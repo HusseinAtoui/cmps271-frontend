@@ -1,0 +1,100 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #222;
+    color: white;
+    padding: 10px 20px;
+}
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.main-nav .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+.nav-item {
+    margin: 0 15px;
+}
+.nav-item a {
+    color: white;
+    text-decoration: none;
+}
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+.search-input {
+    padding: 5px;
+}
+
+/* Main Content */
+.main-content {
+    padding: 20px;
+}
+.section-title {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+.events-section, .articles-section {
+    background-color: white;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.article-card {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+.article-title {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+.article-excerpt {
+    font-size: 1em;
+}
+.article-link {
+    color: blue;
+    text-decoration: none;
+    font-weight: bold;
+}
+.article-author {
+    font-size: 0.9em;
+    color: gray;
+}
+
+/* Footer */
+.site-footer {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+}
+.footer-text {
+    margin-bottom: 10px;
+}
+.btn {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: #555;
+}
