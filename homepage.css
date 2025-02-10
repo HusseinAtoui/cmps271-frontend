@@ -1,99 +1,278 @@
-/* General Styles */
-body {
+/* Global Styles */
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #FFE2D5;
     color: #333;
-    margin: 0;
-    padding: 0;
-}
-
-/* Header */
-.site-header {
+    line-height: 1.6;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* NAVIGATION (Header, Mini, Footer) */
+  .navbar, .mini-navbar, .footer-navbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: #222;
-    color: white;
-    padding: 10px 20px;
-}
-.logo {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-.main-nav .nav-list {
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: #B23A48;
+    color: #fff;
+  }
+  
+  .navbar .logo, 
+  .mini-navbar .logo,
+  .footer-navbar .logo {
+    width: 80px;
+  }
+  
+  nav ul {
     list-style: none;
-    padding: 0;
+    display: flex;
     margin: 0;
-    display: flex;
-}
-.nav-item {
-    margin: 0 15px;
-}
-.nav-item a {
-    color: white;
-    text-decoration: none;
-}
-.header-actions {
-    display: flex;
-    gap: 10px;
-}
-.search-input {
-    padding: 5px;
-}
-
-/* Main Content */
-.main-content {
+    padding: 0;
+  }
   
-}
-.section-title {
-    font-size: 1.8em;
-    margin-bottom: 10px;
-}
-.events-section, .articles-section {
-    background-color: white;
+  nav ul li {
+    margin-right: 20px;
+  }
   
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-.article-card {
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
-}
-.article-title {
-    font-size: 1.5em;
-    margin-bottom: 5px;
-}
-.article-excerpt {
-    font-size: 1em;
-}
-.article-link {
-    color: blue;
-    text-decoration: none;
+  nav ul li a {
     font-weight: bold;
-}
-.article-author {
-    font-size: 0.9em;
-    color: gray;
-}
-
-/* Footer */
-.site-footer {
-    background-color: #222;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    margin-top: 20px;
-}
-.footer-text {
-    margin-bottom: 10px;
-}
-.btn {
-    background-color: #444;
-    color: white;
+    color: #fff;
+  }
+  
+  .nav-icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-icons input {
+    padding: 5px;
     border: none;
+    border-radius: 3px;
+    margin-right: 10px;
+  }
+  
+  /* Buttons in nav */
+  .login-btn, .submit-btn {
+    background-color: #BC5561;
+    border: none;
+    color: #fff;
     padding: 8px 12px;
     cursor: pointer;
-}
-.btn:hover {
-    background-color: #555;
-}
+    border-radius: 3px;
+    margin-right: 5px;
+  }
+  
+  /* HERO SECTION */
+  .hero {
+    background-color: #FCB9B2;
+    text-align: center;
+    padding: 50px 20px;
+  }
+  
+  .hero-content h1 {
+    margin: 0;
+    font-size: 2.5rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.2rem;
+    margin: 10px 0 20px;
+  }
+  
+  .hero-submit {
+    background-color: #BC5561;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  /* EVENTS SECTION */
+  .events {
+    background-color: #D99C96;
+    padding: 40px 30px;
+  }
+  
+  .events h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+  }
+  
+  .event-item {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .event-item h3 {
+    margin-top: 0;
+    color: #B23A48;
+  }
+  
+  /* ARTICLES SECTION */
+  .articles {
+    background-color: #fff;
+    padding: 40px 30px;
+  }
+  
+  .articles h2 {
+    text-align: center;
+    color: #B23A48;
+    margin-bottom: 30px;
+  }
+  
+  .article-item {
+    border: 1px solid #B23A48;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .article-meta .date {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .article-item h3 {
+    margin-top: 10px;
+    color: #B23A48;
+  }
+  
+  .article-item p {
+    margin: 15px 0;
+  }
+  
+  .read-more {
+    color: #B23A48;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  
+  .read-more:hover {
+    border-color: #B23A48;
+  }
+  
+  .writer {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 5px;
+  }
+  
+  /* MEMBERSHIP SECTION */
+  .membership {
+    background-color: #B23A48;
+    color: #fff;
+    text-align: center;
+    padding: 40px 30px;
+  }
+  
+  .membership h2 {
+    margin-bottom: 20px;
+  }
+  
+  .join-btn {
+    background-color: #BC5561;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 1rem;
+  }
+  
+  .membership-links {
+    margin-top: 20px;
+  }
+  
+  .membership-links a {
+    display: inline-block;
+    margin: 0 10px;
+    color: #fff;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  
+  .membership-links a:hover {
+    border-color: #fff;
+  }
+  
+  .membership-subtext {
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+  
+  .membership-logo {
+    margin-top: 20px;
+    width: 80px;
+  }
+  
+  /* READ MORE SECTION */
+  .read-more-section {
+    background-color: #FFE2D5;
+    padding: 40px 30px;
+  }
+  
+  .read-more-event {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .read-more-event h3 {
+    margin-top: 0;
+    color: #B23A48;
+  }
+  
+  .read-more-btn {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #BC5561;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 3px;
+  }
+  
+  /* FOOTER */
+  footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 30px;
+  }
+  
+  footer p {
+    margin: 10px 0 0;
+  }
+  
+  /* Responsive adjustments (optional) */
+  @media (max-width: 768px) {
+    .navbar, .mini-navbar, .footer-navbar {
+      flex-direction: column;
+      text-align: center;
+    }
+    nav ul {
+      flex-direction: column;
+      margin: 10px 0;
+    }
+    nav ul li {
+      margin: 10px 0;
+    }
+    .nav-icons {
+      margin-top: 10px;
+    }
+  }
+  
