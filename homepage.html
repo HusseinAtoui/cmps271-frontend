@@ -1,18 +1,40 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Afterthoughts – Philosophy Journal</title>
+  <title>Afterthoughts Philosophy Journal</title>
   <link rel="stylesheet" href="homepage.css">
 </head>
+<script src="homepage.js"></script>
+<header>
+  <div class="navbar">
+    <img src="logo.png" alt="Logo" class="logo">
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Submissions</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Team</a></li>
+        <li><a href="#">About Us</a></li>
+      </ul>
+    </nav>
+    <div class="nav-icons">
+      <input type="text" placeholder="Search">
+      <button class="login-btn">Login</button>
+      <button class="submit-btn">Submit</button>
+    </div>
+  </div>
+</header>
 <body>
+  
 
   <!-- HERO SECTION -->
   <section class="hero">
     <div class="hero-content">
       <h1>ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴀꜰᴛᴇʀᴛʜᴏᴜɢʜᴛꜱ!</h1>
-      <p>𝕋𝕙𝕚𝕤 𝕚𝕤 𝕒 ℙ𝕙ɪʟᴏꜱᴏᴘʜʏ 𝕛ᴏᴜʀɴᴀʟ<br>
+      <p>This is a philosophy journal<br>
          .....................................................<br>
          .....................................................
       </p>
@@ -22,122 +44,108 @@
   </section>
 
   <!-- MAIN NAVIGATION (FULL) -->
-  <header>
-    <div class="navbar">
-      <img src="logo.png" alt="Logo" class="logo">
-      <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Submissions</a></li>
-          <li><a href="#">Events</a></li>
-          <li><a href="#">Team</a></li>
-          <li><a href="#">About Us</a></li>
-        </ul>
-      </nav>
-      <div class="nav-icons">
-        <input type="text" placeholder="Search">
-        <button class="login-btn">Login</button>
-        <button class="submit-btn">Submit</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- MINI NAVIGATION (Repeated as in the PDF) -->
   
 
   <!-- EVENTS SECTION -->
-  <section class="events">
-    <h2>Upcoming Events</h2>
-    <div class="event-item">
-      <h3>Event Title</h3>
-      <p>
-        event text...................... event text<br>
-        ......................event text......................
-      </p>
-    </div>
-    <div class="event-item">
-      <h3>Event Title</h3>
-      <p>
-        event text...................... event text<br>
-        ......................event text......................
-      </p>
-    </div>
-  </section>
+  <div class="slideshow-container">
 
+    <!-- Full-width images with number and caption text -->
+    <div class="mySlides fade">
+      <div class="numbertext">1 / 3</div>
+      <img src="img1.jpg" style="width:100%">
+      <div class="text">Caption Text</div>
+    </div>
+  
+    <div class="mySlides fade">
+      <div class="numbertext">2 / 3</div>
+      <img src="img2.jpg" style="width:100%">
+      <div class="text">Caption Two</div>
+    </div>
+  
+    <div class="mySlides fade">
+      <div class="numbertext">3 / 3</div>
+      <img src="img3.jpg" style="width:100%">
+      <div class="text">Caption Three</div>
+    </div>
+  
+    <!-- Next and previous buttons -->
+    <a class="next" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="prev" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+  <br>
+  
+  <!-- The dots/circles -->
+  <div style="text-align:center">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+  </div>
   
 
   <!-- TOP ARTICLES SECTION -->
-  <section class="articles">
-    <h2>Top Articles</h2>
-    
-    <!-- First Article -->
-    <div class="article-item">
-      <div class="article-meta">
-        <span class="date">February 5, 2025 | 3 min read</span>
-      </div>
-      <h3>The Philosophy Journal</h3>
-      <p>
-        this is a philo ......... ...... .......... .........<br>
-        ................. .... ... ....... ........ ...... .....<br><br>
-        this is a philo ......... ...... .......... .........<br>
-        ................. .... ... ....... ........ ...... .....
-      </p>
-      <a href="#" class="read-more">Continue Reading</a>
-      <p class="writer">pp writer's name</p>
-    </div>
+  <section class="grid-container">
+    <div class="card">
+      <div class="imagecontainer">
 
-    <!-- Second Article -->
-    <div class="article-item">
-      <div class="article-meta">
-        <span class="date">February 5, 2025 | 3 min read</span>
       </div>
-      <h3>The Philosophy Journal</h3>
-      <p>
-        this is a philo ......... ...... .......... .........<br>
-        ................. .... ... ....... ........ ...... .....<br><br>
-        this is a philo ......... ...... .......... .........<br>
-        ................. .... ... ....... ........ ...... .....
-      </p>
-      <a href="#" class="read-more">Continue Reading</a>
-      <p class="writer">pp writer's name</p>
+      <div class="text-section">
+        <p class="details">Februar y 5, 2025 | 3 min read</p>
+        <p class="title">Title1</p>
+        <p class="description">hello this is filler information, idk what to tell you you shouldnt see this is purely html</p>
+        <div class="buttons">
+          <button class="cotinuereading">continue reading</button>
+          <img src="" alt="profile" class="profile">
+          <p class="authorname">spring anderson</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="imagecontainer">
+
+      </div>
+      <div class="text-section">
+        <p class="details">Februar y 5, 2025 | 3 min read</p>
+        <p class="title">Title1</p>
+        <p class="description"></p>
+        <div class="buttons">
+          <button class="cotinuereading">continue reading</button>
+          <img src="" alt="profile" class="profile">
+          <p class="authorname"></p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="imagecontainer">
+
+      </div>
+      <div class="text-section">
+        <p class="details">Februar y 5, 2025 | 3 min read</p>
+        <p class="title">Title1</p>
+        <p class="description"></p>
+        <div class="buttons">
+          <button class="cotinuereading">continue reading</button>
+          <img src="" alt="profile" class="profile">
+          <p class="authorname"></p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="imagecontainer">
+
+      </div>
+      <div class="text-section">
+        <p class="details">Februar y 5, 2025 | 3 min read</p>
+        <p class="title">Title1</p>
+        <p class="description"></p>
+        <div class="buttons">
+          <button class="cotinuereading">continue reading</button>
+          <img src="" alt="profile" class="profile">
+          <p class="authorname"></p>
+        </div>
+      </div>
     </div>
   </section>
-
   
-  <!-- ADDITIONAL ARTICLES (More repeating article entries) -->
-  <section class="articles">
-    <!-- Third Article -->
-    <div class="article-item">
-      <div class="article-meta">
-        <span class="date">February 5, 2025 | 3 min read</span>
-      </div>
-      <h3>The Philosophy Journal</h3>
-      <p>
-        this is a philo ......... ...... .......... .........<br>
-        ................. .... ... ....... ........ ...... .....<br><br>
-        this is a philo ......... ...... .......... .........<br>
-        ................. .... ... ....... ........ ...... .....
-      </p>
-      <a href="#" class="read-more">Continue Reading</a>
-      <p class="writer">pp writer's name</p>
-    </div>
-    <!-- Fourth Article -->
-    <div class="article-item">
-      <div class="article-meta">
-        <span class="date">February 5, 2025 | 3 min read</span>
-      </div>
-      <h3>The Philosophy Journal</h3>
-      <p>
-        this is a philo ......... ...... .......... .........<br>
-        ................. .... ... ....... ........ ...... .....<br><br>
-        this is a philo ......... ...... .......... .........<br>
-        ................. .... ... ....... ........ ...... .....
-      </p>
-      <a href="#" class="read-more">Continue Reading</a>
-      <p class="writer">pp writer's name</p>
-    </div>
-  </section>
-
 
   <!-- MEMBERSHIP SECTION -->
   <section class="membership">
