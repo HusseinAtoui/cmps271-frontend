@@ -328,7 +328,7 @@
   
   /* Hide the images by default */
   .mySlides {
-    display: flex;
+    display: none;
     flex-direction: row;
     height: 550px;
     width:100%;
