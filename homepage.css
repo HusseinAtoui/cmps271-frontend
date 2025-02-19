@@ -169,8 +169,9 @@ footer {
   height: 600px;
   background-image: url(image8.jpg);
   background-repeat: no-repeat;
-height: 100%;
-width: 100%;
+  
+background-size: 100%;
+opacity: 0.8;
 }
 
 .hero-content h1 {
