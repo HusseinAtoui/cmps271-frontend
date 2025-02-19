@@ -28,6 +28,7 @@ body {
     color: #7d0c0e;
     border: white;
     padding: 6px;
+    font-family: "Times New Roman";
 }
 
 .search-container input:focus {
@@ -45,6 +46,7 @@ body {
     width: 10%;
     font-weight: bold;
     color: #7D0C0E;
+    font-family: "Times New Roman";
 }
 
 .navbar {

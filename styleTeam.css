@@ -1,9 +1,10 @@
 * {
-    box-sizing: border-box; 
+    box-sizing: border-box;
     font-family: 'Times New Roman', Times, serif;
-  }
-  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-body{
+}
+
+
+body {
     background-color: #f5e8bc;
 }
 
@@ -21,7 +22,7 @@ body{
 }
 
 
-.group-pic{
+.group-pic {
     width: 50%;
     height: 400px;
     margin: auto;
@@ -29,36 +30,43 @@ body{
     display: block;
     border-radius: 15%;
 }
-.caption{
+
+.caption {
     text-align: center;
     margin-top: 10px;
     font-size: 18px;
     border: 2px solid black;
     padding: 10px;
 }
-.team-images{
+
+.team-images {
     width: 200px;
     height: auto;
 }
-header h1,h4{
+
+header h1,
+h4 {
     text-align: center;
 }
-.team-container{
+
+.team-container {
     display: flex;
     height: 200px;
     align-items: stretch;
     justify-content: space-between;
 
 }
+
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);  
-    grid-template-rows: auto auto; 
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
     justify-items: center;
-    align-items: center; 
+    align-items: center;
     gap: 20px;
     width: 80%;
 }
+
 .last-row {
     width: 200px;
     background-color: #420000;
@@ -67,15 +75,16 @@ header h1,h4{
     overflow: hidden;
     text-align: center;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
-    height:300px;
+    height: 300px;
     justify-content: center;
     align-items: stretch;
     margin: 0 auto;
     grid-column: span 2;
-    color:white;
+    color: white;
     height: 350px;
 
 }
+
 .team-card {
     width: 200px;
     background-color: #420000;
@@ -84,84 +93,94 @@ header h1,h4{
     overflow: hidden;
     text-align: center;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
-    height:300px;
+    height: 300px;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    color:white;
+    color: white;
     height: 350px;
 
 }
+
 .team-images {
     width: 200px;
     height: 250px;
     object-fit: cover;
 }
+
 .name {
     font-size: 16px;
     font-weight: bold;
 }
+
 .quote {
     font-size: 14px;
     color: gray;
     margin-top: 5px;
     font-style: italic;
-    color:cornsilk;
+    color: cornsilk;
 }
 
-  
-  header{
+
+header {
     width: 100%;
-  }
-  h1{
-    font-size:50px;
-  }
-  .membership {
+}
+
+h1 {
+    font-size: 50px;
+}
+
+.membership {
     background-color: #6E1313;
     color: #fff;
     text-align: center;
     padding: 40px 30px;
     width: 100%;
-  }
-  
+}
 
-  .membership-links {
+
+.membership-links {
     margin-top: 20px;
-  }
-  
-  .membership-links a {
+}
+
+.membership-links a {
     display: inline-block;
     margin: 0 10px;
     color: #fff;
     border-bottom: 1px solid transparent;
     transition: border-color 0.3s;
-  }
-  
-  .membership-links a:hover {
+}
+
+.membership-links a:hover {
     border-color: #fff;
-  }
-  
-  .membership-subtext {
+}
+
+.membership-subtext {
     margin-top: 20px;
     font-size: 1rem;
-  }
-  
-  .membership-logo {
+}
+
+.membership-logo {
     margin-top: 20px;
     width: 80px;
-  }
+}
 
-main{
+main {
     height: 400px;
 }
+
 .logo img {
-    height: 70px;  /* Adjust this value for height */
-    width: auto;  /* Let the width adjust proportionally */
+    height: 70px;
+    /* Adjust this value for height */
+    width: auto;
+    /* Let the width adjust proportionally */
     background-color: #faefe1;
     padding: 2px;
     margin-left: 20px;
     border-radius: 5px;
-}footer {
+}
+
+footer {
     background-color: #7D0D0D;
     padding: 40px;
     text-align: center;
@@ -179,15 +198,18 @@ main{
     align-items: center;
     max-width: 900px;
     margin: 0 auto;
-    gap: 20px; /* spacing between columns */
+    gap: 20px;
+    /* spacing between columns */
 }
 
 .footer-left,
 .footer-right,
 .footer-info {
     flex: 1;
-    min-width: 200px; /* ensures columns don’t become too narrow */
-    margin-bottom: 20px; /* spacing if needed */
+    min-width: 200px;
+    /* ensures columns don’t become too narrow */
+    margin-bottom: 20px;
+    /* spacing if needed */
 }
 
 /* Remove the hard-coded margin-left so it can respond to smaller screens */
@@ -216,7 +238,7 @@ main{
     width: 300px;
     padding: 10px;
     border: none;
- 
+
     font-size: 16px;
     color: #7D0D0D;
     background-color: #FAEDE1;
@@ -305,7 +327,7 @@ body {
     justify-content: space-between;
     background-color: #7d0c0e;
     padding: 15px 50px;
-    height:112px;
+    height: 112px;
 }
 
 
@@ -352,6 +374,7 @@ body {
 .nav-links a:hover {
     text-decoration: underline;
 }
+
 /*Guys this is the footer that we will go with most probably */
 /* Footer */
 footer {
