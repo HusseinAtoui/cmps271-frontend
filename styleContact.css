@@ -2,7 +2,11 @@
   box-sizing: border-box;
   font-family: "Times New Roman";
 }
+.active{
+  text-decoration: underline;
+color:beige;
 
+}
 /* Search Bar Styles */
 .search-container {
   display: flex;

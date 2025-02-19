@@ -7,6 +7,10 @@ body {
   height:100vh;
   
   /*#C7D2AB*/
+}.active{
+  text-decoration: underline;
+  color: rgb(115, 23, 23);
+
 }
 
 /* NAVIGATION (Header, Mini, Footer) */
