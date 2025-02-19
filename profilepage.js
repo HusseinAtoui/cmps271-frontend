@@ -1,120 +1,116 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Select all article cards
-    const articleCards = document.querySelectorAll('.activity-card');
-  
-    // Create the modal container (full-screen overlay)
-    const modal = document.createElement('div');
-    modal.id = 'article-modal';
-    Object.assign(modal.style, {
-      position: 'fixed',
-      top: '0',
-      left: '0',
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(0,0,0,0.7)',
-      display: 'none',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex: '1000'
-    });
-  
-    // Create the modal content box with rounded corners
-    const modalContent = document.createElement('div');
-    modalContent.id = 'modal-content';
-    Object.assign(modalContent.style, {
-      backgroundColor: '#fff',
-      padding: '20px',
-      borderRadius: '20px', // fully rounded modal box
-      maxWidth: '600px',
-      maxHeight: '80%',
-      overflowY: 'auto',
-      position: 'relative'
-    });
-    modal.appendChild(modalContent);
-  
-    // Create a close button with rounded corners
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'Close';
-    Object.assign(closeButton.style, {
-      position: 'absolute',
-      top: '10px',
-      right: '10px',
-      padding: '5px 10px',
-      cursor: 'pointer',
-      borderRadius: '20px',
-      border: 'none',
-      backgroundColor: '#f0c5a4'
-    });
-    modalContent.appendChild(closeButton);
-  
-    // Append the modal to the body
-    document.body.appendChild(modal);
-  
-    // Add custom scrollbar styling via a style element
-    const style = document.createElement('style');
-    style.textContent = `
-      /* Custom scrollbar styling for Webkit browsers */
+  // Ensure this script runs only once using a flag
+  if (window.articleScriptRun) return;
+  window.articleScriptRun = true; // Set a flag to prevent multiple executions
+
+  // Fetch articles from the XML file
+  fetch('1.xml') // Ensure file path is correct
+      .then(response => response.text())
+      .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+      .then(data => {
+          const articles = data.getElementsByTagName("article");
+          const activitySection = document.querySelector('.recent-activity');
+
+          // Clear existing content to avoid duplicates
+          activitySection.innerHTML = '';
+
+          Array.from(articles).forEach(article => {
+              const title = article.getElementsByTagName("title")[0].textContent;
+              const content = article.getElementsByTagName("content")[0].textContent.trim();
+              const imageTag = article.getElementsByTagName("image")[0]; 
+              const imageSrc = imageTag ? imageTag.textContent.trim() : "default.jpg"; // Default image if missing
+              
+              const preview = content.split("\n").slice(0, 3).join("<br>"); // Extract first 3 lines
+              const wordCount = content.split(/\s+/).length;
+              const readingTime = Math.ceil(wordCount / 225);
+              
+              
+              let articleCard = document.createElement("div");
+              articleCard.classList.add("activity-card");
+              articleCard.innerHTML = `
+                  <img class="images" src="${imageSrc}" alt="${title}">
+                  <div class="activity-info">
+                      <h3>${title}</h3>
+                      <p>${preview}</p>
+                      <span>${readingTime} minute${readingTime === 1 ? '' : 's'}</span>
+                  </div>
+              `;
+
+              // Add event listener to open modal on click
+              articleCard.addEventListener("click", function () {
+                  openModal(title, content, imageSrc);
+              });
+
+              activitySection.appendChild(articleCard);
+          });
+      })
+      .catch(error => console.error('Error loading XML:', error));
+
+  // Create the modal
+  const modal = document.createElement('div');
+  modal.id = 'article-modal';
+  modal.style.display = 'none';
+  modal.style.position = 'fixed';
+  modal.style.top = '0';
+  modal.style.left = '0';
+  modal.style.width = '100%';
+  modal.style.height = '100%';
+  modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+  modal.style.justifyContent = 'center';
+  modal.style.alignItems = 'center';
+  modal.style.zIndex = '1000';
+
+  // Modal content with scroll styling
+  const modalContent = document.createElement('div');
+  modalContent.id = 'modal-content';
+  modalContent.style.backgroundColor = '#fff';
+  modalContent.style.padding = '20px';
+  modalContent.style.borderRadius = '20px';
+  modalContent.style.maxWidth = '600px';
+  modalContent.style.maxHeight = '80%';
+  modalContent.style.overflowY = 'auto';
+  modalContent.style.position = 'relative';
+
+  // Custom Scrollbar
+  const style = document.createElement('style');
+  style.innerHTML = `
       #modal-content::-webkit-scrollbar {
-        width: 12px;
+          width: 8px;
       }
       #modal-content::-webkit-scrollbar-track {
-        background: #f3e5d8;
-        border-radius: 20px;  /* Fully rounded track */
+          background:#7d0c0;
+          border-radius: 10px;
       }
       #modal-content::-webkit-scrollbar-thumb {
-        background-color: #7d0c0e;
-        border-radius: 20px;  /* Fully rounded thumb */
-        border: 3px solid #f3e5d8;
+          background: #7d0c0;
+          border-radius: 10px;
       }
-      
-      /* Firefox scrollbar styling */
-      #modal-content {
-        scrollbar-width: thin;
-        scrollbar-color: #7d0c0e #f3e5d8;
-      }
-    `;
-    document.head.appendChild(style);
-  
-    // Function to close the modal
-    function closeModal() {
-      modal.style.display = 'none';
-    }
-  
-    // Close modal when clicking the close button
-    closeButton.addEventListener('click', closeModal);
-  
-    // Also close modal when clicking outside the content area
-    modal.addEventListener('click', function (e) {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-  
-    // Add click event to each article card
-    articleCards.forEach(function (card) {
-      card.addEventListener('click', function () {
-        // Get the article title from the card (assuming it's inside an h3)
-        const title = card.querySelector('h3') ? card.querySelector('h3').innerText : 'Article';
-        // Get the image source from the card (if exists)
-        const imageSrc = card.querySelector('img') ? card.querySelector('img').src : '';
-        // Get the full article text from a data attribute (or use a default text)
-        const fullText = card.getAttribute('data-fulltext') ||
-          `This is the full article for "${title}".`;
-  
-        // Build the modal content with rounded elements and a custom rounded scrollbar
-        modalContent.innerHTML = `
+  `;
+  document.head.appendChild(style);
+
+  modal.appendChild(modalContent);
+  document.body.appendChild(modal);
+
+  // Open modal function
+  function openModal(title, content, imageSrc) {
+      modalContent.innerHTML = `
           <button id="modal-close" style="position:absolute;top:10px;right:10px;padding:5px 10px;cursor:pointer;border-radius:20px;border:none;background-color:#f0c5a4;">Close</button>
+          <img src="${imageSrc}" alt="${title}" style="width:100%; border-radius:10px; margin-bottom:10px;">
           <h2>${title}</h2>
-          ${imageSrc ? `<img src="${imageSrc}" alt="${title}" style="width:100%;height:auto;margin-bottom:15px;border-radius:20px;">` : ''}
-          <p>${fullText}</p>
-        `;
-  
-        // Re-attach the close event to the newly created close button
-        document.getElementById('modal-close').addEventListener('click', closeModal);
-  
-        // Display the modal
-        modal.style.display = 'flex';
+          <p>${content}</p>
+      `;
+      modal.style.display = 'flex';
+
+      // Close modal when clicking the close button
+      document.getElementById('modal-close').addEventListener('click', function () {
+          modal.style.display = 'none';
       });
-    });
+  }
+
+  // Close modal when clicking outside the content area
+  modal.addEventListener('click', function (e) {
+      if (e.target === modal) {
+          modal.style.display = 'none';
+      }
   });
-  
+});
