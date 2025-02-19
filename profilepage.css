@@ -6,6 +6,32 @@ body {
     background-color: #faefe1;
 }
 
+/* Search Bar Styles */
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+    padding: 5px; /* Add padding for better visual appearance */
+    border-radius: 20px; /* Make the container's corners rounded */
+
+}
+
+.search-container input {
+ 
+    font-size: 16px;
+     /* Match the navbar background color */
+    border-radius: 5px;
+    outline: none;
+    border-radius: 20px; 
+    width: 100%; /* Adjust the width as per your preference */
+    background-color: #faefe1;
+    color: #7d0c0e;
+}
+
+.search-container input:focus {
+    border-color: #f0c5a4; /* Change border color when the input is focused */
+}
 
 
 .navbar {
