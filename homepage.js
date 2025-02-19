@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
           details: 'February 6, 2025 | 2 min read',
           title: 'Article Title 2',
           description: 'This is a dummy description for article 2.',
-          author: 'John Doe',
+          author: 'Spring Anderson',
           authorProfile: 'profile.jpeg'
         }
       ];
