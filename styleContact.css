@@ -2,11 +2,14 @@
   box-sizing: border-box;
   font-family: "Times New Roman";
 }
-.active{
+
+
+.active {
   text-decoration: underline;
-color:beige;
+  color: beige;
 
 }
+
 /* Search Bar Styles */
 .search-container {
   display: flex;
@@ -30,7 +33,9 @@ color:beige;
   color: #7d0c0e;
   border: white;
   padding: 6px;
-}.navbar {
+}
+
+.navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -137,7 +142,7 @@ nav ul li a {
   margin-right: 10px;
 }
 
-.login-btn{
+.login-btn {
   background-color: #faefe1;
   border-color: #f0c5a4;
   border-radius: 15px;
@@ -148,6 +153,7 @@ nav ul li a {
   font-weight: bold;
   color: #7D0C0E;
 }
+
 .submit-btn {
   background-color: #420000;
   border: none;
@@ -165,21 +171,19 @@ body {
   justify-content: center;
   align-items: center;
   height: 100 vh;
-  background-color: #f5e8bc;
+  background-color: #faefe1;
 }
 
 .contact-form-container {
-  background-color: #6E1313;
+  background-color: #7d0c0e;
   color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   max-width: 700px;
   width: 100%;
-
   margin-left: 10%;
- margin-top: 5%;
-
+  margin-top: 5%;
 }
 
 .form-elem {
@@ -203,7 +207,7 @@ textarea {
 }
 
 .submit-button {
-  background-color: #871b1b;
+  background-color: #ac3232;
   font-weight: 100;
   font-size: medium;
   border: none;
@@ -222,8 +226,7 @@ textarea {
 .newsletter-container {
   border: 5px;
   color: white;
-  background-color: #6E1313;
-
+  background-color: #7d0c0e;
   max-width: 50%;
   padding: 20px;
   border-radius: 8px;
@@ -245,7 +248,7 @@ textarea {
 }
 
 .Subscribe-button {
-  background-color: #871b1b;
+  background-color: #ac3232;
   color: black;
   font-weight: 100;
   font-size: medium;
@@ -294,36 +297,41 @@ textarea {
   margin-bottom: 10px;
 }
 
-.phone-container, .email-container, .location-container {
-  flex: 1; /* This will make all containers grow equally */
-  padding: 5px; /* Consistent padding */
-  background-color: #730E0E;
-  border-radius: 8px; /* Uniform border radius */
+.phone-container,
+.email-container,
+.location-container {
+  flex: 1;
+  /* This will make all containers grow equally */
+  padding: 10px;
+  /* Consistent padding */
+  background-color: #7d0c0e;
+  border-radius: 8px;
+  /* Uniform border radius */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   color: white;
-  margin: 10px; 
+  margin: 10px;
 }
 
 .details-container {
   justify-content: space-evenly;
   display: flex;
   margin-top: 5%;
-  padding: 0 9%; 
+  padding: 0 9%;
 }
 
 .google-map {
   display: flex;
 
-height: 400px;
+  height: 400px;
 
-padding-top: 5%;
-padding-left: 5%;
-padding-right: 5%;
+  padding-top: 5%;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .google-map iframe {
 
-  height:100%;
+  height: 100%;
   width: 100%;
 
   border-radius: 25px;
@@ -472,22 +480,23 @@ footer {
   margin: 0 auto;
   gap: 20px;
 }
-  .footer-left,
-  .footer-right,
-  .footer-info {
-      flex: 1;
-      min-width: 200px;
-      /* ensures columns don’t become too narrow */
-      margin-bottom: 20px;
-      /* spacing if needed */
-  }
-  
-  /* Remove the hard-coded margin-left so it can respond to smaller screens */
-  .footer-right {
-      text-align: right;
-      margin-left: 0;
-  }
-  
+
+.footer-left,
+.footer-right,
+.footer-info {
+  flex: 1;
+  min-width: 200px;
+  /* ensures columns don’t become too narrow */
+  margin-bottom: 20px;
+  /* spacing if needed */
+}
+
+/* Remove the hard-coded margin-left so it can respond to smaller screens */
+.footer-right {
+  text-align: right;
+  margin-left: 0;
+}
+
 .join a {
   color: #FAEDE1;
   font-size: 18px;
@@ -552,90 +561,90 @@ footer {
 /*Guys this is the footer that we will go with most probably */
 /* Footer */
 footer {
-    background-color: #7D0D0D;
-    padding: 40px;
-    text-align: center;
-    color: #FAEDE1;
-    font-family: "Times New Roman", serif;
+  background-color: #7D0D0D;
+  padding: 40px;
+  text-align: center;
+  color: #FAEDE1;
+  font-family: "Times New Roman", serif;
 
-   
-    /* No fixed height, so the footer can resize based on content */
+
+  /* No fixed height, so the footer can resize based on content */
 }
 
 .footer-container {
-    /* Use flex and allow wrapping for responsiveness */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 900px;
-    margin: 0 auto;
-    gap: 20px;
-    /* spacing between columns */
+  /* Use flex and allow wrapping for responsiveness */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 20px;
+  /* spacing between columns */
 }
 
 .footer-left,
 .footer-right,
 .footer-info {
-    flex: 1;
-    min-width: 200px;
-    /* ensures columns don’t become too narrow */
-    margin-bottom: 20px;
-    /* spacing if needed */
+  flex: 1;
+  min-width: 200px;
+  /* ensures columns don’t become too narrow */
+  margin-bottom: 20px;
+  /* spacing if needed */
 }
 
 /* Remove the hard-coded margin-left so it can respond to smaller screens */
 .footer-right {
-    text-align: right;
-    margin-left: 0;
+  text-align: right;
+  margin-left: 0;
 }
 
 .logofooter img {
-    height: 200px;
-    width: auto;
-    background-color: #faefe1;
-    padding: 5px;
-    border-radius: 5px;
+  height: 200px;
+  width: auto;
+  background-color: #faefe1;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 
 /* Links inside footer */
 .join a,
 .mailing-list p a {
-    color: #FAEDE1;
-    font-size: 18px;
-    text-decoration: none;
-    border-bottom: 1px solid #FAEDE1;
+  color: #FAEDE1;
+  font-size: 18px;
+  text-decoration: none;
+  border-bottom: 1px solid #FAEDE1;
 }
 
 .join a:hover,
 .mailing-list a:hover {
-    color: #F0C5A4;
-    border-bottom: 1px solid #F0C5A4;
+  color: #F0C5A4;
+  border-bottom: 1px solid #F0C5A4;
 }
 
 /* Mailing list inputs/buttons */
 .mailing-list input {
-    width: 300px;
-    padding: 10px;
-    border: none;
-    margin-top: 10px;
-    font-size: 16px;
-    color: #7D0D0D;
-    background-color: #FAEDE1;
-    text-align: center;
+  width: 300px;
+  padding: 10px;
+  border: none;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #7D0D0D;
+  background-color: #FAEDE1;
+  text-align: center;
 }
 
 .mailing-list button {
-    background-color: #FAEDE1;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 10px;
-    font-size: 16px;
-    font-style: italic;
-    cursor: pointer;
+  background-color: #FAEDE1;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-size: 16px;
+  font-style: italic;
+  cursor: pointer;
 }
 
 .mailing-list button:hover {
-    background-color: #F0C5A4;
+  background-color: #F0C5A4;
 }
