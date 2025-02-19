@@ -1,30 +1,100 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Afterthoughts Philosophy Journal</title>
-  <link rel="stylesheet" href="profilepage.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="profilepage.css">
 </head>
-<script src="profilepage.css"></script>
-<header>
-  <div class="navbar">
-    <img src="logo.jpeg" alt="Logo" class="logo">
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Submissions</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">Team</a></li>
-        <li><a href="#">About Us</a></li>
-      </ul>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.jpeg" alt="Afterthoughts">
+        </div>
+        <div class="nav-links">
+            <a href="#homepage.html" >home</a>
+            <a href="#">about</a>
+            <a href="#">events</a>
+            <a href="#">essays</a>
+            <a href="#">poetry</a>
+            <a href="#">fiction</a>
+            <a href="#">art</a>
+            <a href="#"><strong>SUBMIT</strong></a>
+
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        </div>
     </nav>
-    <div class="nav-icons">
-      <input type="text" placeholder="Search">
-      <button class="login-btn">Login</button>
-      <button class="submit-btn">Submit</button>
+
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <h1>Hi, Girlie(Profile Name)</h1>
+            <p>Ready to start your day with some articles?</p>
+        </div>
+        <div class="header-image">
+            <img src="profile.jpeg" alt="Profile ">
+        </div>
+    </header>
+
+    <!-- Dashboard Stats -->
+    <section class="dashboard-stats">
+        <div class="stat-box "> 83% Open Rate</div>
+        <div class="stat-box "> 77% Complete</div>
+        <div class="stat-box "> 91 Unique Views</div>
+        <div class="stat-box "> 126 Total Views</div>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="recent-activity">
+        <div class="activity-card">
+            <img class="images" src="article1.jpeg" alt="The Lamb">
+            <div class="activity-info">
+                <h3>the two headed lamb</h3>
+                <p>xxxxxx</p>
+                <span>3 minutes</span>
+            </div>
+            <span class="status public">Public</span>
+        </div>
+
+        <div class="activity-card">
+            <img  class="images"src="article2.jpeg" alt="Hamlet">
+            <div class="activity-info">
+                <h3>Hamlet</h3>
+                <p>Why i decided to be dramatic .</p>
+                <span>2.5 minutes</span>
+            </div>
+            <span class="status private">Private</span>
+        </div>
+    </section>
+
+    
+
+</body>
+<footer>
+  <div class="footer-container">
+    <div class="footer-left">
+      <div class="logofooter">
+        <img src="logo.jpeg" alt="Logo">
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="join">
+          <a href="#">Become a member of The Philosophy Journal </a>
+      </div>
+    
+      <div class="mailing-list">
+          <p><a href="#">join the mailing list to stay up to date:</a></p>
+          <input type="email" placeholder="Email Address">
+          <button>SIGN UP</button>
+      </div> 
+    </div>
+    <div class="footer-info">
+        <p>© Afterthoughts </p>
     </div>
   </div>
-</header>
-<body>
+</footer>
+
+</html>

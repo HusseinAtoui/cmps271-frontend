@@ -1,0 +1,56 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Georgia', serif;
+    background-color: #faefe1;
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #7d0c0e;
+    padding: 15px 50px;
+    height: 80px;
+}
+
+/* Logo */
+.logo img {
+    height: 70px;
+    background-color: #faefe1;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #faefe1;
+    font-size: 18px;
+    text-transform: lowercase;
+    transition: 0.3s;
+}
+
+/* Underline effect on active link */
+.nav-links a.active {
+    border-bottom: 2px solid #faefe1;
+    padding-bottom: 3px;
+}
+
+/* Hover effect */
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Instagram Icon */
+.nav-links i {
+    font-size: 20px;
+}
