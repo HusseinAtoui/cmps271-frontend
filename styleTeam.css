@@ -32,7 +32,11 @@
     padding: 10px;
     font-weight: bold;
 }
+.active{
+    text-decoration: underline;
+    color: rgb(115, 23, 23);
 
+}
 .team-images {
     width: 200px;
     height: auto;
