@@ -7,25 +7,31 @@
   <link rel="stylesheet" href="homepage.css">
 </head>
 <body>
-  <header>
-    <div class="navbar">
-      <img src="image.png" alt="Logo" class="logo">
-      <nav>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Submissions</a></li>
-          <li><a href="#">Events</a></li>
-          <li><a href="#">Team</a></li>
-          <li><a href="#">About Us</a></li>
-        </ul>
-      </nav>
-      <div class="nav-icons">
-        <input type="text" placeholder="Search">
-        <button class="login-btn">Login</button>
-        <button class="submit-btn">Submit</button>
-      </div>
+  <nav class="navbar">
+    <div class="logo">
+        <img src="logo.jpeg" alt="Afterthoughts">
     </div>
-  </header>
+    <div class="nav-links">
+        <a href="homepage.html" >Home</a>
+        <a href="#">Submissions</a>
+        <a href="EventPage.html">Events</a>
+        <a href="teamPage.html">Team</a>
+        <a href="#">About Us</a>
+        <a href="#"><strong>SUBMIT</strong></a>
+
+
+        <div class="search-container">
+          <input type="text" placeholder="Search..." aria-label="Search">
+     
+      </div>
+
+    
+       
+        <button class="login-btn">Login</button>
+      
+      
+    </div>
+</nav>
 
   <!-- HERO SECTION -->
   <section class="hero">
@@ -52,22 +58,26 @@
     <!-- Article cards will be loaded dynamically -->
   </section>
 
-  <!-- MEMBERSHIP SECTION -->
-  <section class="membership">
-    <h2>ᴊᴏɪɴ ᴛᴏ ʙᴇᴄᴏᴍᴇ ᴀ ᴍᴇᴍʙᴇʀ ᴏꜰ ᴏᴜʀ<br>ᴘʜɪʟᴏꜱᴏᴘʜʏ ᴊᴏᴜʀɴᴀʟ</h2>
-    <button class="join-btn">Sub</button>
-    <div class="membership-links">
-      <a href="#">ref to all pages here</a>
-      <a href="#">ref to all pages here</a>
-    </div>
-    <p class="membership-subtext">sub Text</p>
-    <img src="image.png" alt="Logo" class="membership-logo">
-  </section>
-
-  <!-- FOOTER WITH NAVIGATION -->
   <footer>
-    <p>&copy; 2025 Afterthoughts Journal. All rights reserved.</p>
-  </footer>
+    <div class="footer-container">
+        <div class="footer-left">
+            <div class="logofooter">
+                <img src="logo.jpeg" alt="Logo" />
+            </div>
+        </div>
+        <div class="footer-right">
+            <div class="join">
+                <a href="#">Become a member of The Philosophy Journal</a>
+            </div>
+            <div class="mailing-list">
+                <p><a href="#">Join the mailing list to stay up to date:</a></p>
+                <input type="email" placeholder="Email Address">
+                <button>SIGN UP</button>
+            </div> 
+        </div>
+   
+   
+</footer>
 
   <script src="homepage.js"></script>
 </body>
