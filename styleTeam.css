@@ -1,5 +1,10 @@
+* {
+    box-sizing: border-box; 
+    font-family: 'Press Start 2P', cursive;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 body{
-    background-color: #E6EBFE;
+    background-color: #f5e8bc;
 }
 .group-pic{
     width: 50%;
@@ -40,14 +45,8 @@ header h1,h4{
     width: 80%;
 }
 .last-row {
-    /*grid-column: span 2;
-    justify-self: center;
-    flex-direction: row;
-    border: 50px;
-    justify-content: space-between;
-    align-items: stretch; */
     width: 200px;
-    background: rgb(182, 216, 233);
+    background-color: #420000;
     border: 2px solid black;
     border-radius: 10px;
     overflow: hidden;
@@ -58,12 +57,13 @@ header h1,h4{
     align-items: stretch;
     margin: 0 auto;
     grid-column: span 2;
-
+    color:white;
+    height: 350px;
 
 }
 .team-card {
     width: 200px;
-    background: rgb(182, 216, 233);
+    background-color: #420000;
     border: 2px solid black;
     border-radius: 10px;
     overflow: hidden;
@@ -73,12 +73,13 @@ header h1,h4{
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    
+    color:white;
+    height: 350px;
 
 }
-.team-img {
-    width: 100px;
-    height: 50px;
+.team-images {
+    width: 200px;
+    height: 250px;
     object-fit: cover;
 }
 .name {
@@ -90,16 +91,226 @@ header h1,h4{
     color: gray;
     margin-top: 5px;
     font-style: italic;
+    color:cornsilk;
 }
-.nav{
-    background-color: cornflowerblue;
-    height: 50px;
+.navbar {
+    display: flex;
+   
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: #420000;
+    color: #fff;
+    width: 100%;
+    img{
+        height: 90px;
+        width: 90px;
+        margin-left: 10px;
+      }
+  }
+  header{
+    width: 100%;
+  }
+  h1{
+    font-size:50px;
+  }
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #7d0c0e;
+    padding: 15px 50px;
+    height: 80px;
 }
-/* Align last two cards in second row */
-.team-card:nth-child(4) {
-    grid-column: 2; /* Centered under middle column */
-}
-.team-card:nth-child(5) {
-    grid-column: 3; /* Placed in third column */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
 }
 
+.nav-links a {
+    text-decoration: none;
+    color: #faefe1;
+    font-size: 18px;
+    text-transform: lowercase;
+    transition: 0.3s;
+}
+
+.nav-links a.active {
+    border-bottom: 2px solid #faefe1;
+    padding-bottom: 3px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+  /* Buttons in nav */
+  .login-btn, .submit-btn {
+    background-color: #BC5561;
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-right: 5px;
+  }
+  footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 30px;
+  }
+  
+  footer p {
+    margin: 10px 0 0;
+  }
+  .membership {
+    background-color: #6E1313;
+    color: #fff;
+    text-align: center;
+    padding: 40px 30px;
+    width: 100%;
+  }
+  
+  .membership h2 {
+    margin-bottom: 20px;
+  }
+  
+  .join-btn {
+    background-color: #420000;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 1rem;
+  }
+  
+  .membership-links {
+    margin-top: 20px;
+  }
+  
+  .membership-links a {
+    display: inline-block;
+    margin: 0 10px;
+    color: #fff;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  
+  .membership-links a:hover {
+    border-color: #fff;
+  }
+  
+  .membership-subtext {
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+  
+  .membership-logo {
+    margin-top: 20px;
+    width: 80px;
+  }
+footer{
+    background-color: #420000;
+}
+main{
+    height: 400px;
+}
+.logo img {
+    height: 70px;  /* Adjust this value for height */
+    width: auto;  /* Let the width adjust proportionally */
+    background-color: #faefe1;
+    padding: 2px;
+    margin-left: 20px;
+    border-radius: 5px;
+}
+footer {
+    background-color: #7D0D0D;
+    padding: 40px;
+    text-align: center;
+    color: #FAEDE1;
+    font-family: "Times New Roman", serif;
+    margin-top: 50px;
+}
+
+.footer-container {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+
+}
+
+.footer-right
+{
+ margin-left: 40%;
+
+}
+.join a {
+    color: #FAEDE1;
+    font-size: 18px;
+    text-decoration: none;
+    border-bottom: 1px solid #FAEDE1;
+}
+
+.join a:hover {
+    color: #F0C5A4;
+    border-bottom: 1px solid #F0C5A4;
+}
+
+.mailing-list p a {
+    color: #FAEDE1;
+    text-decoration: none;
+    font-size: 16px;
+    border-bottom: 1px solid #FAEDE1;
+}
+.mailing-list a:hover {
+    color: #F0C5A4;
+    border-bottom: 1px solid #F0C5A4;
+}
+.mailing-list input {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #7D0D0D;
+    background-color: #FAEDE1;
+    text-align: center;
+
+}
+
+.mailing-list button {
+    background-color: #FAEDE1;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-style: italic;
+    cursor: pointer;
+}
+.logofooter img {
+    height: 200px; 
+     /* Adjust this value for height */
+    width: auto;  /* Let the width adjust proportionally */
+    background-color: #faefe1;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.mailing-list button:hover {
+    background-color: #F0C5A4;
+}
+
+.footer-info {
+
+bottom: 0%;
+
+}
+
+
+.footer-left{
+    width: 150px; 
+}
