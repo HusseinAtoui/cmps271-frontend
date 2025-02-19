@@ -109,6 +109,7 @@ footer {
     color: #FAEDE1;
     font-family: "Times New Roman", serif;
     margin-top: 50px;
+    height: 80%;
     /* No fixed height, so the footer can resize based on content */
 }
 
