@@ -101,49 +101,6 @@ header h1,h4{
   h1{
     font-size:50px;
   }
-  .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #7d0c0e;
-    padding: 15px 50px;
-    height: 80px;
-}
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #faefe1;
-    font-size: 18px;
-    text-transform: lowercase;
-    transition: 0.3s;
-}
-
-.nav-links a.active {
-    border-bottom: 2px solid #faefe1;
-    padding-bottom: 3px;
-}
-
-.nav-links a:hover {
-    text-decoration: underline;
-}
-  /* Buttons in nav */
-  .login-btn, .submit-btn {
-    background-color: #BC5561;
-    border: none;
-    color: #fff;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 3px;
-    margin-right: 5px;
-  }
-
-  
-
   .membership {
     background-color: #6E1313;
     color: #fff;
@@ -153,16 +110,6 @@ header h1,h4{
   }
   
 
-  .join-btn {
-    background-color: #420000;
-    border: none;
-    color: #fff;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 3px;
-    font-size: 1rem;
-  }
-  
   .membership-links {
     margin-top: 20px;
   }
@@ -295,4 +242,196 @@ main{
     .footer-left,
     .footer-right,
   
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Times New Roman";
+    background-color: #faefe1;
+}
+
+/* Search Bar Styles */
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    /* Add padding for better visual appearance */
+    border-radius: 20px;
+    /* Make the container's corners rounded */
+}
+
+.search-container input {
+
+    font-size: 16px;
+    /* Match the navbar background color */
+    outline: none;
+    border-radius: 15px;
+    width: 100%;
+    /* Adjust the width as per your preference */
+    background-color: #faefe1;
+    color: #7d0c0e;
+    border: white;
+    padding: 6px;
+}
+
+.search-container input:focus {
+    border-color: #f0c5a4;
+    /* Change border color when the input is focused */
+}
+
+.login-btn {
+    background-color: #faefe1;
+    border-color: #f0c5a4;
+    border-radius: 15px;
+    padding: 6px;
+    border: white;
+    font-size: 16px;
+    width: 10%;
+    font-weight: bold;
+    color: #7D0C0E;
+}
+
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #7d0c0e;
+    padding: 15px 50px;
+    height: 80px;
+}
+
+
+.logo img {
+    height: 70px;
+    /* Adjust this value for height */
+    width: auto;
+    /* Let the width adjust proportionally */
+    background-color: #faefe1;
+    padding: 2px;
+    margin-left: 20px;
+    border-radius: 5px;
+}
+
+
+
+.images {
+
+    width: 40%;
+}
+
+
+
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #faefe1;
+    font-size: 18px;
+    text-transform: lowercase;
+    transition: 0.3s;
+}
+
+.nav-links a.active {
+    border-bottom: 2px solid #faefe1;
+    padding-bottom: 3px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+/*Guys this is the footer that we will go with most probably */
+/* Footer */
+footer {
+    background-color: #7D0D0D;
+    padding: 40px;
+    text-align: center;
+    color: #FAEDE1;
+    font-family: "Times New Roman", serif;
+    margin-top: 50px;
+    /* No fixed height, so the footer can resize based on content */
+}
+
+.footer-container {
+    /* Use flex and allow wrapping for responsiveness */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 20px;
+    /* spacing between columns */
+}
+
+.footer-left,
+.footer-right,
+.footer-info {
+    flex: 1;
+    min-width: 200px;
+    /* ensures columns don’t become too narrow */
+    margin-bottom: 20px;
+    /* spacing if needed */
+}
+
+/* Remove the hard-coded margin-left so it can respond to smaller screens */
+.footer-right {
+    text-align: right;
+    margin-left: 0;
+}
+
+.logofooter img {
+    height: 200px;
+    width: auto;
+    background-color: #faefe1;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+/* Links inside footer */
+.join a,
+.mailing-list p a {
+    color: #FAEDE1;
+    font-size: 18px;
+    text-decoration: none;
+    border-bottom: 1px solid #FAEDE1;
+}
+
+.join a:hover,
+.mailing-list a:hover {
+    color: #F0C5A4;
+    border-bottom: 1px solid #F0C5A4;
+}
+
+/* Mailing list inputs/buttons */
+.mailing-list input {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #7D0D0D;
+    background-color: #FAEDE1;
+    text-align: center;
+}
+
+.mailing-list button {
+    background-color: #FAEDE1;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.mailing-list button:hover {
+    background-color: #F0C5A4;
 }

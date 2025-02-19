@@ -101,66 +101,6 @@ body {
 .nav-links a:hover {
     text-decoration: underline;
 }
-
-/* Dashboard Header */
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f3e5d8;
-    padding: 40px 50px;
-}
-
-.header-content h1 {
-    font-size: 32px;
-    color: #7d0c0e;
-}
-
-.header-content p {
-    font-size: 18px;
-    color: #444;
-}
-
-.header-image img {
-    height: 150px;
-}
-
-
-.dashboard-stats {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 30px;
-}
-
-.stat-box {
-    padding: 15px 25px;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    background-color: #7D0D0D;
-}
-
-
-.recent-activity {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    height: 5%;
-    margin: 0 auto;
-}
-
-.activity-card {
-    display: flex;
-    align-items: center;
-    background-color: rgb(237, 213, 204);
-    padding: 15px;
-    border-radius: 10px;
-
-
-}
-
 /*Guys this is the footer that we will go with most probably */
 /* Footer */
 footer {
@@ -253,3 +193,62 @@ footer {
 
 
 
+
+/* Dashboard Header */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f3e5d8;
+    padding: 40px 50px;
+}
+
+.header-content h1 {
+    font-size: 32px;
+    color: #7d0c0e;
+}
+
+.header-content p {
+    font-size: 18px;
+    color: #444;
+}
+
+.header-image img {
+    height: 150px;
+}
+
+
+.dashboard-stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px;
+}
+
+.stat-box {
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #7D0D0D;
+}
+
+
+.recent-activity {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 5%;
+    margin: 0 auto;
+}
+
+.activity-card {
+    display: flex;
+    align-items: center;
+    background-color: rgb(237, 213, 204);
+    padding: 15px;
+    border-radius: 10px;
+
+
+}
