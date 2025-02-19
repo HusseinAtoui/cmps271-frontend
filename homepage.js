@@ -64,67 +64,97 @@ document.addEventListener("DOMContentLoaded", () => {
     // Clear out any existing content
     slideshowContainer.innerHTML = "";
   
+    let eventsData;
     try {
-      // Fetch events from your backend API
       const response = await fetch('/api/events');
-      const eventsData = await response.json();
+      if (response && response.ok) {
+        eventsData = await response.json();
+      } else {
+        throw new Error("Response not ok");
+      }
+    } catch (error) {
+      console.error("Error loading events from backend, using dummy data:", error);
+      // Fallback dummy events
+      eventsData = [
+        {
+          id: 1,
+          image: 'image.png',
+          details: 'February 5, 2025 | 3 min read',
+          title: 'Event Title 1',
+          description: 'This is a dummy description for event 1.'
+        },{
+            id: 1,
+            image: 'image.png',
+            details: 'February 5, 2025 | 3 min read',
+            title: 'Event Title 1',
+            description: 'This is a dummy description for event 1.'
+          },{
+            id: 1,
+            image: 'image.png',
+            details: 'February 5, 2025 | 3 min read',
+            title: 'Event Title 1',
+            description: 'This is a dummy description for event 1.'
+          },
+        {
+          id: 2,
+          image: 'image.png',
+          details: 'February 6, 2025 | 4 min read',
+          title: 'Event Title 2',
+          description: 'This is a dummy description for event 2.'
+        }
+      ];
+    }
   
-      // For each event, create a slide element dynamically
-      eventsData.forEach((event, index) => {
-        // Create slide container
-        const slide = document.createElement('div');
-        slide.classList.add('mySlides', 'fade');
+    eventsData.forEach((event, index) => {
+      // Create slide container
+      const slide = document.createElement('div');
+      slide.classList.add('mySlides', 'fade');
   
-        // Build image container
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add('imagecontainer');
-        const img = document.createElement('img');
-        img.src = event.image; // e.g., "image.png"
-        img.alt = event.title;
-        imageContainer.appendChild(img);
+      // Build image container
+      const imageContainer = document.createElement('div');
+      imageContainer.classList.add('imagecontainer');
+      const img = document.createElement('img');
+      img.src = event.image;
+      img.alt = event.title;
+      imageContainer.appendChild(img);
   
-        // Build text section
-        const textSection = document.createElement('div');
-        textSection.classList.add('text-section');
+      // Build text section
+      const textSection = document.createElement('div');
+      textSection.classList.add('text-section');
   
-        const detailsP = document.createElement('p');
-        detailsP.classList.add('details');
-        detailsP.textContent = event.details; // e.g., "February 5, 2025 | 3 min read"
+      const detailsP = document.createElement('p');
+      detailsP.classList.add('details');
+      detailsP.textContent = event.details;
   
-        const titleP = document.createElement('p');
-        titleP.classList.add('title');
-        titleP.textContent = event.title;
+      const titleP = document.createElement('p');
+      titleP.classList.add('title');
+      titleP.textContent = event.title;
   
-        const descriptionP = document.createElement('p');
-        descriptionP.classList.add('description');
-        descriptionP.textContent = event.description;
+      const descriptionP = document.createElement('p');
+      descriptionP.classList.add('description');
+      descriptionP.textContent = event.description;
   
-        // Create "continue reading" button with its event listener
-        const continueBtn = document.createElement('button');
-        continueBtn.classList.add('continue-reading');
-        continueBtn.textContent = "continue reading";
-        continueBtn.addEventListener('click', () => {
-          console.log(`Continue reading event ${event.id}`);
-          // TODO: Redirect to event details page, for example:
-          // window.location.href = `/events/${event.id}`;
-        });
-  
-        // Append all text elements to the text section
-        textSection.append(detailsP, titleP, descriptionP, continueBtn);
-  
-        // Append image and text to the slide container
-        slide.append(imageContainer, textSection);
-  
-        // Append slide to the slideshow container
-        slideshowContainer.appendChild(slide);
+      // Create "continue reading" button with its event listener
+      const continueBtn = document.createElement('button');
+      continueBtn.classList.add('continue-reading');
+      continueBtn.textContent = "continue reading";
+      continueBtn.addEventListener('click', () => {
+        console.log(`Continue reading event ${event.id}`);
+        // TODO: Redirect to event details page, e.g., window.location.href = `/events/${event.id}`;
       });
   
-      // Once slides are created, add slideshow controls (prev/next buttons and dots)
-      createSlideshowControls();
-    } catch (error) {
-      console.error("Error loading events:", error);
-      // Optionally: load fallback/dummy events here.
-    }
+      // Append all text elements to the text section
+      textSection.append(detailsP, titleP, descriptionP, continueBtn);
+  
+      // Append image and text to the slide container
+      slide.append(imageContainer, textSection);
+  
+      // Append slide to the slideshow container
+      slideshowContainer.appendChild(slide);
+    });
+  
+    // Once slides are created, add slideshow controls (prev/next buttons and dots)
+    createSlideshowControls();
   }
   
   /* =============================
@@ -135,80 +165,120 @@ document.addEventListener("DOMContentLoaded", () => {
     // Clear existing cards
     gridContainer.innerHTML = "";
   
+    let articlesData;
     try {
-      // Fetch articles from your backend API
       const response = await fetch('/api/articles');
-      const articlesData = await response.json();
-  
-      articlesData.forEach(article => {
-        // Create card container
-        const card = document.createElement('div');
-        card.classList.add('card');
-  
-        // Create image container (if an image is provided)
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add('imagecontainer');
-        if (article.image) {
-          const img = document.createElement('img');
-          img.src = article.image;
-          img.alt = article.title;
-          imageContainer.appendChild(img);
-        }
-  
-        // Create text section
-        const textSection = document.createElement('div');
-        textSection.classList.add('text-section');
-  
-        const detailsP = document.createElement('p');
-        detailsP.classList.add('details');
-        detailsP.textContent = article.details;
-  
-        const titleP = document.createElement('p');
-        titleP.classList.add('title');
-        titleP.textContent = article.title;
-  
-        const descriptionP = document.createElement('p');
-        descriptionP.classList.add('description');
-        descriptionP.textContent = article.description;
-  
-        // Create "continue reading" button with event listener
-        const continueBtn = document.createElement('button');
-        continueBtn.classList.add('continue-reading');
-        continueBtn.textContent = "continue reading";
-        continueBtn.addEventListener('click', () => {
-          console.log(`Continue reading article ${article.id}`);
-          // TODO: Redirect to article details page, e.g.:
-          // window.location.href = `/articles/${article.id}`;
-        });
-  
-        // Create author info section
-        const buttonsDiv = document.createElement('div');
-        buttonsDiv.classList.add('buttons');
-  
-        const authorImg = document.createElement('img');
-        authorImg.classList.add('profile');
-        if (article.authorProfile) {
-          authorImg.src = article.authorProfile;
-          authorImg.alt = article.author;
-        }
-  
-        const authorName = document.createElement('p');
-        authorName.classList.add('authorname');
-        authorName.textContent = article.author;
-  
-        buttonsDiv.append(continueBtn, authorImg, authorName);
-  
-        // Assemble the text section
-        textSection.append(detailsP, titleP, descriptionP, buttonsDiv);
-  
-        // Assemble the card
-        card.append(imageContainer, textSection);
-        gridContainer.appendChild(card);
-      });
+      if (response && response.ok) {
+        articlesData = await response.json();
+      } else {
+        throw new Error("Response not ok");
+      }
     } catch (error) {
-      console.error("Error loading articles:", error);
-      // Optionally: load fallback/dummy articles here.
+      console.error("Error loading articles from backend, using dummy data:", error);
+      // Fallback dummy articles
+      articlesData = [
+        {
+          id: 1,
+          image: 'image.png',
+          details: 'February 5, 2025 | 3 min read',
+          title: 'Article Title 1',
+          description: 'This is a dummy description for article 1.',
+          author: 'Spring Anderson',
+          authorProfile: 'image.png'
+        },
+        {
+            id: 1,
+            image: 'image.png',
+            details: 'February 5, 2025 | 3 min read',
+            title: 'Article Title 1',
+            description: 'This is a dummy description for article 1.',
+            author: 'Spring Anderson',
+            authorProfile: 'image.png'
+          }, {
+            id: 1,
+            image: 'image.png',
+            details: 'February 5, 2025 | 3 min read',
+            title: 'Article Title 1',
+            description: 'This is a dummy description for article 1.',
+            author: 'Spring Anderson',
+            authorProfile: 'image.png'
+          },
+        {
+          id: 2,
+          image: 'image.png',
+          details: 'February 6, 2025 | 2 min read',
+          title: 'Article Title 2',
+          description: 'This is a dummy description for article 2.',
+          author: 'John Doe',
+          authorProfile: 'image.png'
+        }
+      ];
     }
+  
+    articlesData.forEach(article => {
+      // Create card container
+      const card = document.createElement('div');
+      card.classList.add('card');
+  
+      // Create image container (if an image is provided)
+      const imageContainer = document.createElement('div');
+      imageContainer.classList.add('imagecontainer');
+      if (article.image) {
+        const img = document.createElement('img');
+        img.src = article.image;
+        img.alt = article.title;
+        imageContainer.appendChild(img);
+      }
+  
+      // Create text section
+      const textSection = document.createElement('div');
+      textSection.classList.add('text-section');
+  
+      const detailsP = document.createElement('p');
+      detailsP.classList.add('details');
+      detailsP.textContent = article.details;
+  
+      const titleP = document.createElement('p');
+      titleP.classList.add('title');
+      titleP.textContent = article.title;
+  
+      const descriptionP = document.createElement('p');
+      descriptionP.classList.add('description');
+      descriptionP.textContent = article.description;
+  
+      // Create "continue reading" button with event listener
+      const continueBtn = document.createElement('button');
+      continueBtn.classList.add('continue-reading');
+      continueBtn.textContent = "continue reading";
+      continueBtn.addEventListener('click', () => {
+        console.log(`Continue reading article ${article.id}`);
+        // TODO: Redirect to article details page, e.g., window.location.href = `/articles/${article.id}`;
+      });
+  
+      // Create author info section
+      const buttonsDiv = document.createElement('div');
+      buttonsDiv.classList.add('buttons');
+  
+      const authorImg = document.createElement('img');
+      authorImg.classList.add('profile');
+      if (article.authorProfile) {
+        authorImg.src = article.authorProfile;
+        authorImg.alt = article.author;
+      }
+  
+      const authorName = document.createElement('p');
+      authorName.classList.add('authorname');
+      authorName.textContent = article.author;
+  
+      buttonsDiv.append(continueBtn, authorImg, authorName);
+  
+      // Assemble the text section
+      textSection.append(detailsP, titleP, descriptionP, buttonsDiv);
+  
+      // Assemble the card
+      card.append(imageContainer, textSection);
+      gridContainer.appendChild(card);
+    });
   }
   
   /* =============================
@@ -263,24 +333,23 @@ document.addEventListener("DOMContentLoaded", () => {
     // Create previous button
     const prevBtn = document.createElement('button');
     prevBtn.classList.add('prev');
-    prevBtn.innerHTML = '&#10094;'; // Left arrow
+    prevBtn.innerHTML = '&#10094;';
     prevBtn.addEventListener('click', prevSlide);
     slideshowContainer.appendChild(prevBtn);
   
     // Create next button
     const nextBtn = document.createElement('button');
     nextBtn.classList.add('next');
-    nextBtn.innerHTML = '&#10095;'; // Right arrow
+    nextBtn.innerHTML = '&#10095;';
     nextBtn.addEventListener('click', nextSlide);
     slideshowContainer.appendChild(nextBtn);
   
-    // Create dot navigation container (if not already present)
+    // Create dot navigation container
     let dotContainer = document.querySelector('.dot-container');
     if (!dotContainer) {
       dotContainer = document.createElement('div');
       dotContainer.classList.add('dot-container');
       dotContainer.style.textAlign = "center";
-      // Insert dot container after the slideshow container
       slideshowContainer.parentNode.insertBefore(dotContainer, slideshowContainer.nextSibling);
     } else {
       dotContainer.innerHTML = "";

@@ -1,431 +1,345 @@
 /* Global Styles */
 * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #FFE2D5;
-    color: #333;
-    line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-   
-   width: 100%;
-  }
-  .hero, .events, .membership, footer,.grid-container{
-    width: 100%;
-  }
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  /* NAVIGATION (Header, Mini, Footer) */
-  .navbar {
-    display: flex;
-   
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 30px;
-    background-color: #B23A48;
-    color: #fff;
-    width: 100%;
-    img{
-      border-radius: 50%;
-      height: 50px;
-      width: 50px;
-      margin-left: 10px;
-    }
-  }
-  header{
-    width: 100%;
-  }
-  
-  
-  nav ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-  }
-  
-  nav ul li {
-    margin-right: 20px;
-  }
-  
-  nav ul li a {
-    font-weight: bold;
-    color: #fff;
-  }
-  
-  .nav-icons {
-    display: flex;
-    align-items: center;
-  }
-  
-  .nav-icons input {
-    padding: 5px;
-    border: none;
-    border-radius: 3px;
-    margin-right: 10px;
-  }
-  
-  /* Buttons in nav */
-  .login-btn, .submit-btn {
-    background-color: #BC5561;
-    border: none;
-    color: #fff;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 3px;
-    margin-right: 5px;
-  }
-  
-  /* HERO SECTION */
-  .hero {
-    background-color: #FFE2D5;
-    text-align: center;
-    padding: 50px 20px;
-  }
-  
-  .hero-content h1 {
-    margin: 0;
-    font-size: 2.5rem;
-  }
-  
-  .hero-content p {
-    font-size: 1.2rem;
-    margin: 10px 0 20px;
-  }
-  
-  .hero-submit {
-    background-color: #BC5561;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 3px;
-  }
-  
-  /* EVENTS SECTION */
-  .events {
-    background-color: #D99C96;
-    padding: 40px 30px;
-  }
-  
-  .events h2 {
-    text-align: center;
-    color: #fff;
-    margin-bottom: 30px;
-  }
-  
-  .event-item {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .event-item h3 {
-    margin-top: 0;
-    color: #B23A48;
-  }
-  
-  /* ARTICLES SECTION */
-  .grid-container{
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 30px;
-    row-gap: 30px;
-   padding: 30px;
-    
-    
-    
-  }
-  .card:nth-child(odd) {
-    align-self: start; 
-    justify-self: end; 
-  }
-  .card{
-    border-radius: 20px;
-    background-color: #FCB9B2;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    width: 100%;
-    height:100%;
-    place-items: center;
-    display: flex;
-
-  }
-  .card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
-  .imagecontainer{
-    height: 475px;
-    width: 450px;
-    border-radius: 20px;
-    background-color: #D99C96;
-   margin-left: 20px;
-   margin-right: 20px;
-    img{
-      height: 475px;
-      width: 450px;
-      border-radius: 20px;
-    }
-  }
-  .text-section{
-    display: flex;
-    flex-direction: column;
-    height: 500px;
-    width: 450px;}
-    
-   .details{
-    align-self: center;
-    justify-self: start;
-    font-size: x-large;
-    color: white;
-    font: bolder;
-   } 
-   .buttons{
-    margin-top: auto; 
-    align-self: center;
-    display: flex;
-    margin-bottom: 15px;
-    
-    button{
-      background-color:#BC5561 ;
-      height: 50px;
-      justify-self: last baseline;
-      border-radius: 20px;
-      color: white;
-      margin-right: 10px;
-    }
-    img{
-      border-radius: 50%;
-      height: 50px;
-      width: 50px;
-      margin-left: 10px;
-    }
-
-   }
-   .title{
-    font-size: x-large;
-   }
-  
-  /* MEMBERSHIP SECTION */
-  .membership {
-    background-color: #B23A48;
-    color: #fff;
-    text-align: center;
-    padding: 40px 30px;
-  }
-  
-  .membership h2 {
-    margin-bottom: 20px;
-  }
-  
-  .join-btn {
-    background-color: #BC5561;
-    border: none;
-    color: #fff;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 3px;
-    font-size: 1rem;
-  }
-  
-  .membership-links {
-    margin-top: 20px;
-  }
-  
-  .membership-links a {
-    display: inline-block;
-    margin: 0 10px;
-    color: #fff;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s;
-  }
-  
-  .membership-links a:hover {
-    border-color: #fff;
-  }
-  
-  .membership-subtext {
-    margin-top: 20px;
-    font-size: 1rem;
-  }
-  
-  .membership-logo {
-    margin-top: 20px;
-    width: 80px;
-  }
-  
-  /* READ MORE SECTION */
-  .read-more-section {
-    background-color: #FFE2D5;
-    padding: 40px 30px;
-  }
-  
-  .read-more-event {
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .read-more-event h3 {
-    margin-top: 0;
-    color: #B23A48;
-  }
-  
-  .read-more-btn {
-    display: inline-block;
-    margin-top: 10px;
-    background-color: #BC5561;
-    color: #fff;
-    padding: 8px 15px;
-    border-radius: 3px;
-  }
-  
-  /* FOOTER */
-  footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px 30px;
-  }
-  
-  footer p {
-    margin: 10px 0 0;
-  }
-  
-  /* Responsive adjustments (optional) */
-  @media (max-width: 768px) {
-    .navbar, .mini-navbar, .footer-navbar {
-      flex-direction: column;
-      text-align: center;
-    }
-    nav ul {
-      flex-direction: column;
-      margin: 10px 0;
-    }
-    nav ul li {
-      margin: 10px 0;
-    }
-    .nav-icons {
-      margin-top: 10px;
-    }
-  }
-  /*event side*/
-  .slideshow-container {
-   width: 100%;
-  
-  }
-  
-  /* Hide the images by default */
-  .mySlides {
-    display: none;
-    flex-direction: row;
-    height: 550px;
-    width:100%;
-    background-color: #FCB9B2;
-   justify-content: center;
-   .details{
-    align-self: center;
-    justify-self: start;
-    font-size: x-large;
-    color: white;
-    font: bolder;
-   }
-  
-    button{
-      background-color:#BC5561 ;
-      height: 50px;
-      justify-self: last baseline;
-      border-radius: 20px;
-      color: white;
-      margin-right: 10px;
-    }
-    .imagecontainer{
-      margin-top: 35px;
-      margin-left: 35px;
-    }
-
-img{
-  border-radius: 20px;
-  height: 475px;
-    width: 450px;
+  box-sizing: border-box;
 }
 
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #FFE2D5;
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
-  }
-  
-  /* Next & previous buttons */
-  .prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    margin-top: 130px;
-    padding: 16px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-  }
-  
-  /* Position the "next button" to the right */
-  .next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-  }
-  
-  /* On hover, add a black background color with a little bit see-through */
-  .prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.8);
-  }
-  
-  /* Caption text */
-  .text {
-    color: #f2f2f2;
-    font-size: 15px;
-    padding: 8px 12px;
-    position: absolute;
-    bottom: 8px;
-    width: 100%;
+/* Navigation */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #B23A48;
+  color: #fff;
+  width: 100%;
+}
+
+.navbar img.logo {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin-right: 1.25rem;
+}
+
+nav ul li a {
+  font-weight: bold;
+  color: #fff;
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+}
+
+.nav-icons input {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 3px;
+  margin-right: 0.5rem;
+}
+
+.login-btn,
+.submit-btn {
+  background-color: #BC5561;
+  border: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-right: 0.5rem;
+}
+
+/* HERO SECTION */
+.hero {
+  background-color: #FFE2D5;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.hero-content h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.hero-submit {
+  background-color: #BC5561;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 1rem;
+}
+
+/* SLIDESHOW / EVENTS SECTION */
+.slideshow-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: #FCB9B2;
+  padding: 1rem 0;
+}
+
+.mySlides {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 1rem;
+}
+
+/* Image Container */
+.imagecontainer {
+  width: 45%;
+  max-width: 450px;
+  aspect-ratio: 450 / 475;
+  border-radius: 20px;
+  background-color: #D99C96;
+  margin: 1rem;
+  overflow: hidden;
+}
+
+.imagecontainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Text Section */
+.text-section {
+  width: 45%;
+  max-width: 450px;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.text-section .details {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.text-section .title {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.text-section .description {
+  flex-grow: 1;
+  margin: 0.5rem 0;
+}
+
+.text-section .buttons {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.text-section .buttons button {
+  background-color: #BC5561;
+  border: none;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-right: 1rem;
+}
+
+.text-section .buttons img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-left: 1rem;
+}
+
+/* ARTICLES SECTION (Grid) */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.card {
+  border-radius: 20px;
+  background-color: #FCB9B2;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+ 
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* MEMBERSHIP SECTION */
+.membership {
+  background-color: #B23A48;
+  color: #fff;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.membership h2 {
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+}
+
+.join-btn {
+  background-color: #BC5561;
+  border: none;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 1rem;
+}
+
+.membership-links {
+  margin-top: 1rem;
+}
+
+.membership-links a {
+  display: inline-block;
+  margin: 0 0.5rem;
+  color: #fff;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.membership-links a:hover {
+  border-color: #fff;
+}
+
+.membership-subtext {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.membership-logo {
+  margin-top: 1rem;
+  width: 80px;
+}
+
+/* FOOTER */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+footer p {
+  margin: 0.5rem 0 0;
+}
+
+/* SLIDESHOW CONTROLS */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 1rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.125rem;
+  background: rgba(0,0,0,0.5);
+  border: none;
+  border-radius: 3px;
+}
+
+.prev {
+  left: 1rem;
+}
+
+.next {
+  right: 1rem;
+}
+
+.prev:hover,
+.next:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+/* Dot Indicators */
+.dot-container {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.dot {
+  cursor: pointer;
+  height: 0.75rem;
+  width: 0.75rem;
+  margin: 0 0.25rem;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active,
+.dot:hover {
+  background-color: #717171;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
     text-align: center;
   }
-  
-  
-  /* The dots/bullets/indicators */
-  .dot {
-    cursor: pointer;
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
+  nav ul {
+    flex-direction: column;
+    margin: 1rem 0;
   }
-  
-  .active, .dot:hover {
-    background-color: #717171;
+  nav ul li {
+    margin: 0.5rem 0;
   }
-  
-  /* Fading animation */
-  .fade {
-    animation-name: fade;
-    animation-duration: 1.5s;
+  .nav-icons {
+    margin-top: 1rem;
   }
-  
-  @keyframes fade {
-    from {opacity: .4}
-    to {opacity: 1}
+  .mySlides {
+    flex-direction: column;
   }
+  .imagecontainer,
+  .text-section {
+    width: 90%;
+    max-width: 100%;
+    margin: 0.5rem auto;
+  }
+}
