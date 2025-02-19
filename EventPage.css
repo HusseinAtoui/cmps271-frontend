@@ -1,70 +1,105 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #f5e8bc; /*#C7D2AB*/
+    font-family: "Times New Roman";
+    background-color: #faefe1; /*#C7D2AB*/
 } 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-*{
-    font-family: 'Press Start 2P', cursive;
-}
+
 /* NAVIGATION (Header, Mini, Footer) */
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  /* Add padding for better visual appearance */
+  border-radius: 20px;
+ 
+  /* Make the container's corners rounded */
+}
+
+.search-container input {
+  font-size: 16px;
+  /* Match the navbar background color */
+  outline: none;
+  border-radius: 15px;
+  width: 100%;
+  /* Adjust the width as per your preference */
+  background-color: #faefe1;
+  color: #7d0c0e;
+  border: white;
+  padding: 6px; 
+  font-family: "Times New Roman";
+}
+
+.search-container input:focus {
+  border-color: #f0c5a4;
+  /* Change border color when the input is focused */
+}
+
+.login-btn {
+  background-color: #faefe1;
+  border-color: #f0c5a4;
+  border-radius: 15px;
+  padding: 6px;
+  border: white;
+  font-size: 16px;
+  width: 10%;
+  font-weight: bold;
+  color: #7D0C0E;
+  font-family: "Times New Roman";
+}
+
+
 .navbar {
-    display: flex;
-    height:100px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 30px;
-    background-color: #6E1313;
-    color: #fff;
-    width: 100%;
-    
-  }
-  header{
-    width: 100%;
-  }
-  /*logo*/
-  .logo{
-      height: 90px;
-      width: 90px;
-  }
-  nav ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-  }
-  
-  nav ul li {
-    margin-right: 20px;
-  }
-  
-  nav ul li a {
-    font-weight: bold;
-    color: #fff;
-  }
-  
-  .nav-icons {
-    display: flex;
-    align-items: center;
-  }
-  
-  .nav-icons input {
-    padding: 5px;
-    border: none;
-    border-radius: 3px;
-    margin-right: 10px;
-  }
-  
-  /* Buttons in nav */
-  .login-btn, .submit-btn {
-    background-color: #420000;
-    border: none;
-    color: #fff;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 3px;
-    margin-right: 5px;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #7d0c0e;
+  padding: 15px 50px;
+  height: 80px;
+}
+
+
+.logo img {
+  height: 70px;
+  /* Adjust this value for height */
+  width: auto;
+  /* Let the width adjust proportionally */
+  background-color: #faefe1;
+  padding: 2px;
+  margin-left: 20px;
+  border-radius: 5px;
+}
+
+.images {
+
+  width: 40%;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #faefe1;
+  font-size: 18px;
+  text-transform: lowercase;
+  transition: 0.3s;
+}
+
+.nav-links a.active {
+  border-bottom: 2px solid #faefe1;
+  padding-bottom: 3px;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
 #Allevents{
     margin: 0 auto;
     height: 100%;
