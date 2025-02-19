@@ -31,6 +31,12 @@ body {
 .search-container input:focus {
     border-color: #f0c5a4; /* Change border color when the input is focused */
 }
+.login-btn{
+    background-color: #faefe1;
+    border-color: #f0c5a4;
+    border-radius:20px;
+   
+}
 
 
 .navbar {
