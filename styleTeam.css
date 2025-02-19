@@ -3,10 +3,6 @@
     font-family: 'Times New Roman', Times, serif;
 }
 
-body {
-    background-color: #f5e8bc;
-}
-
 .login-btn {
     background-color: #faefe1;
     border-color: #f0c5a4;
@@ -34,6 +30,7 @@ body {
     font-size: 18px;
     border: 2px solid black;
     padding: 10px;
+    font-weight: bold;
 }
 
 .team-images {
@@ -84,7 +81,7 @@ h4 {
 
 .team-card {
     width: 200px;
-    background-color: #420000;
+    background-color: #3f0808;
     border: 2px solid black;
     border-radius: 10px;
     overflow: hidden;
@@ -134,8 +131,7 @@ h1 {
     padding: 40px 30px;
     width: 100%;
 }
-
-
+ 
 .membership-links {
     margin-top: 20px;
 }
@@ -235,7 +231,6 @@ footer {
     width: 300px;
     padding: 10px;
     border: none;
-
     font-size: 16px;
     color: #7D0D0D;
     background-color: #FAEDE1;
