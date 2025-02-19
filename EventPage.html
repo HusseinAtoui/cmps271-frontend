@@ -7,124 +7,56 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
     </head>
+    <header>
+        <div class="navbar">
+          <img src="logo.png" alt="Logo" class="logo">
+          <nav>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Submissions</a></li>
+              <li><a href="#">Events</a></li>
+              <li><a href="#">Team</a></li>
+              <li><a href="#">About Us</a></li>
+            </ul>
+          </nav>
+          <div class="nav-icons">
+            <input type="text" placeholder="Search">
+            <button class="login-btn">Login</button>
+            <button class="submit-btn">Submit</button>
+          </div>
+        </div>
+      </header>
+      <body>
     <body>
-            <div class="navbar">
-                <h1>nav bar</h1>
-            </div>
+            
             <div id="Allevents">
                 <div id="currentEvents" >
                     
                 </div>
                 <div id="upComingEvents">
-                    <h1>coming soon</h1>
                     <div id="tempcal">
                         <!-- here should be the calender -->
                     </div>
+                    <h1>coming soon</h1>
                     <div id="porfile">
                         <img src="profile.jpg" alt="profile" class=" pic">
                     </div>
                 </div>
             </div>
-            <div id="footer">
 
-            </div>
-        
+            <section class="membership">
+                <h2>ᴊᴏɪɴ ᴛᴏ ʙᴇᴄᴏᴍᴇ ᴀ ᴍᴇᴍʙᴇʀ ᴏꜰ ᴏᴜʀ<br>ᴘʜɪʟᴏꜱᴏᴘʜʏ ᴊᴏᴜʀɴᴀʟ</h2>
+                <button class="join-btn">Sub</button>
+                <div class="membership-links">
+                  <a href="#">ref to all pages here</a>
+                  <a href="#">ref to all pages here</a>
+                </div>
+                <p class="membership-subtext">sub Text</p>
+                <img src="logo.png" alt="Logo" class="membership-logo">
+              </section>
+            
+            <script src="EventPage.js"></script>
     </body>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-    <script>
-        const events = [
-            {
-                image: "fruit.jpg",
-                title: "Event 1",
-                description: "This is the description of Event 1.",
-                date: "2023-10-01"
-            },
-            {
-                image: "muisc.jpg",
-                title: "Event 2",
-                description: "This is the description of Event 2.",
-                date: "2023-10-05"
-            },
-            {
-                image: "store.jpg",
-                title: "Event 3",
-                description: "This is the description of Event 3.",
-                date: "2023-10-10"
-            },
-            {
-                image: "kisses.jpg",
-                title: "Event 4",
-                description: "This is the description of Event 4.",
-                date: "2023-10-15"
-            }
-        ];
-
-        function makeEvent(events) {
-    const allEvents = document.getElementById("currentEvents");
-
-    allEvents.innerHTML = ''; 
-
-    events.forEach(event => {
-    
-        const eventElement = document.createElement('div');
-        eventElement.classList.add('Event');
-
-        const imageElement = document.createElement('img');
-        imageElement.src = event.image; 
-        imageElement.alt = event.title; 
-        imageElement.classList.add('decorations'); 
-        eventElement.appendChild(imageElement);
-
-        const textContainer = document.createElement('div');
-        textContainer.classList.add('text-container');
-
-        const dateElement = document.createElement('h5');
-        dateElement.textContent = `Date: ${event.date}`; 
-        textContainer.appendChild(dateElement);
-        
-        const titleElement = document.createElement('h3');
-        titleElement.textContent = event.title; 
-        textContainer.appendChild(titleElement);
-
-        const descriptionElement = document.createElement('p');
-        descriptionElement.textContent = event.description; 
-        textContainer.appendChild(descriptionElement);
-        
-        eventElement.appendChild(textContainer);
-
-        allEvents.appendChild(eventElement);
-    });
-}
-
-
-makeEvent(events);
-        
-        document.addEventListener('DOMContentLoaded', function() {
-                
-                var calendarEl = document.getElementById('tempcal');
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth', 
-                    headerToolbar: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                    },
-                    events: [
-                        {
-                            title: 'Event 1',
-                            start: '2023-10-01'
-                        },
-                        {
-                            title: 'Event 2',
-                            start: '2023-10-05',
-                            end: '2023-10-07'
-                        }
-                    ]
-                });
-                calendar.render(); 
-            }); 
-           
-    </script>
-        
 </html>
