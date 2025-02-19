@@ -289,38 +289,21 @@ textarea {
   margin-bottom: 10px;
 }
 
-.phone-container {
-  border: 1px;
-  padding: 20px;
+.phone-container, .email-container, .location-container {
+  flex: 1; /* This will make all containers grow equally */
+  padding: 5px; /* Consistent padding */
   background-color: #730E0E;
-  border-radius: 8px;
+  border-radius: 8px; /* Uniform border radius */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   color: white;
-}
-
-.email-container {
-  border: 1px;
-  padding: 20px;
-  background-color: #730E0E;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  color: white;
-}
-
-.location-container {
-  border: 1px;
-  border-radius: 15%;
-  padding: 20px;
-  width: 25%;
-  background-color: #730E0E;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  color: white;
+  margin: 10px; 
 }
 
 .details-container {
   justify-content: space-evenly;
   display: flex;
   margin-top: 5%;
+  padding: 0 9%; 
 }
 
 .google-map {
