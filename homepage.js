@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
           title: 'Article Title 1',
           description: 'This is a dummy description for article 1.',
           author: 'Spring Anderson',
-          authorProfile: 'image.png'
+          authorProfile: 'profile.jpeg'
         },
         {
             id: 2,
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: 'Article Title 1',
             description: 'This is a dummy description for article 1.',
             author: 'Spring Anderson',
-            authorProfile: 'image.png'
+            authorProfile: 'profile.jpeg'
           }, {
             id: 3,
             image: 'image6.jpg',
@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: 'Article Title 1',
             description: 'This is a dummy description for article 1.',
             author: 'Spring Anderson',
-            authorProfile: 'image.png'
+            authorProfile: 'profile.jpeg'
           },
         {
           id: 4,
@@ -209,8 +209,8 @@ document.addEventListener("DOMContentLoaded", () => {
           details: 'February 6, 2025 | 2 min read',
           title: 'Article Title 2',
           description: 'This is a dummy description for article 2.',
-          author: 'John Doe',
-          authorProfile: 'image.png'
+          author: 'Spring Anderson',
+          authorProfile: 'profile.jpeg'
         }
       ];
     }
