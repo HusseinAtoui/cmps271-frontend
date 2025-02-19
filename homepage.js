@@ -78,26 +78,26 @@ document.addEventListener("DOMContentLoaded", () => {
       eventsData = [
         {
           id: 1,
-          image: 'image.png',
+          image: 'image1.jpg',
           details: 'February 5, 2025 | 3 min read',
           title: 'Event Title 1',
           description: 'This is a dummy description for event 1.'
         },{
-            id: 1,
-            image: 'image.png',
+            id: 2,
+            image: 'image2.jpg',
             details: 'February 5, 2025 | 3 min read',
             title: 'Event Title 1',
             description: 'This is a dummy description for event 1.'
           },{
-            id: 1,
-            image: 'image.png',
+            id: 3,
+            image: 'image3.jpg',
             details: 'February 5, 2025 | 3 min read',
             title: 'Event Title 1',
             description: 'This is a dummy description for event 1.'
           },
         {
-          id: 2,
-          image: 'image.png',
+          id: 4,
+          image: 'image4.jpg',
           details: 'February 6, 2025 | 4 min read',
           title: 'Event Title 2',
           description: 'This is a dummy description for event 2.'
@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
       articlesData = [
         {
           id: 1,
-          image: 'image.png',
+          image: 'image5.jpg',
           details: 'February 5, 2025 | 3 min read',
           title: 'Article Title 1',
           description: 'This is a dummy description for article 1.',
@@ -187,16 +187,16 @@ document.addEventListener("DOMContentLoaded", () => {
           authorProfile: 'image.png'
         },
         {
-            id: 1,
-            image: 'image.png',
+            id: 2,
+            image: 'image6.jpg',
             details: 'February 5, 2025 | 3 min read',
             title: 'Article Title 1',
             description: 'This is a dummy description for article 1.',
             author: 'Spring Anderson',
             authorProfile: 'image.png'
           }, {
-            id: 1,
-            image: 'image.png',
+            id: 3,
+            image: 'image6.jpg',
             details: 'February 5, 2025 | 3 min read',
             title: 'Article Title 1',
             description: 'This is a dummy description for article 1.',
@@ -204,8 +204,8 @@ document.addEventListener("DOMContentLoaded", () => {
             authorProfile: 'image.png'
           },
         {
-          id: 2,
-          image: 'image.png',
+          id: 4,
+          image: 'image7.jpg',
           details: 'February 6, 2025 | 2 min read',
           title: 'Article Title 2',
           description: 'This is a dummy description for article 2.',
