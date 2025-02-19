@@ -17,6 +17,7 @@ body {
 }
 
 .search-container input {
+
     font-size: 16px;
     /* Match the navbar background color */
     outline: none;
@@ -82,6 +83,11 @@ body {
     display: flex;
     align-items: center;
     gap: 25px;
+} 
+.active{
+    text-decoration: underline;
+    color: rgb(115, 23, 23);
+
 }
 
 .nav-links a {
@@ -109,7 +115,7 @@ footer {
     color: #FAEDE1;
     font-family: "Times New Roman", serif;
     margin-top: 50px;
-    height: 80%;
+
     /* No fixed height, so the footer can resize based on content */
 }
 
@@ -190,6 +196,8 @@ footer {
 .mailing-list button:hover {
     background-color: #F0C5A4;
 }
+
+
 
 
 /* Dashboard Header */
