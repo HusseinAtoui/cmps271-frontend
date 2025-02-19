@@ -172,8 +172,8 @@ body {
   max-width: 700px;
   width: 100%;
 
-  margin-left: 5%;
-  margin-top: 5%;
+  margin-left: 10%;
+ margin-top: 5%;
 
 }
 
@@ -223,9 +223,9 @@ textarea {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin-top: 10%;
   margin-right: 10%;
-  margin: 5%;
+  margin-top: 5%;
+  margin-left: 5%;
 
 }
 
@@ -570,7 +570,7 @@ footer {
     color: #FAEDE1;
     font-family: "Times New Roman", serif;
 
-   height: 500px;
+   
     /* No fixed height, so the footer can resize based on content */
 }
 
