@@ -4,6 +4,8 @@ body {
   padding: 0;
   font-family: "Times New Roman";
   background-color: #faefe1;
+  height:100vh;
+  overflow: hidden;
   /*#C7D2AB*/
 }.active{
   text-decoration: underline;
@@ -61,8 +63,9 @@ body {
   align-items: center;
   justify-content: space-between;
   background-color: #7d0c0e;
-  padding: 15px 50px;
-  height: 80px;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 110px;
 }
 
 
@@ -108,8 +111,9 @@ body {
 #Allevents {
   margin: 0 auto;
   height: 100%;
-  padding-top: 40px;
+  
   display: flex;
+  flex-direction: row-reverse;
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -120,6 +124,7 @@ body {
   z-index: 999;
   right: 20px;
   border-top: 2px solid #420000;
+  padding-right: 50px;
 
 }
 
@@ -137,9 +142,11 @@ body {
 
 #currentEvents {
   overflow: scroll;
-  height: 100vh;
+  height: 60vh;
   border-top: 2px solid #420000;
-
+  width: 70%;
+overflow-x: hidden;
+justify-items: center;
 }
 
 .Event {
@@ -238,7 +245,7 @@ footer {
   text-align: center;
   color: #FAEDE1;
   font-family: "Times New Roman", serif;
-  margin-top: 50px;
+
   height: 80%;
   /* No fixed height, so the footer can resize based on content */
 }
