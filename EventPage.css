@@ -2,25 +2,73 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: #f5e8bc; /*#C7D2AB*/
-}
-.navbar{
-    width: 100%;
-    background-color: #420000;/*#9DC183 SAGE GREEN */ 
-    position: fixed;
-    height: 100px;
-    z-index: 1000; 
-}
+} 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-.navbar h1{
-    text-align: center;
-    color:#f5e8bc;
+*{
     font-family: 'Press Start 2P', cursive;
 }
-
+/* NAVIGATION (Header, Mini, Footer) */
+.navbar {
+    display: flex;
+    height:100px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: #6E1313;
+    color: #fff;
+    width: 100%;
+    
+  }
+  header{
+    width: 100%;
+  }
+  /*logo*/
+  .logo{
+      height: 90px;
+      width: 90px;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav ul li {
+    margin-right: 20px;
+  }
+  
+  nav ul li a {
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .nav-icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-icons input {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    margin-right: 10px;
+  }
+  
+  /* Buttons in nav */
+  .login-btn, .submit-btn {
+    background-color: #420000;
+    border: none;
+    color: #fff;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-right: 5px;
+  }
 #Allevents{
     margin: 0 auto;
     height: 100%;
-    padding-top: 120px; 
+    padding-top: 40px; 
     display: flex; 
     padding-left: 20px; 
     padding-right: 20px;
@@ -30,7 +78,8 @@ html, body {
    /* position: fixed; */
     z-index: 999;
     right: 20px; 
-    
+    border-top: 2px solid #420000;
+
 }
 #upComingEvents h1{
     text-align: center;
@@ -41,6 +90,12 @@ html, body {
     height: 150px;
     border: 2px dashed #6E1313;
     border-radius: 20px;
+}
+#currentEvents{
+  overflow: scroll;
+  height: 100vh;
+  border-top: 2px solid #420000;
+
 }
 .Event{ /*if the width and hight are changed then change also the photos*/
     display: flex; 
@@ -59,8 +114,8 @@ html, body {
 }
 .decorations{ /*to change the size of the photo width and height*/
     border-radius: 20px;
-    width: 450px; 
-    height: 350px;
+    width: 50%; 
+    height: 100%;
 }
 #tempcal{
     width: 400px;
@@ -78,8 +133,51 @@ html, body {
     padding-left: 20px;
 }
 
-#footer{
+.membership {
+    background-color: #6E1313;
+    color: #fff;
+    text-align: center;
+    padding: 40px 30px;
     width: 100%;
-    height: 500px;
+  }
+  
+  .membership h2 {
+    margin-bottom: 20px;
+  }
+  
+  .join-btn {
     background-color: #420000;
-} 
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 1rem;
+  }
+  
+  .membership-links {
+    margin-top: 20px;
+  }
+  
+  .membership-links a {
+    display: inline-block;
+    margin: 0 10px;
+    color: #fff;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  
+  .membership-links a:hover {
+    border-color: #fff;
+  }
+  
+  .membership-subtext {
+    margin-top: 20px;
+    font-size: 1rem;
+  }
+  
+  .membership-logo {
+    margin-top: 20px;
+    width: 80px;
+  }
+  
