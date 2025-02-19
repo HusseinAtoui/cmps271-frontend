@@ -7,15 +7,26 @@
         <link rel="stylesheet" href="styleContact.css">
     </head>
     <body>
-        <div class="nav-bar">
-            <nav>
-                <ul>
-                    <li>
-                        nav <!-- nav bar placeholder -->
-                    </li>
-                </ul>
-             </nav>
+          <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Afterthoughts">
         </div>
+        <div class="nav-links">
+            <a href="homepage.html" >Home</a>
+            <a href="#">Submissions</a>
+            <a href="EventPage.html">Events</a>
+            <a href="teamPage.html">Team</a>
+            <a href="#">About Us</a>
+            <a href="#"><strong>SUBMIT</strong></a>
+  
+            <div class="search-container">
+              <input type="text" placeholder="Search..." aria-label="Search">
+          </div>
+  
+           
+        </div>
+    </nav>
         <div class="head-text">
         <h1 id="title">Contact Us</h1>
             <p id="text">some text here</p>
@@ -56,7 +67,7 @@
                 </div>
                 <div class="checkbox">
                     <input type="checkbox" id="agree-box" name="agree-box" required>
-                    <label for="agree">I agree to recieve emails and updates from (website name)</label>
+                    <label for="agree" class="agree">I agree to recieve emails and updates from AfterThoughts</label>
                 </div>
                 <button type="submit" class="Subscribe-button">Subscribe</button>
             </form>
@@ -82,6 +93,40 @@
         <div class="google-map">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7634.7527323134755!2d35.47785730378264!3d33.8968218703534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151f17283e7e3ced%3A0x740bcfc330ca9eb0!2sHamra%2C%20Beirut!5e0!3m2!1sen!2slb!4v1739803513150!5m2!1sen!2slb" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
        </div>
+       <section class="membership">
+        <h2>ᴊᴏɪɴ ᴛᴏ ʙᴇᴄᴏᴍᴇ ᴀ ᴍᴇᴍʙᴇʀ ᴏꜰ ᴏᴜʀ<br>ᴘʜɪʟᴏꜱᴏᴘʜʏ ᴊᴏᴜʀɴᴀʟ</h2>
+        <button class="join-btn">Sub</button>
+        <div class="membership-links">
+          <a href="#">ref to all pages here</a>
+          <a href="#">ref to all pages here</a>
+        </div>
+        <p class="membership-subtext">sub Text</p>
+        <img src="logo.png" alt="Logo" class="membership-logo">
+      </section>
+ <!-- FOOTER WITH NAVIGATION -->
+ <footer>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="logofooter">
+          <img src="logo.png" alt="Logo">
+        </div>
+      </div>
+      <div class="footer-right">
+        <div class="join">
+            <a href="#">Become a member of The Philosophy Journal </a>
+        </div>
+      
+        <div class="mailing-list">
+            <p><a href="#">join the mailing list to stay up to date:</a></p>
+            <input type="email" placeholder="Email Address">
+            <button>SIGN UP</button>
+        </div> 
+      </div>
+      <div class="footer-info">
+          <p>© Afterthoughts </p>
+      </div>
+    </div>
+  </footer> 
     </body>
     <script src="scriptContact.js"></script>
 </html>
