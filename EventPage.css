@@ -141,7 +141,7 @@ body {
   height: 60vh;
   border-top: 2px solid #420000;
   width: 70%;
-
+overflow-x: hidden;
 justify-items: center;
 }
 
