@@ -5,8 +5,6 @@ body {
     background-color: #faefe1;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
 /* Search Bar Styles */
 .search-container {
     display: flex;
@@ -30,7 +28,6 @@ body {
     color: #7d0c0e;
     border: white;
     padding: 6px;
-    font-family: 'Press Start 2P', cursive;
 }
 
 .search-container input:focus {
@@ -47,7 +44,7 @@ body {
     font-size: 16px;
     width: 10%;
     font-weight: bold;
-    font-family: 'Press Start 2P', cursive;
+    color: #7D0C0E;
 }
 
 
@@ -58,7 +55,6 @@ body {
     background-color: #7d0c0e;
     padding: 15px 50px;
     height: 80px;
-    font-family: 'Press Start 2P', cursive;
 }
 
 
@@ -204,6 +200,7 @@ footer {
     text-align: right;
     margin-left: 0;
 }
+
 .logofooter img {
     height: 200px;
     width: auto;
