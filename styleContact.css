@@ -3,6 +3,46 @@
   font-family: "Times New Roman";
 }
 
+/* Search Bar Styles */
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  /* Add padding for better visual appearance */
+  border-radius: 20px;
+  /* Make the container's corners rounded */
+}
+
+.search-container input {
+
+  font-size: 16px;
+  /* Match the navbar background color */
+  outline: none;
+  border-radius: 15px;
+  width: 100%;
+  /* Adjust the width as per your preference */
+  background-color: #faefe1;
+  color: #7d0c0e;
+  border: white;
+  padding: 6px;
+}.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #7d0c0e;
+  padding: 15px 50px;
+  height: 80px;
+}
+
+
+.search-container input:focus {
+  border-color: #f0c5a4;
+  /* Change border color when the input is focused */
+}
+
+
+
 .head-text {
   text-align: center;
   font-size: 20px;
@@ -10,6 +50,7 @@
   background-image: url("contact-back.png");
   color: white;
 }
+
 
 #title {
   font-size: 70px;
@@ -91,8 +132,17 @@ nav ul li a {
   margin-right: 10px;
 }
 
-/* Buttons in nav */
-.login-btn,
+.login-btn{
+  background-color: #faefe1;
+  border-color: #f0c5a4;
+  border-radius: 15px;
+  padding: 6px;
+  border: white;
+  font-size: 16px;
+  width: 10%;
+  font-weight: bold;
+  color: #7D0C0E;
+}
 .submit-btn {
   background-color: #420000;
   border: none;
