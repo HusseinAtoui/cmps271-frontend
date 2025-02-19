@@ -26,6 +26,8 @@ body {
     /* Adjust the width as per your preference */
     background-color: #faefe1;
     color: #7d0c0e;
+    border: white;
+    padding: 6px;
 }
 
 .search-container input:focus {
@@ -36,8 +38,13 @@ body {
 .login-btn {
     background-color: #faefe1;
     border-color: #f0c5a4;
-    border-radius:20px;
-   
+    border-radius: 15px;
+    padding: 6px;
+    border: white;
+    font-size: 16px;
+    width: 10%;
+    font-weight: bold;
+    color: #7D0C0E;
 }
 
 
@@ -193,6 +200,7 @@ footer {
     text-align: right;
     margin-left: 0;
 }
+
 .logofooter img {
     height: 200px;
     width: auto;
