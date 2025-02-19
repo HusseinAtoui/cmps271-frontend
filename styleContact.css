@@ -160,6 +160,7 @@ label {
     margin-top: 10%;
     margin-right: 10%;
     margin: 5%;
+    
 }
 .newsletter-container input{
     width:100%;
@@ -168,6 +169,7 @@ label {
     border-radius: 10px;
     box-sizing: border-box;
     font-size: 1rem;
+
 }
 .Subscribe-button{
     background-color: #871b1b;
