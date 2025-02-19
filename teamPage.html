@@ -8,19 +8,29 @@
     </head>
    <body>
      <header>
-     <div class="nav">
-        <nav>
-            <ul>
-                <li>
-                    <!-- nav bar here -->
-                     <p>nav bar</p>
-                </li>
-            </ul>
-        </nav>
-    </div>
-        <h1>Our Team Members!</h1>
+      <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="logo">
+          <img src="logo.png" alt="Afterthoughts">
+      </div>
+      <div class="nav-links">
+          <a href="homepage.html" >Home</a>
+          <a href="#">Submissions</a>
+          <a href="EventPage.html">Events</a>
+          <a href="teamPage.html">Team</a>
+          <a href="#">About Us</a>
+          <a href="#"><strong>SUBMIT</strong></a>
+
+          <div class="search-container">
+            <input type="text" placeholder="Search..." aria-label="Search">
+        </div>
+
+         
+      </div>
+  </nav>
+        <h1>Our Team Members</h1>
         <h4>Meet the people behind the scenes</h4>
-         <img src="teentitans.jpg" alt="group-pic" class="group-pic">
+         <img src="group-pic.png" alt="group-pic" class="group-pic">
          <p class="caption"> text describing us here</p>
      </header>
      <main>
@@ -29,10 +39,43 @@
       </div>
      </main>
      <script src="scriptTeam.js"></script>
-  <div class="footer">
+     <section class="membership">
+      <h2>ᴊᴏɪɴ ᴛᴏ ʙᴇᴄᴏᴍᴇ ᴀ ᴍᴇᴍʙᴇʀ ᴏꜰ ᴏᴜʀ<br>ᴘʜɪʟᴏꜱᴏᴘʜʏ ᴊᴏᴜʀɴᴀʟ</h2>
+      <button class="join-btn">Sub</button>
+      <div class="membership-links">
+        <a href="#">ref to all pages here</a>
+        <a href="#">ref to all pages here</a>
+      </div>
+      <p class="membership-subtext">sub Text</p>
+      <img src="logo.png" alt="Logo" class="membership-logo">
+    </section>
+  
+  
+    <!-- FOOTER WITH NAVIGATION -->
     <footer>
+      <div class="footer-container">
+        <div class="footer-left">
+          <div class="logofooter">
+            <img src="logo.png" alt="Logo">
+          </div>
+        </div>
+        <div class="footer-right">
+          <div class="join">
+              <a href="#">Become a member of The Philosophy Journal </a>
+          </div>
+        
+          <div class="mailing-list">
+              <p><a href="#">join the mailing list to stay up to date:</a></p>
+              <input type="email" placeholder="Email Address">
+              <button>SIGN UP</button>
+          </div> 
+        </div>
+        <div class="footer-info">
+            <p>© Afterthoughts </p>
+        </div>
+      </div>
+    </footer>    
 
-    </footer>
-  </div>
+  <script src="scriptTeam.js"></script>
 </body>
 </html>
