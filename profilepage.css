@@ -1,8 +1,7 @@
-
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Georgia', serif;
+    font-family: "Times New Roman", serif;
     background-color: #faefe1;
 }
 
@@ -11,27 +10,30 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px; /* Add padding for better visual appearance */
-    border-radius: 20px; /* Make the container's corners rounded */
-
+    padding: 5px;
+    /* Add padding for better visual appearance */
+    border-radius: 20px;
+    /* Make the container's corners rounded */
 }
 
 .search-container input {
- 
+
     font-size: 16px;
-     /* Match the navbar background color */
-    border-radius: 5px;
+    /* Match the navbar background color */
     outline: none;
-    border-radius: 20px; 
-    width: 100%; /* Adjust the width as per your preference */
+    border-radius: 15px;
+    width: 100%;
+    /* Adjust the width as per your preference */
     background-color: #faefe1;
     color: #7d0c0e;
 }
 
 .search-container input:focus {
-    border-color: #f0c5a4; /* Change border color when the input is focused */
+    border-color: #f0c5a4;
+    /* Change border color when the input is focused */
 }
-.login-btn{
+
+.login-btn {
     background-color: #faefe1;
     border-color: #f0c5a4;
     border-radius:20px;
@@ -50,8 +52,10 @@ body {
 
 
 .logo img {
-    height: 70px;  /* Adjust this value for height */
-    width: auto;  /* Let the width adjust proportionally */
+    height: 70px;
+    /* Adjust this value for height */
+    width: auto;
+    /* Let the width adjust proportionally */
     background-color: #faefe1;
     padding: 2px;
     margin-left: 20px;
@@ -60,7 +64,7 @@ body {
 
 
 
-.images{
+.images {
 
     width: 40%;
 }
@@ -136,7 +140,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    height: 5%;   
+    height: 5%;
     margin: 0 auto;
 }
 
@@ -146,9 +150,10 @@ body {
     background-color: rgb(237, 213, 204);
     padding: 15px;
     border-radius: 10px;
- 
- 
+
+
 }
+
 /*Guys this is the footer that we will go with most probably */
 /* Footer */
 footer {
@@ -169,15 +174,18 @@ footer {
     align-items: center;
     max-width: 900px;
     margin: 0 auto;
-    gap: 20px; /* spacing between columns */
+    gap: 20px;
+    /* spacing between columns */
 }
 
 .footer-left,
 .footer-right,
 .footer-info {
     flex: 1;
-    min-width: 200px; /* ensures columns don’t become too narrow */
-    margin-bottom: 20px; /* spacing if needed */
+    min-width: 200px;
+    /* ensures columns don’t become too narrow */
+    margin-bottom: 20px;
+    /* spacing if needed */
 }
 
 /* Remove the hard-coded margin-left so it can respond to smaller screens */
@@ -185,6 +193,14 @@ footer {
     text-align: right;
     margin-left: 0;
 }
+.logofooter img {
+    height: 200px;
+    width: auto;
+    background-color: #faefe1;
+    padding: 5px;
+    border-radius: 5px;
+}
+
 
 /* Links inside footer */
 .join a,
@@ -225,14 +241,6 @@ footer {
 
 .mailing-list button:hover {
     background-color: #F0C5A4;
-}
-
-.logofooter img {
-    height: 200px;
-    width: auto;
-    background-color: #faefe1;
-    padding: 5px;
-    border-radius: 5px;
 }
 
 
