@@ -93,21 +93,8 @@ header h1,h4{
     font-style: italic;
     color:cornsilk;
 }
-.navbar {
-    display: flex;
-   
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 30px;
-    background-color: #420000;
-    color: #fff;
-    width: 100%;
-    img{
-        height: 90px;
-        width: 90px;
-        margin-left: 10px;
-      }
-  }
+
+  
   header{
     width: 100%;
   }
@@ -165,10 +152,7 @@ header h1,h4{
     width: 100%;
   }
   
-  .membership h2 {
-    margin-bottom: 20px;
-  }
-  
+
   .join-btn {
     background-color: #420000;
     border: none;
