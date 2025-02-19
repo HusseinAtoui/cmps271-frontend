@@ -32,6 +32,12 @@
     background-color: #B23A48;
     color: #fff;
     width: 100%;
+    img{
+      border-radius: 50%;
+      height: 50px;
+      width: 50px;
+      margin-left: 10px;
+    }
   }
   header{
     width: 100%;
@@ -79,7 +85,7 @@
   
   /* HERO SECTION */
   .hero {
-    background-color: #FCB9B2;
+    background-color: #FFE2D5;
     text-align: center;
     padding: 50px 20px;
   }
@@ -147,8 +153,8 @@
     background-color: #FCB9B2;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    width: 900px;
-    height: 525px;
+    width: 100%;
+    height:100%;
     place-items: center;
     display: flex;
 
@@ -160,10 +166,15 @@
   .imagecontainer{
     height: 475px;
     width: 450px;
+    border-radius: 20px;
     background-color: #D99C96;
    margin-left: 20px;
    margin-right: 20px;
-    border-radius: 20px;
+    img{
+      height: 475px;
+      width: 450px;
+      border-radius: 20px;
+    }
   }
   .text-section{
     display: flex;
@@ -311,14 +322,46 @@
   }
   /*event side*/
   .slideshow-container {
-    max-width: 1000px;
-    position: relative;
-    margin: auto;
+   width: 100%;
+  
   }
   
   /* Hide the images by default */
   .mySlides {
     display: none;
+    flex-direction: row;
+    height: 550px;
+    width:100%;
+    background-color: #FCB9B2;
+   justify-content: center;
+   .details{
+    align-self: center;
+    justify-self: start;
+    font-size: x-large;
+    color: white;
+    font: bolder;
+   }
+  
+    button{
+      background-color:#BC5561 ;
+      height: 50px;
+      justify-self: last baseline;
+      border-radius: 20px;
+      color: white;
+      margin-right: 10px;
+    }
+    .imagecontainer{
+      margin-top: 35px;
+      margin-left: 35px;
+    }
+
+img{
+  border-radius: 20px;
+  height: 475px;
+    width: 450px;
+}
+
+
   }
   
   /* Next & previous buttons */
@@ -327,7 +370,7 @@
     position: absolute;
     top: 50%;
     width: auto;
-    margin-top: -22px;
+    margin-top: 130px;
     padding: 16px;
     color: white;
     font-weight: bold;
@@ -359,14 +402,6 @@
     text-align: center;
   }
   
-  /* Number text (1/3 etc) */
-  .numbertext {
-    color: #f2f2f2;
-    font-size: 12px;
-    padding: 8px 12px;
-    position: absolute;
-    top: 0;
-  }
   
   /* The dots/bullets/indicators */
   .dot {

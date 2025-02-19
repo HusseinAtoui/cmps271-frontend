@@ -1,0 +1,105 @@
+body{
+    background-color: #E6EBFE;
+}
+.group-pic{
+    width: 50%;
+    height: 400px;
+    margin: auto;
+    padding: 10px;
+    display: block;
+    border-radius: 15%;
+}
+.caption{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 18px;
+    border: 2px solid black;
+    padding: 10px;
+}
+.team-images{
+    width: 200px;
+    height: auto;
+}
+header h1,h4{
+    text-align: center;
+}
+.team-container{
+    display: flex;
+    height: 200px;
+    align-items: stretch;
+    justify-content: space-between;
+
+}
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  
+    grid-template-rows: auto auto; 
+    justify-items: center;
+    align-items: center; 
+    gap: 20px;
+    width: 80%;
+}
+.last-row {
+    /*grid-column: span 2;
+    justify-self: center;
+    flex-direction: row;
+    border: 50px;
+    justify-content: space-between;
+    align-items: stretch; */
+    width: 200px;
+    background: rgb(182, 216, 233);
+    border: 2px solid black;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    height:300px;
+    justify-content: center;
+    align-items: stretch;
+    margin: 0 auto;
+    grid-column: span 2;
+
+
+}
+.team-card {
+    width: 200px;
+    background: rgb(182, 216, 233);
+    border: 2px solid black;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    height:300px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    
+
+}
+.team-img {
+    width: 100px;
+    height: 50px;
+    object-fit: cover;
+}
+.name {
+    font-size: 16px;
+    font-weight: bold;
+}
+.quote {
+    font-size: 14px;
+    color: gray;
+    margin-top: 5px;
+    font-style: italic;
+}
+.nav{
+    background-color: cornflowerblue;
+    height: 50px;
+}
+/* Align last two cards in second row */
+.team-card:nth-child(4) {
+    grid-column: 2; /* Centered under middle column */
+}
+.team-card:nth-child(5) {
+    grid-column: 3; /* Placed in third column */
+}
+
