@@ -1,11 +1,26 @@
 * {
     box-sizing: border-box; 
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'Times New Roman', Times, serif;
   }
   @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 body{
     background-color: #f5e8bc;
 }
+
+
+.login-btn {
+    background-color: #faefe1;
+    border-color: #f0c5a4;
+    border-radius: 15px;
+    padding: 6px;
+    border: white;
+    font-size: 16px;
+    width: 10%;
+    font-weight: bold;
+    color: #7D0C0E;
+}
+
+
 .group-pic{
     width: 50%;
     height: 400px;
@@ -290,7 +305,7 @@ body {
     justify-content: space-between;
     background-color: #7d0c0e;
     padding: 15px 50px;
-    height: 80px;
+    height:112px;
 }
 
 
