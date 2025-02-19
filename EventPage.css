@@ -5,6 +5,10 @@ body {
   font-family: "Times New Roman";
   background-color: #faefe1;
   /*#C7D2AB*/
+}.active{
+  text-decoration: underline;
+  color: rgb(115, 23, 23);
+
 }
 
 /* NAVIGATION (Header, Mini, Footer) */
