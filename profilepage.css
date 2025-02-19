@@ -28,7 +28,6 @@ body {
     color: #7d0c0e;
     border: white;
     padding: 6px;
-    font-family: "Times New Roman";
 }
 
 .search-container input:focus {
@@ -46,8 +45,8 @@ body {
     width: 10%;
     font-weight: bold;
     color: #7D0C0E;
-    font-family: "Times New Roman";
 }
+
 
 .navbar {
     display: flex;
@@ -57,6 +56,7 @@ body {
     padding: 15px 50px;
     height: 80px;
 }
+
 
 .logo img {
     height: 70px;
@@ -69,10 +69,15 @@ body {
     border-radius: 5px;
 }
 
+
+
 .images {
 
     width: 40%;
 }
+
+
+
 
 .nav-links {
     display: flex;
@@ -96,11 +101,10 @@ body {
 .nav-links a:hover {
     text-decoration: underline;
 }
-
 /*Guys this is the footer that we will go with most probably */
 /* Footer */
 footer {
-    background-color: #7D0C0E;
+    background-color: #7D0D0D;
     padding: 40px;
     text-align: center;
     color: #FAEDE1;
@@ -145,6 +149,7 @@ footer {
     border-radius: 5px;
 }
 
+
 /* Links inside footer */
 .join a,
 .mailing-list p a {
@@ -185,6 +190,9 @@ footer {
 .mailing-list button:hover {
     background-color: #F0C5A4;
 }
+
+
+
 
 /* Dashboard Header */
 .dashboard-header {
@@ -241,4 +249,6 @@ footer {
     background-color: rgb(237, 213, 204);
     padding: 15px;
     border-radius: 10px;
+
+
 }
