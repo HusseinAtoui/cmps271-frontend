@@ -74,7 +74,7 @@ body {
   /* Adjust this value for height */
   width: auto;
   /* Let the width adjust proportionally */
-  background-color: #faefe1;
+ 
   padding: 2px;
   margin-left: 20px;
   border-radius: 5px;
@@ -281,7 +281,7 @@ footer {
 .logofooter img {
   height: 200px;
   width: auto;
-  background-color: #faefe1;
+
   padding: 5px;
   border-radius: 5px;
 }
