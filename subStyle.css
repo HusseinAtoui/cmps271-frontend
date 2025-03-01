@@ -93,6 +93,7 @@ body {
 }
 
 /* Search bar */
+
 .search-container-section {
     background-color: #faefe1;
     padding: 5px;
@@ -114,7 +115,7 @@ body {
     padding: 6px;
 }
 .search-container-section i {
-    margin-left: 20%;
+    margin-left: 20px;
     color: #7D0C0E;
     font-size: 1.2rem; 
 }
@@ -137,7 +138,7 @@ body {
 }
 
 .search-container-section button {
-    margin-right: 20%;
+    margin-right: 20px;
     width: 10%;
     padding: 8px; 
     background-color: #7D0C0E;
