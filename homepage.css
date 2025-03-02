@@ -16,11 +16,6 @@ body {
   width: 100%;
 }
 
-.active {
-  text-decoration: underline;
-  color: rgb(115, 23, 23);
-}
-
 /* ============================= */
 /*          Navigation           */
 /* ============================= */
@@ -60,7 +55,7 @@ body {
   padding-bottom: 3px;
 }
 
-.nav-links a:hover {
+.nav-links a:not(.active):hover {
   text-decoration: underline;
 }
 
