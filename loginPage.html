@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="loginStle.css">
+    <script src="loginScript.js"></script>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="Afterthoughts">
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="profilepage.html">Profile</a>
+            <a href="EventPage.html">Events</a>
+            <a href="teamPage.html">Team</a>
+            <a href="contact.html"> Contact </a>
+            <a href="subpage.html"><strong>SUBMIT</strong></a>
+
+
+            <div class="search-container">
+                <input type="text" placeholder="Search..." aria-label="Search">
+
+            </div>
+
+            <button class="login-btn">login</button>
+
+
+        </div>
+    </nav>
+
+    <div class="login-container">
+        <!-- Left Side: Login Form -->
+        <div class="login-form">
+            <h2>Welcome Back!</h2>
+            <form action="#" method="POST">
+                <input type="text" id="username" name="username" placeholder="username" required>
+                <input type="password" id="password" name="password" placeholder="password" required>
+
+                <div class="forgot-password">
+                    <a href="#">forgot Password?</a>
+                </div>
+
+                <button type="submit" class="login-btn2">Login</button>
+                <hr>
+            </form>
+           
+            <p class="register-text">Not a member? <a href="#">Register now</a></p>
+        </div>
+
+        <!-- Right Side: Image -->
+        <div class="login-image">
+            <img src="loginPic.jpg" alt="Login Image">
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="logofooter">
+                    <img src="logo.png" alt="Logo" />
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="join">
+                    <a href="#">Become a member of The Philosophy Journal</a>
+                </div>
+                <div class="mailing-list">
+                    <p><a href="#">Join the mailing list to stay up to date:</a></p>
+                    <input type="email" placeholder="Email Address">
+                    <button>SIGN UP</button>
+                </div>
+            </div>
+    </footer>
+
+</body>
+
+</html>
