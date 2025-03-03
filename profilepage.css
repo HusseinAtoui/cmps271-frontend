@@ -5,18 +5,21 @@ body {
     background-color: #faefe1;
 }
 
-.images{
-   width: 50%;
+.images {
+    width: 50%;
     height: 50%;
 
 }
-.activity-card{
-  width: 90%;
-margin-left: 5%;
-}
-.activity-info{
+
+.activity-card {
+    width: 90%;
     margin-left: 5%;
 }
+
+.activity-info {
+    margin-left: 5%;
+}
+
 /* Search Bar Styles */
 .search-container {
     display: flex;
@@ -59,7 +62,6 @@ margin-left: 5%;
     font-family: "Times New Roman";
 }
 
-
 .navbar {
     display: flex;
     align-items: center;
@@ -69,34 +71,29 @@ margin-left: 5%;
     height: 80px;
 }
 
-
 .logo img {
     height: 70px;
     /* Adjust this value for height */
     width: auto;
     /* Let the width adjust proportionally */
-    
+
     padding: 2px;
     margin-left: 20px;
     border-radius: 5px;
 }
-
-
 
 .images {
 
     width: 40%;
 }
 
-
-
-
 .nav-links {
     display: flex;
     align-items: center;
     gap: 25px;
-} 
-.active{
+}
+
+.active {
     text-decoration: underline;
     color: rgb(115, 23, 23);
 
@@ -115,9 +112,10 @@ margin-left: 5%;
     padding-bottom: 3px;
 }
 
-.nav-links a:hover {
+.nav-links a:not(.active):hover {
     text-decoration: underline;
 }
+
 /*Guys this is the footer that we will go with most probably */
 /* Footer */
 footer {
@@ -162,7 +160,7 @@ footer {
 .logofooter img {
     height: 200px;
     width: auto;
-   
+
     padding: 5px;
     border-radius: 5px;
 }
