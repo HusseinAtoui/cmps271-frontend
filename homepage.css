@@ -94,6 +94,12 @@ body {
   color: #7D0C0E;
 }
 
+.navbar button a {
+  color: #7D0C0E;
+  text-decoration: none;
+  
+}
+
 /* ============================= */
 /*  Hero Section / welcome part  */
 /* ============================= */
