@@ -11,13 +11,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: calc(100vh);
+    height: 100vh;
     width: 100%;
     background-color: #faefe1;
     box-sizing: border-box;
 }
 
-/* Left Side - Login Form */
+/* Left Side - Login/sign up Form */
 .login-form,
 .signup-form {
     flex: 1;
@@ -31,7 +31,8 @@ body {
     margin-top: -30px;
 }
 
-.login-container h2 {
+.login-form h2,
+.signup-form h2 {
     font-size: 28px;
     font-weight: bold;
     color: #7d0c0e;
@@ -55,6 +56,11 @@ body {
 
 .login-container input:focus {
     border-color: #ad3d3f;
+}
+
+.signup-form input,
+.signup-form button {
+    width: 80%;
 }
 
 /* Forgot Password */
@@ -121,8 +127,7 @@ body {
     text-decoration: underline;
 }
 
-.login-form hr,
-.signup-form hr {
+.login-form hr {
     border: none;
     height: 2px;
     background-color: #7D0C0E;
