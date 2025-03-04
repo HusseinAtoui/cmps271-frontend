@@ -18,7 +18,8 @@ body {
 }
 
 /* Left Side - Login Form */
-.login-form, .signup-form{
+.login-form,
+.signup-form {
     flex: 1;
     padding: 30px;
     display: flex;
@@ -89,33 +90,39 @@ body {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.login-btn2:hover, .signup-btn:hover {
+.login-btn2:hover,
+.signup-btn:hover {
     background-color: #8b181a;
     transform: scale(1.05);
 }
 
-.login-btn2:active, .signup-btn:active{
+.login-btn2:active,
+.signup-btn:active {
     transform: scale(0.95);
 }
 
 /* Register Text */
-.register-text, .login-text {
+.register-text,
+.login-text {
     margin-top: 20px;
     font-size: 16px;
     text-align: center;
 }
 
-.register-text a, .login-text a {
+.register-text a,
+.login-text a {
     color: #7d0c0e;
     text-decoration: none;
     font-weight: bold;
 }
 
-.register-text a:hover, .login-text a:hover{
+.register-text a:hover,
+.login-text a:hover {
     text-decoration: underline;
 }
 
-.login-form hr, .signup-form hr {
+.login-form hr,
+.signup-form hr {
     border: none;
     height: 2px;
     background-color: #7D0C0E;
