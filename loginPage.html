@@ -42,7 +42,12 @@
                 <input type="password" id="signupPassword" name="signupPassword" placeholder="password" required>
                 <input type="password" id="confirmPassword" name="confirmPassword" placeholder="confirm password"
                     required>
-                <input type="file" id="profileImage" name="profileImage" accept="image/*">
+                <!-- Custom File Upload -->
+                <div class="custom-file">
+                    <label for="profileImage" class="custom-file-upload">Upload Profile Image</label>
+                    <input type="file" id="profileImage" name="profileImage" accept="image/*" hidden>
+                    <span id="fileName">No file chosen</span>
+                </div>
 
                 <button type="submit" class="signup-btn">Sign Up</button>
             </form>

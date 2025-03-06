@@ -63,6 +63,46 @@ body {
     width: 80%;
 }
 
+/* file upload section */
+
+.custom-file {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 10px;
+    justify-self: center;
+}
+
+.custom-file-upload {
+    display: flex;
+    width: 100%;
+    padding: 12px;
+    border-radius: 25px;
+    border: 2px solid #7d0c0e;
+    font-size: 16px;
+    color: #7d0c0e;
+    background-color: #faefe1;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-weight: bold;
+}
+
+.custom-file-upload:hover {
+    border-color: #ad3d3f;
+}
+
+#fileName {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #7d0c0e;
+    text-align: center;
+    font-weight: bold;
+    margin-left: 5px;
+    width: 25%;
+}
+
 /* Forgot Password */
 .forgot-password {
     width: 100%;
