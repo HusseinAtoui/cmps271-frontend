@@ -149,6 +149,11 @@ body {
   font-size: 1rem;
 }
 
+.hero-submit:hover {
+  background-color: #bb484a;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 /* ============================= */
 /*      Slideshow / Events       */
 /* ============================= */
@@ -249,6 +254,12 @@ body {
   border-radius: 20px;
   margin-right: 1rem;
   margin-top: 20px;
+}
+
+.text-section .buttons button:hover,
+.mySlides button:hover {
+  background-color: #bb484a;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Slideshow Controls */
