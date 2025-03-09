@@ -59,7 +59,7 @@ function registerNow() {
     formData.append("profilePicture", profilePicture);
   
     try {
-      const response = await fetch("http://localhost:3000/user/signup", {
+      const response = await fetch("http://localhost:3000/api/auth/signup", {
         method: "POST",
         body: formData
       });
@@ -91,7 +91,7 @@ function registerNow() {
     }
   
     try {
-      const response = await fetch("http://localhost:3000/user/login", {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
