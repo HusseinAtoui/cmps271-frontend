@@ -102,7 +102,7 @@ function registerNow() {
         alert("Login successful!");
         // Store token in localStorage for future authenticated requests
         localStorage.setItem("authToken", result.token);
-        window.location.href = "profile.html"; // Redirect to a protected page
+        window.location.href = "index.html"; // Redirect to a protected page
       } else {
         alert(result.message);
       }
