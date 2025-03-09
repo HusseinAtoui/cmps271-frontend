@@ -1,0 +1,303 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/* General Styling */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #faefe1;
+}
+
+
+/* Buttons */
+.login-btn {
+    background-color: #faefe1;
+    border-color: #f0c5a4;
+    border-radius: 15px;
+    padding: 6px;
+    border: white;
+    font-size: 16px;
+    width: 10%;
+    font-weight: bold;
+    color: #7D0C0E;
+  }
+
+.join a,
+.mailing-list p a {
+    color: #FAEDE1;
+    font-size: 18px;
+    text-decoration: none;
+    border-bottom: 1px solid #FAEDE1;
+}
+
+.join a:hover,
+.mailing-list a:hover {
+    color: #F0C5A4;
+    border-bottom: 1px solid #F0C5A4;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #7d0c0e;
+    padding: 15px 50px;
+    height: 112px;
+    color: #fff;
+    width: 100%;
+}
+
+.logo img {
+    height: 70px;
+    width: auto;
+    padding: 2px;
+    margin-left: 20px;
+    border-radius: 5px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #faefe1;
+    font-size: 18px;
+    text-transform: lowercase;
+    transition: 0.3s;
+}
+
+.nav-links a.active {
+    border-bottom: 2px solid #faefe1;
+    padding-bottom: 3px;
+}
+
+.nav-links a:not(.active):hover {
+    text-decoration: underline;
+}
+
+.navbar button a {
+    color: #7D0C0E;
+    text-decoration: none;
+}
+
+/* Search Bar */
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.search-container input {
+    font-size: 16px;
+    outline: none;
+    border-radius: 15px;
+    width: 100%;
+    background-color: #faefe1;
+    color: #7d0c0e;
+    border: none;
+    padding: 6px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.search-container input:focus {
+    border-color: #f0c5a4;
+}
+
+/* Team Section */
+.team-container {
+    display: flex;
+    height: 200px;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    justify-items: center;
+    align-items: center;
+    gap: 20px;
+    width: 80%;
+}
+
+.team-card,
+.last-row {
+    width: 200px;
+    background-color: #7D0C0E;
+    border: 2px solid black;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    color: white;
+    height: 350px;
+}
+
+.team-images {
+    width: 200px;
+    height: 250px;
+    object-fit: cover;
+}
+
+.name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.quote {
+    font-size: 14px;
+    font-style: italic;
+    color: cornsilk;
+    margin-top: 5px;
+}
+
+/* Membership Section */
+.membership {
+    background-color: #6E1313;
+    color: #fff;
+    text-align: center;
+    padding: 40px 30px;
+    width: 100%;
+}
+
+.membership-links {
+    margin-top: 20px;
+}
+
+.membership-links a {
+    display: inline-block;
+    margin: 0 10px;
+    color: #fff;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.membership-links a:hover {
+    border-color: #fff;
+}
+
+.membership-subtext {
+    margin-top: 20px;
+    font-size: 1rem;
+}
+
+.membership-logo {
+    margin-top: 20px;
+    width: 80px;
+}
+
+/* Footer */
+footer {
+    background-color: #7D0C0E;
+    padding: 40px;
+    text-align: center;
+    color: #FAEDE1;
+    font-family: "Times New Roman", serif;
+    margin-top: 50px;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.footer-left,
+.footer-right,
+.footer-info {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+}
+
+.footer-right {
+    text-align: right;
+    margin-left: 0;
+}
+
+.logofooter img {
+    height: 200px;
+    width: auto;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Mailing List */
+.mailing-list input {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    color: #7D0D0D;
+    background-color: #FAEDE1;
+    text-align: center;
+}
+
+.mailing-list button {
+    background-color: #FAEDE1;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.mailing-list button:hover {
+    background-color: #F0C5A4;
+}
+
+/* Group Picture */
+.group-pic {
+    width: 50%;
+    height: 400px;
+    margin: auto;
+    padding: 10px;
+    display: block;
+    border-radius: 15%;
+}
+
+.caption {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 18px;
+    border: 2px solid black;
+    padding: 10px;
+    font-weight: bold;
+}
+
+/* Header */
+header {
+    width: 100%;
+    text-align: center;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+h4 {
+    text-align: center;
+}
+
+/* Main Content */
+main {
+    height: 400px;
+}
