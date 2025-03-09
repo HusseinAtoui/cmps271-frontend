@@ -11,70 +11,64 @@
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 </head>
 <header>
-  <nav class="navbar">
-    <div class="logo">
-      <img src="logo.png" alt="Afterthoughts">
-    </div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="subpage.html">Submissions</a>
-      <a href="profilepage.html">Profile</a>
-      <a href="EventPage.html"class="active">Events</a>
-      <a href="teamPage.html">Team</a>
-      <a href="contact.html">Contact</a>
-      <a href="submissionpage.html"><strong>SUBMIT</strong></a>
-
-
-      <div class="search-container">
-        <input type="text" placeholder="Search..." aria-label="Search">
-
-      </div>
-
-      <button class="login-btn"><a href="loginPage.html">login</a></button>
-
-
-    </div>
-  </nav>
 
   <body>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="logo.png" alt="Afterthoughts">
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="subpage.html">Submissions</a>
+        <a href="profilepage.html">Profile</a>
+        <a href="EventPage.html" class="active">Events</a>
+        <a href="teamPage.html">Team</a>
+        <a href="contact.html">Contact</a>
+        <a href="submissionpage.html"><strong>SUBMIT</strong></a>
 
-    <body>
 
-      <div id="Allevents">
-        <div id="currentEvents">
+        <div class="search-container">
+          <input type="text" placeholder="Search..." aria-label="Search">
 
         </div>
-        <div id="upComingEvents">
-          <div id="tempcal">
-            <!-- here should be the calender -->
-          </div>
-          <h1>coming soon</h1>
-          <div id="porfile">
-            <img src="profile.jpg" alt="profile" class=" pic">
-          </div>
+
+        <button class="login-btn"><a href="loginPage.html">login</a></button>
+
+      </div>
+    </nav>
+
+    <div id="Allevents">
+      <div id="currentEvents"></div>
+      <div id="upComingEvents">
+        <div id="tempcal">
+          <!-- here should be the calender -->
+        </div>
+        <h1>coming soon</h1>
+        <div id="porfile">
+          <img src="profile.jpg" alt="profile" class=" pic">
         </div>
       </div>
+    </div>
 
-      <footer>
-        <div class="footer-container">
-          <div class="footer-left">
-            <div class="logofooter">
-              <img src="logo.png" alt="Logo" />
-            </div>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-left">
+          <div class="logofooter">
+            <img src="logo.png" alt="Logo" />
           </div>
-          <div class="footer-right">
-            <div class="join">
-              <a href="#">Become a member of The Philosophy Journal</a>
-            </div>
-            <div class="mailing-list">
-              <p><a href="#">Join the mailing list to stay up to date:</a></p>
-              <input type="email" placeholder="Email Address">
-              <button>SIGN UP</button>
-            </div>
+        </div>
+        <div class="footer-right">
+          <div class="join">
+            <a href="#">Become a member of The Philosophy Journal</a>
           </div>
-      </footer>
+          <div class="mailing-list">
+            <p><a href="#">Join the mailing list to stay up to date:</a></p>
+            <input type="email" placeholder="Email Address">
+            <button>SIGN UP</button>
+          </div>
+        </div>
+    </footer>
 
-      <script src="EventPage.js"></script>
-    </body>
-
+    <script src="EventPage.js"></script>
+  </body>
 </html>
