@@ -29,6 +29,7 @@ body {
     color: #7d0c0e;
     border: white;
     padding: 6px;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .search-container input:focus {
@@ -90,6 +91,11 @@ body {
 
 .nav-links a:not(.active):hover {
     text-decoration: underline;
+}
+
+.navbar button a {
+    color: #7D0C0E;
+    text-decoration: none;
 }
 
 /* Search bar */
@@ -343,8 +349,8 @@ footer {
 
 .text-section .buttons button:hover,
 .mySlides button:hover {
-  background-color: #bb484a;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #bb484a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* SLIDESHOW CONTROLS */
