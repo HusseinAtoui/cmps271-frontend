@@ -1,20 +1,114 @@
-// first name, last name, email, pass, confirm pass, image box // for sign up
-
+// Toggle to show the signup form and hide the login form
 function registerNow() {
     document.getElementById("loginForm").style.display = "none";
     document.getElementById("signupForm").style.display = "flex";
-}
-
-function goToLogin() {
+  }
+  
+  // Toggle to show the login form and hide the signup form
+  function goToLogin() {
     document.getElementById("loginForm").style.display = "flex";
     document.getElementById("signupForm").style.display = "none";
-}
-
-document.getElementById("profileImage").addEventListener("change", function () {
+  }
+  
+  // Update file name display when a profile image is selected
+  document.getElementById("profileImage").addEventListener("change", function () {
     let file = this.files[0];
-    if (file) {
-        document.getElementById("fileName").textContent = file.name; // Show file name
-    } else {
-        document.getElementById("fileName").textContent = "No file chosen";
+    document.getElementById("fileName").textContent = file ? file.name : "No file chosen";
+  });
+  
+  // Signup form submission event listener
+  document.getElementById("signupFormElement").addEventListener("submit", async function (e) {
+    e.preventDefault();
+  
+    // Gather signup form field values
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+    const profilePictureInput = document.getElementById("profileImage");
+    const profilePicture = profilePictureInput.files[0];
+  
+    // Validate required fields
+    let missingFields = [];
+    if (!firstName) missingFields.push("First Name");
+    if (!lastName) missingFields.push("Last Name");
+    if (!email) missingFields.push("Email");
+    if (!password) missingFields.push("Password");
+    if (!confirmPassword) missingFields.push("Confirm Password");
+    if (!profilePicture) missingFields.push("Profile Picture");
+  
+    if (missingFields.length > 0) {
+      alert("Please fill in the following fields: " + missingFields.join(", "));
+      return;
     }
-});
+  
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+  
+    // Prepare FormData for signup request
+    const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("email", email);
+    formData.append("password", password);
+    // Optionally, set a default bio if not provided by the user
+    formData.append("bio", "I am an aftertinker");
+    formData.append("profilePicture", profilePicture);
+  
+    try {
+      const response = await fetch("http://localhost:3000/user/signup", {
+        method: "POST",
+        body: formData
+      });
+      const result = await response.json();
+  
+      if (result.status === "SUCCESS") {
+        alert("Signup successful! Please verify your email.");
+        window.location.href = "login.html"; // Adjust redirection as needed
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("An error occurred. Please try again.");
+    }
+  });
+  
+  // Login form submission event listener
+  document.getElementById("loginFormElement").addEventListener("submit", async function (e) {
+    e.preventDefault();
+  
+    // Gather login form field values
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+  
+    if (!email || !password) {
+      alert("Please fill in both the email and password fields.");
+      return;
+    }
+  
+    try {
+      const response = await fetch("http://localhost:3000/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const result = await response.json();
+  
+      if (result.status === "SUCCESS") {
+        alert("Login successful!");
+        // Store token in localStorage for future authenticated requests
+        localStorage.setItem("authToken", result.token);
+        window.location.href = "profile.html"; // Redirect to a protected page
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("An error occurred. Please try again.");
+    }
+  });
+  
