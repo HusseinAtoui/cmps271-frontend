@@ -55,24 +55,48 @@
   <div class="box">
     <h2>Submit Your Work</h2>
     <form action="/submit" method="POST" enctype="multipart/form-data">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required><br>
-
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required><br>
-
-      <label for="bio">Bio:</label>
-      <textarea id="bio" name="bio" placeholder="Tell us about yourself..." required></textarea><br>
-
-      <label for="document">Upload Document (PDF/Word):</label>
-      <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" required><br>
-
-      <label for="picture">Upload Picture (JPG/PNG):</label>
-      <input type="file" id="picture" name="picture" accept=".jpg,.jpeg,.png" required><br>
-
+      
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      
+      <!-- Phone Field (optional example) -->
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone">
+      </div>
+      
+      <!-- Bio Field -->
+      <div class="form-group">
+        <label for="bio">Bio:</label>
+        <textarea id="bio" name="bio" required></textarea>
+      </div>
+      
+      <!-- Upload Document -->
+      <div class="form-group">
+        <label for="document">Upload Document:</label>
+        <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" required>
+      </div>
+      
+      <!-- Upload Picture -->
+      <div class="form-group">
+        <label for="picture">Upload Picture:</label>
+        <input type="file" id="picture" name="picture" accept=".jpg,.jpeg,.png" required>
+      </div>
+      
+      <!-- Submit Button -->
       <button type="submit">Submit</button>
     </form>
   </div>
+  
 </div>
   <!-- Footer -->
   <footer>

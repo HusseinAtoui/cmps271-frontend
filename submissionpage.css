@@ -212,14 +212,23 @@ font-size: large;
 align-items: center;
 justify-content: center;
 padding-left: 20%;
-padding-right: 10%;
-margin-top: 5%;
+padding-right: 20%;
+
 text-align: center;
 
 display: flex;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 border-radius: 10px;
+width: 50%;
+
+border-radius: 15px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+color: rgb(255, 239, 239);
+flex-direction: column;
+margin-right: 5%;
+padding-bottom: 2%;
 }
+
 
 
 h2{
@@ -237,5 +246,81 @@ text-align: center;
 /* Style for the submission guidelines */
 .submission {
     margin-left: 5%;
-    margin-top: 2%;
+ 
 }
+/* Container for centering */
+.submission-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 10px;
+    flex-direction: row;
+    margin-top: 5%;
+
+}/* Container (box) styling */
+
+  /* Headline styling */
+  .box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+
+        white-space: nowrap; /* Prevents the text from wrapping */
+        text-align: center;  /* Centers the text */
+        overflow: hidden;    /* Optional: hides overflow if container is too narrow */
+
+      
+  }
+  
+  /* Form group: label and input side by side */
+  .form-group {
+    display: flex;          /* Places label and input on same line */
+    align-items: center;    /* Vertically center them */
+    margin-bottom: 15px;    /* Spacing between rows */
+  }
+  
+  /* Label styling */
+  .form-group label {
+    width: 150px;           /* Fixed width for label */
+    font-weight: bold;
+    margin-right: 10px;     /* Space between label and input */
+    text-align: right;      /* Align text to the right for a clean look */
+  }
+  
+  /* Input and textarea styling */
+  .form-group input,
+  .form-group textarea {
+    flex: 1;                /* Takes up remaining horizontal space */
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+    box-sizing: border-box; /* Ensures padding doesn't exceed total width */
+  }
+  
+  /* Textarea height */
+  .form-group textarea {
+    height: 100px; 
+    resize: none;
+  }
+  
+  /* Submit button styling */
+  .box button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    background-color: #a52a2a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .box button:hover {
+    background-color: #b33c3c;
+  }
+  
