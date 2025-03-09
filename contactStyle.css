@@ -4,11 +4,7 @@
 }
 
 
-.active {
-  text-decoration: underline;
-  color: beige;
 
-}
 
 /* Search Bar Styles */
 .search-container {
@@ -44,13 +40,10 @@
   height: 80px;
 }
 
-
 .search-container input:focus {
   border-color: #f0c5a4;
   /* Change border color when the input is focused */
 }
-
-
 
 .head-text {
   text-align: center;
@@ -59,7 +52,6 @@
   background-image: url("meow.jpg");
   color: white;
 }
-
 
 #title {
   font-size: 70px;
@@ -106,7 +98,7 @@
   padding-bottom: 3px;
 }
 
-.nav-links a:hover {
+.nav-links a:not(.active):hover {
   text-decoration: underline;
 }
 
@@ -164,6 +156,11 @@ nav ul li a {
   margin-right: 5px;
 }
 
+.navbar button a {
+  color: #7D0C0E;
+  text-decoration: none;
+
+}
 body {
   font-family: 'Times New Roman', Times, serif;
   margin: 0;
@@ -456,7 +453,7 @@ main {
   /* Adjust this value for height */
   width: auto;
   /* Let the width adjust proportionally */
-  
+
   padding: 2px;
   margin-left: 20px;
   border-radius: 5px;
