@@ -1,9 +1,12 @@
-* {
+/* ========================================= */
+/*               Global Styles             */
+/* ========================================= */
+* { 
     box-sizing: border-box;
     font-family: "Times New Roman";
-  }
-  
-  body {
+}
+
+body {
     margin: 0;
     background-color: #FFE2D5;
     color: #333;
@@ -11,60 +14,60 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-  }
-  
-  /* ============================= */
-  /*          Navigation           */
-  /* ============================= */
-  .navbar {
+}
+
+/* ========================================= */
+/*               Navigation                */
+/* ========================================= */
+.navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #7d0c0e;
     padding: 15px 50px;
     height: 110px;
-  }
-  
-  .logo img {
+}
+
+.logo img {
     height: 70px;
     width: auto;
     padding: 2px;
     margin-left: 20px;
     border-radius: 5px;
-  }
-  
-  .nav-links {
+}
+
+.nav-links {
     display: flex;
     align-items: center;
     gap: 25px;
-  }
-  
-  .nav-links a {
+}
+
+.nav-links a {
     text-decoration: none;
     color: #faefe1;
     font-size: 18px;
     text-transform: lowercase;
     transition: 0.3s;
-  }
-  
-  .nav-links a.active {
+}
+
+.nav-links a.active {
     border-bottom: 2px solid #faefe1;
     padding-bottom: 3px;
-  }
-  
-  .nav-links a:not(.active):hover {
+}
+
+.nav-links a:not(.active):hover {
     text-decoration: underline;
-  }
-  
-  .search-container {
+}
+
+.search-container {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 5px;
     border-radius: 20px;
-  }
-  
-  .search-container input {
+}
+
+.search-container input {
     font-size: 16px;
     outline: none;
     border-radius: 15px;
@@ -73,13 +76,13 @@
     color: #7d0c0e;
     border: white;
     padding: 6px;
-  }
-  
-  .search-container input:focus {
+}
+
+.search-container input:focus {
     border-color: #f0c5a4;
-  }
-  
-  .login-btn {
+}
+
+.login-btn {
     background-color: #faefe1;
     border-color: #f0c5a4;
     border-radius: 15px;
@@ -89,23 +92,17 @@
     width: 10%;
     font-weight: bold;
     color: #7D0C0E;
-  }
-  
-  .navbar button a {
+}
+
+.navbar button a {
     color: #7D0C0E;
     text-decoration: none;
-  
-  }
-  
-  /* ============================= */
-  /*  Hero Section / welcome part  */
-  /* ============================= */
- 
-  
-  /* ============================= */
-  /*          Footer Section       */
-  /* ============================= */
-  footer {
+}
+
+/* ========================================= */
+/*                 Footer                  */
+/* ========================================= */
+footer {
     background-color: #7D0C0E;
     padding: 40px;
     text-align: center;
@@ -113,9 +110,9 @@
     font-family: "Times New Roman", serif;
     margin-top: 50px;
     height: 80%;
-  }
-  
-  .footer-container {
+}
+
+.footer-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -123,42 +120,42 @@
     max-width: 900px;
     margin: 0 auto;
     gap: 20px;
-  }
-  
-  .footer-left,
-  .footer-right {
+}
+
+.footer-left,
+.footer-right {
     flex: 1;
     min-width: 200px;
     margin-bottom: 20px;
-  }
-  
-  .footer-right {
+}
+
+.footer-right {
     text-align: right;
     margin-left: 0;
-  }
-  
-  .logofooter img {
+}
+
+.logofooter img {
     height: 200px;
     width: auto;
     padding: 5px;
     border-radius: 5px;
-  }
-  
-  .join a,
-  .mailing-list p a {
+}
+
+.join a,
+.mailing-list p a {
     color: #FAEDE1;
     font-size: 18px;
     text-decoration: none;
     border-bottom: 1px solid #FAEDE1;
-  }
-  
-  .join a:hover,
-  .mailing-list a:hover {
+}
+
+.join a:hover,
+.mailing-list a:hover {
     color: #F0C5A4;
     border-bottom: 1px solid #F0C5A4;
-  }
-  
-  .mailing-list input {
+}
+
+.mailing-list input {
     width: 300px;
     padding: 10px;
     border: none;
@@ -167,9 +164,9 @@
     color: #7D0D0D;
     background-color: #FAEDE1;
     text-align: center;
-  }
-  
-  .mailing-list button {
+}
+
+.mailing-list button {
     background-color: #FAEDE1;
     border: none;
     padding: 10px 20px;
@@ -177,78 +174,38 @@
     font-size: 16px;
     font-style: italic;
     cursor: pointer;
-  }
-  
-  .mailing-list button:hover {
+}
+
+.mailing-list button:hover {
     background-color: #F0C5A4;
-  }
-  
-  /* ============================= */
-  /*       Responsive Styles       */
-  /* ============================= */
-  @media (max-width: 768px) {
+}
+
+/* ========================================= */
+/*           Responsive Styles             */
+/* ========================================= */
+@media (max-width: 768px) {
     .navbar {
-      flex-direction: column;
-      text-align: center;
+        flex-direction: column;
+        text-align: center;
     }
-  
-    /* Adjust dynamic slide elements */
+
     .mySlides {
-      flex-direction: column;
+        flex-direction: column;
     }
-  
+
     .imagecontainer,
     .text-section {
-      width: 90%;
-      max-width: 100%;
-      margin: 0.5rem auto;
+        width: 90%;
+        max-width: 100%;
+        margin: 0.5rem auto;
     }
-  }
-.box{
-background-color: #7D0C0E;
-
-font-size: large;
-
-align-items: center;
-justify-content: center;
-padding-left: 20%;
-padding-right: 20%;
-
-text-align: center;
-
-display: flex;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-border-radius: 10px;
-width: 50%;
-
-border-radius: 15px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-color: rgb(255, 239, 239);
-flex-direction: column;
-margin-right: 5%;
-padding-bottom: 2%;
 }
 
+/* ========================================= */
+/*         Submission Page Styles          */
+/* ========================================= */
 
-
-h2{
-text-align: center;
-}
 /* Container to hold both divs side by side */
-.submission-container {
-    display: flex;
-
-}
-
-/* Style for the form box */
-
-
-/* Style for the submission guidelines */
-.submission {
-    margin-left: 5%;
- 
-}
-/* Container for centering */
 .submission-container {
     display: flex;
     justify-content: center; 
@@ -256,57 +213,83 @@ text-align: center;
     gap: 10px;
     flex-direction: row;
     margin-top: 5%;
+}
 
-}/* Container (box) styling */
-
-  /* Headline styling */
-  .box h2 {
+/* ======================= */
+/*          Form Box       */
+/* ======================= */
+.box {
+    background-color: #7D0C0E;
+    font-size: large;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    width: 50%;  /* Takes up half the available container width */
+    margin-right: 5%;
+    padding: 2% 20%;  /* Top-bottom padding 2%, left-right 20% */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: rgb(255, 239, 239);
+}
+
+/* Heading styling inside form box */
+.box h2 {
+    white-space: nowrap; /* Keeps "Submit Your Work" on one line */
+    text-align: center;
+    overflow: hidden;
     margin-bottom: 20px;
+}
 
-        white-space: nowrap; /* Prevents the text from wrapping */
-        text-align: center;  /* Centers the text */
-        overflow: hidden;    /* Optional: hides overflow if container is too narrow */
+/* ======================= */
+/*      Submission Guidelines       */
+/* ======================= */
+.submission {
+    width: 50%;  /* Equal width to the form box */
+    margin-left: 5%;
+    /* You can add additional styling for the guidelines here */
+}
 
-      
-  }
-  
-  /* Form group: label and input side by side */
-  .form-group {
+/* ======================= */
+/*       Form Group Styling */
+/* ======================= */
+
+
+.form-group {
     display: flex;          /* Places label and input on same line */
     align-items: center;    /* Vertically center them */
     margin-bottom: 15px;    /* Spacing between rows */
-  }
-  
-  /* Label styling */
-  .form-group label {
+}
+
+.form-group label {
     width: 150px;           /* Fixed width for label */
     font-weight: bold;
     margin-right: 10px;     /* Space between label and input */
-    text-align: right;      /* Align text to the right for a clean look */
-  }
-  
-  /* Input and textarea styling */
-  .form-group input,
-  .form-group textarea {
-    flex: 1;                /* Takes up remaining horizontal space */
+    text-align: right;
+}
+
+.form-group input,
+.form-group textarea {
+    flex: 1;                /* Fills the remaining horizontal space */
     padding: 10px;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     background-color: #fff;
     color: #333;
-    box-sizing: border-box; /* Ensures padding doesn't exceed total width */
-  }
-  
-  /* Textarea height */
-  .form-group textarea {
+    box-sizing: border-box;
+}
+
+.form-group textarea {
     height: 100px; 
     resize: none;
-  }
-  
-  /* Submit button styling */
-  .box button {
+}
+
+/* ======================= */
+/*       Submit Button     */
+/* ======================= */
+.box button {
     display: block;
     width: 100%;
     padding: 12px;
@@ -318,9 +301,8 @@ text-align: center;
     cursor: pointer;
     font-weight: bold;
     margin-top: 10px;
-  }
-  
-  .box button:hover {
+}
+
+.box button:hover {
     background-color: #b33c3c;
-  }
-  
+}
