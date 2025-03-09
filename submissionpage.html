@@ -31,73 +31,78 @@
       <button class="login-btn"><a href="loginPage.html">Login</a></button>
     </div>
   </nav>
+  
   <div class="submission-container">
-  <!-- Submission Form -->
-  
 
-  <!-- Submission Guidelines -->
-  <div class="submission">
-    <h1>General Submission Guidelines</h1>
-    <p><strong>Afterthoughts</strong> is an English journal published in print annually. The call for submissions for our print edition is announced on social media and this website. All submissions will be considered for print and online publication. To submit, see our <a href="#">Submittable portal</a> for open calls.</p>
-    
-    <p>If you have questions, please send an e-mail to <a href="mailto:info@rustedradishes.com">info@rustedradishes.com</a>. Any work submitted not in line with these guidelines will not be accepted or read.</p>
-    
-    <h2>Submission Requirements</h2>
-    <ul>
-      <li><strong>Attachment:</strong> Each writing piece should be attached in a separate .doc file. Each art piece should be sent as a low-res attachment.</li>
-      <li><strong>Bio:</strong> Provide a brief bio (third-person, max 80 words). Indicate whether you are a student, faculty, or alum of AUB, or your connection to Lebanon or the region.</li>
-      <li><strong>Formatting:</strong> Use a 12-pt font and double-space prose. Keep poetry formatting intact.</li>
-      <li><strong>Multiple Submissions:</strong> Check specific genre guidelines for limits.</li>
-      <li><strong>File Naming:</strong> Use format ‘title_genre’. Include your full name and e-mail at the top of the document.</li>
-      <li><strong>Simultaneous Submissions:</strong> These are allowed. Withdraw work by emailing <a href="mailto:submit@rustedradishes.com">submit@rustedradishes.com</a> or using Submittable.</li>
-    </ul>
+    <!-- Submission Guidelines -->
+    <div class="submission">
+      <h1>General Submission Guidelines</h1>
+      <p><strong>Afterthoughts</strong> is an English journal published in print annually. The call for submissions for our print edition is announced on social media and this website. All submissions will be considered for print and online publication. To submit, see our <a href="#">Submittable portal</a> for open calls.</p>
+
+      <p>If you have questions, please send an e-mail to <a href="mailto:info@rustedradishes.com">info@rustedradishes.com</a>. Any work submitted not in line with these guidelines will not be accepted or read.</p>
+
+      <h2>Submission Requirements</h2>
+      <ul>
+        <li><strong>Attachment:</strong> Each writing piece should be attached in a separate .doc file. Each art piece should be sent as a low-res attachment.</li>
+        <li><strong>Bio:</strong> Provide a brief bio (third-person, max 80 words). Indicate whether you are a student, faculty, or alum of AUB, or your connection to Lebanon or the region.</li>
+        <li><strong>Formatting:</strong> Use a 12-pt font and double-space prose. Keep poetry formatting intact.</li>
+        <li><strong>Multiple Submissions:</strong> Check specific genre guidelines for limits.</li>
+        <li><strong>File Naming:</strong> Use format ‘title_genre’. Include your full name and e-mail at the top of the document.</li>
+        <li><strong>Simultaneous Submissions:</strong> These are allowed. Withdraw work by emailing <a href="mailto:submit@rustedradishes.com">submit@rustedradishes.com</a> or using Submittable.</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>Submit Your Work</h2>
+      <form id="submissionForm" action="#" method="POST" enctype="multipart/form-data">
+        
+        <!-- Name Field -->
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        
+        <!-- Phone Field (optional example) -->
+        <div class="form-group">
+          <label for="phone">Phone Number:</label>
+          <input type="text" id="phone" name="phone">
+        </div>
+        
+        <!-- Bio Field -->
+        <div class="form-group">
+          <label for="bio">Bio:</label>
+          <textarea id="bio" name="bio" required></textarea>
+        </div>
+        
+        <!-- Upload Document -->
+        <div class="form-group">
+          <label for="document">Upload Document:</label>
+          <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" required>
+        </div>
+        
+        <!-- Upload Picture -->
+        <div class="form-group">
+          <label for="picture">Upload Picture:</label>
+          <input type="file" id="picture" name="picture" accept=".jpg,.jpeg,.png" required>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit">Submit</button>
+      </form>
+
+      <!-- Status Message for Submission -->
+      <div id="statusMessage"></div>
+
+    </div>
+
   </div>
-  <div class="box">
-    <h2>Submit Your Work</h2>
-    <form action="/submit" method="POST" enctype="multipart/form-data">
-      
-      <!-- Name Field -->
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      
-      <!-- Email Field -->
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      
-      <!-- Phone Field (optional example) -->
-      <div class="form-group">
-        <label for="phone">Phone Number:</label>
-        <input type="text" id="phone" name="phone">
-      </div>
-      
-      <!-- Bio Field -->
-      <div class="form-group">
-        <label for="bio">Bio:</label>
-        <textarea id="bio" name="bio" required></textarea>
-      </div>
-      
-      <!-- Upload Document -->
-      <div class="form-group">
-        <label for="document">Upload Document:</label>
-        <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" required>
-      </div>
-      
-      <!-- Upload Picture -->
-      <div class="form-group">
-        <label for="picture">Upload Picture:</label>
-        <input type="file" id="picture" name="picture" accept=".jpg,.jpeg,.png" required>
-      </div>
-      
-      <!-- Submit Button -->
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-  
-</div>
+
   <!-- Footer -->
   <footer>
     <div class="footer-container">
@@ -119,7 +124,8 @@
     </div>
   </footer>
 
-  <script src="homepage.js"></script>
+  <!-- Load JavaScript at the bottom of the page -->
+  <script src="submissionpage.js" defer></script>
 
 </body>
 </html>
