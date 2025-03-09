@@ -42,6 +42,7 @@ body {
     color: #7d0c0e;
     border: white;
     padding: 6px;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .search-container input:focus {
@@ -114,6 +115,12 @@ body {
 
 .nav-links a:not(.active):hover {
     text-decoration: underline;
+}
+
+.navbar button a {
+    color: #7D0C0E;
+    text-decoration: none;
+
 }
 
 /*Guys this is the footer that we will go with most probably */
