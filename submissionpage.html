@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Afterthoughts Philosophy Journal</title>
-  <link rel="stylesheet" href="homepage.css">
+  <link rel="stylesheet" href="submissionpage.css">
 </head>
 
-<body>
+
   <!--https://tiny-biscotti-8cfac5.netlify.app/-->
   <!-- Navigation Bar -->
   <nav class="navbar">
@@ -16,12 +16,13 @@
       <img src="logo.png" alt="Afterthoughts">
     </div>
     <div class="nav-links">
-      <a href="index.html" class="active">Home</a>
+      <a href="index.html" >Home</a>
+      <a href="subpage.html">Submissions</a>
       <a href="profilepage.html">Profile</a>
       <a href="EventPage.html">Events</a>
       <a href="teamPage.html">Team</a>
       <a href="contact.html"> Contact </a>
-      <a href="subpage.html"><strong>SUBMIT</strong></a>
+      <a href="submissionpage.html"class="active"><strong>SUBMIT</strong></a>
 
 
       <div class="search-container">
@@ -34,6 +35,58 @@
 
     </div>
   </nav>
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Work</title>
+</head>
+<body>
+ 
+    <h2>Submit Your Work</h2>
+    <form action="/submit" method="POST" enctype="multipart/form-data">
+        <label>Name:</label>
+        <input type="text" name="name" required><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" required><br>
+
+        <label>Bio:</label>
+        <textarea name="bio" placeholder="Tell us about yourself..." required></textarea><br>
+
+        <label>Upload Document (PDF/Word):</label>
+        <input type="file" name="document" accept=".pdf,.doc,.docx" required><br>
+
+        <label>Upload Picture (JPG/PNG):</label>
+        <input type="file" name="picture" accept=".jpg,.jpeg,.png" required><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+<
+    <h1>General Submission Guidelines</h1>
+
+    <p><strong>Afterthoughts</strong> is an english published in print annually. The call for submissions for our print edition is announced on social media channels and on this website. All submissions for this call will be considered for print and online publication. To submit, see our <a href="#">Submittable portal</a> for open calls.</p>
+    
+   
+    <p>If you have questions, please send an e-mail to <a href="mailto:info@rustedradishes.com">info@rustedradishes.com</a>. Any work submitted not in line with these guidelines will not be accepted, nor read.</p>
+    
+    <h2>Submission Requirements</h2>
+    <p>Please follow these guidelines when submitting:</p>
+    <ul>
+        <li><strong>Attachment:</strong> Each writing piece should be attached in a separate document in .doc form. Each art piece should be sent as a low-res attachment.</li>
+        <li><strong>Bio:</strong> Please provide a brief bio written in 3rd person that does not exceed 80 words. Indicate whether you are a student, faculty, or alum of AUB; and/or your connection to Lebanon or the region. We reserve the right to edit your bio for syntax and grammatical correctness.</li>
+        <li><strong>Formatting:</strong> Use a 12-pt font and double-space each prose piece. Please retain the original aesthetic in your poetry.</li>
+        <li><strong>Multiple Submissions:</strong> Check the guidelines specific to each genre for the maximum allowance.</li>
+        <li><strong>File Naming:</strong> Name each submission in the format ‘title_genre’. Include your full name and e-mail address at the top of the first page of the actual submission file.</li>
+        <li><strong>Simultaneous Submissions:</strong> These are welcome. If you need to withdraw work, please write to <a href="mailto:submit@rustedradishes.com">submit@rustedradishes.com</a> or use the Submittable submissions manager. For poetry, leave a note specifying which poem you’d like to withdraw.</li>
+    </ul>
+
+
+
+
 
   <footer>
     <div class="footer-container">
