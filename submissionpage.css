@@ -1,0 +1,241 @@
+* {
+    box-sizing: border-box;
+    font-family: "Times New Roman";
+  }
+  
+  body {
+    margin: 0;
+    background-color: #FFE2D5;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  /* ============================= */
+  /*          Navigation           */
+  /* ============================= */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #7d0c0e;
+    padding: 15px 50px;
+    height: 110px;
+  }
+  
+  .logo img {
+    height: 70px;
+    width: auto;
+    padding: 2px;
+    margin-left: 20px;
+    border-radius: 5px;
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #faefe1;
+    font-size: 18px;
+    text-transform: lowercase;
+    transition: 0.3s;
+  }
+  
+  .nav-links a.active {
+    border-bottom: 2px solid #faefe1;
+    padding-bottom: 3px;
+  }
+  
+  .nav-links a:not(.active):hover {
+    text-decoration: underline;
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  
+  .search-container input {
+    font-size: 16px;
+    outline: none;
+    border-radius: 15px;
+    width: 100%;
+    background-color: #faefe1;
+    color: #7d0c0e;
+    border: white;
+    padding: 6px;
+  }
+  
+  .search-container input:focus {
+    border-color: #f0c5a4;
+  }
+  
+  .login-btn {
+    background-color: #faefe1;
+    border-color: #f0c5a4;
+    border-radius: 15px;
+    padding: 6px;
+    border: white;
+    font-size: 16px;
+    width: 10%;
+    font-weight: bold;
+    color: #7D0C0E;
+  }
+  
+  .navbar button a {
+    color: #7D0C0E;
+    text-decoration: none;
+  
+  }
+  
+  /* ============================= */
+  /*  Hero Section / welcome part  */
+  /* ============================= */
+ 
+  
+  /* ============================= */
+  /*          Footer Section       */
+  /* ============================= */
+  footer {
+    background-color: #7D0C0E;
+    padding: 40px;
+    text-align: center;
+    color: #FAEDE1;
+    font-family: "Times New Roman", serif;
+    margin-top: 50px;
+    height: 80%;
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 20px;
+  }
+  
+  .footer-left,
+  .footer-right {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-right {
+    text-align: right;
+    margin-left: 0;
+  }
+  
+  .logofooter img {
+    height: 200px;
+    width: auto;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .join a,
+  .mailing-list p a {
+    color: #FAEDE1;
+    font-size: 18px;
+    text-decoration: none;
+    border-bottom: 1px solid #FAEDE1;
+  }
+  
+  .join a:hover,
+  .mailing-list a:hover {
+    color: #F0C5A4;
+    border-bottom: 1px solid #F0C5A4;
+  }
+  
+  .mailing-list input {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #7D0D0D;
+    background-color: #FAEDE1;
+    text-align: center;
+  }
+  
+  .mailing-list button {
+    background-color: #FAEDE1;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-style: italic;
+    cursor: pointer;
+  }
+  
+  .mailing-list button:hover {
+    background-color: #F0C5A4;
+  }
+  
+  /* ============================= */
+  /*       Responsive Styles       */
+  /* ============================= */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    /* Adjust dynamic slide elements */
+    .mySlides {
+      flex-direction: column;
+    }
+  
+    .imagecontainer,
+    .text-section {
+      width: 90%;
+      max-width: 100%;
+      margin: 0.5rem auto;
+    }
+  }
+.box{
+background-color: #7D0C0E;
+
+font-size: large;
+
+align-items: center;
+justify-content: center;
+padding-left: 20%;
+padding-right: 10%;
+margin-top: 5%;
+text-align: center;
+
+display: flex;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+border-radius: 10px;
+}
+
+
+h2{
+text-align: center;
+}
+/* Container to hold both divs side by side */
+.submission-container {
+    display: flex;
+
+}
+
+/* Style for the form box */
+
+
+/* Style for the submission guidelines */
+.submission {
+    margin-left: 5%;
+    margin-top: 2%;
+}
