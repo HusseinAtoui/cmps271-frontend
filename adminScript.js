@@ -21,6 +21,8 @@ async function fetchEvents() {
                 <p>${event.description}</p>
                 <p><strong>Date:</strong> ${new Date(event.date).toLocaleDateString()}</p>
                 <p>${event.details}</p>
+                
+
                 <button onclick="fetchEventById('${event._id}')">View Details</button>
                 <button class="delete-btn" onclick="deleteEvent('${event._id}')">Delete</button>
             `;
@@ -53,12 +55,6 @@ async function fetchEventById(eventId) {
 async function uploadEvent(event) {
     event.preventDefault();
 
-    const token = localStorage.getItem("authToken"); 
-    if (!token) {
-        alert("❌ You are not authenticated. Please log in again.");
-        return;
-    }
-
     const formData = new FormData();
     formData.append("title", document.getElementById("title").value);
     formData.append("image", document.getElementById("image").files[0]);
@@ -67,15 +63,11 @@ async function uploadEvent(event) {
     formData.append("details", document.getElementById("details").value);
 
     console.log("📩 Sending Form Data:", [...formData.entries()]);
-    console.log("🔑 Sending Token in Headers:", `Bearer ${token}`);
 
     try {
         const response = await fetch("http://localhost:3000/api/events", {
             method: "POST",
-            body: formData,
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
+            body: formData
         });
 
         const responseData = await response.json();
@@ -94,25 +86,15 @@ async function uploadEvent(event) {
     }
 }
 
-
+// ✅ Delete an event (No authentication required)
 async function deleteEvent(eventId) {
     if (!confirm("⚠️ Are you sure you want to delete this event?")) return;
 
-    const token = localStorage.getItem("authToken"); // Ensure token is retrieved
-    if (!token) {
-        alert("❌ You are not authenticated. Please log in again.");
-        return;
-    }
-
     console.log("🗑️ Deleting Event ID:", eventId);
-    console.log("🔑 Sending Token:", `Bearer ${token}`);
 
     try {
         const response = await fetch(`http://localhost:3000/api/events/${eventId}`, {
-            method: "DELETE",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            } 
+            method: "DELETE"
         });
 
         const responseData = await response.json();
