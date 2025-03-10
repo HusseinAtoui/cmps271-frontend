@@ -112,7 +112,7 @@ async function deleteEvent(eventId) {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${token}`
-            }
+            } 
         });
 
         const responseData = await response.json();
