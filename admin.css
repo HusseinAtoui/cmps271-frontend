@@ -1,0 +1,80 @@
+/* Global Styles */
+body {
+    font-family: "Times New Roman", serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  /* Header Styles */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #7d0c0e;
+    color: #faefe1;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  header h1 {
+    margin: 0;
+  }
+  
+  header nav a {
+    color: #faefe1;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  /* Main Content Styles */
+  main h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Table Styles */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #7d0c0e;
+    color: #faefe1;
+  }
+  
+  /* Button Styles for Actions */
+  button {
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  
+  button:first-of-type {
+    background-color: #4CAF50; /* Green for approve */
+    color: white;
+  }
+  
+  button:last-of-type {
+    background-color: #f44336; /* Red for reject */
+    color: white;
+  }
+  
