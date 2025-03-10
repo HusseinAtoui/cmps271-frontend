@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ✅ Fetch and display all events
 async function fetchEvents() {
     try {
-        const response = await fetch('/api/events');
+        const response = await fetch('http://localhost:3000/api/events/');
         const events = await response.json();
         const eventList = document.getElementById("eventList");
 
@@ -28,25 +28,24 @@ async function fetchEvents() {
         });
 
     } catch (error) {
-        console.error("Error fetching events:", error);
+        console.error("❌ Error fetching events:", error);
     }
 }
 
 // ✅ Fetch and display a single event by ID
 async function fetchEventById(eventId) {
     try {
-        const response = await fetch(`/api/events/${eventId}`);
+        const response = await fetch(`http://localhost:3000/api/events/${eventId}`);
         const event = await response.json();
 
         if (!response.ok) {
-            alert("Error fetching event: " + event.error);
+            alert("❌ Error fetching event: " + event.error);
             return;
         }
 
-        // Display event details in a modal or alert (You can improve UI later)
-        alert(`Event: ${event.title}\nDate: ${new Date(event.date).toLocaleDateString()}\nDetails: ${event.details}`);
+        alert(`📅 Event: ${event.title}\n📆 Date: ${new Date(event.date).toLocaleDateString()}\n📝 Details: ${event.details}`);
     } catch (error) {
-        console.error("Error fetching event:", error);
+        console.error("❌ Error fetching event:", error);
     }
 }
 
@@ -54,55 +53,79 @@ async function fetchEventById(eventId) {
 async function uploadEvent(event) {
     event.preventDefault();
 
+    const token = localStorage.getItem("authToken"); 
+    if (!token) {
+        alert("❌ You are not authenticated. Please log in again.");
+        return;
+    }
+
     const formData = new FormData();
     formData.append("title", document.getElementById("title").value);
-    formData.append("image", document.getElementById("image").files[0]); // File upload
+    formData.append("image", document.getElementById("image").files[0]);
     formData.append("description", document.getElementById("description").value);
     formData.append("date", document.getElementById("date").value);
     formData.append("details", document.getElementById("details").value);
 
+    console.log("📩 Sending Form Data:", [...formData.entries()]);
+    console.log("🔑 Sending Token in Headers:", `Bearer ${token}`);
+
     try {
-        const response = await fetch('/api/events', {
+        const response = await fetch("http://localhost:3000/api/events", {
             method: "POST",
             body: formData,
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}` // Ensure user authentication
+                "Authorization": `Bearer ${token}`
             }
         });
 
-        if (response.ok) {
-            alert("Event uploaded successfully!");
-            fetchEvents(); // Refresh event list
-            document.getElementById("eventForm").reset(); // Clear form
-        } else {
-            const error = await response.json();
-            alert("Error: " + error.message);
+        const responseData = await response.json();
+        
+        if (!response.ok) {
+            console.error("❌ Server Response:", responseData);
+            throw new Error(responseData.error || "Unknown error occurred");
         }
+
+        alert("✅ Event uploaded successfully!");
+        fetchEvents();
+        document.getElementById("eventForm").reset();
     } catch (error) {
-        console.error("Error uploading event:", error);
+        console.error("❌ Error uploading event:", error);
+        alert(`Error: ${error.message || "Something went wrong"}`);
     }
 }
 
-// ✅ Delete an event
+
 async function deleteEvent(eventId) {
-    if (!confirm("Are you sure you want to delete this event?")) return;
+    if (!confirm("⚠️ Are you sure you want to delete this event?")) return;
+
+    const token = localStorage.getItem("authToken"); // Ensure token is retrieved
+    if (!token) {
+        alert("❌ You are not authenticated. Please log in again.");
+        return;
+    }
+
+    console.log("🗑️ Deleting Event ID:", eventId);
+    console.log("🔑 Sending Token:", `Bearer ${token}`);
 
     try {
-        const response = await fetch(`/api/events/${eventId}`, {
+        const response = await fetch(`http://localhost:3000/api/events/${eventId}`, {
             method: "DELETE",
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`
+                "Authorization": `Bearer ${token}`
             }
         });
 
-        if (response.ok) {
-            alert("Event deleted successfully!");
-            fetchEvents(); // Refresh event list after deletion
-        } else {
-            const error = await response.json();
-            alert("Error: " + error.message);
+        const responseData = await response.json();
+        console.log("📌 Server Response:", responseData);
+
+        if (!response.ok) {
+            throw new Error(responseData.error || "Unknown error occurred");
         }
+
+        alert("✅ Event deleted successfully!");
+        fetchEvents(); // Refresh event list after deletion
     } catch (error) {
-        console.error("Error deleting event:", error);
+        console.error("❌ Error deleting event:", error);
+        alert(`Error: ${error.message || "Something went wrong"}`);
     }
 }
