@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Event Management</title>
+    <link rel="stylesheet" href="styleAdmin.css">
+</head>
+<body>
+    <h1>Admin Event Management</h1>
+    
+    <form id="eventForm">
+        <label for="title">Event Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="image">Event Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+
+        <label for="date">Event Date:</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="details">Additional Details:</label>
+        <input type="text" id="details" name="details">
+
+        <button type="submit">Upload Event</button>
+    </form>
+
+    <h2>Current Events</h2>
+    <div id="eventList">
+        <div class="event-item">
+            <h3>Event Title</h3>
+            <img src="placeholder.jpg" alt="Event Image" width="150">
+            <p>Description of the event</p>
+            <p><strong>Date:</strong> <span class="event-date">YYYY-MM-DD</span></p>
+            <p>Additional details</p>
+            <button class="delete-btn">Delete</button>
+        </div>
+    </div>
+
+    <script src="adminScriptEvent.js"></script>
+</body>
+</html>

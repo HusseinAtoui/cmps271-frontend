@@ -2,24 +2,32 @@
 function registerNow() {
     document.getElementById("loginForm").style.display = "none";
     document.getElementById("signupForm").style.display = "flex";
-  }
-  
-  // Toggle to show the login form and hide the signup form
-  function goToLogin() {
+}
+
+// Toggle to show the login form and hide the signup form
+function goToLogin() {
     document.getElementById("loginForm").style.display = "flex";
     document.getElementById("signupForm").style.display = "none";
-  }
-  
-  // Update file name display when a profile image is selected
-  document.getElementById("profileImage").addEventListener("change", function () {
+}
+
+// Update file name display when a profile image is selected
+document.getElementById("profileImage").addEventListener("change", function () {
     let file = this.files[0];
     document.getElementById("fileName").textContent = file ? file.name : "No file chosen";
-  });
-  
-  // Signup form submission event listener
-  document.getElementById("signupFormElement").addEventListener("submit", async function (e) {
+});
+
+// Function to show verification message if email is verified
+window.onload = function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("verified") === "true") {
+        alert("Your email has been verified! You can now log in.");
+    }
+};
+
+// Signup form submission event listener
+document.getElementById("signupFormElement").addEventListener("submit", async function (e) {
     e.preventDefault();
-  
+
     // Gather signup form field values
     const firstName = document.getElementById("firstName").value.trim();
     const lastName = document.getElementById("lastName").value.trim();
@@ -28,7 +36,7 @@ function registerNow() {
     const confirmPassword = document.getElementById("confirmPassword").value.trim();
     const profilePictureInput = document.getElementById("profileImage");
     const profilePicture = profilePictureInput.files[0];
-  
+
     // Validate required fields
     let missingFields = [];
     if (!firstName) missingFields.push("First Name");
@@ -36,79 +44,75 @@ function registerNow() {
     if (!email) missingFields.push("Email");
     if (!password) missingFields.push("Password");
     if (!confirmPassword) missingFields.push("Confirm Password");
-    if (!profilePicture) missingFields.push("Profile Picture");
-  
+
     if (missingFields.length > 0) {
-      alert("Please fill in the following fields: " + missingFields.join(", "));
-      return;
+        alert("Please fill in the following fields: " + missingFields.join(", "));
+        return;
     }
-  
+
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+        alert("Passwords do not match!");
+        return;
     }
-  
+
     // Prepare FormData for signup request
     const formData = new FormData();
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
     formData.append("email", email);
     formData.append("password", password);
-    // Optionally, set a default bio if not provided by the user
     formData.append("bio", "I am an aftertinker");
-    formData.append("profilePicture", profilePicture);
-  
+    if (profilePicture) formData.append("profilePicture", profilePicture); // Only append if provided
+
     try {
-      const response = await fetch("http://localhost:3000/api/auth/signup", {
-        method: "POST",
-        body: formData
-      });
-      const result = await response.json();
-  
-      if (result.status === "SUCCESS") {
-        alert("Signup successful! Please verify your email.");
-        window.location.href = "login.html"; // Adjust redirection as needed
-      } else {
-        alert(result.message);
-      }
+        const response = await fetch("http://localhost:3000/api/auth/signup", {
+            method: "POST",
+            body: formData
+        });
+        const result = await response.json();
+
+        if (result.status === "SUCCESS") {
+            alert("Signup successful! Please check your email to verify your account.");
+            window.location.href = "login.html"; // Redirect to login page
+        } else {
+            alert(result.message);
+        }
     } catch (error) {
-      console.error("Signup error:", error);
-      alert("An error occurred. Please try again.");
+        console.error("Signup error:", error);
+        alert("An error occurred. Please try again.");
     }
-  });
-  
-  // Login form submission event listener
-  document.getElementById("loginFormElement").addEventListener("submit", async function (e) {
+});
+
+// Login form submission event listener
+document.getElementById("loginFormElement").addEventListener("submit", async function (e) {
     e.preventDefault();
-  
+
     // Gather login form field values
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
-  
+
     if (!email || !password) {
-      alert("Please fill in both the email and password fields.");
-      return;
+        alert("Please fill in both the email and password fields.");
+        return;
     }
-  
+
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      });
-      const result = await response.json();
-  
-      if (result.status === "SUCCESS") {
-        alert("Login successful!");
-        // Store token in localStorage for future authenticated requests
-        localStorage.setItem("authToken", result.token);
-        window.location.href = "index.html"; // Redirect to a protected page
-      } else {
-        alert(result.message);
-      }
+        const response = await fetch("http://localhost:3000/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+        const result = await response.json();
+
+        if (result.status === "SUCCESS") {
+            alert("Login successful!");
+            localStorage.setItem("authToken", result.token); // Store token in localStorage
+            window.location.href = "index.html"; // Redirect to the homepage
+        } else {
+            alert(result.message);
+        }
     } catch (error) {
-      console.error("Login error:", error);
-      alert("An error occurred. Please try again.");
+        console.error("Login error:", error);
+        alert("An error occurred. Please try again.");
     }
-  });
-  
+});

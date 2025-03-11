@@ -97,7 +97,6 @@ body {
 .navbar button a {
   color: #7D0C0E;
   text-decoration: none;
-
 }
 
 /* ============================= */
@@ -108,8 +107,8 @@ body {
   padding: 3rem 1rem;
   height: calc(100vh - 150px);
   background:
-    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("homeBG1.jpg");
+    linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    url("homeBG.jpg");
   background-repeat: no-repeat;
   background-size: 100%;
 }

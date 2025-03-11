@@ -1,30 +1,14 @@
-// Define the events array
-const events = [
-    {
-        image: "fruit.jpg",
-        title: "Event 1",
-        description: "This is the description of Event 1.",
-        date: "2023-10-01"
-    },
-    {
-        image: "muisc.jpg",
-        title: "Event 2",
-        description: "This is the description of Event 2.",
-        date: "2023-10-05"
-    },
-    {
-        image: "store.jpg",
-        title: "Event 3",
-        description: "This is the description of Event 3.",
-        date: "2023-10-10"
-    },
-    {
-        image: "kisses.jpg",
-        title: "Event 4",
-        description: "This is the description of Event 4.",
-        date: "2023-10-15"
+// Function to fetch and display events from the backend
+async function fetchEvents() {
+    try {
+        const response = await fetch('http://localhost:3000/api/events/');
+        const events = await response.json();
+        makeEvent(events); // Call makeEvent with fetched data
+        initializeCalendar(events); // Call FullCalendar with fetched events
+    } catch (error) {
+        console.error("❌ Error fetching events:", error);
     }
-];
+}
 
 // Function to create and display events
 function makeEvent(events) {
@@ -51,7 +35,7 @@ function makeEvent(events) {
 
         // Add date
         const dateElement = document.createElement('h5');
-        dateElement.textContent = `Date: ${event.date}`; 
+        dateElement.textContent = `Date: ${new Date(event.date).toLocaleDateString()}`; 
         textContainer.appendChild(dateElement);
         
         // Add title
@@ -72,11 +56,12 @@ function makeEvent(events) {
     });
 }
 
-// Call the function to display events
-makeEvent(events);
-
-// Initialize FullCalendar when the DOM is fully loaded
+// Function to initialize FullCalendar with events from backend
 document.addEventListener('DOMContentLoaded', function() {
+    fetchEvents(); // Fetch events when the DOM loads
+});
+
+function initializeCalendar(events) {
     var calendarEl = document.getElementById('tempcal');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth', 
@@ -85,17 +70,10 @@ document.addEventListener('DOMContentLoaded', function() {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: [
-            {
-                title: 'Event 1',
-                start: '2023-10-01'
-            },
-            {
-                title: 'Event 2',
-                start: '2023-10-05',
-                end: '2023-10-07'
-            }
-        ]
+        events: events.map(event => ({
+            title: event.title,
+            start: event.date
+        })) // Convert backend events to FullCalendar format
     });
-    calendar.render(); 
-});
+    calendar.render();
+}
