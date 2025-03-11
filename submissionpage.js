@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => { 
     const form = document.getElementById('submissionForm');
     const statusMsg = document.getElementById('statusMessage');
 
@@ -11,14 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();  // Prevent default form submission
 
         const formData = new FormData(form); 
-        const token = localStorage.getItem('token'); 
-
-        if (!token) {
-            console.error("❌ No token found! User must be logged in.");
-            statusMsg.textContent = "❌ You must be logged in to submit.";
-            statusMsg.style.color = "red";
-            return;
-        }
 
         // Show loading message
         statusMsg.textContent = "⏳ Submitting, please wait...";
@@ -27,9 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch('http://localhost:3000/api/articles/', { 
                 method: 'POST',
-                headers: {
-                    "Authorization": `Bearer ${token}`, // ✅ Attach token
-                },
                 body: formData // ✅ Sending FormData (handles file uploads)
             });
 
