@@ -9,9 +9,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             articlesList.innerHTML = articles.map(article => `
                 <div class="article">
                     <h2>${article.title}</h2>
-                    <p>Author: ${article.author}</p>
-                    <p>${article.description}</p>
-                    <p>Tag: ${article.tag} | ${article.minToRead} min read</p>
+                    <img src="${article.image}" alt="Article Image" class="article-image">
+                    <p><strong>Author:</strong> ${article.author}</p>
+                    <p><strong>Description:</strong> ${article.description}</p>
+                    <p><strong>Tag:</strong> ${article.tag} | <strong>Read Time:</strong> ${article.minToRead} min</p>
+                    <p><strong>Date:</strong> ${new Date(article.date).toLocaleDateString()}</p>
+                    <p><strong>Full Text:</strong> ${article.text}</p>
                     <button class="delete" data-id="${article._id}">Delete</button>
                 </div>
             `).join('');
