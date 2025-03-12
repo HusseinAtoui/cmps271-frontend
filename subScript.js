@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Set up event listeners for static navigation buttons
     setupStaticEventListeners();
-
-    // Load dynamic content for events (slideshow) and articles (cards)
     loadDynamicContent();
 });
 
@@ -11,12 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
    ============================= */
 
 function setupStaticEventListeners() {
-
     const loginBtn = document.querySelector('.login-btn');
     if (loginBtn) {
         loginBtn.addEventListener('click', () => {
             console.log("Login button clicked");
-            // TODO: Implement login modal or redirect here.
         });
     }
 
@@ -24,7 +19,6 @@ function setupStaticEventListeners() {
     if (submitBtn) {
         submitBtn.addEventListener('click', () => {
             console.log("Submit button clicked");
-            // TODO: Implement submission logic here.
         });
     }
 
@@ -32,9 +26,12 @@ function setupStaticEventListeners() {
     if (joinBtn) {
         joinBtn.addEventListener('click', () => {
             console.log("Join membership button clicked");
-            // TODO: Implement membership join logic here.
         });
     }
+
+    // Add event listeners for filtering and searching
+    document.getElementById("categoryFilter").addEventListener("change", filterArticlesByTag);
+    document.getElementById("searchInput").addEventListener("input", searchArticles);
 }
 
 /* =============================
@@ -42,200 +39,50 @@ function setupStaticEventListeners() {
    ============================= */
 
 async function loadDynamicContent() {
-    await loadEvents();    // Load events into the slideshow
-    await loadArticles();  // Load article cards into the grid
-
-    // Initialize slideshow if any slides were loaded
-    if (document.getElementsByClassName("mySlides").length > 0) {
-        showSlide(0);
-    }
+    await loadArticles();
 }
 
 /* =============================
-   Load Events (Slideshow)
+   Load Articles
    ============================= */
 
-async function loadEvents() {
-    const slideshowContainer = document.querySelector('.slideshow-container');
-    // Clear out any existing content
-    slideshowContainer.innerHTML = "";
-
-    let eventsData;
-    try {
-        const response = await fetch('/api/events');
-        if (response && response.ok) {
-            eventsData = await response.json();
-        } else {
-            throw new Error("Response not ok");
-        }
-    } catch (error) {
-        console.error("Error loading events from backend, using dummy data:", error);
-        // Fallback dummy events
-        eventsData = [
-            {
-                id: 1,
-                image: 'image1.jpg',
-                details: 'February 5, 2025 | 3 min read',
-                title: 'Article Title 1',
-                description: 'This is a dummy description for article 1.'
-            }, {
-                id: 2,
-                image: 'image2.jpg',
-                details: 'February 5, 2025 | 3 min read',
-                title: 'Article Title 2',
-                description: 'This is a dummy description for article 2.'
-                
-            }, {
-                id: 3,
-                image: 'image3.jpg',
-                details: 'February 5, 2025 | 3 min read',
-                title: 'Article Title 3',
-                description: 'This is a dummy description for article 3.'
-            },
-            {
-                id: 4,
-                image: 'image4.jpg',
-                details: 'February 6, 2025 | 4 min read',
-                title: 'Article Title 4',
-                description: 'This is a dummy description for article 4.'
-            }
-        ];
-    }
-
-    eventsData.forEach((event, index) => {
-        // Create slide container
-        const slide = document.createElement('div');
-        slide.classList.add('mySlides', 'fade');
-
-        // Build image container
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add('imagecontainer');
-        const img = document.createElement('img');
-        img.src = event.image;
-        img.alt = event.title;
-        imageContainer.appendChild(img);
-
-        // Build text section
-        const textSection = document.createElement('div');
-        textSection.classList.add('text-section');
-
-        const detailsP = document.createElement('p');
-        detailsP.classList.add('details');
-        detailsP.textContent = event.details;
-
-        const titleP = document.createElement('p');
-        titleP.classList.add('title');
-        titleP.textContent = event.title;
-
-        const descriptionP = document.createElement('p');
-        descriptionP.classList.add('description');
-        descriptionP.textContent = event.description;
-
-        // Create "continue reading" button with its event listener
-        const continueBtn = document.createElement('button');
-        continueBtn.classList.add('continue-reading');
-        continueBtn.textContent = "continue reading";
-        continueBtn.addEventListener('click', () => {
-            console.log(`Continue reading event ${event.id}`);
-            // TODO: Redirect to event details page, e.g., window.location.href = `/events/${event.id}`;
-        });
-
-        // Append all text elements to the text section
-        textSection.append(detailsP, titleP, descriptionP, continueBtn);
-
-        // Append image and text to the slide container
-        slide.append(imageContainer, textSection);
-
-        // Append slide to the slideshow container
-        slideshowContainer.appendChild(slide);
-    });
-
-    // Once slides are created, add slideshow controls (prev/next buttons and dots)
-    createSlideshowControls();
-}
-
-/* =============================
-   Load Articles (Cards)
-   ============================= */
 async function loadArticles() {
     const gridContainer = document.querySelector('.grid-container');
-    // Clear existing cards
     gridContainer.innerHTML = "";
 
     let articlesData;
     try {
-        const response = await fetch('/api/articles');
-        if (response && response.ok) {
+        const response = await fetch('http://localhost:3000/api/articles');
+        if (response.ok) {
             articlesData = await response.json();
         } else {
             throw new Error("Response not ok");
         }
     } catch (error) {
-        console.error("Error loading articles from backend, using dummy data:", error);
-        // Fallback dummy articles
-        articlesData = [
-            {
-                id: 1,
-                image: 'image5.jpg',
-                details: 'February 5, 2025 | 3 min read',
-                title: 'Article Title 1',
-                description: 'This is a dummy description for article 1.',
-                author: 'Spring Anderson',
-                authorProfile: 'profile.jpeg'
-            },
-            {
-                id: 2,
-                image: 'image6.jpg',
-                details: 'February 5, 2025 | 3 min read',
-                title: 'Article Title 1',
-                description: 'This is a dummy description for article 1.',
-                author: 'Spring Anderson',
-                authorProfile: 'profile.jpeg'
-            }, {
-                id: 3,
-                image: 'image4.jpg',
-                details: 'February 5, 2025 | 3 min read',
-                title: 'Article Title 1',
-                description: 'This is a dummy description for article 1.',
-                author: 'Spring Anderson',
-                authorProfile: 'profile.jpeg'
-            },
-            {
-                id: 4,
-                image: 'image7.jpg',
-                details: 'February 6, 2025 | 2 min read',
-                title: 'Article Title 2',
-                description: 'This is a dummy description for article 2.',
-                author: 'Spring Anderson',
-                authorProfile: 'profile.jpeg'
-            },
-            {
-                id: 6,
-                image: 'image3.jpg',
-                details: 'February 6, 2025 | 2 min read',
-                title: 'Article Title 2',
-                description: 'This is a dummy description for article 2.',
-                author: 'Spring Anderson',
-                authorProfile: 'profile.jpeg'
-            },
-            {
-                id: 7,
-                image: 'image1.jpg',
-                details: 'February 6, 2025 | 2 min read',
-                title: 'Article Title 2',
-                description: 'This is a dummy description for article 2.',
-                author: 'Spring Anderson',
-                authorProfile: 'profile.jpeg'
-            }
-        ];
+        console.error("Error loading articles from backend:", error);
+        articlesData = [];
     }
 
-    articlesData.forEach(article => {
-        // Create card container
+    displayArticles(articlesData);
+}
+
+/* =============================
+   Display Articles
+   ============================= */
+
+function displayArticles(articles) {
+    const gridContainer = document.querySelector('.grid-container');
+    gridContainer.innerHTML = "";
+
+    if (articles.length === 0) {
+        gridContainer.innerHTML = "<p>No articles found.</p>";
+        return;
+    }
+
+    articles.forEach(article => {
         const card = document.createElement('div');
         card.classList.add('card');
 
-        // Create image container (if an image is provided)
         const imageContainer = document.createElement('div');
         imageContainer.classList.add('imagecontainer');
         if (article.image) {
@@ -245,13 +92,12 @@ async function loadArticles() {
             imageContainer.appendChild(img);
         }
 
-        // Create text section
         const textSection = document.createElement('div');
         textSection.classList.add('text-section');
 
         const detailsP = document.createElement('p');
         detailsP.classList.add('details');
-        detailsP.textContent = article.details;
+        detailsP.textContent = `${article.date} | ${article.minToRead} min read`;
 
         const titleP = document.createElement('p');
         titleP.classList.add('title');
@@ -261,133 +107,93 @@ async function loadArticles() {
         descriptionP.classList.add('description');
         descriptionP.textContent = article.description;
 
-        // Create "continue reading" button with event listener
         const continueBtn = document.createElement('button');
         continueBtn.classList.add('continue-reading');
-        continueBtn.textContent = "continue reading";
+        continueBtn.textContent = "Continue reading";
         continueBtn.addEventListener('click', () => {
-            console.log(`Continue reading article ${article.id}`);
-            // TODO: Redirect to article details page, e.g., window.location.href = `/articles/${article.id}`;
+            window.location.href = `/articles/${article._id}`;
         });
 
-        // Create author info section
         const buttonsDiv = document.createElement('div');
         buttonsDiv.classList.add('buttons');
-
-        const authorImg = document.createElement('img');
-        authorImg.classList.add('profile');
-        if (article.authorProfile) {
-            authorImg.src = article.authorProfile;
-            authorImg.alt = article.author;
-        }
 
         const authorName = document.createElement('p');
         authorName.classList.add('authorname');
         authorName.textContent = article.author;
 
-        buttonsDiv.append(continueBtn, authorImg, authorName);
-
-        // Assemble the text section
+        buttonsDiv.append(continueBtn, authorName);
         textSection.append(detailsP, titleP, descriptionP, buttonsDiv);
-
-        // Assemble the card
         card.append(imageContainer, textSection);
         gridContainer.appendChild(card);
     });
 }
 
 /* =============================
-   Slideshow Functionality
+   Filter Articles by Tag
    ============================= */
-let slideIndex = 0;
-
-function showSlide(index) {
-    const slides = document.getElementsByClassName("mySlides");
-    if (slides.length === 0) return;
-
-    // Wrap-around index if needed
-    if (index >= slides.length) {
-        slideIndex = 0;
-    } else if (index < 0) {
-        slideIndex = slides.length - 1;
-    } else {
-        slideIndex = index;
-    }
-
-    // Hide all slides
-    for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    // Display the current slide using flex layout
-    slides[slideIndex].style.display = "flex";
-
-    // Update the dot indicators
-    updateDots(slideIndex);
-}
-
-function nextSlide() {
-    showSlide(slideIndex + 1);
-}
-
-function prevSlide() {
-    showSlide(slideIndex - 1);
-}
 
 /* =============================
-   Create and Update Controls
+   Filter Articles by Tag (Fixed)
    ============================= */
-function createSlideshowControls() {
-    const slideshowContainer = document.querySelector('.slideshow-container');
+   async function filterArticlesByTag() {
+    const selectedTag = document.getElementById("categoryFilter").value;
+    
+    console.log(`Selected Tag from Dropdown: ${selectedTag}`); // Log the selected tag
 
-    // Remove any existing controls to avoid duplicates
-    const existingPrev = slideshowContainer.querySelector('.prev');
-    const existingNext = slideshowContainer.querySelector('.next');
-    if (existingPrev) existingPrev.remove();
-    if (existingNext) existingNext.remove();
-
-    // Create previous button
-    const prevBtn = document.createElement('button');
-    prevBtn.classList.add('prev');
-    prevBtn.innerHTML = '&#10094;';
-    prevBtn.addEventListener('click', prevSlide);
-    slideshowContainer.appendChild(prevBtn);
-
-    // Create next button
-    const nextBtn = document.createElement('button');
-    nextBtn.classList.add('next');
-    nextBtn.innerHTML = '&#10095;';
-    nextBtn.addEventListener('click', nextSlide);
-    slideshowContainer.appendChild(nextBtn);
-
-    // Create dot navigation container
-    let dotContainer = document.querySelector('.dot-container');
-    if (!dotContainer) {
-        dotContainer = document.createElement('div');
-        dotContainer.classList.add('dot-container');
-        dotContainer.style.textAlign = "center";
-        slideshowContainer.parentNode.insertBefore(dotContainer, slideshowContainer.nextSibling);
-    } else {
-        dotContainer.innerHTML = "";
+    if (selectedTag === "all") {
+        return loadArticles();
     }
 
-    // Create one dot for each slide
-    const slides = document.getElementsByClassName("mySlides");
-    for (let i = 0; i < slides.length; i++) {
-        const dot = document.createElement('span');
-        dot.classList.add('dot');
-        dot.addEventListener('click', () => {
-            showSlide(i);
-        });
-        dotContainer.appendChild(dot);
+    try {
+        const apiUrl = `http://localhost:3000/api/articles/tag/${encodeURIComponent(selectedTag)}`;
+        console.log(`Fetching from: ${apiUrl}`); // Debug log: Ensure correct request
+
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch articles. Status: ${response.status}`);
+        }
+
+        const filteredArticles = await response.json();
+        console.log(`Filtered Articles Response:`, filteredArticles); // Debugging log
+
+        if (filteredArticles.length === 0) {
+            document.querySelector('.grid-container').innerHTML = "<p>No articles found for this tag.</p>";
+        } else {
+            displayArticles(filteredArticles);
+        }
+    } catch (error) {
+        console.error("Error fetching articles by tag:", error);
+        document.querySelector('.grid-container').innerHTML = `<p>Error loading articles: ${error.message}</p>`;
     }
 }
 
-function updateDots(activeIndex) {
-    const dots = document.getElementsByClassName("dot");
-    for (let i = 0; i < dots.length; i++) {
-        dots[i].classList.remove("active");
+
+
+/* =============================
+   Search Articles by Keyword
+   ============================= */
+
+async function searchArticles() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+
+    if (!query) {
+        return loadArticles();
     }
-    if (dots[activeIndex]) {
-        dots[activeIndex].classList.add("active");
+
+    try {
+        const response = await fetch('http://localhost:3000/api/articles');
+        if (response.ok) {
+            let articles = await response.json();
+            articles = articles.filter(article => 
+                article.title.toLowerCase().includes(query) ||
+                article.author.toLowerCase().includes(query) ||
+                article.text.toLowerCase().includes(query)
+            );
+            displayArticles(articles);
+        } else {
+            throw new Error("Response not ok");
+        }
+    } catch (error) {
+        console.error("Error searching articles:", error);
     }
 }

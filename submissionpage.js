@@ -11,14 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const formData = new FormData(form);
 
-        // ✅ Get token from localStorage (assuming user logged in)
-        const token = localStorage.getItem("authToken");
-
-        if (!token) {
-            statusMessage.innerHTML = `<p style="color: red;">You need to log in first!</p>`;
-            loadingIndicator.style.display = "none";
-            return;
-        }
+       
 
         try {
             const response = await fetch("http://localhost:3000/api/articles  ", {

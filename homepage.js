@@ -178,9 +178,10 @@ document.addEventListener("DOMContentLoaded", () => {
   
     let articlesData;
     try {
-      const response = await fetch('/api/articles');
+      const response = await fetch('http://localhost:3000/api/articles');
       if (response && response.ok) {
         articlesData = await response.json();
+        articlesData = articlesData.slice(0, 4);
       } else {
         throw new Error("Response not ok");
       }
@@ -236,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
       imageContainer.classList.add('imagecontainer');
       if (article.image) {
         const img = document.createElement('img');
-        img.src = article.image;
+        img.src = article.image ? `${article.image}?cache-bypass=${Date.now()}` : 'https://i.imgur.com/default.png';
         img.alt = article.title;
         imageContainer.appendChild(img);
       }
