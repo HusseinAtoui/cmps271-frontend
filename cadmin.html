@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Articles</title>
+    <link rel="stylesheet" href="cadmin.css">
+</head>
+<body>
+    <header>
+        <h1>Manage Articles</h1>
+    </header>
+    <main>
+        <form id="article-form">
+            <input type="text" id="title" placeholder="Title" required>
+            <input type="text" id="author" placeholder="Author" required>
+            <input type="number" id="minToRead" placeholder="Minutes to Read" required>
+            <input type="text" id="tag" placeholder="Tag" required>
+            <input type="date" id="date" required>
+            <textarea id="description" placeholder="Description" required></textarea>
+            <textarea id="text" placeholder="Full Text" required></textarea>
+            <input type="file" id="image">
+            <button type="submit">Add Article</button>
+        </form>
+        <h2>Existing Articles</h2>
+        <div id="articles-list"></div>
+    </main>
+    <script src="cadmin.js"></script>
+</body>
+</html>
