@@ -66,12 +66,14 @@ document.addEventListener("DOMContentLoaded", () => {
   
     let eventsData;
     try {
-      const response = await fetch('/api/events');
+      const response = await fetch('http://localhost:3000/api/events/');
       if (response && response.ok) {
         eventsData = await response.json();
       } else {
         throw new Error("Response not ok");
       }
+
+      
     } catch (error) {
       console.error("Error loading events from backend, using dummy data:", error);
       // Fallback dummy events
@@ -104,7 +106,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       ];
     }
-  
+    async function fetchEvents() {
+      try {
+          const response = await fetch('http://localhost:3000/api/events/');
+          const events = await response.json();
+          makeEvent(events); // Call makeEvent with fetched data
+          initializeCalendar(events); // Call FullCalendar with fetched events
+      } catch (error) {
+          console.error("❌ Error fetching events:", error);
+      }
+  }
     eventsData.forEach((event, index) => {
       // Create slide container
       const slide = document.createElement('div');

@@ -54,47 +54,43 @@
 
     <div class="box">
       <h2>Submit Your Work</h2>
-      <form id="submissionForm" action="#" method="POST" enctype="multipart/form-data">
-        
-        <!-- Name Field -->
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-        
-        <!-- Email Field -->
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        
-        <!-- Phone Field (optional example) -->
-        <div class="form-group">
-          <label for="phone">Phone Number:</label>
-          <input type="text" id="phone" name="phone">
-        </div>
-        
-        <!-- Bio Field -->
-        <div class="form-group">
-          <label for="bio">Bio:</label>
-          <textarea id="bio" name="bio" required></textarea>
-        </div>
-        
-        <!-- Upload Document -->
-        <div class="form-group">
-          <label for="document">Upload Document:</label>
-          <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" required>
-        </div>
-        
-        <!-- Upload Picture -->
-        <div class="form-group">
-          <label for="picture">Upload Picture:</label>
-          <input type="file" id="picture" name="picture" accept=".jpg,.jpeg,.png" required>
-        </div>
-        
-        <!-- Submit Button -->
-        <button type="submit">Submit</button>
-      </form>
+     
+<form id="submissionForm" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Phone Number:</label>
+    <input type="text" id="phone" name="phone">
+  </div>
+
+  <div class="form-group">
+    <label for="bio">Bio:</label>
+    <textarea id="bio" name="bio" required></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="document">Upload Document:</label>
+    <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" required>
+  </div>
+
+  <div class="form-group">
+    <label for="picture">Upload Picture:</label>
+    <input type="file" id="picture" name="picture" accept=".jpg,.jpeg,.png" required>
+  </div>
+
+  <button type="submit">Submit</button>
+  <div id="loading" style="display:none;">Submitting...</div>
+  <div id="statusMessage"></div>
+</form>
+
 
       <!-- Status Message for Submission -->
       <div id="statusMessage"></div>

@@ -1,43 +1,47 @@
-document.addEventListener('DOMContentLoaded', () => { 
-    const form = document.getElementById('submissionForm');
-    const statusMsg = document.getElementById('statusMessage');
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("submissionForm");
+    const statusMessage = document.getElementById("statusMessage");
+    const loadingIndicator = document.getElementById("loading");
 
-    if (!form) {
-        console.error("❌ ERROR: Form with ID 'submissionForm' not found!");
-        return;
-    }
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault(); 
 
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();  // Prevent default form submission
+        loadingIndicator.style.display = "block";
+        statusMessage.innerHTML = "";
 
-        const formData = new FormData(form); 
+        const formData = new FormData(form);
 
-        // Show loading message
-        statusMsg.textContent = "⏳ Submitting, please wait...";
-        statusMsg.style.color = "blue";
+        // ✅ Get token from localStorage (assuming user logged in)
+        const token = localStorage.getItem("authToken");
+
+        if (!token) {
+            statusMessage.innerHTML = `<p style="color: red;">You need to log in first!</p>`;
+            loadingIndicator.style.display = "none";
+            return;
+        }
 
         try {
-            const response = await fetch('http://localhost:3000/api/articles/', { 
-                method: 'POST',
-                body: formData // ✅ Sending FormData (handles file uploads)
+            const response = await fetch("http://localhost:3000/api/articles  ", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}` // ✅ Include token
+                },
+                body: formData
             });
 
-            const responseData = await response.json(); // Parse JSON response
+            const result = await response.json();
 
             if (response.ok) {
-                console.log("✅ Submission successful!");
-                statusMsg.textContent = "✅ Submission successful! Thank you.";
-                statusMsg.style.color = "green";
+                statusMessage.innerHTML = `<p style="color: green;">Submission successful!</p>`;
                 form.reset();
             } else {
-                console.error("❌ Submission failed:", responseData.error || responseData.message);
-                statusMsg.textContent = `❌ ${responseData.error || responseData.message}`;
-                statusMsg.style.color = "red";
+                statusMessage.innerHTML = `<p style="color: red;">Error: ${result.error}</p>`;
             }
         } catch (error) {
-            console.error("❌ Network error:", error);
-            statusMsg.textContent = "❌ Network error. Please try again.";
-            statusMsg.style.color = "red";
+            console.error("Network error:", error);
+            statusMessage.innerHTML = `<p style="color: red;">Network error! Check console.</p>`;
+        } finally {
+            loadingIndicator.style.display = "none";
         }
     });
 });
