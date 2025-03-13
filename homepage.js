@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     let eventsData;
     try {
-      const response = await fetch('http://localhost:3000/api/events/');
+      const response = await fetch('https://afterthoughts.onrender.com/api/events/');
       if (response && response.ok) {
         eventsData = await response.json();
       } else {
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     async function fetchEvents() {
       try {
-          const response = await fetch('http://localhost:3000/api/events/');
+          const response = await fetch('https://afterthoughts.onrender.com/api/events/');
           const events = await response.json();
           makeEvent(events); // Call makeEvent with fetched data
           initializeCalendar(events); // Call FullCalendar with fetched events
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     let articlesData;
     try {
-      const response = await fetch('http://localhost:3000/api/articles');
+      const response = await fetch('https://afterthoughts.onrender.com/api/articles');
       if (response && response.ok) {
         articlesData = await response.json();
         articlesData = articlesData.slice(0, 4);
