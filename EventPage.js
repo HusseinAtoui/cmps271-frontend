@@ -1,7 +1,7 @@
 // Function to fetch and display events from the backend
 async function fetchEvents() {
     try {
-        const response = await fetch('http://localhost:3000/api/events/');
+        const response = await fetch('https://afterthoughts.onrender.com/api/events/');
         const events = await response.json();
         makeEvent(events); // Call makeEvent with fetched data
         initializeCalendar(events); // Call FullCalendar with fetched events
