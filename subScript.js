@@ -52,7 +52,7 @@ async function loadArticles() {
 
     let articlesData;
     try {
-        const response = await fetch('http://localhost:3000/api/articles');
+        const response = await fetch('https://afterthoughts.onrender.com/api/articles');
         if (response.ok) {
             articlesData = await response.json();
         } else {
@@ -145,7 +145,7 @@ function displayArticles(articles) {
     }
 
     try {
-        const apiUrl = `http://localhost:3000/api/articles/tag/${encodeURIComponent(selectedTag)}`;
+        const apiUrl = `https://afterthoughts.onrender.com/api/articles/tag/${encodeURIComponent(selectedTag)}`;
         console.log(`Fetching from: ${apiUrl}`); // Debug log: Ensure correct request
 
         const response = await fetch(apiUrl);
@@ -181,7 +181,7 @@ async function searchArticles() {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/articles');
+        const response = await fetch('https://afterthoughts.onrender.com/api/articles');
         if (response.ok) {
             let articles = await response.json();
             articles = articles.filter(article => 
