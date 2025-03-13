@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
     async function fetchArticles() {
         try {
-            const response = await fetch('http://localhost:3000/api/articles/');
+            const response = await fetch('https://afterthoughts.onrender.com/api/articles/');
             if (!response.ok) throw new Error('Failed to fetch articles');
             const articles = await response.json();
             const articlesList = document.getElementById('articles-list');
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.querySelectorAll('.delete').forEach(button => {
                 button.addEventListener('click', async () => {
                     const id = button.getAttribute('data-id');
-                    await fetch(`http://localhost:3000/api/articles/delete/${id}`, { method: 'DELETE' });
+                    await fetch(`https://afterthoughts.onrender.com/api/articles/delete/${id}`, { method: 'DELETE' });
                     fetchArticles();
                 });
             });
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             formData.append('image', document.getElementById('image').files[0]);
         }
         try {
-            const response = await fetch('http://localhost:3000/api/articles/add', {
+            const response = await fetch('https://afterthoughts.onrender.com/api/articles/add', {
                 method: 'POST',
                 body: formData,
             });
