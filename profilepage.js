@@ -1,116 +1,102 @@
-document.addEventListener('DOMContentLoaded', function () {
-  // Ensure this script runs only once using a flag
-  if (window.articleScriptRun) return;
-  window.articleScriptRun = true; // Set a flag to prevent multiple executions
+// ✅ Determine API Base URL (for Local & Production)
+const API_BASE_URL = window.location.hostname === "localhost"
+    ? "http://localhost:3000"  // Local development
+    : "https://afterthoughts.onrender.com"; // Production
 
-  // Fetch articles from the XML file
-  fetch('1.xml') // Ensure file path is correct
-      .then(response => response.text())
-      .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-      .then(data => {
-          const articles = data.getElementsByTagName("article");
-          const activitySection = document.querySelector('.recent-activity');
+// ✅ Get userId from URL or localStorage
+const urlParams = new URLSearchParams(window.location.search);
+const userId = urlParams.get("userId") || localStorage.getItem("userId");
 
-          // Clear existing content to avoid duplicates
-          activitySection.innerHTML = '';
+if (!userId) {
+    alert("You need to log in first!");
+    window.location.href = "loginPage.html"; // Redirect if not logged in
+}
 
-          Array.from(articles).forEach(article => {
-              const title = article.getElementsByTagName("title")[0].textContent;
-              const content = article.getElementsByTagName("content")[0].textContent.trim();
-              const imageTag = article.getElementsByTagName("image")[0]; 
-              const imageSrc = imageTag ? imageTag.textContent.trim() : "default.jpg"; // Default image if missing
-              
-              const preview = content.split("\n").slice(0, 3).join("<br>"); // Extract first 3 lines
-              const wordCount = content.split(/\s+/).length;
-              const readingTime = Math.ceil(wordCount / 225);
-              
-              
-              let articleCard = document.createElement("div");
-              articleCard.classList.add("activity-card");
-              articleCard.innerHTML = `
-                  <img class="images" src="${imageSrc}" alt="${title}">
-                  <div class="activity-info">
-                      <h3>${title}</h3>
-                      <p>${preview}</p>
-                      <span>${readingTime} minute${readingTime === 1 ? '' : 's'}</span>
-                  </div>
-              `;
+// ✅ Fetch User Profile Data
+async function fetchUserProfile() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/users/${userId}`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` }
+        });
 
-              // Add event listener to open modal on click
-              articleCard.addEventListener("click", function () {
-                  openModal(title, content, imageSrc);
-              });
+        if (!response.ok) {
+            throw new Error("Failed to fetch user data.");
+        }
 
-              activitySection.appendChild(articleCard);
-          });
-      })
-      .catch(error => console.error('Error loading XML:', error));
+        const user = await response.json();
+        document.querySelector(".dashboard-header h1").textContent = `Hi, ${user.firstName} ${user.lastName}`;
+        document.querySelector(".dashboard-header p").textContent = `Ready to start your day with some articles?`;
+        
+        if (user.profilePicture) {
+            document.querySelector(".header-image img").src = user.profilePicture;
+        }
 
-  // Create the modal
-  const modal = document.createElement('div');
-  modal.id = 'article-modal';
-  modal.style.display = 'none';
-  modal.style.position = 'fixed';
-  modal.style.top = '0';
-  modal.style.left = '0';
-  modal.style.width = '100%';
-  modal.style.height = '100%';
-  modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
-  modal.style.justifyContent = 'center';
-  modal.style.alignItems = 'center';
-  modal.style.zIndex = '1000';
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        alert("Failed to load profile. Redirecting to login.");
+        window.location.href = "loginPage.html";
+    }
+}
 
-  // Modal content with scroll styling
-  const modalContent = document.createElement('div');
-  modalContent.id = 'modal-content';
-  modalContent.style.backgroundColor = '#fff';
-  modalContent.style.padding = '20px';
-  modalContent.style.borderRadius = '20px';
-  modalContent.style.maxWidth = '600px';
-  modalContent.style.maxHeight = '80%';
-  modalContent.style.overflowY = 'auto';
-  modalContent.style.position = 'relative';
+// ✅ Fetch User Articles & Activity
+async function fetchUserArticles() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/users/${userId}/articles`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` }
+        });
 
-  // Custom Scrollbar
-  const style = document.createElement('style');
-  style.innerHTML = `
-      #modal-content::-webkit-scrollbar {
-          width: 8px;
-      }
-      #modal-content::-webkit-scrollbar-track {
-          background:#7d0c0;
-          border-radius: 10px;
-      }
-      #modal-content::-webkit-scrollbar-thumb {
-          background: #7d0c0;
-          border-radius: 10px;
-      }
-  `;
-  document.head.appendChild(style);
+        if (!response.ok) {
+            throw new Error("Failed to fetch articles.");
+        }
 
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
+        const articles = await response.json();
+        const activitySection = document.querySelector(".recent-activity");
+        activitySection.innerHTML = ""; // Clear existing content
 
-  // Open modal function
-  function openModal(title, content, imageSrc) {
-      modalContent.innerHTML = `
-          <button id="modal-close" style="position:absolute;top:10px;right:10px;padding:5px 10px;cursor:pointer;border-radius:20px;border:none;background-color:#f0c5a4;">Close</button>
-          <img src="${imageSrc}" alt="${title}" style="width:100%; border-radius:10px; margin-bottom:10px;">
-          <h2>${title}</h2>
-          <p>${content}</p>
-      `;
-      modal.style.display = 'flex';
+        if (articles.length === 0) {
+            activitySection.innerHTML = "<p>No recent articles published.</p>";
+            return;
+        }
 
-      // Close modal when clicking the close button
-      document.getElementById('modal-close').addEventListener('click', function () {
-          modal.style.display = 'none';
-      });
-  }
+        articles.forEach(article => {
+            const articleItem = document.createElement("div");
+            articleItem.classList.add("article-item");
+            articleItem.innerHTML = `
+                <h3>${article.title}</h3>
+                <p>${article.summary}</p>
+                <p><strong>Views:</strong> ${article.views}</p>
+                <a href="article.html?id=${article._id}">Read More</a>
+            `;
+            activitySection.appendChild(articleItem);
+        });
 
-  // Close modal when clicking outside the content area
-  modal.addEventListener('click', function (e) {
-      if (e.target === modal) {
-          modal.style.display = 'none';
-      }
-  });
+    } catch (error) {
+        console.error("Error fetching articles:", error);
+    }
+}
+
+// ✅ Profile Button Click Redirect
+document.querySelector(".nav-links a[href='profilepage.html']")?.addEventListener("click", function (e) {
+    e.preventDefault();
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+        window.location.href = `profilepage.html?userId=${userId}`;
+    } else {
+        alert("Please log in first.");
+        window.location.href = "loginPage.html";
+    }
 });
+
+// ✅ Logout Function
+function logout() {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userId");
+    window.location.href = "loginPage.html"; // Redirect to login after logout
+}
+
+// ✅ Ensure Scripts Only Run Once
+if (!window.profileScriptRun) {
+    window.profileScriptRun = true;
+    fetchUserProfile();
+    fetchUserArticles();
+}
