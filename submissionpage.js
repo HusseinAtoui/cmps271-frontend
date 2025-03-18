@@ -38,3 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+document.getElementById("document").addEventListener("change", function() {
+    document.getElementById("documentName").textContent = this.files[0] ? this.files[0].name : "No Document chosen";
+});
+
+document.getElementById("picture").addEventListener("change", function() {
+    document.getElementById("pictureName").textContent = this.files[0] ? this.files[0].name : "No file chosen";
+});
