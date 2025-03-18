@@ -22,73 +22,88 @@ document.addEventListener('DOMContentLoaded', function () {
         profileImage.src = userData.profilePicture || "default-profile.jpeg";
     }
 
-    // Fetch and display articles from the backend
-    fetchArticles();
-});
-
-// Function to fetch articles from the backend API
-function fetchArticles() {
-    fetch("/api/articles", {
-        method: "GET",
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem("authToken")}`
-        }
-    })
-    .then(response => response.json())
-    .then(articles => {
-        const activitySection = document.querySelector(".recent-activity");
-        activitySection.innerHTML = ""; // Clear existing content
-
-        articles.forEach(article => {
-            const preview = article.content.split("\n").slice(0, 3).join("<br>");
-            const wordCount = article.content.split(/\s+/).length;
-            const readingTime = Math.ceil(wordCount / 225);
-
-            let articleCard = document.createElement("div");
-            articleCard.classList.add("activity-card");
-            articleCard.innerHTML = `
-                <img class="images" src="${article.image || 'default.jpg'}" alt="${article.title}">
-                <div class="activity-info">
-                    <h3>${article.title}</h3>
-                    <p>${preview}</p>
-                    <span>${readingTime} minute${readingTime === 1 ? '' : 's'}</span>
-                </div>
-            `;
-
-            // Open modal on click
-            articleCard.addEventListener("click", function () {
-                openModal(article.title, article.content, article.image || "default.jpg");
-            });
-
-            activitySection.appendChild(articleCard);
-        });
-    })
-    .catch(error => console.error("Error fetching articles:", error));
-}
-
-// Function to open the article modal
-function openModal(title, content, imageSrc) {
-    const modal = document.getElementById("article-modal");
-    const modalContent = document.getElementById("modal-content");
-
-    modalContent.innerHTML = `
-        <button id="modal-close" style="position:absolute;top:10px;right:10px;padding:5px 10px;cursor:pointer;border-radius:20px;border:none;background-color:#f0c5a4;">Close</button>
-        <img src="${imageSrc}" alt="${title}" style="width:100%; border-radius:10px; margin-bottom:10px;">
-        <h2>${title}</h2>
-        <p>${content}</p>
-    `;
-
-    modal.style.display = "flex";
-
-    // Close modal on button click
-    document.getElementById("modal-close").addEventListener("click", function () {
-        modal.style.display = "none";
+       // Fetch and display articles from the backend
+       fetchArticles();
     });
-
-    // Close modal when clicking outside content
-    modal.addEventListener("click", function (e) {
-        if (e.target === modal) {
-            modal.style.display = "none";
+    
+    async function fetchArticles() {
+        const gridContainer = document.querySelector('.grid-container');
+        gridContainer.innerHTML = "";
+    
+        let articlesData;
+        try {
+            const response = await fetch('http://localhost:3000/api/articles');
+            if (response.ok) {
+                articlesData = await response.json();
+            } else {
+                throw new Error("Response not ok");
+            }
+        } catch (error) {
+            console.error("Error loading articles from backend:", error);
+            articlesData = [];
         }
+    
+        displayArticles(articlesData);
+    }
+
+/* =============================
+   Display Articles
+   ============================= */
+
+function displayArticles(articles) {
+    const gridContainer = document.querySelector('.grid-container');
+    gridContainer.innerHTML = "";
+
+    if (articles.length === 0) {
+        gridContainer.innerHTML = "<p>No articles found.</p>";
+        return;
+    }
+
+    articles.forEach(article => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+
+        const imageContainer = document.createElement('div');
+        imageContainer.classList.add('imagecontainer');
+        if (article.image) {
+            const img = document.createElement('img');
+            img.src = article.image;
+            img.alt = article.title;
+            imageContainer.appendChild(img);
+        }
+
+        const textSection = document.createElement('div');
+        textSection.classList.add('text-section');
+
+        const detailsP = document.createElement('p');
+        detailsP.classList.add('details');
+        detailsP.textContent = `${article.date} | ${article.minToRead} min read`;
+
+        const titleP = document.createElement('p');
+        titleP.classList.add('title');
+        titleP.textContent = article.title;
+
+        const descriptionP = document.createElement('p');
+        descriptionP.classList.add('description');
+        descriptionP.textContent = article.description;
+
+        const continueBtn = document.createElement('button');
+        continueBtn.classList.add('continue-reading');
+        continueBtn.textContent = "Continue reading";
+        continueBtn.addEventListener('click', () => {
+            window.location.href = `/articles/${article._id}`;
+        });
+
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.classList.add('buttons');
+
+        const authorName = document.createElement('p');
+        authorName.classList.add('authorname');
+        authorName.textContent = article.author;
+
+        buttonsDiv.append(continueBtn, authorName);
+        textSection.append(detailsP, titleP, descriptionP, buttonsDiv);
+        card.append(imageContainer, textSection);
+        gridContainer.appendChild(card);
     });
 }
