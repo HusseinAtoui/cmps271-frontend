@@ -65,7 +65,7 @@ document.getElementById("signupFormElement").addEventListener("submit", async fu
     if (profilePicture) formData.append("profilePicture", profilePicture); // Only append if provided
 
     try {
-        const response = await fetch("http://localhost:3000/api/auth/signup", {
+        const response = await fetch("https://afterthoughts.onrender.com/api/auth/signup", {
             method: "POST",
             body: formData
         });
@@ -97,7 +97,7 @@ document.getElementById("loginFormElement").addEventListener("submit", async fun
     }
 
     try {
-        const response = await fetch("http://localhost:3000/api/auth/login", {
+        const response = await fetch("https://afterthoughts.onrender.com/api/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
