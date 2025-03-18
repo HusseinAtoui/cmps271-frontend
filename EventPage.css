@@ -151,6 +151,22 @@
    margin-bottom: 20px;
    margin-top: 20px;
  }
+/* Make the navigation buttons (month/week/day, today, next, prev) red */
+.fc .fc-button-primary {
+  background-color:  #6E1313 !important; /* Button background */
+  border-color:  #6E1313 !important;     /* Button border */
+  color: #ffffff !important;            /* Text color (white for contrast) */
+}
+.fc-view-harness fc-view-harness-active
+{color: #420000;}
+.fc .fc-toolbar-title {
+  color:  #6E1313 !important;
+}
+
+/* Change arrow icon colors (left/right) to red or white, depending on your background */
+.fc .fc-button .fc-icon {
+  color: #ffffff !important; 
+}
 
  /* MEMBERSHIP SECTION */
  .membership {
@@ -280,11 +296,12 @@
  }
  
  #user-profile-image {
-  height: 60px; /* Adjust the image height to be smaller */
-  width: 60px; /* Make the image square */
+  height: 80px; /* Adjust the image height to be smaller */
+  width: 80px; /* Make the image square */
   border-radius: 50%; /* To make the profile image circular */
   object-fit: cover; /* Makes sure the image doesn't get stretched */
   margin-right: 15px; /* Adds space between the image and the text */
+  margin-left: 5%;
 }
 
 #profile {
@@ -292,28 +309,21 @@
   align-items: center; /* Vertically align the image and text */
   justify-content: flex-start; /* Align the content to the left */
   background-color: #7D0D0D;
-  height: 80px; 
-  width: 30%;/* Adjust the profile container height */
-  padding: 0 15px; /* Padding to prevent the content from touching the edges */
-  border-radius: 10px; 
+  width: 30%; /* Adjust the profile container width */
+  height: 5%; /* Adjust this value to make the profile shorter */
+  border-radius: 10px;
   margin-bottom: 10%;
-  margin-left: auto; 
-
+  margin-left: auto;
+  height: auto;
+  color: white;
 }
 
 
 #user-greetings {
   font-family: "Times New Roman";
   font-size: 18px; /* Adjust text size */
-  color: #faefe1; /* Light color for the greeting text */
-}
-#upComingEvents {
-  display: flex; /* Use flexbox to layout children */
-  flex-direction: column; /* Stack elements vertically */
-  align-items: flex-start; /* Align items to the left by default */
-  padding: 0 50px;
-  border-top: 2px solid #420000;
 
 }
+
 
 

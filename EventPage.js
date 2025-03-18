@@ -85,7 +85,6 @@ function makeEvent(events) {
         allEvents.appendChild(eventElement);
     });
 }
-
 // Function to initialize FullCalendar with events from the backend
 function initializeCalendar(events) {
     var calendarEl = document.getElementById('tempcal');
@@ -98,7 +97,8 @@ function initializeCalendar(events) {
         },
         events: events.map(event => ({
             title: event.title,
-            start: event.date
+            start: event.date,
+            color: '#7D0D0D' // Fixed: Color value must be a string
         })) // Convert backend events to FullCalendar format
     });
     calendar.render();
