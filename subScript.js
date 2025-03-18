@@ -68,9 +68,7 @@ async function loadArticles() {
 
 /* =============================
    Display Articles
-   ============================= */
-
-function displayArticles(articles) {
+   ============================= */function displayArticles(articles) {
     const gridContainer = document.querySelector('.grid-container');
     gridContainer.innerHTML = "";
 
@@ -95,13 +93,18 @@ function displayArticles(articles) {
         const textSection = document.createElement('div');
         textSection.classList.add('text-section');
 
-        const detailsP = document.createElement('p');
-        detailsP.classList.add('details');
-        detailsP.textContent = `${article.date} | ${article.minToRead} min read`;
-
         const titleP = document.createElement('p');
         titleP.classList.add('title');
         titleP.textContent = article.title;
+
+        // Format the date to a more user-friendly format
+        const formattedDate = new Date(article.date);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDateString = formattedDate.toLocaleDateString('en-US', options);
+
+        const detailsP = document.createElement('p');
+        detailsP.classList.add('details');
+        detailsP.textContent = `${formattedDateString} | ${article.minToRead} min read`;
 
         const descriptionP = document.createElement('p');
         descriptionP.classList.add('description');
@@ -121,16 +124,13 @@ function displayArticles(articles) {
         authorName.classList.add('authorname');
         authorName.textContent = article.author;
 
+        // Append the title first, then the details below
+        textSection.append(titleP, detailsP, descriptionP, buttonsDiv);
         buttonsDiv.append(continueBtn, authorName);
-        textSection.append(detailsP, titleP, descriptionP, buttonsDiv);
         card.append(imageContainer, textSection);
         gridContainer.appendChild(card);
     });
 }
-
-/* =============================
-   Filter Articles by Tag
-   ============================= */
 
 /* =============================
    Filter Articles by Tag (Fixed)

@@ -49,8 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
 /* =============================
    Display Articles
    ============================= */
-
-function displayArticles(articles) {
+   function displayArticles(articles) {
     const gridContainer = document.querySelector('.grid-container');
     gridContainer.innerHTML = "";
 
@@ -75,13 +74,22 @@ function displayArticles(articles) {
         const textSection = document.createElement('div');
         textSection.classList.add('text-section');
 
-        const detailsP = document.createElement('p');
-        detailsP.classList.add('details');
-        detailsP.textContent = `${article.date} | ${article.minToRead} min read`;
-
         const titleP = document.createElement('p');
         titleP.classList.add('title');
         titleP.textContent = article.title;
+
+        // Format the date into a user-friendly format
+        const formattedDate = new Date(article.date).toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        const detailsP = document.createElement('p');
+        detailsP.classList.add('details');
+        // Display date and minToRead below the title
+        detailsP.textContent = `${formattedDate} | ${article.minToRead} min read`;
 
         const descriptionP = document.createElement('p');
         descriptionP.classList.add('description');
@@ -102,7 +110,7 @@ function displayArticles(articles) {
         authorName.textContent = article.author;
 
         buttonsDiv.append(continueBtn, authorName);
-        textSection.append(detailsP, titleP, descriptionP, buttonsDiv);
+        textSection.append(titleP, detailsP, descriptionP, buttonsDiv);
         card.append(imageContainer, textSection);
         gridContainer.appendChild(card);
     });

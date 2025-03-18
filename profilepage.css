@@ -263,27 +263,29 @@ footer {
 
 }
 .text-section{
-    margin-left: 10%;
+    margin-left: 2%;
 
 }
-.imagecontainer{
-    border-radius: 50%;
-    max-height: 50%;
-
-
+.card img {
+    width: 300px; /* Set the width to 100% to ensure it fills the card */
+    height: 100%; /* Set the height to 100% to ensure it fills the card */
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+    border-radius: 5% 0px 0px 5% ; /* This makes the image circular */
 }
+
 .card {
     border-radius: 20px;
-    background-color: #7D0C0E;
+    background-color:rgb(237, 213, 204);
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     overflow: hidden;
     color: white;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
     margin-left: 5%;
     margin-right: 5%;
-    max-height: 5%;
+    height: 300px;
+    color: #7D0C0E;
     
   }
   
@@ -291,3 +293,19 @@ footer {
     transform: scale(1.02);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
+  .continue-reading:hover{
+    background-color: #bb484a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+.continue-reading{
+    background-color:#7D0C0E;
+border-radius: 5%;
+
+border: none;
+color: #fff;
+padding: 0.75rem 1rem;
+cursor: pointer;
+border-radius: 15px;
+margin-right: 1rem;
+}
