@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("submissionForm");
     const statusMessage = document.getElementById("statusMessage");
     const loadingIndicator = document.getElementById("loading");
-
+    const token = localStorage.getItem("authToken");
     form.addEventListener("submit", async (event) => {
         event.preventDefault(); 
 
