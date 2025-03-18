@@ -278,3 +278,42 @@
  .mailing-list button:hover {
    background-color: #F0C5A4;
  }
+ 
+ #user-profile-image {
+  height: 60px; /* Adjust the image height to be smaller */
+  width: 60px; /* Make the image square */
+  border-radius: 50%; /* To make the profile image circular */
+  object-fit: cover; /* Makes sure the image doesn't get stretched */
+  margin-right: 15px; /* Adds space between the image and the text */
+}
+
+#profile {
+  display: flex; /* This enables flexbox layout */
+  align-items: center; /* Vertically align the image and text */
+  justify-content: flex-start; /* Align the content to the left */
+  background-color: #7D0D0D;
+  height: 80px; 
+  width: 30%;/* Adjust the profile container height */
+  padding: 0 15px; /* Padding to prevent the content from touching the edges */
+  border-radius: 10px; 
+  margin-bottom: 10%;
+  margin-left: auto; 
+
+}
+
+
+#user-greetings {
+  font-family: "Times New Roman";
+  font-size: 18px; /* Adjust text size */
+  color: #faefe1; /* Light color for the greeting text */
+}
+#upComingEvents {
+  display: flex; /* Use flexbox to layout children */
+  flex-direction: column; /* Stack elements vertically */
+  align-items: flex-start; /* Align items to the left by default */
+  padding: 0 50px;
+  border-top: 2px solid #420000;
+
+}
+
+
