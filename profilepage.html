@@ -43,6 +43,41 @@
         <div class="header-image">
             <img id="user-profile-image" src="profile.jpeg" alt="Profile">
         </div>
+      
+        <div class="settings" onclick="toggleSettings()">
+            <img id="settings-image" src="bolt.png" alt="Settings" class="settings-image">
+        </div>
+        
+      
+
+          
+        <div id="settings-div" class="settings-content">
+            <button id="changeBioBtn" class="settings-btn">Change Bio</button>
+            <button id="changePicBtn" class="settings-btn">Change Profile Picture</button>
+            <button id="deleteAccBtn" class="settings-btn delete-btn">Delete Account</button>
+            <button id="logoutBtn" class="settings-btn logout-btn">Logout</button>
+
+             <div id="bioSection" class="settings-box">
+              <h3>Change Bio</h3>
+              <textarea id="bioInput" placeholder="Enter your new bio..."></textarea>
+              <button id="saveBioBtn" class="btn">Save Bio</button>
+            </div>
+          
+            <!-- Profile Picture Change Section -->
+            <div id="picSection" class="settings-box">
+              <h3>Change Profile Picture</h3>
+              <input type="file" id="picInput" accept="image/*" />
+              <button id="savePicBtn" class="btn">Save Picture</button>
+            </div>
+          
+            <!-- Delete Account Section -->
+            <div id="deleteSection" class="settings-box delete-section">
+              <h3>Are you sure you want to delete your account?</h3>
+              <button id="yesDeleteBtn" class="btn delete-btn">Yes, Delete Account</button>
+              <button id="noDeleteBtn" class="btn cancel-btn">Cancel</button>
+            </div>
+        </div>
+        
     </header>
 
     <!-- Dashboard Stats -->

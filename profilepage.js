@@ -115,3 +115,159 @@ document.addEventListener('DOMContentLoaded', function () {
         gridContainer.appendChild(card);
     });
 }
+// Function to toggle the visibility of the settings div
+function toggleSettings() {
+    var settingsDiv = document.getElementById('settings-div');
+    // Toggle display between 'none' and 'block'
+    if (settingsDiv.style.display === "none" || settingsDiv.style.display === "") {
+        settingsDiv.style.display = "block";
+    } else {
+        settingsDiv.style.display = "none";
+    }
+}
+document.addEventListener("DOMContentLoaded", function () {
+    const changeBioBtn = document.getElementById("changeBioBtn");
+    const bioSection = document.getElementById("bioSection");
+    const bioInput = document.getElementById("bioInput");
+    const saveBioBtn = document.getElementById("saveBioBtn");
+
+    const changePicBtn = document.getElementById("changePicBtn");
+    const picSection = document.getElementById("picSection");
+    const picInput = document.getElementById("picInput");
+    const savePicBtn = document.getElementById("savePicBtn");
+
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // Toggle bio input display
+    changeBioBtn.addEventListener("click", function () {
+        bioSection.style.display = bioSection.style.display === "block" ? "none" : "block";
+    });
+
+    // Save new bio
+    saveBioBtn.addEventListener("click", async function () {
+        const newBio = bioInput.value.trim();
+        if (!newBio) {
+            alert("Bio cannot be empty!");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:3000/account/updateBio", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+                },
+                body: JSON.stringify({ bio: newBio })
+            });
+
+            if (response.ok) {
+                alert("Bio updated successfully!");
+                document.getElementById("user-greeting").textContent = `Hi, ${newBio}`;
+                bioSection.style.display = "none";
+            } else {
+                alert("Failed to update bio.");
+            }
+        } catch (error) {
+            console.error("Error updating bio:", error);
+            alert("An error occurred while updating your bio.");
+        }
+    });
+
+    // Toggle profile picture upload section
+    changePicBtn.addEventListener("click", function () {
+        picSection.style.display = picSection.style.display === "block" ? "none" : "block";
+    });
+
+    // Save new profile picture
+    savePicBtn.addEventListener("click", async function () {
+        const file = picInput.files[0];
+        if (!file) {
+            alert("Please select a picture.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("profilePicture", file);
+
+        try {
+            const response = await fetch("http://localhost:3000/account/updateProfilePic", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("user-profile-image").src = data.profilePicUrl;
+                alert("Profile picture updated successfully!");
+                picSection.style.display = "none";
+            } else {
+                alert("Failed to update profile picture.");
+            }
+        } catch (error) {
+            console.error("Error updating profile picture:", error);
+            alert("An error occurred while updating your profile picture.");
+        }
+    });
+
+
+    // --- Delete Account ---
+    deleteAccBtn.addEventListener("click", function () {
+        deleteSection.style.display = "block";
+        bioSection.style.display = "none";
+        picSection.style.display = "none";
+    });
+
+    yesDeleteBtn.addEventListener("click", async function () {
+        try {
+            const response = await fetch("http://localhost:3000/account/delete", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+                }
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert("Your account has been deleted.");
+                window.location.href = "index.html"; // Adjust the redirect as needed
+            } else {
+                alert(data.message || "Failed to delete account");
+            }
+        } catch (error) {
+            console.error("Error deleting account:", error);
+            alert("An error occurred while deleting account.");
+        }
+    });
+
+    noDeleteBtn.addEventListener("click", function () {
+        deleteSection.style.display = "none";
+    });
+
+
+    // Logout function
+    logoutBtn.addEventListener("click", async function () {
+        try {
+            const response = await fetch("http://localhost:3000/account/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+                }
+            });
+
+            if (response.ok) {
+                localStorage.removeItem("authToken");
+                window.location.href = "loginPage.html";
+            } else {
+                alert("Failed to logout.");
+            }
+        } catch (error) {
+            console.error("Logout error:", error);
+            alert("An error occurred during logout.");
+        }
+    });
+});
