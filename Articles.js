@@ -52,6 +52,6 @@ const profiles = [
         comment: "I didn't really enjoy the poem that much..."
     }
 ];
-
+window.addEventListener("load", async () => {makeProfile(profiles);});
 // Call the function with the profiles array
-makeProfile(profiles);
+
