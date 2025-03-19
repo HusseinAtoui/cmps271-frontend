@@ -1,116 +1,385 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Ensure this script runs only once using a flag
-  if (window.articleScriptRun) return;
-  window.articleScriptRun = true; // Set a flag to prevent multiple executions
+    const userDataString = localStorage.getItem("userData");
+    const token = localStorage.getItem("authToken");
 
-  // Fetch articles from the XML file
-  fetch('1.xml') // Ensure file path is correct
-      .then(response => response.text())
-      .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-      .then(data => {
-          const articles = data.getElementsByTagName("article");
-          const activitySection = document.querySelector('.recent-activity');
+    if (!userDataString || !token) {
+        console.warn("User not logged in. Redirecting...");
+        window.location.href = "login.html";
+        return;
+    }
 
-          // Clear existing content to avoid duplicates
-          activitySection.innerHTML = '';
+    const userData = JSON.parse(userDataString);
 
-          Array.from(articles).forEach(article => {
-              const title = article.getElementsByTagName("title")[0].textContent;
-              const content = article.getElementsByTagName("content")[0].textContent.trim();
-              const imageTag = article.getElementsByTagName("image")[0]; 
-              const imageSrc = imageTag ? imageTag.textContent.trim() : "default.jpg"; // Default image if missing
-              
-              const preview = content.split("\n").slice(0, 3).join("<br>"); // Extract first 3 lines
-              const wordCount = content.split(/\s+/).length;
-              const readingTime = Math.ceil(wordCount / 225);
-              
-              
-              let articleCard = document.createElement("div");
-              articleCard.classList.add("activity-card");
-              articleCard.innerHTML = `
-                  <img class="images" src="${imageSrc}" alt="${title}">
-                  <div class="activity-info">
-                      <h3>${title}</h3>
-                      <p>${preview}</p>
-                      <span>${readingTime} minute${readingTime === 1 ? '' : 's'}</span>
-                  </div>
-              `;
+    // Update the greeting
+    const userGreeting = document.getElementById("user-greeting");
+    if (userGreeting) {
+        userGreeting.textContent = `Hi, ${userData.firstName} ${userData.lastName}`;
+    }
 
-              // Add event listener to open modal on click
-              articleCard.addEventListener("click", function () {
-                  openModal(title, content, imageSrc);
-              });
+    // Update the profile image
+    const profileImage = document.getElementById("user-profile-image");
+    if (profileImage) {
+        profileImage.src = userData.profilePicture || "default-profile.jpeg";
+    }
 
-              activitySection.appendChild(articleCard);
-          });
-      })
-      .catch(error => console.error('Error loading XML:', error));
+       // Fetch and display articles from the backend
+       fetchArticles();
+    });
+    
+    async function fetchArticles() {
+        const gridContainer = document.querySelector('.grid-container');
+        gridContainer.innerHTML = "";
+    
+        let articlesData;
+        try {
+            const response = await fetch('http://localhost:3000/api/articles');
+            if (response.ok) {
+                articlesData = await response.json();
+            } else {
+                throw new Error("Response not ok");
+            }
+        } catch (error) {
+            console.error("Error loading articles from backend:", error);
+            articlesData = [];
+        }
+    
+        displayArticles(articlesData);
+    }
 
-  // Create the modal
-  const modal = document.createElement('div');
-  modal.id = 'article-modal';
-  modal.style.display = 'none';
-  modal.style.position = 'fixed';
-  modal.style.top = '0';
-  modal.style.left = '0';
-  modal.style.width = '100%';
-  modal.style.height = '100%';
-  modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
-  modal.style.justifyContent = 'center';
-  modal.style.alignItems = 'center';
-  modal.style.zIndex = '1000';
+/* =============================
+   Display Articles
+   ============================= */
+   function displayArticles(articles) {
+    const gridContainer = document.querySelector('.grid-container');
+    gridContainer.innerHTML = "";
 
-  // Modal content with scroll styling
-  const modalContent = document.createElement('div');
-  modalContent.id = 'modal-content';
-  modalContent.style.backgroundColor = '#fff';
-  modalContent.style.padding = '20px';
-  modalContent.style.borderRadius = '20px';
-  modalContent.style.maxWidth = '600px';
-  modalContent.style.maxHeight = '80%';
-  modalContent.style.overflowY = 'auto';
-  modalContent.style.position = 'relative';
+    if (articles.length === 0) {
+        gridContainer.innerHTML = "<p>No articles found.</p>";
+        return;
+    }
 
-  // Custom Scrollbar
-  const style = document.createElement('style');
-  style.innerHTML = `
-      #modal-content::-webkit-scrollbar {
-          width: 8px;
-      }
-      #modal-content::-webkit-scrollbar-track {
-          background:#7d0c0;
-          border-radius: 10px;
-      }
-      #modal-content::-webkit-scrollbar-thumb {
-          background: #7d0c0;
-          border-radius: 10px;
-      }
-  `;
-  document.head.appendChild(style);
+    articles.forEach(article => {
+        const card = document.createElement('div');
+        card.classList.add('card');
 
-  modal.appendChild(modalContent);
-  document.body.appendChild(modal);
+        const imageContainer = document.createElement('div');
+        imageContainer.classList.add('imagecontainer');
+        if (article.image) {
+            const img = document.createElement('img');
+            img.src = article.image;
+            img.alt = article.title;
+            imageContainer.appendChild(img);
+        }
 
-  // Open modal function
-  function openModal(title, content, imageSrc) {
-      modalContent.innerHTML = `
-          <button id="modal-close" style="position:absolute;top:10px;right:10px;padding:5px 10px;cursor:pointer;border-radius:20px;border:none;background-color:#f0c5a4;">Close</button>
-          <img src="${imageSrc}" alt="${title}" style="width:100%; border-radius:10px; margin-bottom:10px;">
-          <h2>${title}</h2>
-          <p>${content}</p>
-      `;
-      modal.style.display = 'flex';
+        const textSection = document.createElement('div');
+        textSection.classList.add('text-section');
 
-      // Close modal when clicking the close button
-      document.getElementById('modal-close').addEventListener('click', function () {
-          modal.style.display = 'none';
+        const titleP = document.createElement('p');
+        titleP.classList.add('title');
+        titleP.textContent = article.title;
+
+        // Format the date into a user-friendly format
+        const formattedDate = new Date(article.date).toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        const detailsP = document.createElement('p');
+        detailsP.classList.add('details');
+        // Display date and minToRead below the title
+        detailsP.textContent = `${formattedDate} | ${article.minToRead} min read`;
+
+        const descriptionP = document.createElement('p');
+        descriptionP.classList.add('description');
+        descriptionP.textContent = article.description;
+
+        const continueBtn = document.createElement('button');
+        continueBtn.classList.add('continue-reading');
+        continueBtn.textContent = "Continue reading";
+        continueBtn.addEventListener('click', () => {
+            window.location.href = `/articles/${article._id}`;
+        });
+
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.classList.add('buttons');
+
+        const authorName = document.createElement('p');
+        authorName.classList.add('authorname');
+        authorName.textContent = article.author;
+
+        buttonsDiv.append(continueBtn, authorName);
+        textSection.append(titleP, detailsP, descriptionP, buttonsDiv);
+        card.append(imageContainer, textSection);
+        gridContainer.appendChild(card);
+    });
+}
+// Function to toggle the visibility of the settings div
+function toggleSettings() {
+    var settingsDiv = document.getElementById('settings-div');
+    // Toggle display between 'none' and 'block'
+    if (settingsDiv.style.display === "none" || settingsDiv.style.display === "") {
+        settingsDiv.style.display = "block";
+    } else {
+        settingsDiv.style.display = "none";
+    }
+}
+document.addEventListener("DOMContentLoaded", function () {
+    const changeBioBtn = document.getElementById("changeBioBtn");
+    const bioSection = document.getElementById("bioSection");
+    const bioInput = document.getElementById("bioInput");
+    const saveBioBtn = document.getElementById("saveBioBtn");
+
+    const changePicBtn = document.getElementById("changePicBtn");
+    const picSection = document.getElementById("picSection");
+    const picInput = document.getElementById("picInput");
+    const savePicBtn = document.getElementById("savePicBtn");
+
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // Toggle bio input display
+    changeBioBtn.addEventListener("click", function () {
+        bioSection.style.display = bioSection.style.display === "block" ? "none" : "block";
+    });
+
+    // Save new bio
+    saveBioBtn.addEventListener("click", async function () {
+        const newBio = bioInput.value.trim();
+        if (!newBio) {
+            alert("Bio cannot be empty!");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:3000/account/updateBio", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+                },
+                body: JSON.stringify({ bio: newBio })
+            });
+
+            if (response.ok) {
+                alert("Bio updated successfully!");
+                document.getElementById("user-greeting").textContent = `Hi, ${newBio}`;
+                bioSection.style.display = "none";
+            } else {
+                alert("Failed to update bio.");
+            }
+        } catch (error) {
+            console.error("Error updating bio:", error);
+            alert("An error occurred while updating your bio.");
+        }
+    });
+
+    // Toggle profile picture upload section
+    changePicBtn.addEventListener("click", function () {
+        picSection.style.display = picSection.style.display === "block" ? "none" : "block";
+    });
+
+    // Save new profile picture
+    savePicBtn.addEventListener("click", async function () {
+        const file = picInput.files[0];
+        if (!file) {
+            alert("Please select a picture.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("profilePicture", file);
+
+        try {
+            const response = await fetch("http://localhost:3000/account/updateProfilePic", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("user-profile-image").src = data.profilePicUrl;
+                alert("Profile picture updated successfully!");
+                picSection.style.display = "none";
+            } else {
+                alert("Failed to update profile picture.");
+            }
+        } catch (error) {
+            console.error("Error updating profile picture:", error);
+            alert("An error occurred while updating your profile picture.");
+        }
+    });
+
+
+    // --- Delete Account ---
+    deleteAccBtn.addEventListener("click", function () {
+        deleteSection.style.display = "block";
+        bioSection.style.display = "none";
+        picSection.style.display = "none";
+    });
+
+    yesDeleteBtn.addEventListener("click", async function () {
+        try {
+            const response = await fetch("http://localhost:3000/account/delete", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+                }
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert("Your account has been deleted.");
+                window.location.href = "index.html"; // Adjust the redirect as needed
+            } else {
+                alert(data.message || "Failed to delete account");
+            }
+        } catch (error) {
+            console.error("Error deleting account:", error);
+            alert("An error occurred while deleting account.");
+        }
+    });
+
+    noDeleteBtn.addEventListener("click", function () {
+        deleteSection.style.display = "none";
+    });
+
+
+    // Logout function
+    logoutBtn.addEventListener("click", async function () {
+        try {
+            const response = await fetch("http://localhost:3000/account/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+                }
+            });
+
+            if (response.ok) {
+                localStorage.removeItem("authToken");
+                window.location.href = "loginPage.html";
+            } else {
+                alert("Failed to logout.");
+            }
+        } catch (error) {
+            console.error("Logout error:", error);
+            alert("An error occurred during logout.");
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", () => {
+    // --- User Data & Authentication ---
+    const userDataString = localStorage.getItem("userData");
+    const token = localStorage.getItem("authToken");
+    if (!userDataString || !token) {
+      console.warn("User not logged in. Redirecting...");
+      window.location.href = "login.html";
+      return;
+    }
+    const userData = JSON.parse(userDataString);
+    const userGreeting = document.getElementById("user-greeting");
+    if (userGreeting) {
+      userGreeting.textContent = `Hi, ${userData.firstName} ${userData.lastName}`;
+    }
+    const profileImage = document.getElementById("user-profile-image");
+    if (profileImage) {
+      profileImage.src = userData.profilePicture || "default-profile.jpeg";
+    }
+    
+    // --- Fetch & Display Articles ---
+    fetchArticles();
+  
+    // --- Stats & Chart Code ---
+    // Sample articles data for chart demo; replace with your actual articles if needed
+    const articlesData = [
+      { title: "Article 1", month: "January", uniqueViews: 50, likes: 20, comments: 5 },
+      { title: "Article 2", month: "January", uniqueViews: 40, likes: 15, comments: 8 },
+      { title: "Article 3", month: "February", uniqueViews: 60, likes: 25, comments: 10 },
+      { title: "Article 4", month: "March", uniqueViews: 70, likes: 30, comments: 12 },
+      { title: "Article 5", month: "March", uniqueViews: 55, likes: 22, comments: 7 },
+      { title: "Article 6", month: "April", uniqueViews: 80, likes: 35, comments: 15 }
+    ];
+  
+    // Calculate overall totals
+    const totalArticles = articlesData.length;
+    const totalUniqueViews = articlesData.reduce((sum, art) => sum + art.uniqueViews, 0);
+    const totalLikes = articlesData.reduce((sum, art) => sum + art.likes, 0);
+    const totalComments = articlesData.reduce((sum, art) => sum + art.comments, 0);
+  
+    // Insert stat boxes into the dashboard-stats section
+    const statsContainer = document.querySelector(".dashboard-stats");
+    statsContainer.innerHTML = `
+        <div class="stat-box" data-type="articles">Total Articles: ${totalArticles}</div>
+        <div class="stat-box" data-type="uniqueViews">Total Unique Views: ${totalUniqueViews}</div>
+        <div class="stat-box" data-type="popular">Total Likes: ${totalLikes}</div>
+        <div class="stat-box" data-type="engagement">Total Comments: ${totalComments}</div>
+    `;
+  
+    // Add click event listeners to stat boxes
+    document.querySelectorAll(".stat-box").forEach(box => {
+      box.addEventListener("click", function () {
+        const statType = this.getAttribute("data-type");
+        displayGraph(statType);
       });
-  }
+    });
+  
+    function displayGraph(type) {
+        // Dummy x-axis values (for example, days or months)
+        const xValues = [1,2,3,4,5,6,7,8,9,10];
+        let dataSet;
+        // Set dummy datasets based on the type clicked
+        if (type === "articles") {
+          dataSet = [1,2,1,3,2,4,3,5,4,6];
+        } else if (type === "uniqueViews") {
+          dataSet = [10,20,30,40,50,60,70,80,90,100];
+        } else if (type === "popular") {
+          dataSet = [5,5,6,7,8,8,9,10,10,11];
+        } else if (type === "engagement") {
+          dataSet = [2,3,2,4,3,5,3,6,4,7];
+        }
 
-  // Close modal when clicking outside the content area
-  modal.addEventListener('click', function (e) {
-      if (e.target === modal) {
-          modal.style.display = 'none';
+        // Ensure the chart container is visible
+        const container = document.getElementById("chartContainer");
+        container.style.display = "block";
+        // Clear any existing content in the container
+        container.innerHTML = "";
+        // Create a new canvas element for the chart
+        const canvas = document.createElement("canvas");
+        canvas.id = "chartCanvas";
+        container.appendChild(canvas);
+        const ctx = canvas.getContext("2d");
+        // Create the chart using Chart.js (line chart example)
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: xValues,
+            datasets: [{
+              label: `${type} Chart`,
+              data: dataSet,
+              borderColor: "#7D0C0E",
+              fill: false
+            }]
+          },
+          options: {
+            scales: {
+              y: { beginAtZero: true }
+            }
+          }
+        });
       }
-  });
+    });
+  // Other functions (fetchArticles, displayArticles, toggleSettings, etc.)
+  // are defined below as needed...
+  document.addEventListener("DOMContentLoaded", () => {
+    // Your existing chart code...
+
+    // Close chart container when the close button is clicked
+    const closeChartBtn = document.getElementById("closeChartBtn");
+    closeChartBtn.addEventListener("click", () => {
+        document.getElementById("chartContainer").style.display = "none";
+    });
 });

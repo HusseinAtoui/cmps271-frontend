@@ -7,7 +7,7 @@
     <title>Dashboard</title>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="profilepage.css">
-    <script src="profilepage.js"></script>
+    <script src="profilepage.js" defer></script> <!-- Add defer to load script after the DOM -->
 </head>
 
 <body>
@@ -26,40 +26,72 @@
             <a href="contact.html"> Contact </a>
             <a href="submissionpage.html"><strong>SUBMIT</strong></a>
 
-
             <div class="search-container">
                 <input type="text" placeholder="Search..." aria-label="Search">
-
             </div>
 
             <button class="login-btn"><a href="loginPage.html">login</a></button>
-
-
         </div>
     </nav>
 
     <!-- Dashboard Header -->
     <header class="dashboard-header">
         <div class="header-content">
-            <h1>Hi, Girlie(Profile Name)</h1>
+            <h1 id="user-greeting">Hi, Loading...</h1>
             <p>Ready to start your day with some articles?</p>
         </div>
         <div class="header-image">
-            <img src="profile.jpeg" alt="Profile " />
+            <img id="user-profile-image" src="profile.jpeg" alt="Profile">
         </div>
+      
+        <div class="settings" onclick="toggleSettings()">
+            <img id="settings-image" src="bolt.png" alt="Settings" class="settings-image">
+        </div>
+        
+      
+
+          
+        <div id="settings-div" class="settings-content">
+            <button id="changeBioBtn" class="settings-btn">Change Bio</button>
+            <button id="changePicBtn" class="settings-btn">Change Profile Picture</button>
+            <button id="deleteAccBtn" class="settings-btn delete-btn">Delete Account</button>
+            <button id="logoutBtn" class="settings-btn logout-btn">Logout</button>
+
+             <div id="bioSection" class="settings-box">
+              <h3>Change Bio</h3>
+              <textarea id="bioInput" placeholder="Enter your new bio..."></textarea>
+              <button id="saveBioBtn" class="btn">Save Bio</button>
+            </div>
+          
+            <!-- Profile Picture Change Section -->
+            <div id="picSection" class="settings-box">
+              <h3>Change Profile Picture</h3>
+              <input type="file" id="picInput" accept="image/*" />
+              <button id="savePicBtn" class="btn">Save Picture</button>
+            </div>
+          
+            <!-- Delete Account Section -->
+            <div id="deleteSection" class="settings-box delete-section">
+              <h3>Are you sure you want to delete your account?</h3>
+              <button id="yesDeleteBtn" class="btn delete-btn">Yes, Delete Account</button>
+              <button id="noDeleteBtn" class="btn cancel-btn">Cancel</button>
+            </div>
+        </div>
+        
     </header>
 
-    <!-- Dashboard Stats -->
     <section class="dashboard-stats">
-        <div class="stat-box">83% Open Rate</div>
-        <div class="stat-box">77% Complete</div>
-        <div class="stat-box">91 Unique Views</div>
-        <div class="stat-box">126 Total Views</div>
-    </section>
+        <!-- Stat boxes will be dynamically inserted here -->
+      </section>
+    
+      <!-- Chart Container (no extra canvas here; the JS will create/update it) -->
+      <div id="chartContainer" style="display: none; position: relative;">
+        <!-- The chart canvas will be dynamically inserted here -->
+    </div>
+    
 
-    <!-- Recent Activity Section for Articles -->
-    <section class="recent-activity">
-        <!-- Articles will be dynamically inserted here -->
+    <section class="grid-container">
+        <!-- Article cards will be loaded dynamically -->
     </section>
 
     <footer>
@@ -79,9 +111,10 @@
                     <button>SIGN UP</button>
                 </div>
             </div>
+        </div>
     </footer>
 
-
 </body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </html>

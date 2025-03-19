@@ -255,23 +255,265 @@ footer {
     font-weight: bold;
     color: white;
     background-color: #7D0D0D;
+    cursor: pointer;
 }
 
 
-.recent-activity {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    height: 5%;
-    margin: 0 auto;
+.grid-container{
+
+
+}
+.text-section{
+    margin-left: 2%;
+
+}
+.card img {
+    width: 300px; /* Set the width to 100% to ensure it fills the card */
+    height: 100%; /* Set the height to 100% to ensure it fills the card */
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+    border-radius: 5% 0px 0px 5% ; /* This makes the image circular */
 }
 
-.activity-card {
+.card {
+    border-radius: 20px;
+    background-color:rgb(237, 213, 204);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
+    overflow: hidden;
+    color: white;
+    margin-bottom: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 300px;
+    color: #7D0C0E;
+    
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  .continue-reading:hover{
+    background-color: #bb484a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+.continue-reading{
+    background-color:#7D0C0E;
+border-radius: 5%;
+
+border: none;
+color: #fff;
+padding: 0.75rem 1rem;
+cursor: pointer;
+border-radius: 15px;
+margin-right: 1rem;
+}/* Dashboard Header - Container */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    background-color: rgb(237, 213, 204);
-    padding: 15px;
-    border-radius: 10px;
-
-
+    background-color: #f3e5d8;
+    padding: 40px 50px;
+    position: relative;  /* Ensure the header is positioned correctly */
 }
+
+/* Settings icon container */
+.settings {
+    position: absolute;  /* Position it relative to the header */
+    top: 10px;   /* Adjust top for positioning */
+    right: 20px; /* Adjust right for positioning */
+    height: 24px;  /* Set a smaller height */
+    width: 24px;   /* Set a smaller width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.settings img {
+    width: 50px;      /* Directly control the width of the image */
+    height: 50px;   
+}
+/* Settings image */
+
+
+/* Profile image inside header */
+.header-image img {
+    height: 150px;  /* Adjust height of profile image */
+    width: auto;    /* Maintain the aspect ratio */
+}
+/* Settings icon container */
+.settings {
+    position: absolute;  
+    top: 10px;   
+    right: 20px; 
+    height: 24px;  
+    width: 24px;   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings-image {
+    width: 20px;     
+    height: 20px;     
+    object-fit: contain; 
+}
+
+/* Hidden settings content */
+.settings-content {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 50px;  /* Adjust position */
+    right: 20px;  /* Adjust position */
+    background-color: white; 
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 200px; /* Adjust the width */
+    border-radius: 8px;
+}
+/* Settings Dropdown */
+.settings-content {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #faefe1; 
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 220px; 
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #7D0C0E;
+}
+
+/* Settings Buttons */
+.settings-btn {
+    display: block;
+    width: 100%;
+    background-color: #7D0C0E;
+    color: #FAEDE1;
+    border: none;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: "Times New Roman", serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.settings-btn:hover {
+    background-color: #bb484a;
+}
+
+/* Logout & Delete Buttons */
+.logout-btn {
+    background-color: #bb484a;
+}
+
+.delete-btn {
+    background-color: #5a0c0e;
+}
+
+.logout-btn:hover, .delete-btn:hover {
+    background-color: #7D0C0E;
+}
+
+/* Bio & Profile Picture Section */
+.settings-box {
+    display: none;
+    background-color: #faefe1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px solid #7D0C0E;
+}
+
+.settings-box h3 {
+    color: #7D0C0E;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+textarea, input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #7D0C0E;
+    border-radius: 5px;
+    font-family: "Times New Roman", serif;
+    background-color: #FAEDE1;
+    color: #7D0C0E;
+}
+
+/* Save Buttons */
+.btn {
+    background-color: #7D0C0E;
+    color: #FAEDE1;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+    font-family: "Times New Roman", serif;
+}
+
+.btn:hover {
+    background-color: #bb484a;
+}
+
+/* Delete Confirmation Section */
+.delete-section {
+    background-color: #f3e5d8;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #7D0C0E;
+}
+
+.cancel-btn {
+    background-color: #faefe1;
+    color: #7D0C0E;
+    border: 1px solid #7D0C0E;
+}
+
+.cancel-btn:hover {
+    background-color: #bb484a;
+    color: #FAEDE1;
+}
+/* Style for the chart container */
+#chartContainer {
+    background-color: #f3e5d8; /* A light, complementary background */
+    border: 2px solid #7D0C0E; /* Border matching your theme */
+    border-radius: 15px;       /* Rounded corners */
+    padding: 20px;             /* Internal spacing */
+    margin: 20px auto;         /* Centered with vertical spacing */
+    max-width: 800px;          /* Maximum width for responsiveness */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle depth */
+}
+
+/* Ensure the canvas fits nicely inside the container */
+#myChart {
+    display: block;
+    width: 100%;
+    height: auto;
+}/* Style for the chart container */
+#chartContainer {
+    background-color: #f3e5d8;
+    border: 2px solid #7D0C0E;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative; /* Needed for absolute positioning of the close button */
+}
+
+/* Ensure the canvas fits nicely inside the container */
+#myChart {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+

@@ -65,7 +65,7 @@ document.getElementById("signupFormElement").addEventListener("submit", async fu
     if (profilePicture) formData.append("profilePicture", profilePicture); // Only append if provided
 
     try {
-        const response = await fetch("https://afterthoughts.onrender.com/auth/signup", {
+        const response = await fetch("https://afterthoughts.onrender.com/api/auth/signup", {
             method: "POST",
             body: formData
         });
@@ -73,13 +73,13 @@ document.getElementById("signupFormElement").addEventListener("submit", async fu
 
         if (result.status === "SUCCESS") {
             alert("Signup successful! Please check your email to verify your account.");
-            window.location.href = "login.html"; // Redirect to login page
+            window.location.href = "loginpage.html"; // Redirect to login page
         } else {
             alert(result.message);
         }
     } catch (error) {
         console.error("Signup error:", error);
-        alert("An error occurred. Please try again.");
+        alert("An error occurred. Please try again.",error);
     }
 });
 
@@ -106,8 +106,21 @@ document.getElementById("loginFormElement").addEventListener("submit", async fun
 
         if (result.status === "SUCCESS") {
             alert("Login successful!");
-            localStorage.setItem("authToken", result.token); // Store token in localStorage
-            window.location.href = "index.html"; // Redirect to the homepage
+
+            // Save the token in localStorage
+            localStorage.setItem("authToken", result.token);
+
+            // Save user data in localStorage for profile page access
+            localStorage.setItem("userData", JSON.stringify({
+                firstName: result.user.firstName,
+                lastName: result.user.lastName,
+                profilePicture: result.user.profilePicture || "default-profile.jpeg",
+                email: result.user.email,
+                bio: result.user.bio
+            }));
+
+            // Redirect to the profile page
+            window.location.href = "profilepage.html";
         } else {
             alert(result.message);
         }

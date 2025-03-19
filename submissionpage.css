@@ -1,7 +1,7 @@
 /* ========================================= */
-/*               Global Styles             */
+/*               Global Styles               */
 /* ========================================= */
-* { 
+* {
     box-sizing: border-box;
     font-family: "Times New Roman";
 }
@@ -17,7 +17,7 @@ body {
 }
 
 /* ========================================= */
-/*               Navigation                */
+/*               Navigation                  */
 /* ========================================= */
 .navbar {
     display: flex;
@@ -100,7 +100,7 @@ body {
 }
 
 /* ========================================= */
-/*                 Footer                  */
+/*                 Footer                    */
 /* ========================================= */
 footer {
     background-color: #7D0C0E;
@@ -181,7 +181,7 @@ footer {
 }
 
 /* ========================================= */
-/*           Responsive Styles             */
+/*           Responsive Styles               */
 /* ========================================= */
 @media (max-width: 768px) {
     .navbar {
@@ -202,13 +202,13 @@ footer {
 }
 
 /* ========================================= */
-/*         Submission Page Styles          */
+/*         Submission Page Styles            */
 /* ========================================= */
 
 /* Container to hold both divs side by side */
 .submission-container {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     gap: 10px;
     flex-direction: row;
@@ -226,9 +226,11 @@ footer {
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 50%;  /* Takes up half the available container width */
-    margin-right: 5%;
-    padding: 2% 20%;  /* Top-bottom padding 2%, left-right 20% */
+    width: 50%;
+    /* Takes up half the available container width */
+    margin-right: 2%;
+    padding: 2% 20%;
+    /* Top-bottom padding 2%, left-right 20% */
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: rgb(255, 239, 239);
@@ -236,54 +238,115 @@ footer {
 
 /* Heading styling inside form box */
 .box h2 {
-    white-space: nowrap; /* Keeps "Submit Your Work" on one line */
+    white-space: nowrap;
+    /* Keeps "Submit Your Work" on one line */
     text-align: center;
     overflow: hidden;
     margin-bottom: 20px;
 }
+.custom-input{
+
+width:90%;
+
+
+}
+/* ======================= */
+/*          Form Styling   */
+/* ======================= */
+
+#submissionForm{
+    width:90%;
+}
 
 /* ======================= */
-/*      Submission Guidelines       */
+/*  Submission Guidelines  */
 /* ======================= */
 .submission {
-    width: 50%;  /* Equal width to the form box */
+    width: 60%;
+    /* Equal width to the form box */
     margin-left: 5%;
     /* You can add additional styling for the guidelines here */
 }
 
 /* ======================= */
-/*       Form Group Styling */
+/*     Form Group Styling  */
 /* ======================= */
-
-
-.form-group {
-    display: flex;          /* Places label and input on same line */
-    align-items: center;    /* Vertically center them */
-    margin-bottom: 15px;    /* Spacing between rows */
+/* ======================= */
+/*      Custom Input       */
+/* ======================= */
+.custom-input {
+    width: 90%;  /* Set the width of the input group to 90% */
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.form-group label {
-    width: 150px;           /* Fixed width for label */
-    font-weight: bold;
-    margin-right: 10px;     /* Space between label and input */
-    text-align: right;
-}
-
-.form-group input,
-.form-group textarea {
-    flex: 1;                /* Fills the remaining horizontal space */
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
+.custom-input label {
     font-size: 16px;
-    background-color: #fff;
-    color: #333;
-    box-sizing: border-box;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: white;
 }
 
-.form-group textarea {
-    height: 100px; 
+.custom-input input,
+.custom-input textarea {
+    width: 400%;  /* Make sure input fields take up full width of the .custom-input container */
+    padding: 10px;
+    border: 2px solid #7d0c0e;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background-color: #faefe1;
+}
+
+.custom-input input:focus,
+.custom-input textarea:focus {
+    border-color: #ad3d3f;
+}
+
+/* File Upload Styling */
+.custom-file {
+    width: 90%;  /* Set the width of the input group to 90% */
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     resize: none;
+}
+
+.custom-file-upload {
+
+    
+    padding: 12px;
+    border-radius: 25px;
+    border: 2px solid #7d0c0e;
+    font-size: 16px;
+    color: #7d0c0e;
+    background-color: #faefe1;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-weight: bold;
+    width: 300%;  /* Make sure input fields take up full width of the .custom-input container */
+    padding: 10px;
+resize: none;
+ 
+    outline: none;
+ 
+}
+
+.custom-file-upload:hover {
+    border-color: #ad3d3f;
+}
+
+
+span {
+    margin-top: 5px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
 }
 
 /* ======================= */
