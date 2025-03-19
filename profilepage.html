@@ -80,14 +80,16 @@
         
     </header>
 
-    <!-- Dashboard Stats -->
     <section class="dashboard-stats">
-        <div class="stat-box">83% Open Rate</div>
-        <div class="stat-box">77% Complete</div>
-        <div class="stat-box">91 Unique Views</div>
-        <div class="stat-box">126 Total Views</div>
-    </section>
+        <!-- Stat boxes will be dynamically inserted here -->
+      </section>
     
+      <!-- Chart Container (no extra canvas here; the JS will create/update it) -->
+      <div id="chartContainer" style="display: none; position: relative;">
+        <!-- The chart canvas will be dynamically inserted here -->
+    </div>
+    
+
     <section class="grid-container">
         <!-- Article cards will be loaded dynamically -->
     </section>
@@ -113,5 +115,6 @@
     </footer>
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </html>

@@ -255,6 +255,7 @@ footer {
     font-weight: bold;
     color: white;
     background-color: #7D0D0D;
+    cursor: pointer;
 }
 
 
@@ -481,3 +482,54 @@ textarea, input[type="file"] {
     background-color: #bb484a;
     color: #FAEDE1;
 }
+/* Style for the chart container */
+#chartContainer {
+    background-color: #f3e5d8; /* A light, complementary background */
+    border: 2px solid #7D0C0E; /* Border matching your theme */
+    border-radius: 15px;       /* Rounded corners */
+    padding: 20px;             /* Internal spacing */
+    margin: 20px auto;         /* Centered with vertical spacing */
+    max-width: 800px;          /* Maximum width for responsiveness */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle depth */
+}
+
+/* Ensure the canvas fits nicely inside the container */
+#myChart {
+    display: block;
+    width: 100%;
+    height: auto;
+}/* Style for the chart container */
+#chartContainer {
+    background-color: #f3e5d8;
+    border: 2px solid #7D0C0E;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative; /* Needed for absolute positioning of the close button */
+}
+
+/* Ensure the canvas fits nicely inside the container */
+#myChart {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Style for the close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff5f5f;
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 10;
+}
+
