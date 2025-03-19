@@ -244,6 +244,19 @@ footer {
     overflow: hidden;
     margin-bottom: 20px;
 }
+.custom-input{
+
+width:90%;
+
+
+}
+/* ======================= */
+/*          Form Styling   */
+/* ======================= */
+
+#submissionForm{
+    width:90%;
+}
 
 /* ======================= */
 /*  Submission Guidelines  */
@@ -258,9 +271,11 @@ footer {
 /* ======================= */
 /*     Form Group Styling  */
 /* ======================= */
-
+/* ======================= */
+/*      Custom Input       */
+/* ======================= */
 .custom-input {
-    width: 100%;
+    width: 90%;  /* Set the width of the input group to 90% */
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
@@ -276,7 +291,7 @@ footer {
 
 .custom-input input,
 .custom-input textarea {
-    width: 100%;
+    width: 400%;  /* Make sure input fields take up full width of the .custom-input container */
     padding: 10px;
     border: 2px solid #7d0c0e;
     border-radius: 8px;
@@ -292,18 +307,17 @@ footer {
 
 /* File Upload Styling */
 .custom-file {
+    width: 90%;  /* Set the width of the input group to 90% */
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%;
-    margin-bottom: 10px;
+    resize: none;
 }
 
 .custom-file-upload {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+
+    
     padding: 12px;
     border-radius: 25px;
     border: 2px solid #7d0c0e;
@@ -314,11 +328,18 @@ footer {
     cursor: pointer;
     transition: 0.3s ease;
     font-weight: bold;
+    width: 300%;  /* Make sure input fields take up full width of the .custom-input container */
+    padding: 10px;
+resize: none;
+ 
+    outline: none;
+ 
 }
 
 .custom-file-upload:hover {
     border-color: #ad3d3f;
 }
+
 
 span {
     margin-top: 5px;
