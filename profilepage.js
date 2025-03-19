@@ -327,81 +327,51 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   
-    // Function to display a graph inside #chartContainer
     function displayGraph(type) {
-      // Sample x-axis values and datasets (you can adjust these using your articlesData)
-      const xValues = [100,200,300,400,500,600,700,800,900,1000];
-      let dataset1, dataset2, dataset3;
-  
-      if (type === "articles") {
-        // Group by month (dummy data for demonstration)
-        dataset1 = [2,3,4,3,5,4,3,2,1,0];
-        dataset2 = [1,2,2,2,1,3,2,1,0,0];
-        dataset3 = [0,1,0,2,1,1,0,1,2,1];
-      } else if (type === "uniqueViews") {
-        dataset1 = articlesData.map(article => article.uniqueViews);
-        dataset2 = dataset1.map(val => val + 10);
-        dataset3 = dataset1.map(val => val - 5);
-      } else if (type === "popular") {
-        dataset1 = articlesData.map(article => article.likes);
-        dataset2 = dataset1.map(val => val + 5);
-        dataset3 = dataset1.map(val => val - 2);
-      } else if (type === "engagement") {
-        dataset1 = articlesData.map(article => article.comments);
-        dataset2 = dataset1.map(val => val + 3);
-        dataset3 = dataset1.map(val => Math.floor(val / 2));
-      }
-  
-      // Make sure the chart container is visible
-      const chartDiv = document.getElementById("chartContainer");
-      chartDiv.style.display = "block";
-  
-      // If a canvas with id "myChart" already exists, remove it before creating a new one
-      let oldCanvas = document.getElementById("myChart");
-      if (oldCanvas) {
-        oldCanvas.parentNode.removeChild(oldCanvas);
-      }
-      // Create a new canvas element
-      const newCanvas = document.createElement("canvas");
-      newCanvas.id = "myChart";
-      chartDiv.appendChild(newCanvas);
-  
-      // Destroy an existing chart instance if it exists (Chart.js 3+)
-      if (window.myLineChart instanceof Chart) {
-        window.myLineChart.destroy();
-      }
-  
-      // Create the new chart (line chart example)
-      const ctx = newCanvas.getContext("2d");
-      window.myLineChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: xValues,
-          datasets: [{
-            data: dataset1,
-            borderColor: "red",
-            fill: false,
-            label: "Dataset 1"
-          },{
-            data: dataset2,
-            borderColor: "green",
-            fill: false,
-            label: "Dataset 2"
-          },{
-            data: dataset3,
-            borderColor: "blue",
-            fill: false,
-            label: "Dataset 3"
-          }]
-        },
-        options: {
-          plugins: { legend: { display: true } },
-          scales: { y: { beginAtZero: true } }
+        // Dummy x-axis values (for example, days or months)
+        const xValues = [1,2,3,4,5,6,7,8,9,10];
+        let dataSet;
+        // Set dummy datasets based on the type clicked
+        if (type === "articles") {
+          dataSet = [1,2,1,3,2,4,3,5,4,6];
+        } else if (type === "uniqueViews") {
+          dataSet = [10,20,30,40,50,60,70,80,90,100];
+        } else if (type === "popular") {
+          dataSet = [5,5,6,7,8,8,9,10,10,11];
+        } else if (type === "engagement") {
+          dataSet = [2,3,2,4,3,5,3,6,4,7];
         }
-      });
-    }
-  });
-  
+
+        // Ensure the chart container is visible
+        const container = document.getElementById("chartContainer");
+        container.style.display = "block";
+        // Clear any existing content in the container
+        container.innerHTML = "";
+        // Create a new canvas element for the chart
+        const canvas = document.createElement("canvas");
+        canvas.id = "chartCanvas";
+        container.appendChild(canvas);
+        const ctx = canvas.getContext("2d");
+        // Create the chart using Chart.js (line chart example)
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: xValues,
+            datasets: [{
+              label: `${type} Chart`,
+              data: dataSet,
+              borderColor: "#7D0C0E",
+              fill: false
+            }]
+          },
+          options: {
+            scales: {
+              y: { beginAtZero: true }
+            }
+          }
+        });
+      }
+    });
   // Other functions (fetchArticles, displayArticles, toggleSettings, etc.)
   // are defined below as needed...
   document.addEventListener("DOMContentLoaded", () => {
