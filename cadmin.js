@@ -1,5 +1,3 @@
-
-/* scripts.js */
 document.addEventListener("DOMContentLoaded", async () => {
     async function fetchArticles() {
         try {
@@ -57,6 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 });
+
 articlesList.innerHTML = articles.map(article => {
     console.log('Rendering article:', article); // Debugging line
     return `
@@ -73,7 +72,6 @@ articlesList.innerHTML = articles.map(article => {
         </div>
     `;
 }).join('');
-
 
 document.querySelectorAll('.approve').forEach(button => {
     button.addEventListener('click', async () => {
