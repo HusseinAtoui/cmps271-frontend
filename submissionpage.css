@@ -228,7 +228,7 @@ footer {
     text-align: center;
     width: 50%;
     /* Takes up half the available container width */
-    margin-right: 5%;
+    margin-right: 2%;
     padding: 2% 20%;
     /* Top-bottom padding 2%, left-right 20% */
     border-radius: 15px;
@@ -262,7 +262,7 @@ width:90%;
 /*  Submission Guidelines  */
 /* ======================= */
 .submission {
-    width: 50%;
+    width: 60%;
     /* Equal width to the form box */
     margin-left: 5%;
     /* You can add additional styling for the guidelines here */
