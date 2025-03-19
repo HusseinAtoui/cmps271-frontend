@@ -1,0 +1,347 @@
+/* ============================= */
+/*          Global Styles        */
+/* ============================= */
+* {
+    box-sizing: border-box;
+    font-family: "Times New Roman";
+  }
+  
+  body {
+    margin: 0;
+    background-color: #FFE2D5;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+/* ============================= */
+/*          Navigation           */
+/* ============================= */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #7d0c0e;
+    padding: 15px 50px;
+    height: 110px;
+  }
+  
+  .logo img {
+    height: 70px;
+    width: auto;
+    padding: 2px;
+    margin-left: 20px;
+    border-radius: 5px;
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #faefe1;
+    font-size: 18px;
+    text-transform: lowercase;
+    transition: 0.3s;
+  }
+  
+  .nav-links a.active {
+    border-bottom: 2px solid #faefe1;
+    padding-bottom: 3px;
+  }
+  
+  .nav-links a:not(.active):hover {
+    text-decoration: underline;
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  
+  .search-container input {
+    font-size: 16px;
+    outline: none;
+    border-radius: 15px;
+    width: 100%;
+    background-color: #faefe1;
+    color: #7d0c0e;
+    border: white;
+    padding: 6px;
+  }
+  
+  .search-container input:focus {
+    border-color: #f0c5a4;
+  }
+  
+  .login-btn {
+    background-color: #faefe1;
+    border-color: #f0c5a4;
+    border-radius: 15px;
+    padding: 6px;
+    border: white;
+    font-size: 16px;
+    width: 10%;
+    font-weight: bold;
+    color: #7D0C0E;
+  }
+  
+  .navbar button a {
+    color: #7D0C0E;
+    text-decoration: none;
+  }
+  /* ============================= */
+  /*           my section          */
+  /* ============================= */
+  .image{
+    background-image:  url("kisses.jpg");
+    background-size: 100% ;
+    height: 400px;
+  }
+  .article{
+    text-align: center;
+    font-family: "Times New Roman", serif;
+    background-color: #faefe1;
+    border-bottom: 10px solid #7D0C0E;
+  }
+ .article h1{  
+    font-size: 300%;
+    color :#7D0C0E;
+    margin:0%;
+
+ }
+ .article h2{
+    font-size: 150%;
+    margin: 0%;
+ }
+ .text{
+    text-align: left;
+    font-size: 120%;
+    /*
+    padding-left: 0%;
+    padding-right: 20%;
+    text-align: center;*/
+ }
+
+ .feedback {
+  background-color: #7D0C0E;   
+  display: flex;     
+  
+  align-items: flex-start;          
+  padding: 2%; 
+  gap: 20px;
+  width: 100%;                  
+}
+
+
+.feedback button {
+  width: 250px;             
+  height: 50px;              
+  border-radius: 8px;        
+  border: none;             
+  background-color: #fff;    
+  color: #7D0C0E;            
+}
+                   
+.context {
+  width: 500px;   
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+h3 {
+  color: white;                
+  font-size: 24px;             
+  margin: 0;                  
+}
+.like{
+  padding-top: 20px;
+  display: flex; 
+  gap:10px;      
+}
+
+.writing {
+  width:100%;
+  height:5%;
+}
+
+.comments {
+  width: 100%;               
+  background-color: #fff;    
+  border-radius: 8px;        
+  padding: 10px;            
+  box-sizing: border-box;    
+}
+
+textarea {
+  width: 100%;               
+  height: 150px;             
+  padding: 10px;            
+  border: 1px solid #ccc;   
+  border-radius: 8px;        
+  font-size: 16px;           
+  box-sizing: border-box; 
+  resize: none;        
+}
+
+
+
+
+
+
+.other {
+  width: 70%;
+  background-color: #fff;
+  height: 370px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-left: 30px;
+  display: flex; 
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column; 
+  padding: 1%;
+}
+.other .profile{
+  display: flex; 
+  flex-direction: row;
+  width: 100%;
+
+}
+
+.profile {
+  display: flex;
+  border: 2px solid grey;
+  flex-direction: row;
+  border-radius: 8px;
+  width: 100%;
+  height: 30%;
+  justify-content: flex-start; /* Ensure content starts from the left */
+  align-items: center; /* Align items vertically */
+  padding: 0;
+  margin-bottom: 2%;
+}
+
+.profile-pic {
+  display: flex;
+  flex-direction: column; /* Arrange the image and name vertically */
+  align-items: center; /* Center the content horizontally */
+  width: 100px; /* Set the profile picture's width */
+  height: 100px; /* Set the profile picture's height */
+  margin-right: 1%; /* Space between the image and text */
+  margin-top: 1%;
+}
+
+.profile-pic img {
+  width: 90%; /* Resize the image to fit */
+  height: 110%; /* Resize the image to fit */
+  border-radius: 12px;
+}
+
+.profile-pic h2{
+  font-size: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.profile-comment {
+  display: flex; /* Ensure this container is a flexbox too */
+  flex-direction: column;
+  width: 100%;
+  height: 100%; /* You can adjust this value to fit the container */
+  gap: 0px;
+  overflow-x: hidden;
+}
+
+.profile-comment .text p{
+  height: 0%;
+  font-size: 70%;
+  margin-top: 4px;
+}
+
+/* ============================= */
+/*          Footer Section       */
+/* ============================= 
+footer {
+    background-color: #7D0C0E;
+    padding: 40px;
+    text-align: center;
+    color: #FAEDE1;
+    font-family: "Times New Roman", serif;
+    height: 80%;
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 20px;
+  }
+  
+  .footer-left,
+  .footer-right {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-right {
+    text-align: right;
+    margin-left: 0;
+  }
+  
+  .logofooter img {
+    height: 200px;
+    width: auto;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .join a,
+  .mailing-list p a {
+    color: #FAEDE1;
+    font-size: 18px;
+    text-decoration: none;
+    border-bottom: 1px solid #FAEDE1;
+  }
+  
+  .join a:hover,
+  .mailing-list a:hover {
+    color: #F0C5A4;
+    border-bottom: 1px solid #F0C5A4;
+  }
+  
+  .mailing-list input {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #7D0D0D;
+    background-color: #FAEDE1;
+    text-align: center;
+  }
+  
+  .mailing-list button {
+    background-color: #FAEDE1;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-style: italic;
+    cursor: pointer;
+  }
+  
+  .mailing-list button:hover {
+    background-color: #F0C5A4;
+  }  */
