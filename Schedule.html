@@ -1,39 +1,13 @@
 <!-- public/index.html -->
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>Schedule a Meeting with an Editor</title>
-  <style>
-    /* Basic CSS styling */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    .container {
-      max-width: 600px;
-      margin: auto;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      box-sizing: border-box;
-    }
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-    }
-    #responseMessage {
-      margin-top: 20px;
-      font-weight: bold;
-    }
-  </style>
+  <link rel="stylesheet" href="Schedule.css">
 </head>
+
 <body>
   <div class="container">
     <h1>Schedule a Meeting</h1>
@@ -41,49 +15,23 @@
     <form id="scheduleForm">
       <label for="name">Name</label>
       <input type="text" id="name" name="name" required>
-      
+
       <label for="email">Email</label>
       <input type="email" id="email" name="email" required>
-      
+
       <label for="meetingDate">Preferred Meeting Date &amp; Time</label>
       <input type="datetime-local" id="meetingDate" name="meetingDate" required>
-      
+
       <label for="message">Message (Optional)</label>
       <textarea id="message" name="message" rows="4"></textarea>
-      
+
       <button type="submit">Schedule Meeting</button>
     </form>
     <div id="responseMessage"></div>
   </div>
 
-  <script>
-    document.getElementById('scheduleForm').addEventListener('submit', function(event) {
-      event.preventDefault();
+  <script src="Schedule.js"></script>
 
-      const data = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        meetingDate: document.getElementById('meetingDate').value,
-        message: document.getElementById('message').value
-      };
-
-      fetch('/api/schedule', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(result => {
-        document.getElementById('responseMessage').textContent = result.message;
-        document.getElementById('scheduleForm').reset();
-      })
-      .catch(error => {
-        document.getElementById('responseMessage').textContent = 'An error occurred.';
-        console.error('Error:', error);
-      });
-    });
-  </script>
 </body>
+
 </html>
