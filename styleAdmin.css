@@ -1,13 +1,23 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+    background-color: #faefe1;;
     text-align: center;
-    margin: 0;
-    padding: 20px;
+    
+    
 }
 
-h1, h2 {
-    color: #7D0C0E;
+h1 {
+    color: white;
+    background-color: #7d0c0e;
+    margin: 0px;
+    text-align: center;
+    
+}
+
+#head{
+    background-color: #7d0c0e;
+    height:80px;
+    text-align: center;
 }
 
 form {
@@ -19,6 +29,8 @@ form {
     margin: 20px auto;
     display: flex;
     flex-direction: column;
+    background-color: #7D0C0E;
+    color: white;
 }
 
 label {
@@ -29,14 +41,14 @@ label {
 
 input, textarea {
     padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
+    margin: 5px;
+    border: 4px solid white;
     border-radius: 5px;
-    width: 100%;
+    justify-content: center;
 }
 
 button {
-    background-color: #7D0C0E;
+    background-color: #600a0c;
     color: white;
     padding: 10px;
     border: none;
@@ -47,7 +59,7 @@ button {
 }
 
 button:hover {
-    background-color: #600a0c;
+    background-color: #8B181A;;
 }
 
 #eventList {
@@ -55,12 +67,13 @@ button:hover {
 }
 
 .event-item {
-    background: white;
+    color: white;
     padding: 15px;
     margin: 10px auto;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 60%;
+    background-color: #7d0c0e;
 }
 
 .event-item img {
@@ -71,7 +84,11 @@ button:hover {
 }
 
 .event-item button {
-    background-color: red;
+    background-color: #8B181A;
     padding: 8px;
     font-size: 14px;
 }
+.event-item button:hover{
+    background-color: #BC7070;
+}
+

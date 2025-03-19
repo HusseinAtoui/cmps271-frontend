@@ -56,3 +56,29 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 });
+articlesList.innerHTML = articles.map(article => {
+    console.log('Rendering article:', article); // Debugging line
+    return `
+        <div class="article">
+            <h2>${article.title}</h2>
+            <img src="${article.image}" alt="Article Image" class="article-image">
+            <p><strong>Author:</strong> ${article.author}</p>
+            <p><strong>Description:</strong> ${article.description}</p>
+            <p><strong>Tag:</strong> ${article.tag} | <strong>Read Time:</strong> ${article.minToRead} min</p>
+            <p><strong>Date:</strong> ${new Date(article.date).toLocaleDateString()}</p>
+            <p><strong>Full Text:</strong> ${article.text}</p>
+            <button class="approve" data-id="${article._id}">Approve</button>
+            <button class="delete" data-id="${article._id}">Delete</button>
+        </div>
+    `;
+}).join('');
+
+
+document.querySelectorAll('.approve').forEach(button => {
+    button.addEventListener('click', async () => {
+        const id = button.getAttribute('data-id');
+        await fetch(`https://afterthoughts.onrender.com/api/articles/approve/${id}`, { method: 'PUT' });
+        fetchArticles(); // Reload articles to reflect the approved state
+    });
+});
+
