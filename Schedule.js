@@ -8,7 +8,7 @@ document.getElementById('scheduleForm').addEventListener('submit', function (eve
         message: document.getElementById('message').value
     };
 
-    fetch('/api/schedule', {
+    fetch('/api/meetings', {  // Updated URL to match backend
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
