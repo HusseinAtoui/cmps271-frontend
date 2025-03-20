@@ -5,23 +5,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("authToken");
 
     form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+        event.preventDefault(); 
         loadingIndicator.style.display = "block";
         statusMessage.innerHTML = "";
 
         // Create a new FormData object from the form
         const formData = new FormData(form);
 
-        // Check if a document file is provided
+        // Ensure required fields for the Article model are present:
+        // If no date is provided, default to current date in ISO format.
+        if (!formData.get("date")) {
+            formData.append("date", new Date().toISOString());
+        }
+        // If no minToRead is provided, default to "1"
+        if (!formData.get("minToRead")) {
+            formData.append("minToRead", "1");
+        }
+        // If no tag is provided, default to "general"
+        if (!formData.get("tag")) {
+            formData.append("tag", "general");
+        }
+
+        // Process the document file if present (and it's a PDF)
         const docInput = document.getElementById("document");
         if (docInput.files.length > 0) {
             const docFile = docInput.files[0];
-
-            // If the file is a PDF, convert it to text
             if (docFile.type === "application/pdf") {
                 try {
                     const textFromPdf = await convertPdfToText(docFile);
-                    // Append the extracted text to the formData under "text"
                     formData.append("text", textFromPdf);
                 } catch (error) {
                     console.error("Error converting PDF to text:", error);
@@ -29,17 +40,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     loadingIndicator.style.display = "none";
                     return;
                 }
+            } else {
+                // If not PDF, you could choose to do nothing or set text as empty
+                formData.append("text", "");
             }
         } else {
-            // If no document is provided, ensure the "text" field exists (could be empty)
+            // No document provided; ensure "text" field is appended
             formData.append("text", "");
         }
 
-        // Submit the article data
-        submitArticle(formData);
+        // Optional: Ensure description field exists (append empty string if missing)
+        if (!formData.get("description")) {
+            formData.append("description", "");
+        }
+
+        // Submit the article to the backend
+        await submitArticle(formData);
     });
 
-    // Function to convert PDF file to text using pdf.js
+    // Function to convert PDF to text using pdf.js
     async function convertPdfToText(file) {
         return new Promise((resolve, reject) => {
             const fileReader = new FileReader();
@@ -48,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     const typedarray = new Uint8Array(this.result);
                     const pdf = await pdfjsLib.getDocument(typedarray).promise;
                     let textContent = "";
-                    // Loop through each page of the PDF and extract text
                     for (let i = 1; i <= pdf.numPages; i++) {
                         const page = await pdf.getPage(i);
                         const content = await page.getTextContent();
@@ -67,18 +85,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Function to submit the article to the backend API
+    // Function to submit the article
     async function submitArticle(formData) {
         try {
             const response = await fetch("https://afterthoughts.onrender.com/api/articles/add", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`
-                    // Do not set Content-Type; browser sets it automatically for FormData.
+                    // Do not set Content-Type manually for FormData
                 },
                 body: formData
             });
-
             const result = await response.json();
             if (response.ok) {
                 statusMessage.innerHTML = `<p style="color: green;">Submission successful!</p>`;
