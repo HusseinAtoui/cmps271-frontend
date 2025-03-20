@@ -517,3 +517,92 @@ textarea, input[type="file"] {
     height: auto;
 }
 
+/* Toggle Button Styling */
+.toggle-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #7D0C0E;
+    color: #FAEDE1;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .toggle-btn:hover {
+    background-color: #bb484a;
+  }
+  
+  /* Scheduler Div Styling */
+  .scheduler {
+    display: none; /* Hidden by default */
+    margin: 20px auto;
+    max-width: 600px;
+    background-color: #f3e5d8;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  /* Admin Section Styling */
+#adminsection {
+    background-color: #faefe1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px solid #7D0C0E;
+}
+
+#adminsection h3 {
+    color: #7D0C0E;
+    font-size: 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.admin {
+background-color: #d77d7a;
+}/* Admin Section Styling */
+#adminsection {
+    background-color: #faefe1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px solid #7D0C0E;
+    display: none; /* Initially hidden */
+}
+
+#adminsection h3 {
+    color: #7D0C0E;
+    font-size: 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.admin-option:hover {
+    text-decoration: underline;
+    color: #bb484a;
+}
+
+/* Consistent Button Styling */
+.btn {
+    background-color: #7D0C0E;
+    color: #FAEDE1;
+    border: none;
+    padding: 8px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: "Times New Roman", serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #bb484a;
+}
+
+/* Admin Button Specific Styling (inherits btn class) */
+.admin-pages-button {
+    width: 100%; /* Ensures it fits within the container */
+    display: block;
+    margin-top: 20px; /* Adds space between button and section */
+}

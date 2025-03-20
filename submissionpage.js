@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
        
 
         try {
-            const response = await fetch("https://afterthoughts.onrender.com/api/articles  ", {
+            const response = await fetch("https://afterthoughts.onrender.com/api/articles/add  ", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}` // ✅ Include token
