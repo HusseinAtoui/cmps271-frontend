@@ -131,6 +131,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const bioInput = document.getElementById("bioInput");
     const saveBioBtn = document.getElementById("saveBioBtn");
 
+
+
     const changePicBtn = document.getElementById("changePicBtn");
     const picSection = document.getElementById("picSection");
     const picInput = document.getElementById("picInput");
@@ -138,11 +140,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const logoutBtn = document.getElementById("logoutBtn");
 
-    // Toggle bio input display
+    const Adminpages = document.getElementById("Adminpages");
+    const admins = document.getElementById("adminsection");
+
+    if (!Adminpages || !admins) {
+        console.error('Admin button or adminsection not found!');
+        return; // If elements are missing, exit early
+    }
+
+    // Ensure that the admin section is initially hidden
+    admins.style.display = "none"; 
+
+    // Toggle admin section visibility when Admin button is clicked
+    Adminpages.addEventListener("click", function () {
+        if (admins.style.display === "block") {
+            admins.style.display = "none";
+        } else {
+            admins.style.display = "block";
+        }
+    });
     changeBioBtn.addEventListener("click", function () {
         bioSection.style.display = bioSection.style.display === "block" ? "none" : "block";
     });
-
     // Save new bio
     saveBioBtn.addEventListener("click", async function () {
         const newBio = bioInput.value.trim();
@@ -214,12 +233,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    // --- Delete Account ---
     deleteAccBtn.addEventListener("click", function () {
-        deleteSection.style.display = "block";
-        bioSection.style.display = "none";
-        picSection.style.display = "none";
+        deleteSection.style.display = deleteSection.style.display === "block" ? "none" : "block";
     });
+
 
     yesDeleteBtn.addEventListener("click", async function () {
         try {
@@ -341,6 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (type === "engagement") {
           dataSet = [2,3,2,4,3,5,3,6,4,7];
         }
+        
 
         // Ensure the chart container is visible
         const container = document.getElementById("chartContainer");
@@ -374,12 +392,57 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   // Other functions (fetchArticles, displayArticles, toggleSettings, etc.)
   // are defined below as needed...
-  document.addEventListener("DOMContentLoaded", () => {
-    // Your existing chart code...
-
-    // Close chart container when the close button is clicked
-    const closeChartBtn = document.getElementById("closeChartBtn");
-    closeChartBtn.addEventListener("click", () => {
-        document.getElementById("chartContainer").style.display = "none";
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('toggleScheduler');
+    const schedulerDiv = document.getElementById('scheduler');
+  
+    toggleButton.addEventListener('click', function () {
+      // Toggle the scheduler's visibility
+      if (schedulerDiv.style.display === "none" || schedulerDiv.style.display === "") {
+        schedulerDiv.style.display = "block";
+      } else {
+        schedulerDiv.style.display = "none";
+      }
     });
-});
+  });
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const scheduleForm = document.getElementById('scheduleForm');
+    const responseMessage = document.getElementById('responseMessage');
+  
+    scheduleForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+  
+      // Gather form data
+      const data = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        meetingDate: document.getElementById('meetingDate').value,
+        message: document.getElementById('message').value
+      };
+  
+      try {
+        // Send POST request to the backend endpoint
+        const response = await fetch('http://localhost:3000/api/schedule', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+  
+        const result = await response.json();
+  
+        // Display message from the backend
+        responseMessage.textContent = result.message || result.error;
+  
+        // Reset the form on success
+        if (response.ok) {
+          scheduleForm.reset();
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        responseMessage.textContent = `Error: ${error.message}`;
+      }
+    });
+  });

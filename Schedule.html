@@ -7,7 +7,9 @@
   <title>Schedule a Meeting with an Editor</title>
   <link rel="stylesheet" href="Schedule.css">
 </head>
-
+<div id="head">
+  <h1>Meeting Management</h1>
+  </div>
 <body>
   <div class="container">
     <h1>Schedule a Meeting</h1>
@@ -22,13 +24,15 @@
       <label for="meetingDate">Preferred Meeting Date &amp; Time</label>
       <input type="datetime-local" id="meetingDate" name="meetingDate" required>
 
-      <label for="message">Message (Optional)</label>
+      <label for="message">Message </label>
       <textarea id="message" name="message" rows="4"></textarea>
 
       <button type="submit">Schedule Meeting</button>
     </form>
     <div id="responseMessage"></div>
   </div>
+<!-- Container for displaying fetched meetings -->
+<div id="meetingsContainer"></div>
 
   <script src="Schedule.js"></script>
 
