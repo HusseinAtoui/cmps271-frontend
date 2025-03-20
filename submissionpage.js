@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to submit the article
     async function submitArticle(formData) {
         try {
-            const response = await fetch("https://afterthoughts.onrender.com/api/articles/add", {
+            const response = await fetch("http://localhost:3000/api/articles/add", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`
