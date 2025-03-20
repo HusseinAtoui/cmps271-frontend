@@ -558,51 +558,28 @@ textarea, input[type="file"] {
     margin-bottom: 10px;
     cursor: pointer;
 }
-.admin {
-background-color: #d77d7a;
-}/* Admin Section Styling */
-#adminsection {
-    background-color: #faefe1;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 10px;
-    border: 1px solid #7D0C0E;
-    display: none; /* Initially hidden */
-}
-
-#adminsection h3 {
-    color: #7D0C0E;
-    font-size: 18px;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
-.admin-option:hover {
-    text-decoration: underline;
-    color: #bb484a;
-}
-
-/* Consistent Button Styling */
-.btn {
-    background-color: #7D0C0E;
-    color: #FAEDE1;
-    border: none;
-    padding: 8px 20px;
-    margin-top: 10px;
-    border-radius: 5px;
+/* Remove default link styles and apply custom color */
+.admin-option {
+    color: rgb(115, 23, 23);  /* Dark Red color */
     font-size: 16px;
-    font-family: "Times New Roman", serif;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    text-decoration: none;     /* Remove underline */
+    padding: 10px;
+    display: block;            /* Make the links block-level so they stack vertically */
 }
 
-.btn:hover {
-    background-color: #bb484a;
+/* Remove the default blue color for anchor tags */
+.admin-option a {
+    color: inherit;            /* Inherit the color from parent element */
+    text-decoration: none;     /* Remove underline from links */
 }
 
-/* Admin Button Specific Styling (inherits btn class) */
-.admin-pages-button {
-    width: 100%; /* Ensures it fits within the container */
-    display: block;
-    margin-top: 20px; /* Adds space between button and section */
+/* Hover effect for the links */
+.admin-option:hover {
+    color: rgb(200, 23, 23);  /* Brighter red on hover */
+    background-color: rgba(255, 0, 0, 0.1);  /* Light red background on hover */
+    transition: all 0.3s ease;  /* Smooth transition for hover effect */
 }
+
+.admin {
+    background-color: #d77d7a;
+    }
