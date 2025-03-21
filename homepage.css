@@ -420,21 +420,53 @@ footer {
 /* ============================= */
 /*       Responsive Styles       */
 /* ============================= */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    text-align: center;
+
+/* ====== 320px - 480px (Small Phones) ====== */
+@media (max-width: 480px) {
+ 
+}
+
+/* ====== 481px - 768px (Larger Phones & Tablets) ====== */
+@media (max-width: 768px) {}
+
+/* ✅ 769px - 1024px (Tablets & Small Laptops) */
+@media (max-width: 1024px) {
+
+  .logo {
+    display: none;
   }
 
-  /* Adjust dynamic slide elements */
-  .mySlides {
-    flex-direction: column;
+  .hero-content h1 {
+    font-size: 2.5rem;
   }
 
-  .imagecontainer,
-  .text-section {
-    width: 90%;
-    max-width: 100%;
-    margin: 0.5rem auto;
+  .hero {
+    height: calc(90vh - 150px);
   }
+
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    width: 100%;
+  }
+
+}
+
+/* ✅ 1025px - 1440px (Laptops & Larger Screens)*/
+@media (max-width: 1440px) {
+
+  .hero {
+    height: calc(90vh - 150px);
+  }
+
+  .hero-content h1 {
+    font-size: 3rem;
+  }
+
+  .hero-content p {
+    font-size: 1.2rem;
+  }
+
 }
