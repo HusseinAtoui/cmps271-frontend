@@ -264,38 +264,40 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
       
-    yesDeleteBtn.addEventListener("click", async function () {
-        try {
-          const response = await fetch("http://localhost:3000/api/auth/delete-account", {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+        // Confirm account deletion
+ yesDeleteBtn.addEventListener("click", async function () {
+          try {
+            const response = await fetch("http://localhost:3000/api/auth/delete-account", {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+              }
+            });
+            const result = await response.json();
+            if (response.ok) {
+              alert("Your account has been deleted successfully.");
+              // Clear any stored user data
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("userData");
+              // Redirect to homepage or login page as desired
+              window.location.href = "index.html";
+            } else {
+              alert(result.message || "Failed to delete account");
             }
-          });
-          const result = await response.json();
-          
-          if (response.ok) {
-            alert("Your account has been deleted successfully.");
-            // Clear any stored user data
-            localStorage.removeItem("authToken");
-            localStorage.removeItem("userData");
-            // Redirect to homepage or login page as desired
-            window.location.href = "index.html";
-          } else {
-            alert(result.message || "Failed to delete account");
+          } catch (error) {
+            console.error("Error deleting account:", error);
+            alert("An error occurred while deleting your account.");
           }
-        } catch (error) {
-          console.error("Error deleting account:", error);
-          alert("An error occurred while deleting your account.");
-        }
+        });
+      
+        // Cancel deletion and hide confirmation dialog
+        noDeleteBtn.addEventListener("click", function () {
+          deleteSection.style.display = "none";
+        });
       });
       
-      // Cancel deletion and hide confirmation dialog
-      noDeleteBtn.addEventListener("click", function () {
-        deleteSection.style.display = "none";
-      });
-      
+
 logoutBtn.addEventListener("click", async function () {
         try {
           const response = await fetch("http://localhost:3000/api/auth/logout", {
