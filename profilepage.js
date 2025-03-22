@@ -142,6 +142,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const Adminpages = document.getElementById("Adminpages");
     const admins = document.getElementById("adminsection");
+    const deleteAccBtn = document.getElementById("deleteAccBtn");
+    const deleteSection = document.getElementById("deleteSection");
+    const yesDeleteBtn = document.getElementById("yesDeleteBtn");
+    const noDeleteBtn = document.getElementById("noDeleteBtn");
+  
+    if (!deleteAccBtn || !deleteSection || !yesDeleteBtn || !noDeleteBtn) {
+      console.error("One or more delete account elements not found.");
+      return;
+    }
+  
+    // Toggle the delete confirmation section when the delete account button is clicked
+    deleteAccBtn.addEventListener("click", function () {
+      deleteSection.style.display = (deleteSection.style.display === "block") ? "none" : "block";
+   
 
     if (!Adminpages || !admins) {
         console.error('Admin button or adminsection not found!');
@@ -164,33 +178,38 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     // Save new bio
     saveBioBtn.addEventListener("click", async function () {
-        const newBio = bioInput.value.trim();
-        if (!newBio) {
-            alert("Bio cannot be empty!");
-            return;
-        }
-
+        const bio = bioInput.value;
         try {
-            const response = await fetch("http://localhost:3000/account/updateBio", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
-                },
-                body: JSON.stringify({ bio: newBio })
-            });
-
-            if (response.ok) {
-                alert("Bio updated successfully!");
-                document.getElementById("user-greeting").textContent = `Hi, ${newBio}`;
-                bioSection.style.display = "none";
+          const response = await fetch("http://localhost:3000/api/auth/change-bio", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+            },
+            body: JSON.stringify({ bio })
+          });
+          
+          // Verify response content-type to avoid JSON parse errors
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.indexOf("application/json") !== -1) {
+            const result = await response.json();
+            if (result.status === "SUCCESS") {
+              alert("Bio updated successfully!");
+              // Optionally update localStorage or UI with new bio
             } else {
-                alert("Failed to update bio.");
+              alert("Error: " + result.message);
             }
+          } else {
+            // If not JSON, get text for debugging
+            const errorText = await response.text();
+            console.error("Unexpected response:", errorText);
+            alert("An unexpected error occurred while updating your bio.");
+          }
         } catch (error) {
-            console.error("Error updating bio:", error);
-            alert("An error occurred while updating your bio.");
+          console.error("Error updating bio:", error);
+          alert("An error occurred while updating your bio.");
         }
+      });
     });
 
     // Toggle profile picture upload section
@@ -202,92 +221,105 @@ document.addEventListener("DOMContentLoaded", function () {
     savePicBtn.addEventListener("click", async function () {
         const file = picInput.files[0];
         if (!file) {
-            alert("Please select a picture.");
-            return;
+          alert("Please select a picture.");
+          return;
         }
-
+    
+        // Create a FormData object to hold the file
         const formData = new FormData();
         formData.append("profilePicture", file);
-
+    
         try {
-            const response = await fetch("http://localhost:3000/account/updateProfilePic", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
-                },
-                body: formData
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                document.getElementById("user-profile-image").src = data.profilePicUrl;
-                alert("Profile picture updated successfully!");
-                picSection.style.display = "none";
+          // Send the request to update profile picture
+          const response = await fetch("http://localhost:3000/api/auth/change-pfp", {
+            method: "PUT",
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("authToken")}`
+              // Do not set "Content-Type" header for FormData; the browser will set it automatically.
+            },
+            body: formData
+          });
+    
+          // Check if response is JSON by inspecting the header
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.indexOf("application/json") !== -1) {
+            const result = await response.json();
+            if (result.status === "SUCCESS") {
+              // Update the profile picture in the UI (if you have an img element with id "user-profile-image")
+              document.getElementById("user-profile-image").src = result.user.profilePicture;
+              alert("Profile picture updated successfully!");
+              picSection.style.display = "none"; // Optionally hide the upload section
             } else {
-                alert("Failed to update profile picture.");
+              alert("Error: " + result.message);
             }
+          } else {
+            const errorText = await response.text();
+            console.error("Unexpected response:", errorText);
+            alert("An unexpected error occurred while updating your profile picture.");
+          }
         } catch (error) {
-            console.error("Error updating profile picture:", error);
-            alert("An error occurred while updating your profile picture.");
+          console.error("Error updating profile picture:", error);
+          alert("An error occurred while updating your profile picture.");
         }
     });
 
-
-    deleteAccBtn.addEventListener("click", function () {
-        deleteSection.style.display = deleteSection.style.display === "block" ? "none" : "block";
-    });
-
-
+      
     yesDeleteBtn.addEventListener("click", async function () {
         try {
-            const response = await fetch("http://localhost:3000/account/delete", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
-                }
-            });
-            const data = await response.json();
-            if (response.ok) {
-                alert("Your account has been deleted.");
-                window.location.href = "index.html"; // Adjust the redirect as needed
-            } else {
-                alert(data.message || "Failed to delete account");
+          const response = await fetch("http://localhost:3000/api/auth/delete-account", {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("authToken")}`
             }
+          });
+          const result = await response.json();
+          
+          if (response.ok) {
+            alert("Your account has been deleted successfully.");
+            // Clear any stored user data
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("userData");
+            // Redirect to homepage or login page as desired
+            window.location.href = "index.html";
+          } else {
+            alert(result.message || "Failed to delete account");
+          }
         } catch (error) {
-            console.error("Error deleting account:", error);
-            alert("An error occurred while deleting account.");
+          console.error("Error deleting account:", error);
+          alert("An error occurred while deleting your account.");
         }
-    });
-
-    noDeleteBtn.addEventListener("click", function () {
+      });
+      
+      // Cancel deletion and hide confirmation dialog
+      noDeleteBtn.addEventListener("click", function () {
         deleteSection.style.display = "none";
-    });
-
-
-    // Logout function
-    logoutBtn.addEventListener("click", async function () {
+      });
+      
+logoutBtn.addEventListener("click", async function () {
         try {
-            const response = await fetch("http://localhost:3000/account/logout", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("authToken")}`
-                }
-            });
-
-            if (response.ok) {
-                localStorage.removeItem("authToken");
-                window.location.href = "loginPage.html";
-            } else {
-                alert("Failed to logout.");
+          const response = await fetch("http://localhost:3000/api/auth/logout", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("authToken")}`
             }
+          });
+          
+          if (response.ok) {
+            // Clear the authentication token and redirect to login page
+            localStorage.removeItem("authToken");
+            window.location.href = "loginPage.html";
+          } else {
+            const result = await response.json();
+            alert("Logout failed: " + (result.message || "Please try again."));
+          }
         } catch (error) {
-            console.error("Logout error:", error);
-            alert("An error occurred during logout.");
+          console.error("Logout error:", error);
+          alert("An error occurred during logout.");
         }
-    });
-});
+      });
+
 document.addEventListener("DOMContentLoaded", () => {
     // --- User Data & Authentication ---
     const userDataString = localStorage.getItem("userData");
