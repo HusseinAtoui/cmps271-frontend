@@ -4,6 +4,20 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* =============================
+   nav bar
+   ============================= */
+
+const navbar = document.getElementById('navbar');
+
+function openSideBar() {
+    navbar.classList.add('show');
+}
+
+function closeSideBar() {
+    navbar.classList.remove('show');
+}
+
+/* =============================
    Setup Static Button Listeners
    ============================= */
 
@@ -135,9 +149,9 @@ async function loadArticles() {
 /* =============================
    Filter Articles by Tag (Fixed)
    ============================= */
-   async function filterArticlesByTag() {
+async function filterArticlesByTag() {
     const selectedTag = document.getElementById("categoryFilter").value;
-    
+
     console.log(`Selected Tag from Dropdown: ${selectedTag}`); // Log the selected tag
 
     if (selectedTag === "all") {
@@ -184,7 +198,7 @@ async function searchArticles() {
         const response = await fetch('https://afterthoughts.onrender.com/api/articles');
         if (response.ok) {
             let articles = await response.json();
-            articles = articles.filter(article => 
+            articles = articles.filter(article =>
                 article.title.toLowerCase().includes(query) ||
                 article.author.toLowerCase().includes(query) ||
                 article.text.toLowerCase().includes(query)
