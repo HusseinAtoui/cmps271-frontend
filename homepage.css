@@ -438,9 +438,28 @@ footer {
 /* ============================= */
 
 /* ====== 320px - 480px (Small Phones) ====== */
-@media (max-width: 480px) {}
+@media (max-width: 480px) {
 
-/* ====== 481px - 768px (Larger Phones & Tablets) ====== */
+  .card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card .imagecontainer {
+    width: 85%;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-bottom: 1px;
+  }
+
+  .card .text-section {
+    width: 85%;
+    margin-left: 40px;
+
+  }
+}
+
+/* ✅ 481px - 768px (Larger Phones & Tablets)  */
 @media (max-width: 768px) {
 
   /* nav section => side bar */
