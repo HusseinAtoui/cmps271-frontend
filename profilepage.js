@@ -374,8 +374,11 @@ document.addEventListener("DOMContentLoaded", () => {
       box.addEventListener("click", function () {
         const statType = this.getAttribute("data-type");
         displayGraph(statType);
+        this.classList.toggle("hidden");
       });
+      
     });
+    
   
     function displayGraph(type) {
         // Dummy x-axis values (for example, days or months)

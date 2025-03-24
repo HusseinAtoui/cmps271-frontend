@@ -56,3 +56,17 @@ teamMembers.forEach((member,index) =>{
 
     teamContainer.appendChild(memberDiv);
 });
+
+/* =============================
+   nav bar
+   ============================= */
+
+   const navbar = document.getElementById('navbar');
+
+   function openSideBar() {
+     navbar.classList.add('show');
+   }
+   
+   function closeSideBar() {
+     navbar.classList.remove('show');
+   }
