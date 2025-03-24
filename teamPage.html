@@ -9,42 +9,57 @@
 </head>
 
 <body>
-  <header>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-      <div class="logo">
-        <img src="logo.png" alt="Afterthoughts">
-      </div>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="subpage.html">Submissions</a>
-        <a href="profilepage.html">Profile</a>
-        <a href="EventPage.html">Events</a>
-        <a href="teamPage.html" class="active">Team</a>
-        <a href="contact.html"> Contact </a>
-        <a href="submissionpage.html"><strong>SUBMIT</strong></a>
 
-        <div class="search-container">
-          <input type="text" placeholder="Search..." aria-label="Search">
-        </div>
+  <!-- Navigation Bar -->
+  <button id="open-sidebar-btn" onclick="openSideBar()">
+    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9">
+      <path
+        d="M165.13-254.62q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.86q7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.87q-7.22 7.12-17.9 7.12H165.13Zm0-200.25q-10.68 0-17.9-7.27-7.23-7.26-7.23-17.99 0-10.74 7.23-17.87 7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.27 7.23 7.26 7.23 17.99 0 10.74-7.23 17.87-7.22 7.13-17.9 7.13H165.13Zm0-200.26q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.87q7.22-7.12 17.9-7.12h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.86q-7.22 7.13-17.9 7.13H165.13Z" />
+    </svg>
+  </button>
 
+  <nav class="navbar" id="navbar">
 
-        <button class="login-btn"><a href="loginPage.html">login</a></button>
-      </div>
-    </nav>
+    <div class="logo">
+      <img src="logo.png" alt="Afterthoughts Logo">
+    </div>
+
+    <ul>
+      <li><button id="close-sidebar-btn" onclick="closeSideBar()"> <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+            viewBox="0 -960 960 960" width="24px" fill="#7D0C0E">
+            <path
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+          </svg></button></li>
+      <li><a href="index.html">Home</a></li>
+      <li> <a href="subpage.html">Submissions</a></li>
+      <li> <a href="profilepage.html">Profile</a></li>
+      <li><a href="EventPage.html">Events</a></li>
+      <li><a href="teamPage.html" class="active">Team</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li> <a href="submissionpage.html"><strong>SUBMIT</strong></a></li>
+      <li class="loginLink"><a href="loginPage.html">Login</a></li>
+    </ul>
+
+    </div>
+
+  </nav>
+
+  <div id="overlay" onclick="closeSideBar()"></div>
+
+  <!-- team section-->
+  <div class="teamSection">
+
     <h1>Our Team Members</h1>
     <h4>Meet the people behind the scenes!</h4>
     <img src="group-pic.png" alt="group-pic" class="group-pic">
     <p class="caption"> Bug Busters! (more like Bug Busted)</p>
-  </header>
-  <main>
-    <div id="team" class="team-container">
-      <!-- members to be inserted here-->
-    </div>
-  </main>
-  <script src="scriptTeam.js"></script>
 
-
+    <main>
+      <div id="team" class="team-container">
+        <!-- members to be inserted here-->
+      </div>
+    </main>
+  </div>
 
   <!-- FOOTER WITH NAVIGATION -->
   <footer>
@@ -65,11 +80,11 @@
           <button>SIGN UP</button>
         </div>
       </div>
-
     </div>
   </footer>
 
-  <script src="scriptTeam.js"></script>
+  <script src="teamScript.js"></script>
+
 </body>
 
 </html>
