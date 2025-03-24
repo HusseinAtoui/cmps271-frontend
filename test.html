@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cohere Summarizer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    textarea {
+      width: 100%;
+      max-width: 600px;
+    }
+    button {
+      margin-top: 10px;
+    }
+    #summary {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      max-width: 600px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cohere Summarizer</h1>
+  <textarea id="inputText" rows="10" placeholder="Enter text to summarize..."></textarea>
+  <br>
+  <button id="summarizeBtn">Summarize</button>
+  <h2>Summary:</h2>
+  <div id="summary"></div>
+
+  <script>
+    document.getElementById('summarizeBtn').addEventListener('click', async () => {
+      const text = document.getElementById('inputText').value;
+      if (!text.trim()) {
+        alert("Please enter some text to summarize.");
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/api/summarize', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+
+        if (!response.ok) {
+          const errorResponse = await response.json();
+          throw new Error(errorResponse.error || "Something went wrong with the summarization.");
+        }
+
+        const data = await response.json();
+        document.getElementById('summary').textContent = data.summary;
+      } catch (error) {
+        document.getElementById('summary').textContent = 'Error: ' + error.message;
+      }
+    });
+  </script>
+</body>
+</html>
