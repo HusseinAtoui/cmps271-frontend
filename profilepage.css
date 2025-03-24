@@ -583,3 +583,75 @@ textarea, input[type="file"] {
 .admin {
     background-color: #d77d7a;
     }
+    /* Scheduler Div Styling */
+.scheduler {
+    display: none; /* Hidden by default */
+    margin: 20px auto;
+    max-width: 600px;
+    background-color: #f3e5d8; /* Matches the light background color */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+}
+
+/* Header for Scheduler */
+.scheduler h1 {
+    color: #7D0C0E; /* Dark red for consistency with other headings */
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* Paragraph under Scheduler Header */
+.scheduler p {
+    color: #444;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+#scheduleForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Adds space between form elements */
+}
+
+/* Form Inputs */
+#scheduleForm input, #scheduleForm textarea {
+    padding: 10px;
+    border: 1px solid #7D0C0E;
+    border-radius: 5px;
+    background-color: #FAEDE1;
+    color: #7D0C0E;
+    font-family: 'Times New Roman', serif;
+}
+
+/* Focused input field */
+#scheduleForm input:focus, #scheduleForm textarea:focus {
+    border-color: #bb484a; /* Focus color matches the button hover effect */
+}
+
+/* Submit Button */
+#scheduleForm button {
+    background-color: #7D0C0E;
+    color: #FAEDE1;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Times New Roman', serif;
+    transition: background-color 0.3s ease;
+}
+
+/* Submit Button Hover Effect */
+#scheduleForm button:hover {
+    background-color: #bb484a; /* Darker red for hover */
+}
+
+/* Response Message */
+#responseMessage {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #7D0C0E;
+    font-weight: bold;
+}
