@@ -1,64 +1,74 @@
+// Ensure correct PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("submissionForm");
     const statusMessage = document.getElementById("statusMessage");
     const loadingIndicator = document.getElementById("loading");
     const token = localStorage.getItem("authToken");
 
+    if (!form) {
+        console.error("❌ Error: Submission form not found.");
+        return;
+    }
+
     form.addEventListener("submit", async (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
         loadingIndicator.style.display = "block";
         statusMessage.innerHTML = "";
 
-        // Create a new FormData object from the form
         const formData = new FormData(form);
 
-        // Ensure required fields for the Article model are present:
-        // If no date is provided, default to current date in ISO format.
-        if (!formData.get("date")) {
-            formData.append("date", new Date().toISOString());
-        }
-        // If no minToRead is provided, default to "1"
-        if (!formData.get("minToRead")) {
-            formData.append("minToRead", "1");
-        }
-        // If no tag is provided, default to "general"
-        if (!formData.get("tag")) {
-            formData.append("tag", "general");
+        // Ensure required fields exist
+        appendIfMissing(formData, "title", "Untitled Article");
+        appendIfMissing(formData, "description", "Read more about this");
+        appendIfMissing(formData, "date", new Date().toISOString());
+        appendIfMissing(formData, "minToRead", "1");
+        appendIfMissing(formData, "tag", "general");
+
+        // Handle image upload
+        const imgInput = document.getElementById("picture");
+        if (imgInput && imgInput.files.length > 0) {
+            formData.append("image", imgInput.files[0]);
+            console.log("one");
         }
 
-        // Process the document file if present (and it's a PDF)
+        // Handle PDF conversion
         const docInput = document.getElementById("document");
-        if (docInput.files.length > 0) {
+        if (docInput && docInput.files.length > 0) {
             const docFile = docInput.files[0];
             if (docFile.type === "application/pdf") {
                 try {
                     const textFromPdf = await convertPdfToText(docFile);
                     formData.append("text", textFromPdf);
                 } catch (error) {
-                    console.error("Error converting PDF to text:", error);
+                    console.error("❌ Error converting PDF to text:", error);
                     statusMessage.innerHTML = `<p style="color: red;">Error converting PDF to text.</p>`;
                     loadingIndicator.style.display = "none";
                     return;
                 }
             } else {
-                // If not PDF, you could choose to do nothing or set text as empty
                 formData.append("text", "");
             }
         } else {
-            // No document provided; ensure "text" field is appended
             formData.append("text", "");
         }
-
-        // Optional: Ensure description field exists (append empty string if missing)
-        if (!formData.get("description")) {
-            formData.append("description", "");
+        for (let pair of formData.entries()) {
+            console.log(pair);
         }
-
-        // Submit the article to the backend
+    
+        // Submit the article
         await submitArticle(formData);
     });
 
-    // Function to convert PDF to text using pdf.js
+    // Function to ensure a field exists in FormData
+    function appendIfMissing(formData, field, defaultValue) {
+        if (!formData.get(field)) {
+            formData.append(field, defaultValue);
+        }
+    }
+
+    // Convert PDF to text
     async function convertPdfToText(file) {
         return new Promise((resolve, reject) => {
             const fileReader = new FileReader();
@@ -85,17 +95,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Function to submit the article
+    // Submit the article
     async function submitArticle(formData) {
         try {
+            console.log("Submitting article...");
+
             const response = await fetch("http://localhost:3000/api/articles/add", {
                 method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                    // Do not set Content-Type manually for FormData
-                },
+                headers: { "Authorization": `Bearer ${token}` },
                 body: formData
             });
+
+            console.log("Response Status:", response.status); // Log the response status
+
             const result = await response.json();
             if (response.ok) {
                 statusMessage.innerHTML = `<p style="color: green;">Submission successful!</p>`;
@@ -104,20 +116,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 statusMessage.innerHTML = `<p style="color: red;">Error: ${result.error || result.message}</p>`;
             }
         } catch (error) {
-            console.error("Network error:", error);
+            console.error("❌ Network error:", error);
             statusMessage.innerHTML = `<p style="color: red;">Network error! Check console.</p>`;
         } finally {
+            console.log("Submission process complete.");
             loadingIndicator.style.display = "none";
         }
     }
 
-    // Update file name display for document input
-    document.getElementById("document").addEventListener("change", function() {
-        document.getElementById("documentName").textContent = this.files[0] ? this.files[0].name : "No Document chosen";
-    });
+    // File name display updates
+    updateFileNameDisplay("document", "documentName");
+    updateFileNameDisplay("picture", "pictureName");
 
-    // Update file name display for picture input
-    document.getElementById("picture").addEventListener("change", function() {
-        document.getElementById("pictureName").textContent = this.files[0] ? this.files[0].name : "No file chosen";
-    });
+    function updateFileNameDisplay(inputId, displayId) {
+        const inputElement = document.getElementById(inputId);
+        const displayElement = document.getElementById(displayId);
+        if (inputElement && displayElement) {
+            inputElement.addEventListener("change", function() {
+                displayElement.textContent = this.files[0] ? this.files[0].name : "No file chosen";
+            });
+        }
+    }
 });
