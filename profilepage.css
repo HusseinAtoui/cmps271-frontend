@@ -437,7 +437,7 @@ margin-right: 1rem;
 }
 
 textarea, input[type="file"] {
-    width: 100%;
+    width: 97%;
     padding: 8px;
     border: 1px solid #7D0C0E;
     border-radius: 5px;
@@ -650,7 +650,7 @@ textarea, input[type="file"] {
 
 /* Response Message */
 #responseMessage {
-    margin-top: 20px;
+    margin-top: 10%;
     font-size: 16px;
     color: #7D0C0E;
     font-weight: bold;
