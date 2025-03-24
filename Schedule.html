@@ -1,43 +1,66 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Schedule a Meeting with an Editor</title>
   <link rel="stylesheet" href="Schedule.css">
 </head>
-<div id="head">
-  <h1>Meeting Management</h1>
-  </div>
 <body>
-  <div class="container">
-    <h1>Schedule a Meeting</h1>
-    <p>Please fill out the form below to schedule a meeting with an editor.</p>
-    <form id="scheduleForm">
-      <label for="name">Name:</label>
-      <input type="text" id="name" required>
+
+  <!-- Main Menu Section -->
+  <header id="menu">
+    <h1>Meeting Management</h1>
+    <div class="settings" onclick="toggleSettings()">
+      <img id="settings-image" src="bolt.png" alt="Settings" class="settings-image">
+    </div>
+  </header>
+
+  <!-- Dashboard -->
+  <div class="dashboard">
+    <aside class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Meetings</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+        </ul>
+    </aside>
     
-      <label for="email">Email:</label>
-      <input type="email" id="email" required>
-    
-      <label for="meetingDate">Meeting Date:</label>
-      <!-- If you need both date and time, use datetime-local -->
-      <input type="datetime-local" id="meetingDate" required>
-    
-      <label for="message">Message:</label>
-      <textarea id="message" required></textarea>
-    
-      <button type="submit">Schedule Meeting</button>
-    </form>
-    
-    <div id="responseMessage"></div>
+    <main class="content">
+      <!-- Content like meeting scheduler, form, etc. goes here -->
+      <div class="container">
+        <h2>Schedule a Meeting</h2>
+        <p>Please fill out the form below to schedule a meeting with an editor.</p>
+        
+        <!-- Meeting Scheduling Form -->
+        <form id="scheduleForm">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+
+          <label for="meetingDate">Preferred Meeting Date &amp; Time</label>
+          <input type="datetime-local" id="meetingDate" name="meetingDate" required>
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4"></textarea>
+
+          <button type="submit">Schedule Meeting</button>
+        </form>
+
+        <!-- Response Message -->
+        <div id="responseMessage"></div>
+      </div>
+      
+      <!-- Container for displaying fetched meetings -->
+      <div id="meetingsContainer"></div>
+    </main>
   </div>
-<!-- Container for displaying fetched meetings -->
-<div id="meetingsContainer"></div>
 
   <script src="Schedule.js"></script>
 
 </body>
-
 </html>

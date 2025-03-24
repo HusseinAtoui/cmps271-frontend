@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+  
   // Function to fetch meetings from the backend
   async function fetchMeetings() {
     try {
