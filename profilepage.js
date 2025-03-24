@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Toggle the delete confirmation section when the delete account button is clicked
     deleteAccBtn.addEventListener("click", function () {
       deleteSection.style.display = (deleteSection.style.display === "block") ? "none" : "block";
-   
+    })
 
     if (!Adminpages || !admins) {
         console.error('Admin button or adminsection not found!');
@@ -295,8 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
         noDeleteBtn.addEventListener("click", function () {
           deleteSection.style.display = "none";
         });
-      });
-      
+
 
 logoutBtn.addEventListener("click", async function () {
         try {
