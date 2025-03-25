@@ -72,6 +72,7 @@ body {
     padding: 10px 20px;
     background-color: #faefe1;
     border-radius: 20px;
+    margin-top: 20px;
 }
 
 .loginLink a {
@@ -117,6 +118,7 @@ body {
 /* ========================================= */
 /*                 Footer                    */
 /* ========================================= */
+
 footer {
     background-color: #7D0C0E;
     padding: 40px;
@@ -206,12 +208,23 @@ footer {
     align-items: center;
     gap: 10px;
     flex-direction: row;
-    margin-top: 5%;
+    list-style-type: none;
+    margin-top: 30px;
+}
+
+.bgColorBack {
+    background-color: #FAEDE1;
+}
+
+.containerSace {
+    padding: 20px;
+    background-color: #FAEDE1;
 }
 
 /* ======================= */
 /*          Form Box       */
 /* ======================= */
+
 .box {
     background-color: #7D0C0E;
     font-size: large;
@@ -221,29 +234,22 @@ footer {
     justify-content: center;
     text-align: center;
     width: 50%;
-    /* Takes up half the available container width */
     margin-right: 2%;
     padding: 2% 20%;
-    /* Top-bottom padding 2%, left-right 20% */
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: rgb(255, 239, 239);
 }
 
-/* Heading styling inside form box */
 .box h2 {
     white-space: nowrap;
-    /* Keeps "Submit Your Work" on one line */
     text-align: center;
     overflow: hidden;
     margin-bottom: 20px;
 }
 
 .custom-input {
-
     width: 90%;
-
-
 }
 
 /* ======================= */
@@ -257,22 +263,18 @@ footer {
 /* ======================= */
 /*  Submission Guidelines  */
 /* ======================= */
+
 .submission {
     width: 60%;
-    /* Equal width to the form box */
     margin-left: 5%;
-    /* You can add additional styling for the guidelines here */
 }
 
 /* ======================= */
-/*     Form Group Styling  */
-/* ======================= */
-/* ======================= */
 /*      Custom Input       */
 /* ======================= */
+
 .custom-input {
     width: 90%;
-    /* Set the width of the input group to 90% */
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
@@ -289,7 +291,6 @@ footer {
 .custom-input input,
 .custom-input textarea {
     width: 400%;
-    /* Make sure input fields take up full width of the .custom-input container */
     padding: 10px;
     border: 2px solid #7d0c0e;
     border-radius: 8px;
@@ -306,7 +307,6 @@ footer {
 /* File Upload Styling */
 .custom-file {
     width: 90%;
-    /* Set the width of the input group to 90% */
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
@@ -315,8 +315,6 @@ footer {
 }
 
 .custom-file-upload {
-
-
     padding: 12px;
     border-radius: 25px;
     border: 2px solid #7d0c0e;
@@ -328,10 +326,8 @@ footer {
     transition: 0.3s ease;
     font-weight: bold;
     width: 300%;
-    /* Make sure input fields take up full width of the .custom-input container */
     padding: 10px;
     resize: none;
-
     outline: none;
 
 }
@@ -339,7 +335,6 @@ footer {
 .custom-file-upload:hover {
     border-color: #ad3d3f;
 }
-
 
 span {
     margin-top: 5px;
@@ -352,6 +347,7 @@ span {
 /* ======================= */
 /*       Submit Button     */
 /* ======================= */
+
 .box button {
     display: block;
     width: 100%;
@@ -426,8 +422,22 @@ span {
         display: block;
     }
 
-}
+    /* submission section */
 
+    .submission-container {
+        flex-direction: column;
+    }
+
+    .box {
+        width: 80%;
+        margin-right: 2%;
+        padding: 2% 30%;
+    }
+
+    .custom-input {
+        width: 90%;
+    }
+}
 
 /* ✅ 769px - 1024px (Tablets & Small Laptops) */
 @media (max-width: 1024px) {
