@@ -1,12 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
     async function fetchArticles() {
         try {
-            const response = await fetch('https://afterthoughts.onrender.com/api/articles/pending', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-                }
-            });
-
+            const response = await fetch('https://afterthoughts.onrender.com/api/articles/');
             if (!response.ok) throw new Error('Failed to fetch articles');
             const articles = await response.json();
             const articlesList = document.getElementById('articles-list');
@@ -19,17 +14,38 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <p><strong>Tag:</strong> ${article.tag} | <strong>Read Time:</strong> ${article.minToRead} min</p>
                     <p><strong>Date:</strong> ${new Date(article.date).toLocaleDateString()}</p>
                     <p><strong>Full Text:</strong> ${article.text}</p>
+                    <button class="approve" data-id="${article._id}">Approve</button>
+                    <button class="disapprove" data-id="${article._id}">Disapprove</button>
                     <button class="delete" data-id="${article._id}">Delete</button>
                 </div>
             `).join('');
+
+            // Attach Approve button listeners
+            document.querySelectorAll('.approve').forEach(button => {
+                button.addEventListener('click', async () => {
+                    const id = button.getAttribute('data-id');
+                    console.log("Approve button clicked:", id);
+                    await fetch(`https://afterthoughts.onrender.com/api/articles/approve/${id}`, { method: 'PUT' });
+                    fetchArticles();
+                });
+            });
+
+            // Attach Disapprove button listeners
+            document.querySelectorAll('.disapprove').forEach(button => {
+                button.addEventListener('click', async () => {
+                    const id = button.getAttribute('data-id');
+                    console.log("Disapprove button clicked:", id);
+                    await fetch(`https://afterthoughts.onrender.com/api/articles/disapprove/${id}`, { method: 'PUT' });
+                    alert("Article disapproved successfully!");
+                    fetchArticles();
+                });
+            });
+
+            // Attach Delete button listeners
             document.querySelectorAll('.delete').forEach(button => {
                 button.addEventListener('click', async () => {
                     const id = button.getAttribute('data-id');
-                    await fetch(`https://afterthoughts.onrender.com/api/articles/delete/${id}`, { method: 'DELETE' }, {
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-                        }
-                    });
+                    await fetch(`https://afterthoughts.onrender.com/api/articles/delete/${id}`, { method: 'DELETE' });
                     fetchArticles();
                 });
             });
@@ -37,8 +53,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.error("Error fetching articles:", error);
         }
     }
+
+    // Initial article fetch
     fetchArticles();
 
+    // Handle form submission
     document.getElementById('article-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -55,9 +74,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         try {
             const response = await fetch('https://afterthoughts.onrender.com/api/articles/add', {
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-                },
                 body: formData,
             });
             if (!response.ok) throw new Error('Failed to add article');
@@ -65,34 +81,5 @@ document.addEventListener("DOMContentLoaded", async () => {
         } catch (error) {
             console.error("Error adding article:", error);
         }
-    });
-});
-
-articlesList.innerHTML = articles.map(article => {
-    console.log('Rendering article:', article); // Debugging line
-    return `
-        <div class="article">
-            <h2>${article.title}</h2>
-            <img src="${article.image}" alt="Article Image" class="article-image">
-            <p><strong>Author:</strong> ${article.author}</p>
-            <p><strong>Description:</strong> ${article.description}</p>
-            <p><strong>Tag:</strong> ${article.tag} | <strong>Read Time:</strong> ${article.minToRead} min</p>
-            <p><strong>Date:</strong> ${new Date(article.date).toLocaleDateString()}</p>
-            <p><strong>Full Text:</strong> ${article.text}</p>
-            <button class="approve" data-id="${article._id}">Approve</button>
-            <button class="delete" data-id="${article._id}">Delete</button>
-        </div>
-    `;
-}).join('');
-
-document.querySelectorAll('.approve').forEach(button => {
-    button.addEventListener('click', async () => {
-        const id = button.getAttribute('data-id');
-        await fetch(`https://afterthoughts.onrender.com/api/articles/approve/${id}`, { method: 'PUT' }, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-            }
-        });
-        fetchArticles(); // Reload articles to reflect the approved state
     });
 });
