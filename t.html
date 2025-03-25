@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard Dummy Chart Example</title>
+  <!-- Include Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .dashboard-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .stat-box {
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      flex: 1;
+      min-width: 150px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .stat-box:hover {
+      background: #ddd;
+    }
+    #chartContainer {
+      margin-top: 20px;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Dashboard</h1>
+  <!-- Stat Boxes -->
+  <section class="dashboard-stats">
+    <div class="stat-box" data-type="articles">Total Articles: 10</div>
+    <div class="stat-box" data-type="uniqueViews">Total Unique Views: 100</div>
+    <div class="stat-box" data-type="popular">Total Likes: 50</div>
+    <div class="stat-box" data-type="engagement">Total Comments: 20</div>
+  </section>
+
+  <!-- Chart Container (Empty, will be filled by JS) -->
+  <div id="chartContainer"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Attach click listeners to each stat box
+      document.querySelectorAll(".stat-box").forEach(box => {
+        box.addEventListener("click", function () {
+          const type = this.getAttribute("data-type");
+          displayGraph(type);
+        });
+      });      function displayGraph(type) {
+        // Dummy x-axis values (for example, days or months)
+        const xValues = [1,2,3,4,5,6,7,8,9,10];
+        let dataSet;
+        // Set dummy datasets based on the type clicked
+        if (type === "articles") {
+          dataSet = [1,2,1,3,2,4,3,5,4,6];
+        } else if (type === "uniqueViews") {
+          dataSet = [10,20,30,40,50,60,70,80,90,100];
+        } else if (type === "popular") {
+          dataSet = [5,5,6,7,8,8,9,10,10,11];
+        } else if (type === "engagement") {
+          dataSet = [2,3,2,4,3,5,3,6,4,7];
+        }
+
+        // Ensure the chart container is visible
+        const container = document.getElementById("chartContainer");
+        container.style.display = "block";
+        // Clear any existing content in the container
+        container.innerHTML = "";
+        // Create a new canvas element for the chart
+        const canvas = document.createElement("canvas");
+        canvas.id = "chartCanvas";
+        container.appendChild(canvas);
+        const ctx = canvas.getContext("2d");
+        // Create the chart using Chart.js (line chart example)
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: xValues,
+            datasets: [{
+              label: `${type} Chart`,
+              data: dataSet,
+              borderColor: "blue",
+              fill: false
+            }]
+          },
+          options: {
+            scales: {
+              y: { beginAtZero: true }
+            }
+          }
+        });
+      }
+    });

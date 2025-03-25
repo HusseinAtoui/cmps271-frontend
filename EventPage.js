@@ -1,16 +1,46 @@
+document.addEventListener('DOMContentLoaded', function () {
+    // Check for user data and display greeting if logged in
+    const userDataString = localStorage.getItem("userData");
+    const token = localStorage.getItem("authToken");
+
+    if (!userDataString || !token) {
+        console.warn("User not logged in. Redirecting...");
+        window.location.href = "login.html";
+        return;
+    }
+
+    const userData = JSON.parse(userDataString);
+
+    // Update the greeting
+    const userGreeting = document.getElementById("user-greeting");
+    if (userGreeting) {
+        userGreeting.textContent = ` ${userData.firstName} ${userData.lastName}`;
+    }
+
+    // Update the profile image (if needed)
+    const profileImage = document.getElementById("user-profile-image");
+    if (profileImage) {
+        profileImage.src = userData.profilePicture || "default-profile.jpeg";
+    }
+
+    // Fetch and display events
+    fetchEvents(); // Call function to fetch events from backend
+});
+
+
 // Function to fetch and display events from the backend
 async function fetchEvents() {
     try {
         const response = await fetch('https://afterthoughts.onrender.com/api/events/');
         const events = await response.json();
         makeEvent(events); // Call makeEvent with fetched data
-        initializeCalendar(events); // Call FullCalendar with fetched events
+        initializeCalendar(events); // Initialize FullCalendar with fetched events
     } catch (error) {
         console.error("❌ Error fetching events:", error);
     }
 }
 
-// Function to create and display events
+// Function to create and display events in HTML
 function makeEvent(events) {
     const allEvents = document.getElementById("currentEvents");
 
@@ -55,12 +85,7 @@ function makeEvent(events) {
         allEvents.appendChild(eventElement);
     });
 }
-
-// Function to initialize FullCalendar with events from backend
-document.addEventListener('DOMContentLoaded', function() {
-    fetchEvents(); // Fetch events when the DOM loads
-});
-
+// Function to initialize FullCalendar with events from the backend
 function initializeCalendar(events) {
     var calendarEl = document.getElementById('tempcal');
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -72,7 +97,8 @@ function initializeCalendar(events) {
         },
         events: events.map(event => ({
             title: event.title,
-            start: event.date
+            start: event.date,
+            color: '#7D0D0D' // Fixed: Color value must be a string
         })) // Convert backend events to FullCalendar format
     });
     calendar.render();
