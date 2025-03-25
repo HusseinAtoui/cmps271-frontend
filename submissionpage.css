@@ -72,7 +72,7 @@ body {
     padding: 10px 20px;
     background-color: #faefe1;
     border-radius: 20px;
-    margin-top: 20px;
+    
 }
 
 .loginLink a {
@@ -410,6 +410,7 @@ span {
     .loginLink {
         background: #FAEDE1;
         border-radius: 15px;
+        margin-top: 20px;
     }
 
     .loginLink a {

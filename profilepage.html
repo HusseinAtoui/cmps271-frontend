@@ -13,29 +13,45 @@
 <body>
 
     <!-- Navigation Bar -->
-    <nav class="navbar">
+
+    <button id="open-sidebar-btn" onclick="openSideBar()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9">
+            <path
+                d="M165.13-254.62q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.86q7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.87q-7.22 7.12-17.9 7.12H165.13Zm0-200.25q-10.68 0-17.9-7.27-7.23-7.26-7.23-17.99 0-10.74 7.23-17.87 7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.27 7.23 7.26 7.23 17.99 0 10.74-7.23 17.87-7.22 7.13-17.9 7.13H165.13Zm0-200.26q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.87q7.22-7.12 17.9-7.12h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.86q-7.22 7.13-17.9 7.13H165.13Z" />
+        </svg>
+    </button>
+
+    <nav class="navbar" id="navbar">
+
         <div class="logo">
-            <img src="logo.png" alt="Afterthoughts">
+            <img src="logo.png" alt="Afterthoughts Logo">
         </div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="subpage.html">Submissions</a>
-            <a href="profilepage.html" class="active">Profile</a>
-            <a href="EventPage.html">Events</a>
-            <a href="teamPage.html">Team</a>
-            <a href="contact.html"> Contact </a>
-            <a href="submissionpage.html"><strong>SUBMIT</strong></a>
 
-            <div class="search-container">
-                <input type="text" placeholder="Search..." aria-label="Search">
-            </div>
+        <ul>
+            <li><button id="close-sidebar-btn" onclick="closeSideBar()"> <svg xmlns="http://www.w3.org/2000/svg"
+                        height="24px" viewBox="0 -960 960 960" width="24px" fill="#7D0C0E">
+                        <path
+                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                    </svg></button></li>
+            <li><a href="index.html">Home</a></li>
+            <li> <a href="subpage.html">Submissions</a></li>
+            <li> <a href="profilepage.html" class="active">Profile</a></li>
+            <li><a href="EventPage.html">Events</a></li>
+            <li><a href="teamPage.html">Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li> <a href="submissionpage.html"><strong>SUBMIT</strong></a></li>
+            <li class="loginLink"><a href="loginPage.html">Login</a></li>
+        </ul>
 
-            <button class="login-btn"><a href="loginPage.html">login</a></button>
         </div>
+
     </nav>
+
+    <div id="overlay" onclick="closeSideBar()"></div>
 
     <!-- Dashboard Header -->
     <header class="dashboard-header">
+
         <div class="header-content">
             <h1 id="user-greeting">Hi, Loading...</h1>
             <p>Ready to start your day with some articles?</p>
@@ -43,94 +59,97 @@
         <div class="header-image">
             <img id="user-profile-image" src="profile.jpeg" alt="Profile">
         </div>
-      
+
         <div class="settings" onclick="toggleSettings()">
             <img id="settings-image" src="bolt.png" alt="Settings" class="settings-image">
         </div>
-        
-      
 
-          
         <div id="settings-div" class="settings-content">
             <button id="changeBioBtn" class="settings-btn">Change Bio</button>
             <button id="changePicBtn" class="settings-btn">Change Profile Picture</button>
             <button id="deleteAccBtn" class="settings-btn delete-btn">Delete Account</button>
             <button id="logoutBtn" class="settings-btn logout-btn">Logout</button>
-<button id="Adminpages" class="settings-btn admin ">Admin </button>
+            <button id="Adminpages" class="settings-btn admin ">Admin </button>
 
-            
-             <div id="bioSection" class="settings-box">
-              <h3>Change Bio</h3>
-              <textarea id="bioInput" placeholder="Enter your new bio..."></textarea>
-              <button id="saveBioBtn" class="btn">Save Bio</button>
+
+            <div id="bioSection" class="settings-box">
+                <h3>Change Bio</h3>
+                <textarea id="bioInput" placeholder="Enter your new bio..."></textarea>
+                <button id="saveBioBtn" class="btn">Save Bio</button>
             </div>
-          
+
             <!-- Profile Picture Change Section -->
             <div id="picSection" class="settings-box">
-              <h3>Change Profile Picture</h3>
-              <input type="file" id="picInput" accept="image/*" />
-              <button id="savePicBtn" class="btn">Save Picture</button>
+                <h3>Change Profile Picture</h3>
+                <input type="file" id="picInput" accept="image/*" />
+                <button id="savePicBtn" class="btn">Save Picture</button>
             </div>
-          
+
             <!-- Delete Account Section -->
             <div id="deleteSection" class="settings-box delete-section">
-              <h3>Are you sure you want to delete your account?</h3>
-              <button id="yesDeleteBtn" class="btn delete-btn">Yes, Delete Account</button>
-              <button id="noDeleteBtn" class="btn cancel-btn">Cancel</button>
-           <!-- Admin Section with Links (Initially hidden) --></div>
-<div id="adminsection" class="settings-box" style="display: none;">
-    <h3 id="eventsAdmin" class="admin-option"><a href="adminEvents.html">Events Admin</a></h3>
-    <h3 id="articlesAdmin" class="admin-option"><a href="cadmin.html">Articles Admin</a></h3>
-    <h3 id="schedulerAdmin" class="admin-option"><a href="Schedule.html">Scheduler Admin</a></h3>
-</div>
+                <h3>Are you sure you want to delete your account?</h3>
+                <button id="yesDeleteBtn" class="btn delete-btn">Yes, Delete Account</button>
+                <button id="noDeleteBtn" class="btn cancel-btn">Cancel</button>
+                <!-- Admin Section with Links (Initially hidden) -->
+            </div>
+            <div id="adminsection" class="settings-box" style="display: none;">
+                <h3 id="eventsAdmin" class="admin-option"><a href="adminEvents.html">Events Admin</a></h3>
+                <h3 id="articlesAdmin" class="admin-option"><a href="cadmin.html">Articles Admin</a></h3>
+                <h3 id="schedulerAdmin" class="admin-option"><a href="Schedule.html">Scheduler Admin</a></h3>
+            </div>
 
 
         </div>
-        
+
     </header>
-<!-- Toggle Button -->
-<button id="toggleScheduler" class="toggle-btn">Schedule a Meeting with an Editor </button>
 
-<!-- Scheduler Div (Initially Hidden) -->
-<div id="scheduler" class="scheduler">
-  <h1>Schedule a Meeting  </h1>
-  <p>Please fill out the form below to schedule a meeting with an editor.</p>
-  <form id="scheduleForm">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required>
+    <div class="BGColorDiv">
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
+        <!-- Toggle Button -->
+        <button id="toggleScheduler" class="toggle-btn">Schedule a Meeting with an Editor </button>
 
-    <label for="meetingDate">Preferred Meeting Date &amp; Time</label>
-    <input type="datetime-local" id="meetingDate" name="meetingDate" required>
+        <!-- Scheduler Div (Initially Hidden) -->
+        <div id="scheduler" class="scheduler">
+            <h1>Schedule a Meeting </h1>
+            <p>Please fill out the form below to schedule a meeting with an editor.</p>
+            <form id="scheduleForm">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
 
-    <label for="message">Message</label>
-    <textarea id="message" name="message" rows="4"></textarea>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
 
-    <button type="submit">Schedule Meeting</button>
-  </form>
-  <div id="responseMessage"></div>
-</div>
+                <label for="meetingDate">Preferred Meeting Date &amp; Time</label>
+                <input type="datetime-local" id="meetingDate" name="meetingDate" required>
 
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="4"></textarea>
 
-    <section class="dashboard-stats">
-        <!-- Stat boxes will be dynamically inserted here -->
-      </section>
-    
+                <button type="submit">Schedule Meeting</button>
+            </form>
+            <div id="responseMessage"></div>
+        </div>
 
 
-
-<!-- Chart Container (Initially Hidden) -->
-<div id="chartContainer" style="display: none; position: relative;">
-  <!-- Close Button to hide the chart container -->
- 
-</div>
+        <section class="dashboard-stats">
+            <!-- Stat boxes will be dynamically inserted here -->
+        </section>
 
 
-    <section class="grid-container">
-        <!-- Article cards will be loaded dynamically -->
-    </section>
+        <!-- Chart Container (Initially Hidden) -->
+        <div id="chartContainer" style="display: none; position: relative;">
+            <!-- Close Button to hide the chart container -->
+        </div>
+
+
+
+        <section class="grid-container">
+            <!-- Article cards will be loaded dynamically -->
+        </section>
+
+    </div>
+
+    <div class="spaceDiv"></div>
 
     <footer>
         <div class="footer-container">
