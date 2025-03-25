@@ -45,7 +45,7 @@ function makeEvent(events) {
     const allEvents = document.getElementById("currentEvents");
 
     // Clear existing content
-    allEvents.innerHTML = ''; 
+    allEvents.innerHTML = '';
 
     // Loop through each event and create its HTML structure
     events.forEach(event => {
@@ -54,9 +54,9 @@ function makeEvent(events) {
 
         // Create image element
         const imageElement = document.createElement('img');
-        imageElement.src = event.image; 
-        imageElement.alt = event.title; 
-        imageElement.classList.add('decorations'); 
+        imageElement.src = event.image;
+        imageElement.alt = event.title;
+        imageElement.classList.add('decorations');
         eventElement.appendChild(imageElement);
 
         // Create text container
@@ -65,19 +65,19 @@ function makeEvent(events) {
 
         // Add date
         const dateElement = document.createElement('h5');
-        dateElement.textContent = `Date: ${new Date(event.date).toLocaleDateString()}`; 
+        dateElement.textContent = `Date: ${new Date(event.date).toLocaleDateString()}`;
         textContainer.appendChild(dateElement);
-        
+
         // Add title
         const titleElement = document.createElement('h3');
-        titleElement.textContent = event.title; 
+        titleElement.textContent = event.title;
         textContainer.appendChild(titleElement);
 
         // Add description
         const descriptionElement = document.createElement('p');
-        descriptionElement.textContent = event.description; 
+        descriptionElement.textContent = event.description;
         textContainer.appendChild(descriptionElement);
-        
+
         // Append text container to event element
         eventElement.appendChild(textContainer);
 
@@ -89,7 +89,7 @@ function makeEvent(events) {
 function initializeCalendar(events) {
     var calendarEl = document.getElementById('tempcal');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth', 
+        initialView: 'dayGridMonth',
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
@@ -102,4 +102,18 @@ function initializeCalendar(events) {
         })) // Convert backend events to FullCalendar format
     });
     calendar.render();
+}
+
+/* =============================
+   nav bar
+   ============================= */
+
+const navbar = document.getElementById('navbar');
+
+function openSideBar() {
+    navbar.classList.add('show');
+}
+
+function closeSideBar() {
+    navbar.classList.remove('show');
 }
