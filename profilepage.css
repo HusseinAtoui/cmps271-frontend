@@ -1,14 +1,24 @@
+/* ==========================================================================
+   GLOBAL STYLES
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    font-family: "Times New Roman";
+}
+
 body {
     margin: 0;
-    padding: 0;
-    font-family: "Times New Roman";
-    background-color: #faefe1;
+    background-color: #7D0C0E;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .images {
-    width: 50%;
+    width: 40%;
     height: 50%;
-
 }
 
 .activity-card {
@@ -20,48 +30,18 @@ body {
     margin-left: 5%;
 }
 
-/* Search Bar Styles */
-.search-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    /* Add padding for better visual appearance */
-    border-radius: 20px;
-    /* Make the container's corners rounded */
+.BGColorDiv {
+    background-color: #FAEDE1;
 }
 
-.search-container input {
-    font-size: 16px;
-    /* Match the navbar background color */
-    outline: none;
-    border-radius: 15px;
-    width: 100%;
-    /* Adjust the width as per your preference */
-    background-color: #faefe1;
-    color: #7d0c0e;
-    border: white;
-    padding: 6px;
-    font-family: 'Times New Roman', Times, serif;
+.spaceDiv {
+    background-color: #FAEDE1;
+    padding: 20px;
 }
 
-.search-container input:focus {
-    border-color: #f0c5a4;
-    /* Change border color when the input is focused */
-}
-
-.login-btn {
-    background-color: #faefe1;
-    border-color: #f0c5a4;
-    border-radius: 15px;
-    padding: 6px;
-    border: white;
-    font-size: 16px;
-    width: 10%;
-    font-weight: bold;
-    color: #7D0C0E;
-    font-family: "Times New Roman";
-}
+/* ==========================================================================
+   NAVIGATION BAR & LOGO
+   ========================================================================== */
 
 .navbar {
     display: flex;
@@ -69,62 +49,98 @@ body {
     justify-content: space-between;
     background-color: #7d0c0e;
     padding: 15px 50px;
-    height: 80px;
+    height: 110px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+}
+
+.navbar li {
+    padding: 0em 1em;
 }
 
 .logo img {
     height: 70px;
-    /* Adjust this value for height */
     width: auto;
-    /* Let the width adjust proportionally */
-
     padding: 2px;
     margin-left: 20px;
     border-radius: 5px;
 }
 
-.images {
-
-    width: 40%;
-}
-
-.nav-links {
+.navbar {
     display: flex;
     align-items: center;
     gap: 25px;
 }
 
-.active {
-    text-decoration: underline;
-    color: rgb(115, 23, 23);
-
-}
-
-.nav-links a {
+.navbar a {
     text-decoration: none;
     color: #faefe1;
     font-size: 18px;
     text-transform: lowercase;
     transition: 0.3s;
+    display: flex;
 }
 
-.nav-links a.active {
+.navbar a.active {
     border-bottom: 2px solid #faefe1;
     padding-bottom: 3px;
 }
 
-.nav-links a:not(.active):hover {
+.loginLink {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #faefe1;
+    border-radius: 20px;
+}
+
+.loginLink a {
+    font-weight: bold;
+    color: #7D0C0E;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.navbar a:not(.active):hover {
     text-decoration: underline;
 }
 
-.navbar button a {
-    color: #7D0C0E;
-    text-decoration: none;
-
+#open-sidebar-btn {
+    display: none;
+    background: none;
+    border: none;
+    padding: 1em;
+    margin-left: auto;
+    cursor: pointer;
+    background-color: #7D0C0E;
 }
 
-/*Guys this is the footer that we will go with most probably */
-/* Footer */
+#close-sidebar-btn {
+    display: none;
+    background-color: none;
+    border: none;
+    padding: 1em;
+    cursor: pointer;
+    background-color: #FAEDE1;
+    border-radius: 15px;
+}
+
+#overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    display: none;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
 footer {
     background-color: #7D0D0D;
     padding: 40px;
@@ -132,12 +148,9 @@ footer {
     color: #FAEDE1;
     font-family: "Times New Roman", serif;
     margin-top: 50px;
-
-    /* No fixed height, so the footer can resize based on content */
 }
 
 .footer-container {
-    /* Use flex and allow wrapping for responsiveness */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -145,7 +158,6 @@ footer {
     max-width: 900px;
     margin: 0 auto;
     gap: 20px;
-    /* spacing between columns */
 }
 
 .footer-left,
@@ -153,12 +165,9 @@ footer {
 .footer-info {
     flex: 1;
     min-width: 200px;
-    /* ensures columns don’t become too narrow */
     margin-bottom: 20px;
-    /* spacing if needed */
 }
 
-/* Remove the hard-coded margin-left so it can respond to smaller screens */
 .footer-right {
     text-align: right;
     margin-left: 0;
@@ -167,13 +176,11 @@ footer {
 .logofooter img {
     height: 200px;
     width: auto;
-
     padding: 5px;
     border-radius: 5px;
 }
 
-
-/* Links inside footer */
+/* Footer Links & Mailing List */
 .join a,
 .mailing-list p a {
     color: #FAEDE1;
@@ -188,7 +195,6 @@ footer {
     border-bottom: 1px solid #F0C5A4;
 }
 
-/* Mailing list inputs/buttons */
 .mailing-list input {
     width: 300px;
     padding: 10px;
@@ -214,16 +220,18 @@ footer {
     background-color: #F0C5A4;
 }
 
+/* ==========================================================================
+   DASHBOARD HEADER & STATS
+   ========================================================================== */
 
-
-
-/* Dashboard Header */
 .dashboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #f3e5d8;
     padding: 40px 50px;
+    position: relative;
+
 }
 
 .header-content h1 {
@@ -238,9 +246,33 @@ footer {
 
 .header-image img {
     height: 150px;
+    width: auto;
 }
 
+/* Settings Icon (within header) */
+.settings {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    height: 24px;
+    width: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.settings img {
+    width: 50px;
+    height: 50px;
+}
+
+.settings-image {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* Dashboard Stats */
 .dashboard-stats {
     display: flex;
     justify-content: center;
@@ -256,132 +288,73 @@ footer {
     color: white;
     background-color: #7D0D0D;
     cursor: pointer;
-}
-
-
-.grid-container{
-
 
 }
-.text-section{
+
+/* ==========================================================================
+   GRID & CARD LAYOUT
+   ========================================================================== */
+
+.text-section {
     margin-left: 2%;
-
-}
-.card img {
-    width: 300px; /* Set the width to 100% to ensure it fills the card */
-    height: 100%; /* Set the height to 100% to ensure it fills the card */
-    object-fit: cover; /* Ensures the image covers the area without stretching */
-    border-radius: 5% 0px 0px 5% ; /* This makes the image circular */
 }
 
 .card {
     border-radius: 20px;
-    background-color:rgb(237, 213, 204);
+    background-color: rgb(237, 213, 204);
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     overflow: hidden;
-    color: white;
     margin-bottom: 2%;
     margin-left: 5%;
     margin-right: 5%;
     height: 300px;
     color: #7D0C0E;
-    
-  }
-  
-  .card:hover {
+}
+
+.card img {
+    width: 300px;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5% 0px 0px 5%;
+}
+
+.card:hover {
     transform: scale(1.02);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
-  .continue-reading:hover{
+}
+
+.continue-reading {
+    background-color: #7D0C0E;
+    border: none;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-right: 1rem;
+}
+
+.continue-reading:hover {
     background-color: #bb484a;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-
-.continue-reading{
-    background-color:#7D0C0E;
-border-radius: 5%;
-
-border: none;
-color: #fff;
-padding: 0.75rem 1rem;
-cursor: pointer;
-border-radius: 15px;
-margin-right: 1rem;
-}/* Dashboard Header - Container */
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f3e5d8;
-    padding: 40px 50px;
-    position: relative;  /* Ensure the header is positioned correctly */
 }
 
-/* Settings icon container */
-.settings {
-    position: absolute;  /* Position it relative to the header */
-    top: 10px;   /* Adjust top for positioning */
-    right: 20px; /* Adjust right for positioning */
-    height: 24px;  /* Set a smaller height */
-    width: 24px;   /* Set a smaller width */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.settings img {
-    width: 50px;      /* Directly control the width of the image */
-    height: 50px;   
-}
-/* Settings image */
+/* ==========================================================================
+   SETTINGS & PROFILE DROPDOWN
+   ========================================================================== */
 
-
-/* Profile image inside header */
-.header-image img {
-    height: 150px;  /* Adjust height of profile image */
-    width: auto;    /* Maintain the aspect ratio */
-}
-/* Settings icon container */
-.settings {
-    position: absolute;  
-    top: 10px;   
-    right: 20px; 
-    height: 24px;  
-    width: 24px;   
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.settings-image {
-    width: 20px;     
-    height: 20px;     
-    object-fit: contain; 
-}
-
-/* Hidden settings content */
+/* Settings Dropdown (merged duplicate selectors; using second definition) */
 .settings-content {
-    display: none; /* Initially hidden */
-    position: absolute;
-    top: 50px;  /* Adjust position */
-    right: 20px;  /* Adjust position */
-    background-color: white; 
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    width: 200px; /* Adjust the width */
-    border-radius: 8px;
-}
-/* Settings Dropdown */
-.settings-content {
-    display: none; /* Initially hidden */
+    display: none;
+    /* Initially hidden */
     position: absolute;
     top: 60px;
     right: 20px;
-    background-color: #faefe1; 
+    background-color: #faefe1;
     padding: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    width: 220px; 
+    width: 220px;
     border-radius: 8px;
     text-align: center;
     border: 1px solid #7D0C0E;
@@ -416,7 +389,8 @@ margin-right: 1rem;
     background-color: #5a0c0e;
 }
 
-.logout-btn:hover, .delete-btn:hover {
+.logout-btn:hover,
+.delete-btn:hover {
     background-color: #7D0C0E;
 }
 
@@ -436,7 +410,8 @@ margin-right: 1rem;
     margin-bottom: 10px;
 }
 
-textarea, input[type="file"] {
+textarea,
+input[type="file"] {
     width: 97%;
     padding: 8px;
     border: 1px solid #7D0C0E;
@@ -482,42 +457,31 @@ textarea, input[type="file"] {
     background-color: #bb484a;
     color: #FAEDE1;
 }
-/* Style for the chart container */
-#chartContainer {
-    background-color: #f3e5d8; /* A light, complementary background */
-    border: 2px solid #7D0C0E; /* Border matching your theme */
-    border-radius: 15px;       /* Rounded corners */
-    padding: 20px;             /* Internal spacing */
-    margin: 20px auto;         /* Centered with vertical spacing */
-    max-width: 800px;          /* Maximum width for responsiveness */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle depth */
-}
 
-/* Ensure the canvas fits nicely inside the container */
-#myChart {
-    display: block;
-    width: 100%;
-    height: auto;
-}/* Style for the chart container */
+/* ==========================================================================
+   CHART CONTAINER
+   ========================================================================== */
 #chartContainer {
     background-color: #f3e5d8;
     border: 2px solid #7D0C0E;
     border-radius: 15px;
     padding: 20px;
-    margin: 20px auto;
-    max-width: 800px;
+    margin: 20px 26%;
+    max-width: 900px;
+    height: 500px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    position: relative; /* Needed for absolute positioning of the close button */
+    position: relative;
 }
 
-/* Ensure the canvas fits nicely inside the container */
 #myChart {
     display: block;
     width: 100%;
     height: auto;
 }
 
-/* Toggle Button Styling */
+/* ==========================================================================
+   TOGGLE BUTTON
+   ========================================================================== */
 .toggle-btn {
     display: block;
     margin: 20px auto;
@@ -528,22 +492,85 @@ textarea, input[type="file"] {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-  }
-  
-  .toggle-btn:hover {
+}
+
+.toggle-btn:hover {
     background-color: #bb484a;
-  }
-  
-  /* Scheduler Div Styling */
-  .scheduler {
-    display: none; /* Hidden by default */
+}
+
+/* ==========================================================================
+   SCHEDULER SECTION
+   ========================================================================== */
+.scheduler {
+    display: none;
     margin: 20px auto;
-    max-width: 600px;
+    max-width: 800px;
     background-color: #f3e5d8;
     padding: 20px;
     border-radius: 8px;
-  }
-  /* Admin Section Styling */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.scheduler h1 {
+    color: #7D0C0E;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.scheduler p {
+    color: #444;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Scheduler Form */
+#scheduleForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#scheduleForm input,
+#scheduleForm textarea {
+    padding: 10px;
+    border: 1px solid #7D0C0E;
+    border-radius: 5px;
+    background-color: #FAEDE1;
+    color: #7D0C0E;
+    font-family: 'Times New Roman', serif;
+}
+
+#scheduleForm input:focus,
+#scheduleForm textarea:focus {
+    border-color: #bb484a;
+}
+
+#scheduleForm button {
+    background-color: #7D0C0E;
+    color: #FAEDE1;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Times New Roman', serif;
+    transition: background-color 0.3s ease;
+}
+
+#scheduleForm button:hover {
+    background-color: #bb484a;
+}
+
+#responseMessage {
+    margin-top: 10%;
+    font-size: 16px;
+    color: #7D0C0E;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   ADMIN SECTION
+   ========================================================================== */
 #adminsection {
     background-color: #faefe1;
     padding: 15px;
@@ -558,100 +585,125 @@ textarea, input[type="file"] {
     margin-bottom: 10px;
     cursor: pointer;
 }
-/* Remove default link styles and apply custom color */
+
+/* Admin Options */
 .admin-option {
-    color: rgb(115, 23, 23);  /* Dark Red color */
+    color: rgb(115, 23, 23);
     font-size: 16px;
-    text-decoration: none;     /* Remove underline */
+    text-decoration: none;
     padding: 10px;
-    display: block;            /* Make the links block-level so they stack vertically */
+    display: block;
 }
 
-/* Remove the default blue color for anchor tags */
 .admin-option a {
-    color: inherit;            /* Inherit the color from parent element */
-    text-decoration: none;     /* Remove underline from links */
+    color: inherit;
+    text-decoration: none;
 }
 
-/* Hover effect for the links */
 .admin-option:hover {
-    color: rgb(200, 23, 23);  /* Brighter red on hover */
-    background-color: rgba(255, 0, 0, 0.1);  /* Light red background on hover */
-    transition: all 0.3s ease;  /* Smooth transition for hover effect */
+    color: rgb(200, 23, 23);
+    background-color: rgba(255, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 .admin {
     background-color: #d77d7a;
+}
+
+/* ==========================================================================
+   Responsive SECTION
+   ========================================================================== */
+
+@media (max-width: 480px) {
+
+    /* scheduler*/
+
+    .scheduler {
+        max-width: 200px;
     }
-    /* Scheduler Div Styling */
-.scheduler {
-    display: none; /* Hidden by default */
-    margin: 20px auto;
-    max-width: 600px;
-    background-color: #f3e5d8; /* Matches the light background color */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+
+    /* Dashboard Stats */
+
+    .dashboard-stats {
+        gap: 15px;
+        margin: 35px;
+    }
+
+    .stat-box {
+        font-size: 14px;
+    }
 }
 
-/* Header for Scheduler */
-.scheduler h1 {
-    color: #7D0C0E; /* Dark red for consistency with other headings */
-    font-size: 24px;
-    margin-bottom: 15px;
+/* ✅ 481px - 768px (Larger Phones & Tablets)  */
+@media (max-width: 768px) {
+
+    /* nav section => side bar */
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        z-index: 10;
+        width: min(15em, 100%);
+        height: 100vh;
+        justify-content: center;
+        border-left: 1px solid rgba(0, 0, 0, 0.132);
+        transition: right 0.4s ease-in-out;
+    }
+
+    .navbar.show {
+        right: 0;
+    }
+
+    .navbar.show~#overlay {
+        display: block;
+    }
+
+    .navbar ul {
+        padding: 0em 1em;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar a {
+        padding: 1.5rem;
+    }
+
+    .loginLink {
+        background: #FAEDE1;
+        border-radius: 15px;
+    }
+
+    .loginLink a {
+        color: #7D0C0E;
+        font-weight: bold;
+    }
+
+    #open-sidebar-btn,
+    #close-sidebar-btn {
+        display: block;
+    }
+
+    /* scheduler*/
+
+    .scheduler {
+        max-width: 600px;
+    }
+
+    /* graph */
+
+    #chartContainer {
+        border-radius: 15px;
+        padding: 20px;
+        margin: 20px 10%;
+        max-width: 900px;
+        height: 500px;
+    }
 }
 
-/* Paragraph under Scheduler Header */
-.scheduler p {
-    color: #444;
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-/* Form Styling */
-#scheduleForm {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Adds space between form elements */
-}
-
-/* Form Inputs */
-#scheduleForm input, #scheduleForm textarea {
-    padding: 10px;
-    border: 1px solid #7D0C0E;
-    border-radius: 5px;
-    background-color: #FAEDE1;
-    color: #7D0C0E;
-    font-family: 'Times New Roman', serif;
-}
-
-/* Focused input field */
-#scheduleForm input:focus, #scheduleForm textarea:focus {
-    border-color: #bb484a; /* Focus color matches the button hover effect */
-}
-
-/* Submit Button */
-#scheduleForm button {
-    background-color: #7D0C0E;
-    color: #FAEDE1;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-family: 'Times New Roman', serif;
-    transition: background-color 0.3s ease;
-}
-
-/* Submit Button Hover Effect */
-#scheduleForm button:hover {
-    background-color: #bb484a; /* Darker red for hover */
-}
-
-/* Response Message */
-#responseMessage {
-    margin-top: 10%;
-    font-size: 16px;
-    color: #7D0C0E;
-    font-weight: bold;
+/* ✅ 769px - 1024px (Tablets & Small Laptops) */
+@media (max-width: 1024px) {
+    .logo {
+        display: none;
+    }
 }

@@ -437,7 +437,7 @@ footer {
 /*       Responsive Styles       */
 /* ============================= */
 
-/* ====== 320px - 480px (Small Phones) ====== */
+/* ✅ 320px - 480px (Small Phones)  */
 @media (max-width: 480px) {
 
   .card {
