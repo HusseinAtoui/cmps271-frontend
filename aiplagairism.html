@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Copyleaks AI Detection</title>
+</head>
+<body>
+  <h1>Copyleaks AI Detection</h1>
+  <textarea id="textInput" placeholder="Enter text to analyze" rows="10" cols="50"></textarea><br>
+  <button onclick="detectAI()">Detect AI</button>
+  <pre id="result"></pre>
+
+  <script>
+ async function detectAI() {
+      const text = document.getElementById("textInput").value;
+      if (!text) {
+        alert("Please enter text to check.");
+        return;
+      }
+      try {
+        const response = await fetch("http://localhost:3000/aiplagiarism/detect", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text })
+        });
+        const result = await response.json();
+        document.getElementById("result").textContent = JSON.stringify(result, null, 2);
+      } catch (error) {
+        document.getElementById("result").textContent = "Error: " + error;
+      }
+    }
+  </script>
+</body>
+</html>
