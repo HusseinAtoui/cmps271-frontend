@@ -1,0 +1,264 @@
+/* ============================= */
+/*      Meeting Scheduler Page   */
+/* ============================= */
+
+body {
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+    background-color: #FAEFE1;
+    text-align: center;
+}
+
+h1 {
+    color: white;
+    background-color: #7D0C0E;
+    margin: 0px;
+    text-align: center;
+}
+#menu h1{
+    background-color: #bb484a;
+}
+#menu{
+   margin-left: 0%;
+   margin-right: 0%; 
+ 
+}
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #7D0C0E;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #7D0C0E;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+}
+
+input, textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 4px solid white;
+    border-radius: 5px;
+    width: 100%;
+}
+
+button {
+    background-color: #600A0C;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+flex: auto;
+    font-size: 16px;
+    transition: 0.3s;
+
+}
+
+button:hover {
+    background-color: #8B181A;
+}
+
+/* ============================= */
+/*      Meetings Display Style   */
+/* ============================= */
+
+#meetingsContainer {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #7D0C0E;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    color: white;
+}
+
+.meeting-card {
+    background: #FAEDE1;
+    border-left: 5px solid #7D0C0E;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.meeting-card p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.meeting-card strong {
+    color: #7D0C0E;
+}/* Settings icon container */
+.settings {
+    position: absolute;  /* Position it relative to the header */
+    top: 10px;   /* Adjust top for positioning */
+    right: 20px; /* Adjust right for positioning */
+    height: 24px;  /* Set a smaller height */
+    width: 24px;   /* Set a smaller width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.settings img {
+    width: 50px;      /* Directly control the width of the image */
+    height: 50px;   
+}
+/* Settings image */
+
+
+/* Settings icon container */
+.settings {
+    position: absolute;  
+    top: 10px;   
+    right: 20px; 
+    height: 24px;  
+    width: 24px;   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings-image {
+    width: 20px;     
+    height: 20px;     
+    object-fit: contain; 
+}
+
+/* Hidden settings content */
+.settings-content {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 50px;  /* Adjust position */
+    right: 20px;  /* Adjust position */
+    background-color: white; 
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 200px; /* Adjust the width */
+    border-radius: 8px;
+}
+/* Settings Dropdown */
+.settings-content {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #faefe1; 
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 220px; 
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #7D0C0E;
+}
+
+/* Settings Buttons */
+.settings-btn {
+    display: block;
+    width: 100%;
+    background-color: #7D0C0E;
+    color: #FAEDE1;
+    border: none;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: "Times New Roman", serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.settings-btn:hover {
+    background-color: #bb484a;
+}
+
+/* Logout & Delete Buttons */
+.logout-btn {
+    background-color: #bb484a;
+}
+
+.delete-btn {
+    background-color: #5a0c0e;
+}
+
+.logout-btn:hover, .delete-btn:hover {
+    background-color: #7D0C0E;
+}
+
+/* Bio & Profile Picture Section */
+.settings-box {
+    display: none;
+    background-color: #faefe1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px solid #7D0C0E;
+}
+
+.settings-box h3 {
+    color: #7D0C0E;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.dashboard {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+}
+
+.sidebar {
+    width: 250px; /* Width of the sidebar */
+    background-color: #7D0C0E;
+    color: white;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+.sidebar ul li a:hover {
+    color: #bb484a;
+}
+
+/* Content area next to the sidebar */
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #FAEFE1;
+    overflow-y: auto;
+}

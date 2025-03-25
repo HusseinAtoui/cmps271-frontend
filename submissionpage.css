@@ -8,7 +8,7 @@
 
 body {
     margin: 0;
-    background-color: #FFE2D5;
+    background-color: #7D0C0E;
     color: #333;
     line-height: 1.6;
     display: flex;
@@ -16,9 +16,9 @@ body {
     width: 100%;
 }
 
-/* ========================================= */
-/*               Navigation                  */
-/* ========================================= */
+/* ============================= */
+/*          Navigation           */
+/* ============================= */
 .navbar {
     display: flex;
     align-items: center;
@@ -26,6 +26,15 @@ body {
     background-color: #7d0c0e;
     padding: 15px 50px;
     height: 110px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+}
+
+.navbar li {
+    padding: 0em 1em;
 }
 
 .logo img {
@@ -36,72 +45,80 @@ body {
     border-radius: 5px;
 }
 
-.nav-links {
+.navbar {
     display: flex;
     align-items: center;
     gap: 25px;
 }
 
-.nav-links a {
+.navbar a {
     text-decoration: none;
     color: #faefe1;
     font-size: 18px;
     text-transform: lowercase;
     transition: 0.3s;
+    display: flex;
 }
 
-.nav-links a.active {
+.navbar a.active {
     border-bottom: 2px solid #faefe1;
     padding-bottom: 3px;
 }
 
-.nav-links a:not(.active):hover {
+.loginLink {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #faefe1;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.loginLink a {
+    font-weight: bold;
+    color: #7D0C0E;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.navbar a:not(.active):hover {
     text-decoration: underline;
 }
 
-.search-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    border-radius: 20px;
+#open-sidebar-btn {
+    display: none;
+    background: none;
+    border: none;
+    padding: 1em;
+    margin-left: auto;
+    cursor: pointer;
+    background-color: #7D0C0E;
 }
 
-.search-container input {
-    font-size: 16px;
-    outline: none;
+#close-sidebar-btn {
+    display: none;
+    background-color: none;
+    border: none;
+    padding: 1em;
+    cursor: pointer;
+    background-color: #FAEDE1;
     border-radius: 15px;
-    width: 100%;
-    background-color: #faefe1;
-    color: #7d0c0e;
-    border: white;
-    padding: 6px;
 }
 
-.search-container input:focus {
-    border-color: #f0c5a4;
+#overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    display: none;
 }
 
-.login-btn {
-    background-color: #faefe1;
-    border-color: #f0c5a4;
-    border-radius: 15px;
-    padding: 6px;
-    border: white;
-    font-size: 16px;
-    width: 10%;
-    font-weight: bold;
-    color: #7D0C0E;
-}
-
-.navbar button a {
-    color: #7D0C0E;
-    text-decoration: none;
-}
 
 /* ========================================= */
 /*                 Footer                    */
 /* ========================================= */
+
 footer {
     background-color: #7D0C0E;
     padding: 40px;
@@ -181,27 +198,6 @@ footer {
 }
 
 /* ========================================= */
-/*           Responsive Styles               */
-/* ========================================= */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .mySlides {
-        flex-direction: column;
-    }
-
-    .imagecontainer,
-    .text-section {
-        width: 90%;
-        max-width: 100%;
-        margin: 0.5rem auto;
-    }
-}
-
-/* ========================================= */
 /*         Submission Page Styles            */
 /* ========================================= */
 
@@ -212,12 +208,23 @@ footer {
     align-items: center;
     gap: 10px;
     flex-direction: row;
-    margin-top: 5%;
+    list-style-type: none;
+    margin-top: 30px;
+}
+
+.bgColorBack {
+    background-color: #FAEDE1;
+}
+
+.containerSace {
+    padding: 20px;
+    background-color: #FAEDE1;
 }
 
 /* ======================= */
 /*          Form Box       */
 /* ======================= */
+
 .box {
     background-color: #7D0C0E;
     font-size: large;
@@ -227,55 +234,47 @@ footer {
     justify-content: center;
     text-align: center;
     width: 50%;
-    /* Takes up half the available container width */
-    margin-right: 5%;
+    margin-right: 2%;
     padding: 2% 20%;
-    /* Top-bottom padding 2%, left-right 20% */
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: rgb(255, 239, 239);
 }
 
-/* Heading styling inside form box */
 .box h2 {
     white-space: nowrap;
-    /* Keeps "Submit Your Work" on one line */
     text-align: center;
     overflow: hidden;
     margin-bottom: 20px;
 }
-.custom-input{
 
-width:90%;
-
-
+.custom-input {
+    width: 90%;
 }
+
 /* ======================= */
 /*          Form Styling   */
 /* ======================= */
 
-#submissionForm{
-    width:90%;
+#submissionForm {
+    width: 90%;
 }
 
 /* ======================= */
 /*  Submission Guidelines  */
 /* ======================= */
+
 .submission {
-    width: 50%;
-    /* Equal width to the form box */
+    width: 60%;
     margin-left: 5%;
-    /* You can add additional styling for the guidelines here */
 }
 
 /* ======================= */
-/*     Form Group Styling  */
-/* ======================= */
-/* ======================= */
 /*      Custom Input       */
 /* ======================= */
+
 .custom-input {
-    width: 90%;  /* Set the width of the input group to 90% */
+    width: 90%;
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
@@ -291,7 +290,7 @@ width:90%;
 
 .custom-input input,
 .custom-input textarea {
-    width: 400%;  /* Make sure input fields take up full width of the .custom-input container */
+    width: 400%;
     padding: 10px;
     border: 2px solid #7d0c0e;
     border-radius: 8px;
@@ -307,7 +306,7 @@ width:90%;
 
 /* File Upload Styling */
 .custom-file {
-    width: 90%;  /* Set the width of the input group to 90% */
+    width: 90%;
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
@@ -316,8 +315,6 @@ width:90%;
 }
 
 .custom-file-upload {
-
-    
     padding: 12px;
     border-radius: 25px;
     border: 2px solid #7d0c0e;
@@ -328,18 +325,16 @@ width:90%;
     cursor: pointer;
     transition: 0.3s ease;
     font-weight: bold;
-    width: 300%;  /* Make sure input fields take up full width of the .custom-input container */
+    width: 300%;
     padding: 10px;
-resize: none;
- 
+    resize: none;
     outline: none;
- 
+
 }
 
 .custom-file-upload:hover {
     border-color: #ad3d3f;
 }
-
 
 span {
     margin-top: 5px;
@@ -352,6 +347,7 @@ span {
 /* ======================= */
 /*       Submit Button     */
 /* ======================= */
+
 .box button {
     display: block;
     width: 100%;
@@ -368,4 +364,85 @@ span {
 
 .box button:hover {
     background-color: #b33c3c;
+}
+
+/* ============================= */
+/*       Responsive Styles       */
+/* ============================= */
+
+/* ====== 320px - 480px (Small Phones) ====== */
+@media (max-width: 480px) {}
+
+/* ✅ 481px - 768px (Larger Phones & Tablets)  */
+@media (max-width: 768px) {
+
+    /* nav section => side bar */
+    .navbar {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        z-index: 10;
+        width: min(15em, 100%);
+        height: 100vh;
+        justify-content: center;
+        border-left: 1px solid rgba(0, 0, 0, 0.132);
+        transition: right 0.4s ease-in-out;
+    }
+
+    .navbar.show {
+        right: 0;
+    }
+
+    .navbar.show~#overlay {
+        display: block;
+    }
+
+    .navbar ul {
+        padding: 0em 1em;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar a {
+        padding: 1.5rem;
+    }
+
+    .loginLink {
+        background: #FAEDE1;
+        border-radius: 15px;
+    }
+
+    .loginLink a {
+        color: #7D0C0E;
+        font-weight: bold;
+    }
+
+    #open-sidebar-btn,
+    #close-sidebar-btn {
+        display: block;
+    }
+
+    /* submission section */
+
+    .submission-container {
+        flex-direction: column;
+    }
+
+    .box {
+        width: 80%;
+        margin-right: 2%;
+        padding: 2% 30%;
+    }
+
+    .custom-input {
+        width: 90%;
+    }
+}
+
+/* ✅ 769px - 1024px (Tablets & Small Laptops) */
+@media (max-width: 1024px) {
+
+    .logo {
+        display: none;
+    }
 }

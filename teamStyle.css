@@ -1,29 +1,24 @@
-/* Global Styles */
+/* ============================= */
+/*          Global Styles        */
+/* ============================= */
 * {
     box-sizing: border-box;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Times New Roman";
 }
 
-/* General Styling */
 body {
     margin: 0;
-    padding: 0;
-    background-color: #faefe1;
+    background-color: #7D0C0E;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-
-/* Buttons */
-.login-btn {
-    background-color: #faefe1;
-    border-color: #f0c5a4;
-    border-radius: 15px;
-    padding: 6px;
-    border: white;
-    font-size: 16px;
-    width: 10%;
-    font-weight: bold;
-    color: #7D0C0E;
-  }
+/* ============================= */
+/*         Buttons Styles        */
+/* ============================= */
 
 .join a,
 .mailing-list p a {
@@ -39,16 +34,26 @@ body {
     border-bottom: 1px solid #F0C5A4;
 }
 
-/* Navbar */
+
+/* ============================= */
+/*          Navigation           */
+/* ============================= */
 .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #7d0c0e;
     padding: 15px 50px;
-    height: 112px;
-    color: #fff;
-    width: 100%;
+    height: 110px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+}
+
+.navbar li {
+    padding: 0em 1em;
 }
 
 .logo img {
@@ -59,65 +64,88 @@ body {
     border-radius: 5px;
 }
 
-.nav-links {
+.navbar {
     display: flex;
     align-items: center;
     gap: 25px;
 }
 
-.nav-links a {
+.navbar a {
     text-decoration: none;
     color: #faefe1;
     font-size: 18px;
     text-transform: lowercase;
     transition: 0.3s;
+    display: flex;
 }
 
-.nav-links a.active {
+.navbar a.active {
     border-bottom: 2px solid #faefe1;
     padding-bottom: 3px;
 }
 
-.nav-links a:not(.active):hover {
-    text-decoration: underline;
-}
-
-.navbar button a {
-    color: #7D0C0E;
-    text-decoration: none;
-}
-
-/* Search Bar */
-.search-container {
-    display: flex;
-    align-items: center;
+.loginLink {
+    display: inline-flex;
     justify-content: center;
-    padding: 5px;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #faefe1;
     border-radius: 20px;
 }
 
-.search-container input {
-    font-size: 16px;
-    outline: none;
-    border-radius: 15px;
-    width: 100%;
-    background-color: #faefe1;
-    color: #7d0c0e;
+.loginLink a {
+    font-weight: bold;
+    color: #7D0C0E;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.navbar a:not(.active):hover {
+    text-decoration: underline;
+}
+
+#open-sidebar-btn {
+    display: none;
+    background: none;
     border: none;
-    padding: 6px;
-    font-family: 'Times New Roman', Times, serif;
+    padding: 1em;
+    margin-left: auto;
+    cursor: pointer;
+    background-color: #7D0C0E;
 }
 
-.search-container input:focus {
-    border-color: #f0c5a4;
+#close-sidebar-btn {
+    display: none;
+    background-color: none;
+    border: none;
+    padding: 1em;
+    cursor: pointer;
+    background-color: #FAEDE1;
+    border-radius: 15px;
 }
 
-/* Team Section */
+#overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    display: none;
+}
+
+/* ============================= */
+/*          team section         */
+/* ============================= */
+
+.teamSection {
+    background-color: #FAEDE1;
+}
+
 .team-container {
     display: flex;
     height: 200px;
     align-items: stretch;
     justify-content: space-between;
+
 }
 
 .team-grid {
@@ -164,7 +192,10 @@ body {
     margin-top: 5px;
 }
 
-/* Membership Section */
+/* ============================= */
+/*        membership sec.        */
+/* ============================= */
+
 .membership {
     background-color: #6E1313;
     color: #fff;
@@ -199,7 +230,10 @@ body {
     width: 80px;
 }
 
-/* Footer */
+/* ============================= */
+/*          footer Styles        */
+/* ============================= */
+
 footer {
     background-color: #7D0C0E;
     padding: 40px;
@@ -239,7 +273,9 @@ footer {
     border-radius: 5px;
 }
 
-/* Mailing List */
+/* ============================= */
+/*          mailing list         */
+/* ============================= */
 .mailing-list input {
     width: 300px;
     padding: 10px;
@@ -264,7 +300,9 @@ footer {
     background-color: #F0C5A4;
 }
 
-/* Group Picture */
+/* ============================= */
+/*          group picture        */
+/* ============================= */
 .group-pic {
     width: 50%;
     height: 400px;
@@ -283,21 +321,120 @@ footer {
     font-weight: bold;
 }
 
-/* Header */
-header {
-    width: 100%;
-    text-align: center;
-}
+/* ============================= */
+/*          Global Styles        */
+/* ============================= */
 
 h1 {
     font-size: 50px;
+    text-align: center;
 }
 
 h4 {
     text-align: center;
 }
 
-/* Main Content */
 main {
     height: 400px;
+}
+
+/* ============================= */
+/*       Responsive Styles       */
+/* ============================= */
+
+/* ====== 320px - 480px (Small Phones) ====== */
+@media (max-width: 480px) {}
+
+/* ✅ 481px - 768px (Larger Phones & Tablets)  */
+@media (max-width: 768px) {
+
+    /* nav section => side bar */
+    .navbar {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        z-index: 10;
+        width: min(15em, 100%);
+        height: 100vh;
+        justify-content: center;
+        border-left: 1px solid rgba(0, 0, 0, 0.132);
+        transition: right 0.4s ease-in-out;
+    }
+
+    .navbar.show {
+        right: 0;
+    }
+
+    .navbar.show~#overlay {
+        display: block;
+    }
+
+    .navbar ul {
+        padding: 0em 1em;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar a {
+        padding: 1.5rem;
+    }
+
+    .loginLink {
+        background: #FAEDE1;
+        border-radius: 15px;
+    }
+
+    .loginLink a {
+        color: #7D0C0E;
+        font-weight: bold;
+    }
+
+    #open-sidebar-btn,
+    #close-sidebar-btn {
+        display: block;
+    }
+
+    .logo {
+        display: none;
+    }
+
+}
+
+/* ✅ 769px - 1024px (Tablets & Small Laptops) */
+@media (max-width: 1024px) {
+
+
+    main {
+        height: 1900px;
+    }
+
+    /* team section */
+
+    .team-container {
+        height: 100%;
+        flex-direction: column;
+    }
+
+    .group-pic {
+        width: 80%;
+    }
+
+    .team-card,
+    .last-row {
+        width: 200px;
+        height: 900px;
+        margin-bottom: 20px;
+    }
+
+    .team-images {
+        width: 200px;
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .quote {
+        font-size: 12px;
+
+    }
+
 }

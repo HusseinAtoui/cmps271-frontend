@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Summarization Test</title>
+  </head>
+  <body>
+    <h1>Summarization Test</h1>
+    <textarea
+      id="inputText"
+      rows="10"
+      cols="50"
+      placeholder="Enter text here to summarize..."
+    ></textarea>
+    <br />
+    <button id="summarizeBtn">Summarize</button>
+    <h2>Summary:</h2>
+    <div id="summary" style="border: 1px solid #ccc; padding: 10px;"></div>
+
+    <script>
+      document.getElementById("summarizeBtn").addEventListener("click", async () => {
+        const text = document.getElementById("inputText").value;
+
+        // Check if text is provided
+        if (!text.trim()) {
+          alert("Please enter some text.");
+          return;
+        }
+
+        try {
+          // Send POST request to your backend endpoint
+          const response = await fetch("http://localhost:3000/api/summarize/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ text: text }),
+          });
+
+          // Check if the response is OK
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          const data = await response.json();
+          // Display the summary
+          document.getElementById("summary").innerText = data.summary || "No summary returned";
+        } catch (error) {
+          console.error("Error fetching summary:", error);
+          document.getElementById("summary").innerText = "Error fetching summary";
+        }
+      });
+    </script>
+  </body>
+</html>

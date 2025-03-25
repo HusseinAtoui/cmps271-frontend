@@ -73,7 +73,7 @@ document.getElementById("signupFormElement").addEventListener("submit", async fu
 
         if (result.status === "SUCCESS") {
             alert("Signup successful! Please check your email to verify your account.");
-            window.location.href = "login.html"; // Redirect to login page
+            window.location.href = "loginpage.html"; // Redirect to login page
         } else {
             alert(result.message);
         }
