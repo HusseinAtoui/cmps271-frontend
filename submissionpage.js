@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let pair of formData.entries()) {
             console.log(pair);
         }
-    
+
         // Submit the article
         await submitArticle(formData);
     });
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function convertPdfToText(file) {
         return new Promise((resolve, reject) => {
             const fileReader = new FileReader();
-            fileReader.onload = async function() {
+            fileReader.onload = async function () {
                 try {
                     const typedarray = new Uint8Array(this.result);
                     const pdf = await pdfjsLib.getDocument(typedarray).promise;
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     reject(error);
                 }
             };
-            fileReader.onerror = function(error) {
+            fileReader.onerror = function (error) {
                 reject(error);
             };
             fileReader.readAsArrayBuffer(file);
@@ -132,9 +132,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const inputElement = document.getElementById(inputId);
         const displayElement = document.getElementById(displayId);
         if (inputElement && displayElement) {
-            inputElement.addEventListener("change", function() {
+            inputElement.addEventListener("change", function () {
                 displayElement.textContent = this.files[0] ? this.files[0].name : "No file chosen";
             });
         }
     }
 });
+
+
+/* =============================
+   nav bar
+   ============================= */
+
+const navbar = document.getElementById('navbar');
+
+function openSideBar() {
+    navbar.classList.add('show');
+}
+
+function closeSideBar() {
+    navbar.classList.remove('show');
+}

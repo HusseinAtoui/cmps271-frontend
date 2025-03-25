@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <script>
   pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
 </script>
@@ -15,101 +15,125 @@
 <body>
 
   <!-- Navigation Bar -->
-  <nav class="navbar">
+
+  <button id="open-sidebar-btn" onclick="openSideBar()">
+    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9">
+      <path
+        d="M165.13-254.62q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.86q7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.87q-7.22 7.12-17.9 7.12H165.13Zm0-200.25q-10.68 0-17.9-7.27-7.23-7.26-7.23-17.99 0-10.74 7.23-17.87 7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.27 7.23 7.26 7.23 17.99 0 10.74-7.23 17.87-7.22 7.13-17.9 7.13H165.13Zm0-200.26q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.87q7.22-7.12 17.9-7.12h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.86q-7.22 7.13-17.9 7.13H165.13Z" />
+    </svg>
+  </button>
+
+  <nav class="navbar" id="navbar">
+
     <div class="logo">
-      <img src="logo.png" alt="Afterthoughts">
+      <img src="logo.png" alt="Afterthoughts Logo">
     </div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="subpage.html">Submissions</a>
-      <a href="profilepage.html">Profile</a>
-      <a href="EventPage.html">Events</a>
-      <a href="teamPage.html">Team</a>
-      <a href="contact.html">Contact</a>
-      <a href="submissionpage.html" class="active"><strong>SUBMIT</strong></a>
 
-      <div class="search-container">
-        <input type="text" placeholder="Search..." aria-label="Search">
-      </div>
+    <ul>
+      <li><button id="close-sidebar-btn" onclick="closeSideBar()"> <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+            viewBox="0 -960 960 960" width="24px" fill="#7D0C0E">
+            <path
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+          </svg></button></li>
+      <li><a href="index.html">Home</a></li>
+      <li> <a href="subpage.html">Submissions</a></li>
+      <li> <a href="profilepage.html">Profile</a></li>
+      <li><a href="EventPage.html">Events</a></li>
+      <li><a href="teamPage.html">Team</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li> <a href="submissionpage.html" class="active"><strong>SUBMIT</strong></a></li>
+      <li class="loginLink"><a href="loginPage.html">Login</a></li>
+    </ul>
 
-      <button class="login-btn"><a href="loginPage.html">Login</a></button>
     </div>
+
   </nav>
 
-  <div class="submission-container">
+  <div id="overlay" onclick="closeSideBar()"></div>
 
-    <!-- Submission Guidelines -->
-    <div class="submission">
-      <h1>General Submission Guidelines</h1>
-      <p><strong>Afterthoughts</strong> is an English journal published in print annually. The call for submissions for
-        our print edition is announced on social media and this website. All submissions will be considered for print
-        and online publication. To submit, see our <a href="#">Submittable portal</a> for open calls.</p>
+  <div class="bgColorBack">
 
-      <p>If you have questions, please send an e-mail to <a
-          href="mailto:info@rustedradishes.com">info@rustedradishes.com</a>. Any work submitted not in line with these
-        guidelines will not be accepted or read.</p>
+    <div class="submission-container">
 
-      <h2>Submission Requirements</h2>
-      <ul>
-        <li><strong>Attachment:</strong> Each writing piece should be attached in a separate .doc file. Each art piece
-          should be sent as a low-res attachment.</li>
-        <li><strong>Bio:</strong> Provide a brief bio (third-person, max 80 words). Indicate whether you are a student,
-          faculty, or alum of AUB, or your connection to Lebanon or the region.</li>
-        <li><strong>Formatting:</strong> Use a 12-pt font and double-space prose. Keep poetry formatting intact.</li>
-        <li><strong>Multiple Submissions:</strong> Check specific genre guidelines for limits.</li>
-        <li><strong>File Naming:</strong> Use format ‘title_genre’. Include your full name and e-mail at the top of the
-          document.</li>
-        <li><strong>Simultaneous Submissions:</strong> These are allowed. Withdraw work by emailing <a
-            href="mailto:submit@rustedradishes.com">submit@rustedradishes.com</a> or using Submittable.</li>
-      </ul>
-    </div>
+      <!-- Submission Guidelines -->
+      <div class="submission">
+        <h1>General Submission Guidelines</h1>
+        <p><strong>Afterthoughts</strong> is an English journal published in print annually. The call for submissions
+          for
+          our print edition is announced on social media and this website. All submissions will be considered for print
+          and online publication. To submit, see our <a href="#">Submittable portal</a> for open calls.</p>
 
-    <div class="box">
-      <h2>Submit Your Work</h2>
+        <p>If you have questions, please send an e-mail to <a
+            href="mailto:info@rustedradishes.com">info@rustedradishes.com</a>. Any work submitted not in line with these
+          guidelines will not be accepted or read.</p>
 
-      <form id="submissionForm" enctype="multipart/form-data">
-
-        <div class="custom-input">
-          <label for="submissionName">Name</label>
-          <input type="text" id="submissionName" name="submissionName" placeholder="Enter submission name..."
-            required />
-        </div>
-
-        <div class="custom-input">
-          <label for="submissionTitle">Title</label>
-          <input type="text" id="submissionTitle" name="submissionTitle" placeholder="Enter submission title..."
-            required />
-        </div>
-
-        <div class="custom-input">
-          <label for="bio">Bio</label>
-          <textarea id="bio" name="bio" rows="3" placeholder="Write a short bio..."></textarea>
-        </div>
-
-        <div class="custom-file">
-          <label for="document" class="custom-file-upload">Upload Document</label>
-          <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" hidden />
-          <span id="documentName">No Document chosen</span>
+        <h2>Submission Requirements</h2>
+        <ul>
+          <li><strong>Attachment:</strong> Each writing piece should be attached in a separate .doc file. Each art piece
+            should be sent as a low-res attachment.</li>
+          <li><strong>Bio:</strong> Provide a brief bio (third-person, max 80 words). Indicate whether you are a
+            student,
+            faculty, or alum of AUB, or your connection to Lebanon or the region.</li>
+          <li><strong>Formatting:</strong> Use a 12-pt font and double-space prose. Keep poetry formatting intact.</li>
+          <li><strong>Multiple Submissions:</strong> Check specific genre guidelines for limits.</li>
+          <li><strong>File Naming:</strong> Use format ‘title_genre’. Include your full name and e-mail at the top of
+            the
+            document.</li>
+          <li><strong>Simultaneous Submissions:</strong> These are allowed. Withdraw work by emailing <a
+              href="mailto:submit@rustedradishes.com">submit@rustedradishes.com</a> or using Submittable.</li>
+        </ul>
       </div>
-      
-      <div class="custom-file">
-          <label for="picture" class="custom-file-upload">Upload Picture</label>
-          <input type="file" id="picture" name="image" accept=".jpg,.jpeg,.png" hidden />
-          <span id="pictureName">No file chosen</span>
-      </div>
-      
 
-        <button type="submit">Submit</button>
-        <div id="loading" style="display:none;">Submitting...</div>
+      <div class="box">
+        <h2>Submit Your Work</h2>
+
+        <form id="submissionForm" enctype="multipart/form-data">
+
+          <div class="custom-input">
+            <label for="submissionName">Name</label>
+            <input type="text" id="submissionName" name="submissionName" placeholder="Enter submission name..."
+              required />
+          </div>
+
+          <div class="custom-input">
+            <label for="submissionTitle">Title</label>
+            <input type="text" id="submissionTitle" name="submissionTitle" placeholder="Enter submission title..."
+              required />
+          </div>
+
+          <div class="custom-input">
+            <label for="bio">Bio</label>
+            <textarea id="bio" name="bio" rows="3" placeholder="Write a short bio..."></textarea>
+          </div>
+
+          <div class="custom-file">
+            <label for="document" class="custom-file-upload">Upload Document</label>
+            <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" hidden />
+            <span id="documentName">No Document chosen</span>
+          </div>
+
+          <div class="custom-file">
+            <label for="picture" class="custom-file-upload">Upload Picture</label>
+            <input type="file" id="picture" name="image" accept=".jpg,.jpeg,.png" hidden />
+            <span id="pictureName">No file chosen</span>
+          </div>
+
+
+          <button type="submit">Submit</button>
+          <div id="loading" style="display:none;">Submitting...</div>
+          <div id="statusMessage"></div>
+        </form>
+
+        <!-- Status Message for Submission -->
         <div id="statusMessage"></div>
-      </form>
 
-      <!-- Status Message for Submission -->
-      <div id="statusMessage"></div>
+      </div>
 
     </div>
 
   </div>
+
+  <div class="containerSace"></div>
 
   <!-- Footer -->
   <footer>

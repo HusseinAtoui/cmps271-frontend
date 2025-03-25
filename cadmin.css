@@ -4,21 +4,12 @@ body {
     padding: 0;
     background-color: #faefe1;
 }
-
 header {
     background: #7d0c0e;
     color: white;
     padding: 10px;
     text-align: center;
 }
-
-h2 {
-    color: #7d0c0e;
-    font-weight: bold;
-    text-decoration: underline;
-    text-underline-offset: 10px;
-}
-
 form {
     background: #7d0c0e;
     padding: 15px;
@@ -26,69 +17,37 @@ form {
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    color: #7d0c0e;
-    font-weight: bold;
 }
-
-input,
-textarea {
+input, textarea {
     margin: 5px 0;
     padding: 10px;
-    border: none;
+    border: 4px solid white;
     border-radius: 5px;
-    background-color: #faefe1;
-    color: #7d0c0e;
-    font-weight: bold;
-    font-size: 1rem;
 }
-
-input::placeholder,
-textarea::placeholder {
-    color: #7d0c0e;
-    font-weight: bold;
-    font-size: 1rem;
-}
-
-input[type="file"]::file-selector-button {
-    background-color: #7d0c0e;
-    color: white;
-    font-weight: bold;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 30px;
-}
-
-input[type="file"]::file-selector-button:hover {
-    background-color: #b8393b;
-}
-
 button {
     padding: 10px;
     color: white;
     border: none;
     cursor: pointer;
-    background-color: #8B181A;
+    background-color:#8B181A;
 }
-
 button.delete {
-    background-color: red;
     background-color: #7d0c0e;
     color: white;
     border: none;
     padding: 5px 10px;
-
-    button.delete {
-        margin: 10px 0;
-        border-radius: 5px;
-        position: relative;
-    }
+    cursor: pointer;
+    margin-top: 10px;
 }
-
+.article {
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    position: relative;
+}
 button.approve {
-    background-color: #4CAF50;
-    /* Green color for the approve button */
+    background-color: #4CAF50; /* Green color for the approve button */
     color: white;
     border: none;
     padding: 5px 10px;
