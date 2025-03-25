@@ -26,66 +26,66 @@ body {
     background-color: #7d0c0e;
     padding: 15px 50px;
     height: 110px;
-  }
-  
-  .navbar ul {
+}
+
+.navbar ul {
     list-style: none;
     display: flex;
-  }
-  
-  .navbar li {
+}
+
+.navbar li {
     padding: 0em 1em;
-  }
-  
-  .logo img {
+}
+
+.logo img {
     height: 70px;
     width: auto;
     padding: 2px;
     margin-left: 20px;
     border-radius: 5px;
-  }
-  
-  .navbar {
+}
+
+.navbar {
     display: flex;
     align-items: center;
     gap: 25px;
-  }
-  
-  .navbar a {
+}
+
+.navbar a {
     text-decoration: none;
     color: #faefe1;
     font-size: 18px;
     text-transform: lowercase;
     transition: 0.3s;
     display: flex;
-  }
-  
-  .navbar a.active {
+}
+
+.navbar a.active {
     border-bottom: 2px solid #faefe1;
     padding-bottom: 3px;
-  }
-  
-  .loginLink {
+}
+
+.loginLink {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     padding: 10px 20px;
     background-color: #faefe1;
     border-radius: 20px;
-  }
-  
-  .loginLink a {
+}
+
+.loginLink a {
     font-weight: bold;
     color: #7D0C0E;
     text-decoration: none;
     display: inline-block;
-  }
-  
-  .navbar a:not(.active):hover {
+}
+
+.navbar a:not(.active):hover {
     text-decoration: underline;
-  }
-  
-  #open-sidebar-btn {
+}
+
+#open-sidebar-btn {
     display: none;
     background: none;
     border: none;
@@ -93,9 +93,9 @@ body {
     margin-left: auto;
     cursor: pointer;
     background-color: #7D0C0E;
-  }
-  
-  #close-sidebar-btn {
+}
+
+#close-sidebar-btn {
     display: none;
     background-color: none;
     border: none;
@@ -103,16 +103,16 @@ body {
     cursor: pointer;
     background-color: #FAEDE1;
     border-radius: 15px;
-  }
-  
-  #overlay {
+}
+
+#overlay {
     background-color: rgba(0, 0, 0, 0.3);
     position: fixed;
     inset: 0;
     z-index: 9;
     display: none;
-  }
-  
+}
+
 
 /* ========================================= */
 /*                 Footer                    */
@@ -259,18 +259,20 @@ footer {
     overflow: hidden;
     margin-bottom: 20px;
 }
-.custom-input{
 
-width:90%;
+.custom-input {
+
+    width: 90%;
 
 
 }
+
 /* ======================= */
 /*          Form Styling   */
-/* ======================= */ 
+/* ======================= */
 
-#submissionForm{
-    width:90%;
+#submissionForm {
+    width: 90%;
 }
 
 /* ======================= */
@@ -290,7 +292,8 @@ width:90%;
 /*      Custom Input       */
 /* ======================= */
 .custom-input {
-    width: 90%;  /* Set the width of the input group to 90% */
+    width: 90%;
+    /* Set the width of the input group to 90% */
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
@@ -306,7 +309,8 @@ width:90%;
 
 .custom-input input,
 .custom-input textarea {
-    width: 400%;  /* Make sure input fields take up full width of the .custom-input container */
+    width: 400%;
+    /* Make sure input fields take up full width of the .custom-input container */
     padding: 10px;
     border: 2px solid #7d0c0e;
     border-radius: 8px;
@@ -322,7 +326,8 @@ width:90%;
 
 /* File Upload Styling */
 .custom-file {
-    width: 90%;  /* Set the width of the input group to 90% */
+    width: 90%;
+    /* Set the width of the input group to 90% */
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
@@ -332,7 +337,7 @@ width:90%;
 
 .custom-file-upload {
 
-    
+
     padding: 12px;
     border-radius: 25px;
     border: 2px solid #7d0c0e;
@@ -343,12 +348,13 @@ width:90%;
     cursor: pointer;
     transition: 0.3s ease;
     font-weight: bold;
-    width: 300%;  /* Make sure input fields take up full width of the .custom-input container */
+    width: 300%;
+    /* Make sure input fields take up full width of the .custom-input container */
     padding: 10px;
-resize: none;
- 
+    resize: none;
+
     outline: none;
- 
+
 }
 
 .custom-file-upload:hover {
