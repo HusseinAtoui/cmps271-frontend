@@ -1,13 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const tokenParam = urlParams.get('token');
+  if (tokenParam) {
+    localStorage.setItem('authToken', tokenParam);
+    // Optionally, remove the token from the URL for cleanliness
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+
+  // Check if userData and authToken are present in localStorage
   const userDataString = localStorage.getItem("userData");
   const token = localStorage.getItem("authToken");
 
   if (!userDataString || !token) {
     console.warn("User not logged in. Redirecting...");
-    window.location.href = "login.html";
+    window.location.href = "loginPage.html";
     return;
   }
-
   const userData = JSON.parse(userDataString);
 
   // Update the greeting
