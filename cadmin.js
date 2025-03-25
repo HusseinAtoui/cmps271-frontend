@@ -15,7 +15,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <p><strong>Tag:</strong> ${article.tag} | <strong>Read Time:</strong> ${article.minToRead} min</p>
                     <p><strong>Date:</strong> ${new Date(article.date).toLocaleDateString()}</p>
                     <p><strong>Full Text:</strong> ${article.text}</p>
+                    <button class="approve" data-id="${article._id}">Approve</button>
+                    <button class="disapprove" data-id="${article._id}">Disapprove</button>
                     <button class="delete" data-id="${article._id}">Delete</button>
+
                 </div>
             `).join('');
             document.querySelectorAll('.delete').forEach(button => {
@@ -74,11 +77,13 @@ articlesList.innerHTML = articles.map(article => {
 }).join('');
 
 
-document.querySelectorAll('.approve').forEach(button => {
+document.querySelectorAll('.disapprove').forEach(button => {
     button.addEventListener('click', async () => {
+        console.log("Disapprove button clicked");
         const id = button.getAttribute('data-id');
-        await fetch(`https://afterthoughts.onrender.com/api/articles/approve/${id}`, { method: 'PUT' });
-        fetchArticles(); // Reload articles to reflect the approved state
+        await fetch(`https://afterthoughts.onrender.com/api/articles/disapprove/${id}`, { method: 'PUT' });
+        fetchArticles(); // Refresh list after update
     });
 });
+
 

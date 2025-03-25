@@ -29,7 +29,7 @@ button {
     color: white;
     border: none;
     cursor: pointer;
-    background-color:#8B181A;
+    background-color:#ba6e6f;
 }
 button.delete {
     background-color: #7d0c0e;
@@ -47,10 +47,19 @@ button.delete {
     position: relative;
 }
 button.approve {
-    background-color: #4CAF50; /* Green color for the approve button */
+    background-color: #7d0c0e; 
     color: white;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
     margin-top: 10px;
 }
+button.disapprove {
+    background-color: #7d0c0e; /* Red */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
