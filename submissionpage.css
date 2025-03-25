@@ -16,9 +16,9 @@ body {
     width: 100%;
 }
 
-/* ========================================= */
-/*               Navigation                  */
-/* ========================================= */
+/* ============================= */
+/*          Navigation           */
+/* ============================= */
 .navbar {
     display: flex;
     align-items: center;
@@ -26,78 +26,93 @@ body {
     background-color: #7d0c0e;
     padding: 15px 50px;
     height: 110px;
-}
-
-.logo img {
+  }
+  
+  .navbar ul {
+    list-style: none;
+    display: flex;
+  }
+  
+  .navbar li {
+    padding: 0em 1em;
+  }
+  
+  .logo img {
     height: 70px;
     width: auto;
     padding: 2px;
     margin-left: 20px;
     border-radius: 5px;
-}
-
-.nav-links {
+  }
+  
+  .navbar {
     display: flex;
     align-items: center;
     gap: 25px;
-}
-
-.nav-links a {
+  }
+  
+  .navbar a {
     text-decoration: none;
     color: #faefe1;
     font-size: 18px;
     text-transform: lowercase;
     transition: 0.3s;
-}
-
-.nav-links a.active {
+    display: flex;
+  }
+  
+  .navbar a.active {
     border-bottom: 2px solid #faefe1;
     padding-bottom: 3px;
-}
-
-.nav-links a:not(.active):hover {
-    text-decoration: underline;
-}
-
-.search-container {
-    display: flex;
-    align-items: center;
+  }
+  
+  .loginLink {
+    display: inline-flex;
     justify-content: center;
-    padding: 5px;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #faefe1;
     border-radius: 20px;
-}
-
-.search-container input {
-    font-size: 16px;
-    outline: none;
-    border-radius: 15px;
-    width: 100%;
-    background-color: #faefe1;
-    color: #7d0c0e;
-    border: white;
-    padding: 6px;
-}
-
-.search-container input:focus {
-    border-color: #f0c5a4;
-}
-
-.login-btn {
-    background-color: #faefe1;
-    border-color: #f0c5a4;
-    border-radius: 15px;
-    padding: 6px;
-    border: white;
-    font-size: 16px;
-    width: 10%;
+  }
+  
+  .loginLink a {
     font-weight: bold;
     color: #7D0C0E;
-}
-
-.navbar button a {
-    color: #7D0C0E;
     text-decoration: none;
-}
+    display: inline-block;
+  }
+  
+  .navbar a:not(.active):hover {
+    text-decoration: underline;
+  }
+  
+  #open-sidebar-btn {
+    display: none;
+    background: none;
+    border: none;
+    padding: 1em;
+    margin-left: auto;
+    cursor: pointer;
+    background-color: #7D0C0E;
+  }
+  
+  #close-sidebar-btn {
+    display: none;
+    background-color: none;
+    border: none;
+    padding: 1em;
+    cursor: pointer;
+    background-color: #FAEDE1;
+    border-radius: 15px;
+  }
+  
+  #overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    display: none;
+  }
+  
 
 /* ========================================= */
 /*                 Footer                    */
@@ -252,7 +267,7 @@ width:90%;
 }
 /* ======================= */
 /*          Form Styling   */
-/* ======================= */
+/* ======================= */ 
 
 #submissionForm{
     width:90%;
