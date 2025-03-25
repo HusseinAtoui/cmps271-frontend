@@ -62,4 +62,6 @@ button.disapprove {
     cursor: pointer;
     margin-top: 10px;
 }
-
+form p{
+    color: white;
+}
