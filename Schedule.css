@@ -6,16 +6,13 @@ body {
     font-family: 'Times New Roman', Times, serif, sans-serif;
     background-color: #FAEFE1;
     text-align: center;
+    margin: 0;
 }
 
 h1 {
     color: white;
-    background-color: #7D0C0E;
     margin: 0px;
     text-align: center;
-}
-#menu h1{
-    background-color: #bb484a;
 }
 #menu{
    margin-left: 0%;
@@ -261,4 +258,21 @@ button:hover {
     padding: 20px;
     background-color: #FAEFE1;
     overflow-y: auto;
+}
+header {
+    background: linear-gradient(90deg, #7d0c0e, #ba6e6f);
+    color: white;
+    padding: 40px 60px; /* increased padding for a taller header */
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    border-bottom: 2px solid #bb484a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.sidebar img {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-left: 5px;
+    margin-bottom: 10px;
 }
