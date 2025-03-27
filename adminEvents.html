@@ -7,12 +7,21 @@
     <title>Admin - Event Management</title>
     <link rel="stylesheet" href="styleAdmin.css">
 </head>
-<body>
-    
-    <div id="head">
-    <h1>Admin Event Management</h1>
-    </div>
-    
+<body> 
+    <header>
+        <h1>Admin Event Management</h1>
+    </header>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2>Dashboard</h2>
+            <ul>
+                <li><a href="#"><img src="home.png" alt="home-icon"> Home</a></li>
+                <li><a href="#"><img src="meetings.png" alt="meetings-icon"> Meetings</a></li>
+                <li><a href="#"><img src="gear.png" alt="settings-icon"> Settings</a></li>
+                <li><a href="#"><img src="user.png" alt="profile-icon"> Profile</a></li>
+            </ul>
+        </aside>
+    <main class="content">
     <form id="eventForm">
         <label for="title">Event Title:</label>
         <input type="text" id="title" name="title" required>
@@ -43,7 +52,8 @@
             <button class="delete-btn">Delete</button>
         </div>
     </div>
-
+    </main>
+    </div>
     <script src="adminScriptEvent.js"></script>
 </body>
 </html>
