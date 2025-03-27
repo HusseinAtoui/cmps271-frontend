@@ -17,10 +17,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <button class="approve" data-id="${article._id}">Approve</button>
                     <button class="disapprove" data-id="${article._id}">Disapprove</button>
                     <button class="delete" data-id="${article._id}">Delete</button>
+                    <button class="check-ai" data-text="${article.text}">Check for AI Plagiarism</button>
                 </div>
             `).join('');
 
-            // Attach Approve button listeners
+            // Approve buttons
             document.querySelectorAll('.approve').forEach(button => {
                 button.addEventListener('click', async () => {
                     const id = button.getAttribute('data-id');
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
             });
 
-            // Attach Disapprove button listeners
+            // Disapprove buttons
             document.querySelectorAll('.disapprove').forEach(button => {
                 button.addEventListener('click', async () => {
                     const id = button.getAttribute('data-id');
@@ -41,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
             });
 
-            // Attach Delete button listeners
+            // Delete buttons
             document.querySelectorAll('.delete').forEach(button => {
                 button.addEventListener('click', async () => {
                     const id = button.getAttribute('data-id');
@@ -49,6 +50,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                     fetchArticles();
                 });
             });
+
+            // Check for AI Plagiarism buttons
+            document.querySelectorAll('.check-ai').forEach(button => {
+                button.addEventListener('click', () => {
+                    const articleText = button.getAttribute('data-text');
+                    alert(`Checking article for AI plagiarism...\n\nPreview:\n${articleText.substring(0, 200)}...`);
+                    // Replace this alert with real API integration logic if needed
+                });
+            });
+
         } catch (error) {
             console.error("Error fetching articles:", error);
         }
@@ -67,10 +78,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         formData.append('tag', document.getElementById('tag').value);
         formData.append('date', document.getElementById('date').value);
         formData.append('description', document.getElementById('description').value);
-        formData.append('text', document.getElementById('text').value);
+        formData.append('text', document.getElementById('text')?.value || ''); // in case 'text' input isn't present
         if (document.getElementById('image').files[0]) {
             formData.append('image', document.getElementById('image').files[0]);
         }
+
         try {
             const response = await fetch('https://afterthoughts.onrender.com/api/articles/add', {
                 method: 'POST',

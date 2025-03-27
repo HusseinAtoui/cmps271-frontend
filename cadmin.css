@@ -133,3 +133,17 @@ form p {
     margin-left: 5px;
     margin-bottom: 10px;
 }
+.check-ai {
+    background-color: #7d0c0e;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.check-ai:hover {
+    background-color: #cc4548;
+}
