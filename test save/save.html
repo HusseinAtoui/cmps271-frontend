@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Article Save Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-article {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="controls">
+            <button onclick="setTestUser()">1. Set Test User</button>
+            <button onclick="createTestArticles()">2. Create Test Articles</button>
+            <button onclick="clearData()">3. Clear All Data</button>
+        </div>
+        <div id="articles-container"></div>
+    </div>
+
+    <script>
+        // Test user and article data
+        const testUserId = '67df0ad73e9a6c2090219570';
+        const testArticles = [
+            {
+                _id: '65f8a1d7b6d72a2a7c4d1234',
+                title: 'Test Article 1',
+                description: 'This is a test article for demonstration purposes'
+            },
+            {
+                _id: '65f8a1d7b6d72a2a7c4d5678',
+                title: 'Test Article 2',
+                description: 'Another test article for validation'
+            }
+        ];
+
+        // Set test user in localStorage
+        function setTestUser() {
+            localStorage.setItem('userId', testUserId);
+            alert(`Test user set with ID: ${testUserId}\nCheck Application > Local Storage in DevTools`);
+        }
+
+        // Create test articles
+        function createTestArticles() {
+            const container = document.getElementById('articles-container');
+            container.innerHTML = '';
+            
+            testArticles.forEach(article => {
+                const articleDiv = document.createElement('div');
+                articleDiv.className = 'test-article';
+                articleDiv.innerHTML = `
+                    <h3>${article.title}</h3>
+                    <p>${article.description}</p>
+                    <div class="article-controls">
+                        <i class="fa-regular fa-bookmark bookmark-icon" 
+                           style="font-size: 24px; cursor: pointer; color: #666;"
+                           onclick="handleSaveArticle('${article._id}', this)"></i>
+                        <button onclick="checkSavedStatus('${article._id}', this)">Check Status</button>
+                    </div>
+                `;
+                container.appendChild(articleDiv);
+            });
+        }
+
+        // Save/Remove handler
+        async function handleSaveArticle(articleId, iconElement) {
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                alert('Please set test user first!');
+                return;
+            }
+
+            const isSaved = iconElement.classList.contains('fa-solid');
+
+            try {
+                const response = await fetch(
+                    `http://localhost:3000/api/users/${userId}/save-article'}`,
+                    {
+                        method: isSaved ? 'DELETE' : 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ articleId })
+                    }
+                );
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    iconElement.classList.toggle('fa-solid');
+                    iconElement.classList.toggle('fa-regular');
+                    console.log(`${isSaved ? 'Removed' : 'Saved'} article ${articleId}`);
+                } else {
+                    throw new Error(result.message || 'Operation failed');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+                console.error('Operation failed:', error);
+            }
+        }
+
+        // Check saved status
+        async function checkSavedStatus(articleId, buttonElement) {
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                alert('Please set test user first!');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/users/${userId}/saved-articles`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const isSaved = data.articles.some(a => a._id === articleId);
+                    alert(`Article ${isSaved ? 'is saved' : 'not saved'}`);
+                } else {
+                    throw new Error(data.message || 'Status check failed');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+                console.error('Status check failed:', error);
+            }
+        }
+
+        // Clear all test data
+        function clearData() {
+            localStorage.removeItem('userId');
+            document.getElementById('articles-container').innerHTML = '';
+            alert('Local storage cleared and articles removed');
+        }
+    </script>
+</body>
+</html>

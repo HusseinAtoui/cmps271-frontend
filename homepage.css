@@ -352,6 +352,15 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.bookmark-icon {
+  color: #FAEDE1; 
+  transition: color 0.3s ease;
+}
+
+.bookmark-icon:hover {
+  color: #ff9800; 
+}
+
 /* ============================= */
 /*          Footer Section       */
 /* ============================= */
