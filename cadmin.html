@@ -9,37 +9,44 @@
 </head>
 
 <body>
+
     <header>
         <h1>Manage Articles</h1>
     </header>
-    <div class="dashboard">
+
+    <div class="Fullpage">
+
+        <div class="dashboard">
             <aside class="sidebar">
                 <h2>Dashboard</h2>
                 <ul>
                     <li><a href="index.html"><img src="home.png" alt="home-icon"> Home</a></li>
-                <li><a href="Schedule.html"><img src="meetings.png" alt="meetings-icon"> Meetings</a></li>
-                <li><a href="#"><img src="gear.png" alt="settings-icon"> Settings</a></li>
-                <li><a href="profilepage.html"><img src="user.png" alt="profile-icon"> Profile</a></li>
+                    <li><a href="profilepage.html"><img src="user.png" alt="profile-icon"> Profile</a></li>
+                    <li><a href="Schedule.html"><img src="meetings.png" alt="meetings-icon"> Meetings</a></li>
+                    <li><a href="cadmin.html"><img src="gear.png" alt="settings-icon"> Articles</a></li>
                 </ul>
             </aside>
-        <main class="content">
-        <form id="article-form">
-            <input type="text" id="title" placeholder="Title" required>
-            <input type="text" id="author" placeholder="Author" required>
-            <input type="number" id="minToRead" placeholder="Minutes to Read" required>
-            <input type="text" id="tag" placeholder="Tag" required>
-            <input type="date" id="date" required>
-            <textarea id="description" placeholder="Description" required></textarea>
-            <p>Upload PDF file</p>
-            <input id="pdfFile" type="file" accept="application/pdf">
-            <p>Upload image</p>
-            <input type="file" id="image">
-            <button type="submit">Add Article</button>
-        </form>
-        <h2>Existing Articles:</h2>
-        <div id="articles-list"></div>
         </div>
-    </main>
+
+        <main class="content">
+            <form id="article-form">
+                <input type="text" id="title" placeholder="Title" required>
+                <input type="text" id="author" placeholder="Author" required>
+                <input type="number" id="minToRead" placeholder="Minutes to Read" required>
+                <input type="text" id="tag" placeholder="Tag" required>
+                <input type="date" id="date" required>
+                <textarea id="description" placeholder="Description" required></textarea>
+                <p>Upload PDF file</p>
+                <input id="pdfFile" type="file" accept="application/pdf">
+                <p>Upload image</p>
+                <input type="file" id="image">
+                <button type="submit">Add Article</button>
+            </form>
+            <h2>Existing Articles:</h2>
+            <div id="articles-list"></div>
+        </main>
+    </div>
+
     <script src="cadmin.js"></script>
 </body>
 

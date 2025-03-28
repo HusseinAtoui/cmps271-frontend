@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Schedule a Meeting with an Editor</title>
   <link rel="stylesheet" href="Schedule.css">
 </head>
+
 <body>
 
   <!-- Main Menu Section -->
@@ -16,24 +18,27 @@
     </div>
   </header>
 
-  <!-- Dashboard -->
-  <div class="dashboard">
-    <aside class="sidebar">
+  <div class="Fullpage">
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+      <aside class="sidebar">
         <h2>Dashboard</h2>
         <ul>
           <li><a href="index.html"><img src="home.png" alt="home-icon"> Home</a></li>
-          <li><a href="Schedule.html"><img src="meetings.png" alt="meetings-icon"> Meetings</a></li>
-          <li><a href="#"><img src="gear.png" alt="settings-icon"> Settings</a></li>
           <li><a href="profilepage.html"><img src="user.png" alt="profile-icon"> Profile</a></li>
+          <li><a href="Schedule.html"><img src="meetings.png" alt="meetings-icon"> Meetings</a></li>
+          <li><a href="cadmin.html"><img src="gear.png" alt="settings-icon"> Articles</a></li>
         </ul>
-    </aside>
-    
-    <main class="content">
+      </aside>
+    </div>
+
+    <div class="content">
       <!-- Content like meeting scheduler, form, etc. goes here -->
       <div class="container">
         <h2>Schedule a Meeting</h2>
         <p>Please fill out the form below to schedule a meeting with an editor.</p>
-        
+
         <!-- Meeting Scheduling Form -->
         <form id="scheduleForm">
           <label for="name">Name</label>
@@ -54,13 +59,15 @@
         <!-- Response Message -->
         <div id="responseMessage"></div>
       </div>
-      
+
       <!-- Container for displaying fetched meetings -->
       <div id="meetingsContainer"></div>
-    </main>
+    </div>
+
   </div>
 
   <script src="Schedule.js"></script>
 
 </body>
+
 </html>

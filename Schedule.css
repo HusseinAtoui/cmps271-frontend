@@ -9,66 +9,32 @@ body {
     margin: 0;
 }
 
+.Fullpage {
+    display: flex;
+}
+
+
 h1 {
     color: white;
     margin: 0px;
     text-align: center;
 }
-#menu{
-   margin-left: 0%;
-   margin-right: 0%; 
- 
-}
-.container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #7D0C0E;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+header {
+    background: linear-gradient(90deg, #7d0c0e, #ba6e6f);
+    color: white;
+    padding: 40px 60px;
     text-align: center;
-    color: white;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    background: #7D0C0E;
-    padding: 20px;
-    border-radius: 8px;
-    color: white;
-}
-
-label {
-    font-size: 16px;
     font-weight: bold;
-    text-align: left;
+    letter-spacing: 1.5px;
+    border-bottom: 2px solid #bb484a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-input, textarea {
-    padding: 10px;
-    font-size: 16px;
-    border: 4px solid white;
-    border-radius: 5px;
-    width: 100%;
-}
+#menu {
+    margin-left: 0%;
+    margin-right: 0%;
 
-button {
-    background-color: #600A0C;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-flex: auto;
-    font-size: 16px;
-    transition: 0.3s;
-
-}
-
-button:hover {
-    background-color: #8B181A;
 }
 
 /* ============================= */
@@ -76,7 +42,7 @@ button:hover {
 /* ============================= */
 
 #meetingsContainer {
-    max-width: 700px;
+    max-width: 100%;
     margin: 40px auto;
     padding: 20px;
     background: #7D0C0E;
@@ -102,70 +68,68 @@ button:hover {
 
 .meeting-card strong {
     color: #7D0C0E;
-}/* Settings icon container */
+}
+
+/* Settings icon container */
 .settings {
-    position: absolute;  /* Position it relative to the header */
-    top: 10px;   /* Adjust top for positioning */
-    right: 20px; /* Adjust right for positioning */
-    height: 24px;  /* Set a smaller height */
-    width: 24px;   /* Set a smaller width */
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    height: 24px;
+    width: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .settings img {
-    width: 50px;      /* Directly control the width of the image */
-    height: 50px;   
+    width: 50px;
+    height: 50px;
 }
-/* Settings image */
 
-
-/* Settings icon container */
 .settings {
-    position: absolute;  
-    top: 10px;   
-    right: 20px; 
-    height: 24px;  
-    width: 24px;   
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    height: 24px;
+    width: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .settings-image {
-    width: 20px;     
-    height: 20px;     
-    object-fit: contain; 
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
-/* Hidden settings content */
 .settings-content {
-    display: none; /* Initially hidden */
+    display: none;
     position: absolute;
-    top: 50px;  /* Adjust position */
-    right: 20px;  /* Adjust position */
-    background-color: white; 
+    top: 50px;
+    right: 20px;
+    background-color: white;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    width: 200px; /* Adjust the width */
+    width: 200px;
     border-radius: 8px;
 }
-/* Settings Dropdown */
+
 .settings-content {
-    display: none; /* Initially hidden */
+    display: none;
     position: absolute;
     top: 60px;
     right: 20px;
-    background-color: #faefe1; 
+    background-color: #faefe1;
     padding: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    width: 220px; 
+    width: 220px;
     border-radius: 8px;
     text-align: center;
     border: 1px solid #7D0C0E;
 }
 
-/* Settings Buttons */
 .settings-btn {
     display: block;
     width: 100%;
@@ -185,7 +149,6 @@ button:hover {
     background-color: #bb484a;
 }
 
-/* Logout & Delete Buttons */
 .logout-btn {
     background-color: #bb484a;
 }
@@ -194,11 +157,11 @@ button:hover {
     background-color: #5a0c0e;
 }
 
-.logout-btn:hover, .delete-btn:hover {
+.logout-btn:hover,
+.delete-btn:hover {
     background-color: #7D0C0E;
 }
 
-/* Bio & Profile Picture Section */
 .settings-box {
     display: none;
     background-color: #faefe1;
@@ -214,13 +177,17 @@ button:hover {
     margin-bottom: 10px;
 }
 
+/* ============================= */
+/*            dashboard          */
+/* ============================= */
+
 .dashboard {
     display: flex;
-    height: 100vh; /* Full viewport height */
+    min-height: 100vh;
 }
 
 .sidebar {
-    width: 250px; /* Width of the sidebar */
+    width: 250px;
     background-color: #7D0C0E;
     color: white;
     padding: 20px;
@@ -252,27 +219,96 @@ button:hover {
     color: #bb484a;
 }
 
-/* Content area next to the sidebar */
+/* ============================= */
+/*        form and content       */
+/* ============================= */
+
+.container {
+    max-width:100%;
+    margin: 40px auto;
+
+    padding: 20px;
+    background: #7D0C0E;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #7D0C0E;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+}
+
+input,
+textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 4px solid white;
+    border-radius: 5px;
+    width: 100%;
+}
+
+button {
+    background-color: #600A0C;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: auto;
+    font-size: 16px;
+    transition: 0.3s;
+
+}
+
+button:hover {
+    background-color: #8B181A;
+}
+
 .content {
     flex: 1;
     padding: 20px;
     background-color: #FAEFE1;
     overflow-y: auto;
 }
-header {
-    background: linear-gradient(90deg, #7d0c0e, #ba6e6f);
-    color: white;
-    padding: 40px 60px; /* increased padding for a taller header */
-    text-align: center;
-    font-weight: bold;
-    letter-spacing: 1.5px;
-    border-bottom: 2px solid #bb484a;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+
 .sidebar img {
     width: 30px;
     height: 30px;
     vertical-align: middle;
     margin-left: 5px;
     margin-bottom: 10px;
+}
+
+/* ============================= */
+/*       Responsive Styles       */
+/* ============================= */
+
+/* ✅ 320px - 480px (Small Phones)  */
+@media (max-width: 480px) {
+
+    .Fullpage {
+        flex-direction: column;
+    }
+
+    .dashboard {
+        min-height: 0;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: 300px;
+    }
 }
