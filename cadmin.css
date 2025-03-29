@@ -188,3 +188,69 @@ form p {
         height: 300px;
     }
 }
+.hidden {
+    display: none;
+}
+
+#ai-toggle-div {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    max-width: 500px;
+    background: #7d0c0e; /* Match the sidebar and header */
+    color: white;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    z-index: 1000;
+    text-align: center;
+    border: 2px solid #bb484a;
+}
+
+.modal-content {
+    padding: 15px;
+}
+
+.modal-content h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #faefe1; /* Match background color contrast */
+}
+
+.modal-content p {
+    font-size: 16px;
+    color: #faefe1;
+    margin: 10px 0;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #faefe1;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #cc4548;
+}
+
+/* Button inside the modal */
+.check-ai {
+    background-color: #bb484a;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.check-ai:hover {
+    background-color: #cc4548;
+}
