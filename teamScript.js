@@ -22,7 +22,7 @@ const teamMembers = [
     {
         name: "Bareaa Joudi",
         image: "bareaa.png",
-        quote: "quote"
+        quote: "lets start a cult!!"
     },
 ];
 const teamContainer = document.getElementById("team");
