@@ -281,6 +281,35 @@ async function loadArticles() {
       // TODO: Redirect to article details page, e.g., window.location.href = `/articles/${article.id}`;
     });
 
+    // Creates a "share" button :)
+    const shareBtn = document.createElement('button');
+    shareBtn.classList.add('share-button');
+    shareBtn.textContent = "Share";
+    shareBtn.addEventListener('click', () => {
+      if (!article._id) {
+        alert("Error: Article ID is missing.");
+        return;
+      }
+    
+      const shareUrl = `${window.location.origin}/articles/${article._id}`;
+      const shareText = `${article.title}\n${shareUrl}\n${article.description}`;
+    
+      if (navigator.share) {
+        navigator.share({
+          title: article.title,
+          text: shareText,
+          url: shareUrl
+        }).then(() => {
+          console.log("Shared successfully!");
+        }).catch((error) => {
+          console.error("Error sharing:", error);
+        });
+      } else {
+        alert("Web Share API is not supported in this browser.");
+      }
+    });    
+
+
     // Create author info section
     const buttonsDiv = document.createElement('div');
     buttonsDiv.classList.add('buttons');
@@ -296,7 +325,7 @@ async function loadArticles() {
     authorName.classList.add('authorname');
     authorName.textContent = article.author;
 
-    buttonsDiv.append(continueBtn, authorImg, authorName);
+    buttonsDiv.append(continueBtn, shareBtn, authorImg, authorName);
 
     // Assemble the text section
     textSection.append(detailsP, titleP, descriptionP, buttonsDiv);

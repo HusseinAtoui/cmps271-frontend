@@ -82,7 +82,8 @@ async function loadArticles() {
 
 /* =============================
    Display Articles
-   ============================= */function displayArticles(articles) {
+   ============================= */
+function displayArticles(articles) {
     const gridContainer = document.querySelector('.grid-container');
     gridContainer.innerHTML = "";
 
@@ -134,13 +135,41 @@ async function loadArticles() {
         const buttonsDiv = document.createElement('div');
         buttonsDiv.classList.add('buttons');
 
+        // Creates a "share" button :)
+        const shareBtn = document.createElement('button');
+        shareBtn.classList.add('share-button');
+        shareBtn.textContent = "Share";
+        shareBtn.addEventListener('click', () => {
+            if (!article._id) {
+                alert("Error: Article ID is missing.");
+                return;
+            }
+
+            const shareUrl = `${window.location.origin}/articles/${article._id}`;
+            const shareText = `${article.title}\n${shareUrl}\n${article.description}`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: article.title,
+                    text: shareText,
+                    url: shareUrl
+                }).then(() => {
+                    console.log("Shared successfully!");
+                }).catch((error) => {
+                    console.error("Error sharing:", error);
+                });
+            } else {
+                alert("Web Share API is not supported in this browser.");
+            }
+        });
+
         const authorName = document.createElement('p');
         authorName.classList.add('authorname');
         authorName.textContent = article.author;
 
         // Append the title first, then the details below
         textSection.append(titleP, detailsP, descriptionP, buttonsDiv);
-        buttonsDiv.append(continueBtn, authorName);
+        buttonsDiv.append(continueBtn, shareBtn, authorName);
         card.append(imageContainer, textSection);
         gridContainer.appendChild(card);
     });
@@ -198,14 +227,14 @@ async function searchArticles() {
         const response = await fetch('https://afterthoughts.onrender.com/api/articles/');
         if (response.ok) {
             let articles = await response.json();
-        
-                articles = articles.filter(article =>
-                    (article.title && article.title.toLowerCase().includes(query)) ||
-                    (article.author && article.author.toLowerCase().includes(query)) ||
-                    (article.text && article.text.toLowerCase().includes(query))
-                );
-                
-            
+
+            articles = articles.filter(article =>
+                (article.title && article.title.toLowerCase().includes(query)) ||
+                (article.author && article.author.toLowerCase().includes(query)) ||
+                (article.text && article.text.toLowerCase().includes(query))
+            );
+
+
             displayArticles(articles);
         } else {
             throw new Error("Response not ok");
