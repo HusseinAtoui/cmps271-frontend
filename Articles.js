@@ -1,4 +1,53 @@
 
+function renderFullArticle({ title, author, text, image }) {
+    const section = document.getElementById('article-section');
+    section.innerHTML = ""; // Clear any existing content
+
+    const h1 = document.createElement('h1');
+    h1.className = 'title';
+    h1.textContent = title;
+
+    const h2 = document.createElement('h2');
+    h2.textContent = `by ${author}`;
+
+    const pre = document.createElement('pre');
+    pre.className = 'text';
+    pre.textContent = text;
+
+    section.classList.add('article');
+    section.append(h1, h2, pre);
+
+    // ✅ Use .image section and apply article image dynamically (no fallback)
+    const imageSection = document.querySelector('.image');
+    if (imageSection && image) {
+        imageSection.style.backgroundImage = `url("${image}")`;
+    }
+}
+const params = new URLSearchParams(window.location.search);
+const articleId = params.get('id');
+
+  if (articleId) {
+    fetch(`https://afterthoughts.onrender.com/articles/${articleId}`)
+    .then(response => {
+        if (!response.ok) throw new Error("Article not found");
+        return response.json();
+    })
+    .then(article => {
+        renderFullArticle({
+        title: article.title,
+        author: article.author,
+        text: article.text,
+        image: article.image 
+        });
+    })
+    .catch(err => {
+        console.error("Error loading article:", err);
+        document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
+    });
+  } else {
+    document.getElementById('article-section').innerHTML = "<p>Invalid article ID.</p>";
+  }
+  
 function makeProfile(profiles) {
     const allProfiles = document.getElementById("profile-contain"); 
 
@@ -47,13 +96,7 @@ const profiles = [
         name: "bouthy",
         image: "kisses.jpg", 
         comment: "This poem was great, very inspiring..."
-    },
-    {
-        name: "john",
-        image: "john_image.jpg", 
-        comment: "I didn't really enjoy the poem that much..."
     }
 ];
 window.addEventListener("load", async () => {makeProfile(profiles);});
 // Call the function with the profiles array
-
