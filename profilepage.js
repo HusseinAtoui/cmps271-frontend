@@ -40,7 +40,7 @@ async function fetchArticles() {
 
   let articlesData;
   try {
-    const response = await fetch('http://localhost:3000/api/articles');
+    const response = await fetch('https://afterthoughts.onrender.com/api/articles/');
     if (response.ok) {
       articlesData = await response.json();
     } else {
