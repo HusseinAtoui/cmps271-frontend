@@ -92,8 +92,7 @@ const params = new URLSearchParams(window.location.search);
 const articleId = params.get('id');
 console.log("🆔 Article ID from URL:", articleId);
 
-fetch(`http://localhost:3000/api/articles/${articleId}`)
-
+fetch(`http://afterthoughts.onrender.com/api/articles/${articleId}`)
   .then(response => {
     if (!response.ok) throw new Error("Article not found");
     return response.json();
