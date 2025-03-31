@@ -1,102 +1,118 @@
+console.log("🔥 Articles.js is running!");
+
+// ==============================
+// RENDER ARTICLE FUNCTION
+// ==============================
 
 function renderFullArticle({ title, author, text, image }) {
-    const section = document.getElementById('article-section');
-    section.innerHTML = ""; // Clear any existing content
+  const section = document.getElementById('article-section');
+  if (!section) {
+    console.error("❌ Missing <section id='article-section'> in HTML.");
+    return;
+  }
 
-    const h1 = document.createElement('h1');
-    h1.className = 'title';
-    h1.textContent = title;
+  section.innerHTML = "";
 
-    const h2 = document.createElement('h2');
-    h2.textContent = `by ${author}`;
+  const h1 = document.createElement('h1');
+  h1.className = 'title';
+  h1.textContent = title;
 
-    const pre = document.createElement('pre');
-    pre.className = 'text';
-    pre.textContent = text;
+  const h2 = document.createElement('h2');
+  h2.textContent = `by ${author || "Unknown Author"}`;
 
-    section.classList.add('article');
-    section.append(h1, h2, pre);
+  const pre = document.createElement('pre');
+  pre.className = 'text';
+  pre.textContent = text;
 
-    // ✅ Use .image section and apply article image dynamically (no fallback)
-    const imageSection = document.querySelector('.image');
-    if (imageSection && image) {
-        imageSection.style.backgroundImage = `url("${image}")`;
-    }
+  section.classList.add('article');
+  section.append(h1, h2, pre);
+
+  const imageSection = document.querySelector('.image');
+  if (imageSection && image) {
+    imageSection.style.backgroundImage = `url("${image}")`;
+    imageSection.style.backgroundSize = '100%';
+    imageSection.style.backgroundPosition = 'center';
+    imageSection.style.backgroundRepeat = 'no-repeat';
+    imageSection.style.height = '400px';
+  }
 }
+
+// ==============================
+// RENDER COMMENT PROFILES
+// ==============================
+
+function makeProfile(profiles) {
+  const allProfiles = document.getElementById("profile-contain");
+
+  if (!allProfiles) {
+    console.error("❌ Missing <div id='profile-contain'> in HTML.");
+    return;
+  }
+
+  allProfiles.innerHTML = '';
+
+  profiles.forEach(profile => {
+    const profileElement = document.createElement('div');
+    profileElement.classList.add('profile', 'other', 'feedback');
+
+    const profilePicDiv = document.createElement('div');
+    profilePicDiv.classList.add('profile-pic');
+
+    const profileImg = document.createElement('img');
+    profileImg.src = profile.image;
+    profileImg.alt = profile.name;
+    profilePicDiv.appendChild(profileImg);
+
+    const nameElement = document.createElement('h2');
+    nameElement.textContent = profile.name;
+    profilePicDiv.appendChild(nameElement);
+
+    const profileCommentDiv = document.createElement('div');
+    profileCommentDiv.classList.add('profile-comment');
+
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('text');
+
+    const paragraph = document.createElement('p');
+    paragraph.textContent = profile.comment;
+    textDiv.appendChild(paragraph);
+
+    profileCommentDiv.appendChild(textDiv);
+    profileElement.append(profilePicDiv, profileCommentDiv);
+
+    allProfiles.appendChild(profileElement);
+  });
+}
+
+// ==============================
+// LOAD ARTICLE FROM BACKEND
+// ==============================
+
 const params = new URLSearchParams(window.location.search);
 const articleId = params.get('id');
+console.log("🆔 Article ID from URL:", articleId);
 
-  if (articleId) {
-    fetch(`https://afterthoughts.onrender.com/articles/${articleId}`)
+if (articleId) {
+  fetch(`https://afterthoughts.onrender.com/articles/${articleId}`)
     .then(response => {
-        if (!response.ok) throw new Error("Article not found");
-        return response.json();
+      if (!response.ok) throw new Error("Article not found");
+      return response.json();
     })
     .then(article => {
-        renderFullArticle({
+      // If you want to fetch author name from userID later, add it here.
+      renderFullArticle({
         title: article.title,
-        author: article.author,
+        author: article.author || "Unknown Author",
         text: article.text,
-        image: article.image 
-        });
+        image: article.image
+      });
+
+      // Optional: You can pass real comments to makeProfile() if you fetch them from backend
     })
     .catch(err => {
-        console.error("Error loading article:", err);
-        document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
+      console.error("❌ Error loading article:", err);
+      document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
     });
-  } else {
-    document.getElementById('article-section').innerHTML = "<p>Invalid article ID.</p>";
-  }
-  
-function makeProfile(profiles) {
-    const allProfiles = document.getElementById("profile-contain"); 
-
-    allProfiles.innerHTML = '';
-
-    profiles.forEach(profile => {
-        const profileElement = document.createElement('div');
-        profileElement.classList.add('profile');
-        profileElement.classList.add('other');
-        profileElement.classList.add('feedback');
-
-        const profilePicDiv = document.createElement('div');
-        profilePicDiv.classList.add('profile-pic');
-
-        const profileImg = document.createElement('img');
-        profileImg.src = profile.image; 
-        profileImg.alt = profile.name;
-        profilePicDiv.appendChild(profileImg);
-
-        const nameElement = document.createElement('h2');
-        nameElement.textContent = profile.name;
-        profilePicDiv.appendChild(nameElement);
-
-        const profileCommentDiv = document.createElement('div');
-        profileCommentDiv.classList.add('profile-comment');
-
-        const textDiv = document.createElement('div');
-        textDiv.classList.add('text');
-
-        const paragraph = document.createElement('p');
-        paragraph.textContent = profile.comment;
-        textDiv.appendChild(paragraph);
-
-        profileCommentDiv.appendChild(textDiv);
-
-        profileElement.appendChild(profilePicDiv);
-        profileElement.appendChild(profileCommentDiv);
-
-        allProfiles.appendChild(profileElement);
-    });
+} else {
+  document.getElementById('article-section').innerHTML = "<p>Invalid article ID.</p>";
 }
-
-// Example usage:
-const profiles = [
-    {
-        name: "bouthy",
-        image: "kisses.jpg", 
-        comment: "This poem was great, very inspiring..."
-    }
-];
-window.addEventListener("load", async () => {makeProfile(profiles);});
-// Call the function with the profiles array
