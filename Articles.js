@@ -92,27 +92,24 @@ const params = new URLSearchParams(window.location.search);
 const articleId = params.get('id');
 console.log("🆔 Article ID from URL:", articleId);
 
-if (articleId) {
-  fetch(`https://afterthoughts.onrender.com/articles/${articleId}`)
-    .then(response => {
-      if (!response.ok) throw new Error("Article not found");
-      return response.json();
-    })
-    .then(article => {
-      // If you want to fetch author name from userID later, add it here.
-      renderFullArticle({
-        title: article.title,
-        author: article.author || "Unknown Author",
-        text: article.text,
-        image: article.image
-      });
-
-      // Optional: You can pass real comments to makeProfile() if you fetch them from backend
-    })
-    .catch(err => {
-      console.error("❌ Error loading article:", err);
-      document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
+fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
+  .then(response => {
+    if (!response.ok) throw new Error("Article not found");
+    return response.json();
+  })
+  .then(article => {
+    renderFullArticle({
+      title: article.title,
+      author: article.author || "Unknown Author",
+      text: article.text,
+      image: article.image
     });
-} else {
-  document.getElementById('article-section').innerHTML = "<p>Invalid article ID.</p>";
-}
+  })
+  .catch(err => {
+    console.error("Error loading article:", err);
+    document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
+  });
+  
+  window.addEventListener("load", () => {
+    makeProfile([]); // <- placeholder for when you add real profiles/comments
+  });
