@@ -271,7 +271,6 @@ savePicBtn.addEventListener("click", async function () {
   }
 });
 
-
 // Confirm account deletion
 yesDeleteBtn.addEventListener("click", async function () {
   try {
