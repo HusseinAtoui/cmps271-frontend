@@ -53,7 +53,7 @@ function makeProfile(profiles) {
 
   profiles.forEach(profile => {
     const profileElement = document.createElement('div');
-    profileElement.classList.add('profile', 'other', 'feedback');
+    profileElement.classList.add('profile-other-feedback');
 
     const profilePicDiv = document.createElement('div');
     profilePicDiv.classList.add('profile-pic');
