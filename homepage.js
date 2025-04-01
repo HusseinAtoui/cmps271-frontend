@@ -281,19 +281,23 @@ async function loadArticles() {
       // TODO: Redirect to article details page, e.g., window.location.href = `/articles/${article.id}`;
     });
 
-    // Creates a "share" button :)
-    const shareBtn = document.createElement('button');
-    shareBtn.classList.add('share-button');
-    shareBtn.textContent = "Share";
-    shareBtn.addEventListener('click', () => {
+    // Create author info section
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.classList.add('buttons');
+
+    // share ion added :)
+    const shareIcon = document.createElement('i');
+    shareIcon.classList.add('fa-solid', 'fa-share', 'share-icon');
+
+    shareIcon.addEventListener('click', () => {
       if (!article._id) {
         alert("Error: Article ID is missing.");
         return;
       }
-    
+
       const shareUrl = `${window.location.origin}/articles/${article._id}`;
       const shareText = `${article.title}\n${shareUrl}\n${article.description}`;
-    
+
       if (navigator.share) {
         navigator.share({
           title: article.title,
@@ -307,25 +311,17 @@ async function loadArticles() {
       } else {
         alert("Web Share API is not supported in this browser.");
       }
-    });    
+    });
 
-
-    // Create author info section
-    const buttonsDiv = document.createElement('div');
-    buttonsDiv.classList.add('buttons');
-
-    const authorImg = document.createElement('img');
-    authorImg.classList.add('profile');
-    if (article.authorProfile) {
-      authorImg.src = article.authorProfile;
-      authorImg.alt = article.author;
-    }
+    // save icon added! 
+    const saveIcon = document.createElement('i');
+    saveIcon.classList.add('fa-regular', 'fa-bookmark', 'save-icon');
 
     const authorName = document.createElement('p');
     authorName.classList.add('authorname');
     authorName.textContent = article.author;
 
-    buttonsDiv.append(continueBtn, shareBtn, authorImg, authorName);
+    buttonsDiv.append(continueBtn, authorName, shareIcon, saveIcon);
 
     // Assemble the text section
     textSection.append(detailsP, titleP, descriptionP, buttonsDiv);
@@ -333,6 +329,7 @@ async function loadArticles() {
     // Assemble the card
     card.append(imageContainer, textSection);
     gridContainer.appendChild(card);
+
   });
 }
 
