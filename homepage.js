@@ -169,7 +169,7 @@ async function loadEvents() {
     });
 
     // Append all text elements to the text section
-    textSection.append(detailsP, titleP, descriptionP, continueBtn);
+    textSection.append(detailsP, titleP, continueBtn);
 
     // Append image and text to the slide container
     slide.append(imageContainer, textSection);
