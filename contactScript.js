@@ -98,32 +98,29 @@ document.getElementById("newsletter").addEventListener("submit", async function(
     }
 });
 function signupUser() {
-    console.log("signupUser function is called"); 
+    console.log("signupUser function is called");
     const email = document.getElementById('signup-email').value;
     console.log("Email:", email);
-    fetch('https://afterthoughts.onrender.com/api/newsletter/signup', {
-        method: 'POST',
+
+    fetch("https://afterthoughts.onrender.com/api/newsletter/signup", {
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({ email: email })
-    })    
-    .then(response => {
-        if (!response.ok) throw new Error('Failed to sign up');
-        return response.text();
     })
-    .then(text => {
-        try {
-            const data = JSON.parse(text);
-            alert(data.message);
-        } catch(err) {
-            throw new Error('Server did not return JSON');
-        }
+    .then(response => {
+        if (!response.ok) throw new Error("Failed to sign up");
+        return response.json();
+    })
+    .then(data => {
+        alert(data.message); // "Thank you for signing up!"
     })
     .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to sign up.');
+        console.error("Error:", error);
+        alert("Failed to sign up.");
     });
 }
+
 
 
