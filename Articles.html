@@ -36,14 +36,14 @@
         <div class="context">
             <h3>Thots Kweschens Queeries</h3>
             <div class="writing">
-                <form class="comments">
+                <form class="comments" onsubmit="return false;">
                     <label for="comment"></label>
                     <textarea id="comment" name="comment" required placeholder="Write your comment here..."></textarea>
-                </form>
+                  </form>
             </div>
             <div class="like">
-                <button type="button">comment</button>
-                <button type="button">Kudos</button>
+                <button id="comment-btn" type="button">Comment</button>
+                <button id="kudos-btn" type="button">Kudos</button>
             </div>
         </div>
         <div class="other">
