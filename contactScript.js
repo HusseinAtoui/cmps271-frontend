@@ -1,64 +1,59 @@
-let isValid = true;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-document.getElementById("contact-form").addEventListener("submit", function (e) {
+
+document.getElementById("contact-form").addEventListener("submit", async function (e) {
     e.preventDefault();
+
+    let isValid = true;
 
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const number = document.getElementById("phone-number").value.trim();
     const message = document.getElementById("message").value.trim();
 
+    // Clear old errors
+    document.getElementById("invalid-name").textContent = "";
+    document.getElementById("invalid-email").textContent = "";
+    document.getElementById("invalid-number").textContent = "";
+    document.getElementById("invalid-message").textContent = "";
 
     if (name === "") {
         isValid = false;
         document.getElementById("invalid-name").textContent = "Please input your Name";
-        document.getElementById("invalid-name").style.display = "block";
     }
     if (email === "" || !emailPattern.test(email)) {
         isValid = false;
         document.getElementById("invalid-email").textContent = "Invalid Email";
-        document.getElementById("invalid-email").style.display = "block";
     }
-    const phonePattern = /^[0-9]{10}$/;
+    const phonePattern = /^[0-9]{8,10}$/;
+
     if (number === "" || !phonePattern.test(number)) {
         isValid = false;
         document.getElementById("invalid-number").textContent = "Invalid Phone Number";
-        document.getElementById("invalid-number").style.display = "block";
     }
     if (message === "") {
         isValid = false;
-        document.getElementById("invalid-message").textContent = "Message Empty !";
-        document.getElementById("invalid-message").style.display = "block";
+        document.getElementById("invalid-message").textContent = "Message Empty!";
     }
-    if (isValid) {
-        alert("Submitted Successfully!")
+
+    if (!isValid) return;
+
+    try {
+        const res = await fetch("http://localhost:3000/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, number, message }),
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+            alert(result.message);
+            document.getElementById("contact-form").reset();
+        } else {
+            alert("Error: " + result.error);
+        }
+    } catch (err) {
+        console.error("Fetch error:", err);
+        alert("Error sending message.");
     }
 });
-// newsletter 
-document.getElementById("newsletter").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const email = document.getElementById("email-news").value.trim();
-    if (email === "" || !emailPattern.test(email)) {
-        isValid = false;
-        document.getElementById("invalid-newsEmail").textContent = "Invalid Email";
-        document.getElementById("invalid-newsEmail").style.display = "block";
-    }
-    if (isValid) {
-        alert("")
-    }
-})
-
-/* =============================
-   nav bar
-   ============================= */
-
-const navbar = document.getElementById('navbar');
-
-function openSideBar() {
-    navbar.classList.add('show');
-}
-
-function closeSideBar() {
-    navbar.classList.remove('show');
-}
