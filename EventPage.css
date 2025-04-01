@@ -360,7 +360,18 @@ footer {
 /*       Responsive Styles       */
 /* ============================= */
 
-@media (max-width: 480px) {}
+@media (max-width: 480px) {
+
+  .Event {
+    flex-direction: column;
+  }
+
+  .decorations {
+    width: 50%;
+    height: 900%;
+  }
+
+}
 
 @media (max-width: 768px) {
 
