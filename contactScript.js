@@ -76,7 +76,7 @@ document.getElementById("newsletter").addEventListener("submit", async function(
     }
 
     try {
-        const response = await fetch("/api/newsletter", {
+        const response = await fetch("https://afterthoughts.onrender.com", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
