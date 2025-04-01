@@ -39,7 +39,7 @@ document.getElementById("contact-form").addEventListener("submit", async functio
     if (!isValid) return;
 
     try {
-        const res = await fetch("http://localhost:3000/api/contact", {
+        const res = await fetch("https://afterthoughts.onrender.comU/api/contact", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, number, message }),
@@ -97,4 +97,33 @@ document.getElementById("newsletter").addEventListener("submit", async function(
         alert("An error occurred while subscribing.");
     }
 });
+function signupUser() {
+    console.log("signupUser function is called"); 
+    const email = document.getElementById('signup-email').value;
+    console.log("Email:", email);
+    fetch('https://afterthoughts.onrender.com/api/newsletter/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+    })    
+    .then(response => {
+        if (!response.ok) throw new Error('Failed to sign up');
+        return response.text();
+    })
+    .then(text => {
+        try {
+            const data = JSON.parse(text);
+            alert(data.message);
+        } catch(err) {
+            throw new Error('Server did not return JSON');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to sign up.');
+    });
+}
+
 
