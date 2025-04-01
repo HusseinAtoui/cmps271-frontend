@@ -97,6 +97,7 @@ document.getElementById("newsletter").addEventListener("submit", async function(
         alert("An error occurred while subscribing.");
     }
 });
+
 function signupUser() {
     console.log("signupUser function is called");
     const email = document.getElementById('signup-email').value;
@@ -122,5 +123,16 @@ function signupUser() {
     });
 }
 
+/* =============================
+   nav bar
+   ============================= */
 
+   const navbar = document.getElementById('navbar');
 
+   function openSideBar() {
+       navbar.classList.add('show');
+   }
+   
+   function closeSideBar() {
+       navbar.classList.remove('show');
+   }
