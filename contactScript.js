@@ -1,3 +1,4 @@
+// contact form code 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 document.getElementById("contact-form").addEventListener("submit", async function (e) {
@@ -57,3 +58,43 @@ document.getElementById("contact-form").addEventListener("submit", async functio
         alert("Error sending message.");
     }
 });
+// newsletter form code 
+document.getElementById("newsletter").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email-news").value.trim();
+    const agree = document.getElementById("agree-box").checked;
+
+    if (!email) {
+        alert("Please enter an email address.");
+        return;
+    }
+
+    if (!agree) {
+        alert("You must agree to receive updates.");
+        return;
+    }
+
+    try {
+        const response = await fetch("https://afterthoughts.onrender.com/api/newsletter", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email })
+        
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            alert("Thank you for subscribing!");
+            document.getElementById("newsletter").reset();
+        } else {
+            alert("Subscription failed: " + data.message);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while subscribing.");
+    }
+});
+
