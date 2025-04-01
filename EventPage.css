@@ -365,7 +365,7 @@ footer {
 @media (max-width: 768px) {
 
   /* nav section => side bar */
-.Event {
+  .Event {
     flex-direction: column;
   }
 
@@ -373,6 +373,7 @@ footer {
     width: 100%;
     height: 50%;
   }
+
   .navbar {
     position: fixed;
     top: 0;
