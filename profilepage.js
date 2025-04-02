@@ -107,9 +107,9 @@ function displayArticles(articles) {
     continueBtn.classList.add('continue-reading');
     continueBtn.textContent = "Continue reading";
     continueBtn.addEventListener('click', () => {
-      window.location.href = `/articles/${article._id}`;
-    });
-
+      window.location.href = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${article._id}`;
+  });
+  
     const buttonsDiv = document.createElement('div');
     buttonsDiv.classList.add('buttons');
 
