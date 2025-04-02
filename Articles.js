@@ -6,10 +6,7 @@ console.log("🔥 Articles.js is running!");
 
 function renderFullArticle({ title, author, text, image }) {
   const section = document.getElementById('article-section');
-  if (!section) {
-    console.error("❌ Missing <section id='article-section'> in HTML.");
-    return;
-  }
+  if (!section) return;
 
   section.innerHTML = "";
 
@@ -18,7 +15,7 @@ function renderFullArticle({ title, author, text, image }) {
   h1.textContent = title;
 
   const h2 = document.createElement('h2');
-  h2.textContent = `by ${author || "Unknown Author"}`;
+  h2.textContent = `by ${author}`;
 
   const pre = document.createElement('pre');
   pre.className = 'text';
@@ -43,11 +40,7 @@ function renderFullArticle({ title, author, text, image }) {
 
 function makeProfile(profiles) {
   const allProfiles = document.getElementById("profile-contain");
-
-  if (!allProfiles) {
-    console.error("❌ Missing <div id='profile-contain'> in HTML.");
-    return;
-  }
+  if (!allProfiles) return;
 
   allProfiles.innerHTML = '';
 
@@ -100,15 +93,15 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
   .then(article => {
     renderFullArticle({
       title: article.title,
-      author: article.userID || "Unknown Author",
+      author: article.userID,
       text: article.text,
       image: article.image
     });
 
     if (Array.isArray(article.comments)) {
       const formattedComments = article.comments.map(comment => ({
-        name: comment.username || "Anonymous",
-        image: comment.userImage || "default.jpg",
+        name: comment.username,
+        image: comment.userImage,
         comment: comment.text
       }));
 
@@ -137,7 +130,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
           });
 
           const data = await response.json();
-
+          
           if (response.ok) {
             alert("✅ Kudos added!");
             kudosBtn.disabled = true;
@@ -145,7 +138,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
             alert(`⚠️ ${data.message}`);
           }
         } catch (err) {
-          console.error("Error sending kudos:", err);
+          console.error("❌ Error sending kudos:", err);
         }
       });
     }
@@ -157,6 +150,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
       commentBtn.addEventListener("click", async () => {
         const token = localStorage.getItem("authToken");
         const text = commentInput.value.trim();
+        const userData = JSON.parse(localStorage.getItem("userData"));
 
         if (!token) {
           alert("🚩 You need to be logged in to comment.");
@@ -184,8 +178,8 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
             commentInput.value = "";
 
             const newComment = {
-              name: data.user?.username || "You",
-              image: data.user?.image || "default.jpg",
+              name: `${userData.firstName} ${userData.lastName}`,
+              image: userData.profilePicture,
               comment: text
             };
 
@@ -197,12 +191,12 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
             alert(`⚠️ ${data.message}`);
           }
         } catch (err) {
-          console.error("Error posting comment:", err);
+          console.error("❌ Error posting comment:", err);
         }
       });
     }
   })
   .catch(err => {
-    console.error("Error loading article:", err);
+    console.error("❌ Error loading article:", err);
     document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
   });
