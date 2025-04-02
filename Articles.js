@@ -119,7 +119,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
     const kudosBtn = document.getElementById("kudos-btn");
     if (kudosBtn) {
       kudosBtn.addEventListener("click", async () => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("authToken");
         if (!token) {
           alert("🚩 Please log in to give kudos.");
           window.location.href = "loginPage.html";
@@ -155,7 +155,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
 
     if (commentBtn && commentInput) {
       commentBtn.addEventListener("click", async () => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("authToken");
         const text = commentInput.value.trim();
 
         if (!token) {
