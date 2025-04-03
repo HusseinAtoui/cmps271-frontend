@@ -1,86 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="loginStle.css" />
-  </head>
-  <body>
-    <div class="login-container">
-      <!-- Login Form -->
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="loginStle.css" />
+</head>
+
+<body>
+  <div class="login-container">
+    <!-- Login Form -->
+
+    <div class="login-form" id="loginForm">
+      <h2>Welcome Back!</h2>
+      <form id="loginFormElement" action="#" method="POST">
+        <!-- Changed to email input -->
+        <input type="email" id="email" name="email" placeholder="Email" required />
+        <input type="password" id="password" name="password" placeholder="Password" required />
+        <div class="forgot-password">
+          <a href="#">Forgot Password?</a>
+        </div>
+        <button type="submit" class="login-btn2">Login</button>
+        <hr />
+      </form>
+      <p class="register-text">
+        Not a member? <a href="#" onclick="registerNow()">Register now</a>
+      </p>
+
       <a href="https://afterthoughts.onrender.com/api/auth/google">
         <button id="googleLoginBtn">Login with Google</button>
       </a>
-      
-      <div class="login-form" id="loginForm">
-        <h2>Welcome Back!</h2>
-        <form id="loginFormElement" action="#" method="POST">
-          <!-- Changed to email input -->
-          <input type="email" id="email" name="email" placeholder="Email" required />
-          <input type="password" id="password" name="password" placeholder="Password" required />
-          <div class="forgot-password">
-            <a href="#">Forgot Password?</a>
-          </div>
-          <button type="submit" class="login-btn2">Login</button>
-          <hr />
-        </form>
-        <p class="register-text">
-          Not a member? <a href="#" onclick="registerNow()">Register now</a>
-        </p>
-      </div>
 
-      <!-- Sign-up Form (Initially Hidden) -->
-      <div class="signup-form" id="signupForm" style="display: none;">
-        <h2>Create an Account!</h2>
-        <form id="signupFormElement" action="#" method="POST">
-          <input type="text" id="firstName" name="firstName" placeholder="First Name" required />
-          <input type="text" id="lastName" name="lastName" placeholder="Last Name" required />
-          <input type="email" id="signupEmail" name="email" placeholder="Email" required />
-          <input type="password" id="signupPassword" name="password" placeholder="Password" required />
-          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required />
-          <!-- Custom File Upload -->
-          <div class="custom-file">
-            <label for="profileImage" class="custom-file-upload">Upload Profile Image</label>
-            <input type="file" id="profileImage" name="profileImage" accept="image/*" hidden />
-            <span id="fileName">No file chosen</span>
-          </div>
-          <button type="submit" class="signup-btn">Sign Up</button>
-        </form>
-        <p class="login-text">
-          Already have an account? <a href="#" onclick="goToLogin()">Login here</a>
-        </p>
-      </div>
-
-      <!-- Right Side: Image -->
-      <div class="login-image">
-        <img src="loginPic.jpg" alt="Login Image" />
-      </div>
     </div>
 
-    <!-- Footer Section -->
-    <footer>
-      <div class="footer-container">
-        <div class="footer-left">
-          <div class="logofooter">
-            <img src="logo.png" alt="Logo" />
-          </div>
+    <!-- Sign-up Form (Initially Hidden) -->
+    <div class="signup-form" id="signupForm" style="display: none;">
+      <h2>Create an Account!</h2>
+      <form id="signupFormElement" action="#" method="POST">
+        <input type="text" id="firstName" name="firstName" placeholder="First Name" required />
+        <input type="text" id="lastName" name="lastName" placeholder="Last Name" required />
+        <input type="email" id="signupEmail" name="email" placeholder="Email" required />
+        <input type="password" id="signupPassword" name="password" placeholder="Password" required />
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required />
+        <!-- Custom File Upload -->
+        <div class="custom-file">
+          <label for="profileImage" class="custom-file-upload">Upload Profile Image</label>
+          <input type="file" id="profileImage" name="profileImage" accept="image/*" hidden />
+          <span id="fileName">No file chosen</span>
         </div>
-        <div class="footer-right">
-          <div class="join">
-            <a href="#">Become a member of The Philosophy Journal</a>
-          </div>
-          <div class="mailing-list">
-            <p>
-              <a href="#">Join the mailing list to stay up to date:</a>
-            </p>
-            <input type="email" placeholder="Email Address" />
-            <button>SIGN UP</button>
-          </div>
+        <button type="submit" class="signup-btn">Sign Up</button>
+      </form>
+      <p class="login-text">
+        Already have an account? <a href="#" onclick="goToLogin()">Login here</a>
+      </p>
+    </div>
+
+    <!-- Right Side: Image -->
+    <div class="login-image">
+      <img src="loginPic.jpg" alt="Login Image" />
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="logofooter">
+          <img src="logo.png" alt="Logo" />
         </div>
       </div>
-    </footer>
+      <div class="footer-right">
+        <div class="join">
+          <a href="#">Become a member of The Philosophy Journal</a>
+        </div>
+        <div class="mailing-list">
+          <p>
+            <a href="#">Join the mailing list to stay up to date:</a>
+          </p>
+          <input type="email" placeholder="Email Address" />
+          <button>SIGN UP</button>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-    <script src="loginScript.js"></script>
-  </body>
+  <script src="loginScript.js"></script>
+</body>
+
 </html>
