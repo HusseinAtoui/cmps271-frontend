@@ -100,8 +100,8 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
 
     if (Array.isArray(article.comments)) {
       const formattedComments = article.comments.map(comment => ({
-        name: comment.User.firstName + comment.User.lastName,  
-        image: comment.userImage,
+        name: comment.postedBy.firstName + " " + comment.postedBy.lastName,
+        image: comment.postedBy.profilePicture,  // Using the profile picture from the User model
         comment: comment.text
       }));
 
