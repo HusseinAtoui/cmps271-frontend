@@ -198,7 +198,7 @@ document.getElementById('comment-btn').addEventListener('click', async () => {
       const userData = JSON.parse(localStorage.getItem("userData")) || {};
       const newComment = {
           name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
-          image: userData..profilePicture || "default.png",
+          image: userData.profileImage || "default.png",
           comment: commentText
       };
 

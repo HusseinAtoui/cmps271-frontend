@@ -21,11 +21,9 @@
                 <form class="comments" onsubmit="return false;">
                     <label for="comment"></label>
                     <textarea id="comment" name="comment" required placeholder="Write your comment here..."></textarea>
-                  <!-- Change result and error div IDs to match JS -->
-<div id="sentiment-result" class="result"></div>
-<div id="sentiment-error" class="error"></div>
-<!-- Remove onclick from analyze button -->
-<button type="button" id="analyze-btn">Analyze Sentiment</button>
+                    <button type="button" id="analyze-btn" onclick="analyzeSentiment()">Analyze Sentiment</button>
+                    <div id="result" class="result"></div>
+                    <div id="error" class="error"></div>
                 </form>
             </div>
             <div class="like">
