@@ -1,112 +1,178 @@
+
 document.addEventListener("DOMContentLoaded", async () => {
-    // Existing AI Toggle Div
-    let aiToggleDiv = document.getElementById("ai-toggle-div");
-    if (!aiToggleDiv) {
-        aiToggleDiv = document.createElement("div");
-        aiToggleDiv.id = "ai-toggle-div";
-        aiToggleDiv.className = "hidden";
-        aiToggleDiv.innerHTML = `
-            <div class="modal-content">
-                <span class="close-btn">&times;</span>
-                <h2>AI Plagiarism Check</h2>
-                <p id="ai-result-text">Processing...</p>
-            </div>
-        `;
-        document.body.appendChild(aiToggleDiv);
-    }
-  
-    // New Sentiment Analysis Toggle Div
-    const sentimentToggleDiv = document.createElement("div");
-    sentimentToggleDiv.id = "sentiment-toggle-div";
-    sentimentToggleDiv.className = "hidden";
-    sentimentToggleDiv.innerHTML = `
-        <div class="modal-content">
-            <span class="close-sentiment-btn">&times;</span>
-            <h2>Sentiment Analysis</h2>
-            <p id="sentiment-result-text">Analyzing sentiment...</p>
-        </div>
-    `;
-    document.body.appendChild(sentimentToggleDiv);
-  
-    // Query elements
-    const aiResultText = document.getElementById("ai-result-text");
-    const sentimentResultText = document.getElementById("sentiment-result-text");
-    const closeBtns = {
-        ai: aiToggleDiv.querySelector(".close-btn"),
-        sentiment: sentimentToggleDiv.querySelector(".close-sentiment-btn")
-    };
-  
-    // Toggle functions
-    function toggleDiv(div) {
-        div.classList.toggle("hidden");
-    }
-  
-    // Sentiment Analysis Handler
-    async function handleSentimentAnalysis(articleText) {
-        try {
-            const response = await fetch("http://localhost:3000/api/sentimentComments/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ text: articleText })
+  let aiToggleDiv = document.getElementById("ai-toggle-div");
+  if (!aiToggleDiv) {
+      aiToggleDiv = document.createElement("div");
+      aiToggleDiv.id = "ai-toggle-div";
+      aiToggleDiv.className = "hidden"; // hidden by default
+      aiToggleDiv.innerHTML = `
+          <div class="modal-content">
+              <span class="close-btn">&times;</span>
+              <h2>AI Plagiarism Check</h2>
+              <p id="ai-result-text">Processing...</p>
+          </div>
+      `;
+      document.body.appendChild(aiToggleDiv);
+  }
+
+  const aiResultText = document.getElementById("ai-result-text");
+  const closeBtn = aiToggleDiv.querySelector(".close-btn");
+
+  function toggleAIToggleDiv() {
+      aiToggleDiv.classList.toggle("hidden");
+  }
+
+  async function fetchArticles() {
+      try {
+          const response = await fetch("https://afterthoughts.onrender.com/api/articles/");
+          if (!response.ok) throw new Error("Failed to fetch articles");
+          const articles = await response.json();
+          const articlesList = document.getElementById("articles-list");
+          articlesList.innerHTML = articles
+              .map(
+                  (article) => `
+                  <div class="article">
+                      <h2>${article.title}</h2>
+                      <img src="${article.image}" alt="Article Image" class="article-image">
+                      <p><strong>Author:</strong> ${article.author}</p>
+                      <p><strong>Description:</strong> ${article.description}</p>
+                      <p><strong>Tag:</strong> ${article.tag} | <strong>Read Time:</strong> ${article.minToRead} min</p>
+                      <p><strong>Date:</strong> ${new Date(article.date).toLocaleDateString()}</p>
+                      <p><strong>Full Text:</strong> ${article.text}</p>
+                      <button class="approve" data-id="${article._id}">Approve</button>
+                      <button class="disapprove" data-id="${article._id}">Disapprove</button>
+                      <button class="delete" data-id="${article._id}">Delete</button>
+                      <button class="check-ai" data-text="${article.text}">Check for AI Plagiarism</button>
+                  </div>
+              `
+              )
+              .join("");
+
+          document.querySelectorAll(".approve").forEach((button) => {
+              button.addEventListener("click", async () => {
+                  const id = button.getAttribute("data-id");
+                  console.log("Approve button clicked:", id);
+                  const token = localStorage.getItem("token");
+                  if (!token) {
+                      alert("You are not authenticated. Please log in.");
+                      return;
+                  }
+                  const response = await fetch(`https://afterthoughts.onrender.com/api/articles/approve/${id}`, {
+                      method: "PUT",
+                      headers: { Authorization: `Bearer ${token}` },
+                  });
+
+                  console.log("Response status:", response.status);
+                  if (response.ok) {
+                      alert("Article approved successfully!");
+                      fetchArticles();
+                  } else {
+                      alert("Failed to approve the article.");
+                  }
+              });
+          });
+
+          document.querySelectorAll(".disapprove").forEach((button) => {
+              button.addEventListener("click", async () => {
+                  const id = button.getAttribute("data-id");
+                  console.log("Disapprove button clicked:", id);
+                  await fetch(`https://afterthoughts.onrender.com/api/articles/disapprove/${id}`, { method: "PUT" });
+
+                  alert("Article disapproved successfully!");
+                  fetchArticles();
+              });
+          });
+
+          document.querySelectorAll(".delete").forEach((button) => {
+              button.addEventListener("click", async () => {
+                  const id = button.getAttribute("data-id");
+                  console.log("Delete button clicked:", id);
+
+                  const response = await fetch(`https://afterthoughts.onrender.com/api/articles/delete/${id}`, {
+                      method: "DELETE",
+                  });
+
+                  if (response.ok) {
+                      alert("Article deleted successfully!");
+                      fetchArticles();
+                  } else {
+                      alert("Failed to delete the article.");
+                  }
+              });
+         
+          });  document.querySelectorAll(".check-ai").forEach((button) => {
+            button.addEventListener("click", async () => {
+                if (!aiToggleDiv.classList.contains("hidden")) {
+                    toggleAIToggleDiv();
+                    return;
+                }
+        
+                aiResultText.textContent = "Checking plagiarism, please wait...";
+                toggleAIToggleDiv();
+        
+                const articleText = button.getAttribute("data-text");
+        
+                try {
+                    const aiResponse = await fetch("http://localhost:3000/api/aiplagarism/detect", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ text: articleText }),
+                    });
+        
+                    if (!aiResponse.ok) {
+                        const errorText = await aiResponse.text();
+                        throw new Error(`AI check failed: ${errorText}`);
+                    }
+        
+                    const result = await aiResponse.json();
+                    aiResultText.innerHTML = `
+                        <br></br>
+                        <strong style="color:rgb(242, 232, 230); font-size: 24px;">  ${(result.score * 100).toFixed(2)}%
+                        <strong>
+                    `;
+                } catch (error) {
+                    aiResultText.textContent = "Failed to check AI plagiarism.";
+                    console.error("AI Check Error:", error);
+                }
             });
-  
-            if (!response.ok) throw new Error("Analysis failed");
-            const data = await response.json();
-  
-            sentimentResultText.innerHTML = `
-                <strong>Dominant Emotion:</strong> ${data.emotion}<br>
-                <strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%<br>
-                <strong>Sample Text:</strong> "${data.analyzedText}..."
-            `;
-        } catch (error) {
-            sentimentResultText.textContent = "Error analyzing sentiment";
-            console.error("Sentiment Error:", error);
-        }
-    }
-  
-    // Modified Article Template
-    function createArticleHTML(article) {
-        return `
-            <div class="article">
-                <h2>${article.title}</h2>
-                <img src="${article.image}" alt="Article Image" class="article-image">
-                <p><strong>Author:</strong> ${article.author}</p>
-                <p><strong>Description:</strong> ${article.description}</p>
-                <p><strong>Tag:</strong> ${article.tag} | <strong>Read Time:</strong> ${article.minToRead} min</p>
-                <p><strong>Date:</strong> ${new Date(article.date).toLocaleDateString()}</p>
-                <p><strong>Full Text:</strong> ${article.text}</p>
-                <div class="article-actions">
-                    <button class="approve" data-id="${article._id}">Approve</button>
-                    <button class="disapprove" data-id="${article._id}">Disapprove</button>
-                    <button class="delete" data-id="${article._id}">Delete</button>
-                    <button class="check-ai" data-text="${article.text}">AI Check</button>
-                    <button class="check-sentiment" data-text="${article.text}">Sentiment</button>
-                </div>
-            </div>
-        `;
-    }
-  
-    // Modified Button Event Listeners
-    document.querySelectorAll(".check-sentiment").forEach((button) => {
-        button.addEventListener("click", async () => {
-            if (!sentimentToggleDiv.classList.contains("hidden")) {
-                toggleDiv(sentimentToggleDiv);
-                return;
-            }
-  
-            sentimentResultText.textContent = "Analyzing sentiment...";
-            toggleDiv(sentimentToggleDiv);
-            
-            const articleText = button.getAttribute("data-text");
-            await handleSentimentAnalysis(articleText);
         });
-    });
-  
-    // Close Button Handlers
-    closeBtns.ai.addEventListener("click", () => toggleDiv(aiToggleDiv));
-    closeBtns.sentiment.addEventListener("click", () => toggleDiv(sentimentToggleDiv));
-  
-    // Rest of your existing code remains the same...
-    // [Keep all existing fetchArticles implementation]
-    // [Keep existing form submission handler]
+        
+
+          closeBtn.addEventListener("click", toggleAIToggleDiv);
+      } catch (error) {
+          console.error("Error fetching articles:", error);
+          alert("Failed to load articles");
+      }
+  }
+
+  fetchArticles();
+
+  document.getElementById("article-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("title", document.getElementById("title").value);
+      formData.append("author", document.getElementById("author").value);
+      formData.append("minToRead", document.getElementById("minToRead").value);
+      formData.append("tag", document.getElementById("tag").value);
+      formData.append("date", document.getElementById("date").value);
+      formData.append("description", document.getElementById("description").value);
+      formData.append("text", document.getElementById("text")?.value || "");
+
+      if (document.getElementById("image").files[0]) {
+          formData.append("image", document.getElementById("image").files[0]);
+      }
+
+      try {
+          const response = await fetch("https://afterthoughts.onrender.com/api/articles/add", {
+              method: "POST",
+              body: formData,
+          });
+          if (!response.ok) throw new Error("Failed to add article");
+          fetchArticles();
+      } catch (error) {
+          console.error("Error adding article:", error);
+      }
   });
+});
