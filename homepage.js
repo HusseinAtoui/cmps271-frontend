@@ -294,8 +294,9 @@ async function loadArticles() {
         return;
       }
 
-      const shareUrl = `${window.location.origin}/articles/${article._id}`;
-      const shareText = `${article.title}\n${shareUrl}\n${article.description}`;
+      const shareUrl = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${article._id}`;
+
+      const shareText = `${article.title}\n\n${article.description}`;
 
       if (navigator.share) {
         navigator.share({
