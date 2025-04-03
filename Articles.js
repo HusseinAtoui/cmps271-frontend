@@ -17,7 +17,7 @@ function renderFullArticle({ title, author, text, image }) {
   const h2 = document.createElement('h2');
   h2.textContent = `by ${author}`;
 
-  const pre = document.createElement('pre');
+  const pre = document.createElement('p');
   pre.className = 'text';
   pre.textContent = text;
 
@@ -100,7 +100,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
 
     if (Array.isArray(article.comments)) {
       const formattedComments = article.comments.map(comment => ({
-        name: comment.username,
+        name: comment.user.firstName + comment.user.lastName,  
         image: comment.userImage,
         comment: comment.text
       }));
@@ -175,13 +175,6 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
 
           const data = await response.json();
           if (response.ok) {
-            commentInput.value = "";
-
-            const newComment = {
-              name: `${userData.firstName} ${userData.lastName}`,
-              image: userData.profilePicture,
-              comment: text
-            };
 
             const existing = document._existingComments || [];
             const updated = [newComment, ...existing];
