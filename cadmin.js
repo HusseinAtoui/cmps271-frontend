@@ -98,81 +98,80 @@ document.addEventListener("DOMContentLoaded", async () => {
                   } else {
                       alert("Failed to delete the article.");
                   }
-              });
-         
-          });  document.querySelectorAll(".check-ai").forEach((button) => {
-            button.addEventListener("click", async () => {
-                if (!aiToggleDiv.classList.contains("hidden")) {
-                    toggleAIToggleDiv();
-                    return;
-                }
-        
-                aiResultText.textContent = "Checking plagiarism, please wait...";
-                toggleAIToggleDiv();
-        
-                const articleText = button.getAttribute("data-text");
-        
-                try {
-                    const aiResponse = await fetch("http://localhost:3000/api/aiplagarism/detect", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ text: articleText }),
-                    });
-        
-                    if (!aiResponse.ok) {
-                        const errorText = await aiResponse.text();
-                        throw new Error(`AI check failed: ${errorText}`);
+              }); });  document.querySelectorAll(".check-ai").forEach((button) => {
+                button.addEventListener("click", async () => {
+                    if (!aiToggleDiv.classList.contains("hidden")) {
+                        toggleAIToggleDiv();
+                        return;
                     }
-        
-                    const result = await aiResponse.json();
-                    aiResultText.innerHTML = `
-                        <br></br>
-                        <strong style="color:rgb(242, 232, 230); font-size: 24px;">  ${(result.score * 100).toFixed(2)}%
-                        <strong>
-                    `;
-                } catch (error) {
-                    aiResultText.textContent = "Failed to check AI plagiarism.";
-                    console.error("AI Check Error:", error);
-                }
+            
+                    aiResultText.textContent = "Checking plagiarism, please wait...";
+                    toggleAIToggleDiv();
+            
+                    const articleText = button.getAttribute("data-text");
+            
+                    try {
+                        const aiResponse = await fetch("http://localhost:3000/api/aiplagarism/detect", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ text: articleText }),
+                        });
+            
+                        if (!aiResponse.ok) {
+                            const errorText = await aiResponse.text();
+                            throw new Error(`AI check failed: ${errorText}`);
+                        }
+            
+                        const result = await aiResponse.json();
+                        aiResultText.innerHTML = `
+                            <br></br>
+                            <strong style="color:rgb(242, 232, 230); font-size: 24px;">  ${(result.score * 100).toFixed(2)}%
+                            <strong>
+                        `;
+                    } catch (error) {
+                        aiResultText.textContent = "Failed to check AI plagiarism.";
+                        console.error("AI Check Error:", error);
+                    }
+                });
             });
-        });
-        
-
-          closeBtn.addEventListener("click", toggleAIToggleDiv);
-      } catch (error) {
-          console.error("Error fetching articles:", error);
-          alert("Failed to load articles");
-      }
-  }
-
-  fetchArticles();
-
-  document.getElementById("article-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = new FormData();
-      formData.append("title", document.getElementById("title").value);
-      formData.append("author", document.getElementById("author").value);
-      formData.append("minToRead", document.getElementById("minToRead").value);
-      formData.append("tag", document.getElementById("tag").value);
-      formData.append("date", document.getElementById("date").value);
-      formData.append("description", document.getElementById("description").value);
-      formData.append("text", document.getElementById("text")?.value || "");
-
-      if (document.getElementById("image").files[0]) {
-          formData.append("image", document.getElementById("image").files[0]);
-      }
-
-      try {
-          const response = await fetch("https://afterthoughts.onrender.com/api/articles/add", {
-              method: "POST",
-              body: formData,
-          });
-          if (!response.ok) throw new Error("Failed to add article");
-          fetchArticles();
-      } catch (error) {
-          console.error("Error adding article:", error);
-      }
+            
+    
+              closeBtn.addEventListener("click", toggleAIToggleDiv);
+          } catch (error) {
+    
+            console.error("Error fetching articles:", error);
+            alert("Failed to load articles");
+        }
+    }
+  
+    fetchArticles();
+  
+    document.getElementById("article-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("title", document.getElementById("title").value);
+        formData.append("author", document.getElementById("author").value);
+        formData.append("minToRead", document.getElementById("minToRead").value);
+        formData.append("tag", document.getElementById("tag").value);
+        formData.append("date", document.getElementById("date").value);
+        formData.append("description", document.getElementById("description").value);
+        formData.append("text", document.getElementById("text")?.value || "");
+  
+        if (document.getElementById("image").files[0]) {
+            formData.append("image", document.getElementById("image").files[0]);
+        }
+  
+        try {
+            const response = await fetch("https://afterthoughts.onrender.com/api/articles/add", {
+                method: "POST",
+                body: formData,
+            });
+            if (!response.ok) throw new Error("Failed to add article");
+            fetchArticles();
+        } catch (error) {
+            console.error("Error adding article:", error);
+        }
+    });
   });
-});
