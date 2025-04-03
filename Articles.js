@@ -77,6 +77,154 @@ function makeProfile(profiles) {
   });
 }
 
+
+console.log("🔥 Articles.js is running!");
+
+// ==============================
+// HELPER FUNCTIONS
+// ==============================
+
+// Simple profanity filter
+const bannedWords = ["fuck", "shit", "damn", "bitch", "asshole", "bastard", "cunt"]; // Add more words as needed
+
+// Sentiment Mapping
+const sentimentMap = {
+  'anger': 'negative',
+  'disgust': 'negative',
+  'fear': 'negative',
+  'joy': 'positive',
+  'neutral': 'neutral',
+  'sadness': 'negative',
+  'surprise': 'neutral'
+};
+
+// ==============================
+// ANALYZE SENTIMENT BEFORE COMMENTING
+// ==============================
+
+async function analyzeSentiment() {
+  const inputText = document.getElementById('comment').value.trim();
+  const resultDiv = document.getElementById('result');
+  const errorDiv = document.getElementById('error');
+
+  // Clear previous messages
+  resultDiv.innerHTML = '';
+  errorDiv.innerHTML = '';
+
+  if (!inputText) {
+    showError('⚠️ Please enter a comment before analyzing.');
+    return false;
+  }
+
+  // Check for profanity
+  const containsBannedWord = bannedWords.some(word => inputText.toLowerCase().includes(word));
+  if (containsBannedWord) {
+    showError('❌ Your comment contains inappropriate language and cannot be posted.');
+    return false;
+  }
+
+  try {
+    const response = await fetch('http://localhost:3000/api/sentimentComments/', { 
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: inputText })
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+    const data = await response.json();
+    const generalSentiment = sentimentMap[data.sentiment.toLowerCase()] || 'neutral';
+
+    // Display sentiment result
+    resultDiv.innerHTML = `<strong>Sentiment:</strong> ${generalSentiment}`;
+
+    // Block negative comments
+    if (generalSentiment === 'negative') {
+      showError('❌ Your comment is too negative and does not meet our guidelines.');
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    showError(`❌ Analysis failed: ${error.message}`);
+    console.error('Error:', error);
+    return false;
+  }
+}
+
+// Show error messages
+function showError(message) {
+  const errorDiv = document.getElementById('error');
+  errorDiv.innerHTML = message;
+}
+
+// ==============================
+// HANDLE COMMENT SUBMISSION
+// ==============================
+
+async function submitComment() {
+  console.log("Comment button clicked");
+
+  const token = localStorage.getItem("authToken");
+  const text = document.getElementById("comment").value.trim();
+
+  if (!token) {
+    alert("🚩 You need to be logged in to comment.");
+    window.location.href = "loginPage.html";
+    return;
+  }
+
+  if (!text) {
+    alert("✍️ Please write a comment before submitting.");
+    return;
+  }
+
+  // Analyze sentiment before allowing submission
+  const isValid = await analyzeSentiment();
+  if (!isValid) return;
+
+  try {
+    const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ articleId, text })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log("✅ Comment posted successfully:", data);
+
+      const userData = JSON.parse(localStorage.getItem("userData")) || {};
+      const newComment = {
+        name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
+        image: userData.profileImage || "default.png",
+        comment: text
+      };
+
+      const existing = document._existingComments || [];
+      const updated = [newComment, ...existing];
+
+      document._existingComments = updated;
+      makeProfile(updated);
+      document.getElementById("comment").value = "";
+    } else {
+      alert(`⚠️ ${data.message}`);
+    }
+  } catch (err) {
+    console.error("❌ Error posting comment:", err);
+  }
+}
+
+// ==============================
+// EVENT LISTENER FOR COMMENT BUTTON
+// ==============================
+
+document.getElementById("comment-btn").addEventListener("click", submitComment);
+
 // ==============================
 // LOAD ARTICLE FROM BACKEND
 // ==============================

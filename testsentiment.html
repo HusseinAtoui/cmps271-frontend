@@ -1,145 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentiment Analysis Tester</title>
+    <!-- Keep existing styles -->
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        textarea {
-            width: 100%;
-            height: 150px;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            resize: vertical;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .result {
-            margin-top: 20px;
+        /* Add to existing styles */
+        .guidelines-error {
+            background-color: #fff3f3;
+            border: 2px solid #ff6b6b;
+            color: #cc0000;
             padding: 15px;
-            border-radius: 4px;
-        }
-
-        .positive { background-color: #dff0d8; color: #3c763d; }
-        .negative { background-color: #f2dede; color: #a94442; }
-        .neutral { background-color: #f9f9f9; color: #666; }
-        
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 4px;
-        }
-
-        .details {
-            margin-top: 10px;
-            font-size: 0.9em;
-            color: #666;
+            margin-top: 15px;
+            border-radius: 5px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Sentiment Analysis Tester</h1>
+        <h1>Comment Compliance Checker</h1>
         
         <textarea 
             id="inputText" 
-            placeholder="Enter text to analyze..."
+            placeholder="Enter your comment..."
         ></textarea>
         
-        <button onclick="analyzeSentiment()">Analyze Sentiment</button>
+        <button onclick="checkGuidelinesCompliance()">Check Compliance</button>
         
         <div id="result" class="result"></div>
         <div id="error" class="error"></div>
+        <div id="guidelinesWarning" class="guidelines-error" style="display: none;">
+            ⚠️ This comment doesn't align with our community guidelines
+        </div>
     </div>
 
     <script>
-        async function analyzeSentiment() {
+        const GUIDELINES_THRESHOLD = 0.7; // 70% confidence threshold
+
+        async function checkGuidelinesCompliance() {
             const inputText = document.getElementById('inputText').value.trim();
             const resultDiv = document.getElementById('result');
             const errorDiv = document.getElementById('error');
-            
-            // Clear previous results
+            const warningDiv = document.getElementById('guidelinesWarning');
+
+            // Clear previous messages
             resultDiv.innerHTML = '';
             errorDiv.innerHTML = '';
-            resultDiv.className = 'result';
-            
+            warningDiv.style.display = 'none';
+
             if (!inputText) {
-                showError('Please enter some text to analyze');
+                showError('Please enter a comment to check');
                 return;
             }
 
             try {
-        const response = await fetch('http://localhost:3000/api/sentimentComments/', { // Fix endpoint
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                text: document.getElementById('inputText').value
-            })
-        });
+                const response = await fetch('http://localhost:3000/api/sentimentComments/', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ text: inputText })
+                });
 
-        // Add sentiment mapping
-        const sentimentMap = {
-            'anger': 'negative',
-            'disgust': 'negative',
-            'fear': 'negative',
-            'joy': 'positive',
-            'neutral': 'neutral',
-            'sadness': 'negative',
-            'surprise': 'neutral'
-        };
+                if (!response.ok) throw new Error('Analysis failed');
+                const data = await response.json();
 
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
-        const data = await response.json();
-        const generalSentiment = sentimentMap[data.sentiment.toLowerCase()] || 'neutral';
+                const sentimentMap = {
+                    'anger': 'negative',
+                    'disgust': 'negative',
+                    'fear': 'negative',
+                    'sadness': 'negative',
+                    'joy': 'positive',
+                    'neutral': 'neutral',
+                    'surprise': 'neutral'
+                };
 
-        // Update display with mapped sentiment
-        resultDiv.className = `result ${generalSentiment}`;
-        resultDiv.innerHTML = `
-            <strong>Sentiment:</strong> ${generalSentiment}<br>
-            <strong>Original Emotion:</strong> ${data.sentiment}<br>
-            <strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%<br>
-            <div class="details">
-                Analyzed text: "${data.analyzedText}"<br>
-                Original length: ${data.originalLength} characters
-            </div>
-        `;
-    }  catch (error) {
-                showError(`Analysis failed: ${error.message}`);
+                const generalSentiment = sentimentMap[data.emotion.toLowerCase()] || 'neutral';
+                const isNegative = generalSentiment === 'negative' && data.confidence > GUIDELINES_THRESHOLD;
+
+                if (isNegative) {
+                    warningDiv.style.display = 'block';
+                    resultDiv.style.display = 'none';
+                } else {
+                    resultDiv.className = `result ${generalSentiment}`;
+                    resultDiv.innerHTML = `
+                        <strong>Status:</strong> Approved for posting<br>
+                        <strong>Detected Emotion:</strong> ${data.emotion}<br>
+                        <strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%
+                    `;
+                    resultDiv.style.display = 'block';
+                    warningDiv.style.display = 'none';
+                }
+
+            } catch (error) {
+                showError(`Compliance check failed: ${error.message}`);
                 console.error('Error:', error);
             }
         }
@@ -148,8 +99,6 @@
             const errorDiv = document.getElementById('error');
             errorDiv.innerHTML = message;
         }
-
-
     </script>
 </body>
 </html>
