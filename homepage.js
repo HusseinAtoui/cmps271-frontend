@@ -277,9 +277,8 @@ async function loadArticles() {
     continueBtn.classList.add('continue-reading');
     continueBtn.textContent = "continue reading";
     continueBtn.addEventListener('click', () => {
-      console.log(`Continue reading article ${article.id}`);
-      // TODO: Redirect to article details page, e.g., window.location.href = `/articles/${article.id}`;
-    });
+      window.location.href = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${article._id}`;
+  });
 
     // Create author info section
     const buttonsDiv = document.createElement('div');

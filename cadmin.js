@@ -49,22 +49,33 @@ document.addEventListener("DOMContentLoaded", async () => {
             `).join('');
 
             document.querySelectorAll('.approve').forEach(button => {
-                button.addEventListener('click', async () => {
-                    const id = button.getAttribute('data-id');
-                    console.log("Approve button clicked:", id);
-                    
-                    const response = await fetch(`http://localhost:3000/api/articles/approve/${id}`, {
-                        method: 'PUT'
-                    });
-            
-                    if (response.ok) {
-                        alert("Article approved successfully!");
-                        fetchArticles(); // Reload the article list
-                    } else {
-                        alert("Failed to approve the article.");
-                    }
-                });
-            });
+              button.addEventListener('click', async () => {
+                  const id = button.getAttribute('data-id');
+                  console.log("Approve button clicked:", id);
+          
+                  const token = localStorage.getItem("token"); // Fetch the token from localStorage
+          
+                  const response = await fetch(`https://afterthoughts.onrender.com/api/articles/approve/${id}`, {
+                      method: 'PUT',
+                      headers: {
+                          Authorization: `Bearer ${token}`,
+                      }
+                  });
+          
+                  console.log("Response status:", response.status);
+                  const errorText = await response.text();
+                  console.error("Approve error:", errorText);
+          
+                  if (response.ok) {
+                      alert("Article approved successfully!");
+                      fetchArticles();
+                  } else {
+                      alert("Failed to approve the article.");
+                  }
+              });
+          });
+          
+          
             
 
             // Disapprove buttons
@@ -72,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 button.addEventListener('click', async () => {
                     const id = button.getAttribute('data-id');
                     console.log("Disapprove button clicked:", id);
-                    await fetch(`http://localhost:3000/api/articles/disapprove/${id}`, { method: 'PUT' });
+                    await fetch(`https://afterthoughts.onrender.com/api/articles/disapprove/${id}`, { method: 'PUT' });
                     
 
 
@@ -86,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const id = button.getAttribute('data-id');
                     console.log("Delete button clicked:", id);
                     
-                    const response = await fetch(`http://localhost:3000/api/articles/delete/${id}`, {
+                    const response = await fetch(`https://afterthoughts.onrender.com/api/articles/delete/${id}`, {
                         method: 'DELETE'
                     });
             
