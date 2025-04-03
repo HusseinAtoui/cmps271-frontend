@@ -98,53 +98,45 @@ document.addEventListener("DOMContentLoaded", async () => {
                       alert("Failed to delete the article.");
                   }
               });
-          });
-
-          document.querySelectorAll(".check-ai").forEach((button) => {
-              button.addEventListener("click", async () => {
-                  if (!aiToggleDiv.classList.contains("hidden")) {
-                      toggleAIToggleDiv();
-                      return;
-                  }
-
-                  aiResultText.textContent = "Checking plagiarism, please wait...";
-                  toggleAIToggleDiv();
-
-                  const articleText = button.getAttribute("data-text");
-                  const token = localStorage.getItem("token");
-
-                  if (!token) {
-                      aiResultText.textContent = "You are not authenticated. Please log in.";
-                      return;
-                  }
-
-                  try {
-                      const aiResponse = await fetch("http://localhost:3000/api/aiplagarism/detect", {
-                          method: "POST",
-                          headers: {
-                              "Content-Type": "application/json",
-                              Authorization: `Bearer ${token}`,
-                          },
-                          body: JSON.stringify({ text: articleText }),
-                      });
-
-                      if (!aiResponse.ok) {
-                          const errorText = await aiResponse.text();
-                          throw new Error(`AI check failed: ${errorText}`);
-                      }
-
-                      const result = await aiResponse.json();
-                      aiResultText.innerHTML = `
-                          <br></br>
-                          <strong style="color:rgb(242, 232, 230); font-size: 24px;">  ${(result.score * 100).toFixed(2)}%
-                          <strong>
-                      `;
-                  } catch (error) {
-                      aiResultText.textContent = "Failed to check AI plagiarism.";
-                      console.error("AI Check Error:", error);
-                  }
-              });
-          });
+          });  document.querySelectorAll(".check-ai").forEach((button) => {
+            button.addEventListener("click", async () => {
+                if (!aiToggleDiv.classList.contains("hidden")) {
+                    toggleAIToggleDiv();
+                    return;
+                }
+        
+                aiResultText.textContent = "Checking plagiarism, please wait...";
+                toggleAIToggleDiv();
+        
+                const articleText = button.getAttribute("data-text");
+        
+                try {
+                    const aiResponse = await fetch("http://localhost:3000/api/aiplagarism/detect", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ text: articleText }),
+                    });
+        
+                    if (!aiResponse.ok) {
+                        const errorText = await aiResponse.text();
+                        throw new Error(`AI check failed: ${errorText}`);
+                    }
+        
+                    const result = await aiResponse.json();
+                    aiResultText.innerHTML = `
+                        <br></br>
+                        <strong style="color:rgb(242, 232, 230); font-size: 24px;">  ${(result.score * 100).toFixed(2)}%
+                        <strong>
+                    `;
+                } catch (error) {
+                    aiResultText.textContent = "Failed to check AI plagiarism.";
+                    console.error("AI Check Error:", error);
+                }
+            });
+        });
+        
 
           closeBtn.addEventListener("click", toggleAIToggleDiv);
       } catch (error) {
