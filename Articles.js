@@ -78,152 +78,143 @@ function makeProfile(profiles) {
 }
 
 
-console.log("🔥 Articles.js is running!");
-
-// ==============================
-// HELPER FUNCTIONS
-// ==============================
-
-// Simple profanity filter
-const bannedWords = ["fuck", "shit", "damn", "bitch", "asshole", "bastard", "cunt"]; // Add more words as needed
-
-// Sentiment Mapping
+// ========================
+// SENTIMENT ANALYSIS SYSTEM
+// ========================
 const sentimentMap = {
   'anger': 'negative',
   'disgust': 'negative',
   'fear': 'negative',
-  'joy': 'positive',
-  'neutral': 'neutral',
   'sadness': 'negative',
-  'surprise': 'neutral'
+  'joy': 'positive',
+  'surprise': 'neutral',
+  'neutral': 'neutral'
 };
 
-// ==============================
-// ANALYZE SENTIMENT BEFORE COMMENTING
-// ==============================
-
-async function analyzeSentiment() {
-  const inputText = document.getElementById('comment').value.trim();
-  const resultDiv = document.getElementById('result');
-  const errorDiv = document.getElementById('error');
-
-  // Clear previous messages
-  resultDiv.innerHTML = '';
-  errorDiv.innerHTML = '';
-
-  if (!inputText) {
-    showError('⚠️ Please enter a comment before analyzing.');
-    return false;
-  }
-
-  // Check for profanity
-  const containsBannedWord = bannedWords.some(word => inputText.toLowerCase().includes(word));
-  if (containsBannedWord) {
-    showError('❌ Your comment contains inappropriate language and cannot be posted.');
-    return false;
-  }
-
+async function analyzeSentiment(text) {
   try {
-    const response = await fetch('http://localhost:3000/api/sentimentComments/', { 
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: inputText })
-    });
+      const response = await fetch('http://localhost:3000/api/sentimentComments/', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ text })
+      });
 
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-    const data = await response.json();
-    const generalSentiment = sentimentMap[data.sentiment.toLowerCase()] || 'neutral';
-
-    // Display sentiment result
-    resultDiv.innerHTML = `<strong>Sentiment:</strong> ${generalSentiment}`;
-
-    // Block negative comments
-    if (generalSentiment === 'negative') {
-      showError('❌ Your comment is too negative and does not meet our guidelines.');
-      return false;
-    }
-
-    return true;
+      if (!response.ok) throw new Error('Analysis failed');
+      return await response.json();
   } catch (error) {
-    showError(`❌ Analysis failed: ${error.message}`);
-    console.error('Error:', error);
-    return false;
+      console.error('Sentiment Analysis Error:', error);
+      throw error;
   }
 }
 
-// Show error messages
-function showError(message) {
-  const errorDiv = document.getElementById('error');
-  errorDiv.innerHTML = message;
+function showSentimentResult(data) {
+  const resultDiv = document.getElementById('sentiment-result');
+  const errorDiv = document.getElementById('sentiment-error');
+  errorDiv.style.display = 'none';
+
+  const generalSentiment = sentimentMap[data.emotion.toLowerCase()] || 'neutral';
+  
+  resultDiv.className = `sentiment-result ${generalSentiment}`;
+  resultDiv.innerHTML = `
+      <strong>Sentiment:</strong> ${generalSentiment}<br>
+      <strong>Detected Emotion:</strong> ${data.emotion}<br>
+      <strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%
+  `;
+  resultDiv.style.display = 'block';
 }
 
-// ==============================
-// HANDLE COMMENT SUBMISSION
-// ==============================
+function showGuidelinesWarning(message) {
+  const warningDiv = document.getElementById('guidelines-warning');
+  warningDiv.textContent = message;
+  warningDiv.classList.add('visible');
+}
 
-async function submitComment() {
-  console.log("Comment button clicked");
-
-  const token = localStorage.getItem("authToken");
-  const text = document.getElementById("comment").value.trim();
-
-  if (!token) {
-    alert("🚩 You need to be logged in to comment.");
-    window.location.href = "loginPage.html";
-    return;
+// ========================
+// COMMENT SYSTEM
+// ========================
+document.getElementById('analyze-btn').addEventListener('click', async () => {
+  const commentText = document.getElementById('comment').value.trim();
+  const errorDiv = document.getElementById('sentiment-error');
+  
+  if (!commentText) {
+      errorDiv.textContent = 'Please enter text to analyze';
+      errorDiv.style.display = 'block';
+      return;
   }
-
-  if (!text) {
-    alert("✍️ Please write a comment before submitting.");
-    return;
-  }
-
-  // Analyze sentiment before allowing submission
-  const isValid = await analyzeSentiment();
-  if (!isValid) return;
 
   try {
-    const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({ articleId, text })
-    });
+      const analysis = await analyzeSentiment(commentText);
+      showSentimentResult(analysis);
+  } catch (error) {
+      errorDiv.textContent = 'Failed to analyze sentiment. Please try again.';
+      errorDiv.style.display = 'block';
+  }
+});
 
-    const data = await response.json();
+document.getElementById('comment-btn').addEventListener('click', async () => {
+  const commentText = document.getElementById('comment').value.trim();
+  const errorDiv = document.getElementById('sentiment-error');
+  errorDiv.style.display = 'none';
 
-    if (response.ok) {
-      console.log("✅ Comment posted successfully:", data);
+  if (!commentText) {
+      errorDiv.textContent = 'Please write a comment before submitting.';
+      errorDiv.style.display = 'block';
+      return;
+  }
 
+  try {
+      // Check sentiment before posting
+      const analysis = await analyzeSentiment(commentText);
+      const sentiment = sentimentMap[analysis.emotion.toLowerCase()] || 'neutral';
+
+      if (sentiment === 'negative') {
+          showGuidelinesWarning('⚠️ This comment violates our community guidelines. Please maintain a respectful and constructive tone.');
+          return;
+      }
+
+      // Proceed with comment submission
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+          alert("🚩 You need to be logged in to comment.");
+          window.location.href = "loginPage.html";
+          return;
+      }
+
+      const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ 
+              articleId: new URLSearchParams(window.location.search).get('id'),
+              text: commentText 
+          })
+      });
+
+      if (!response.ok) throw new Error('Failed to post comment');
+      
+      // Update UI
       const userData = JSON.parse(localStorage.getItem("userData")) || {};
       const newComment = {
-        name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
-        image: userData.profileImage || "default.png",
-        comment: text
+          name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
+          image: userData.profileImage || "default.png",
+          comment: commentText
       };
 
       const existing = document._existingComments || [];
-      const updated = [newComment, ...existing];
+      document._existingComments = [newComment, ...existing];
+      makeProfile(document._existingComments);
+      
+      document.getElementById('comment').value = '';
+      document.getElementById('sentiment-result').style.display = 'none';
 
-      document._existingComments = updated;
-      makeProfile(updated);
-      document.getElementById("comment").value = "";
-    } else {
-      alert(`⚠️ ${data.message}`);
-    }
-  } catch (err) {
-    console.error("❌ Error posting comment:", err);
+  } catch (error) {
+      console.error("Comment Error:", error);
+      errorDiv.textContent = 'Failed to post comment. Please try again.';
+      errorDiv.style.display = 'block';
   }
-}
-
-// ==============================
-// EVENT LISTENER FOR COMMENT BUTTON
-// ==============================
-
-document.getElementById("comment-btn").addEventListener("click", submitComment);
+});
 
 // ==============================
 // LOAD ARTICLE FROM BACKEND
