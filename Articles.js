@@ -100,7 +100,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
 
     if (Array.isArray(article.comments)) {
       const formattedComments = article.comments.map(comment => ({
-        name: comment.user.firstName + comment.user.lastName,  
+        name: comment.User.firstName + comment.User.lastName,  
         image: comment.userImage,
         comment: comment.text
       }));
