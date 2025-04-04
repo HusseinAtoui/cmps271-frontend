@@ -332,37 +332,50 @@ async function loadArticles() {
     saveIcon.dataset.articleId = article._id;
 
     // Save Icon Click Handler
-    saveIcon.addEventListener('click', async function() {
-      const token = localStorage.getItem('authToken');
-      if (!token) {
-        alert('Please login to save articles');
-        window.location.href = '/login.html'; // Update with your login path
-        return;
-      }
+    // Update the save button event handler
+saveIcon.addEventListener('click', async function() {
+  try {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      alert('Please login to save articles');
+      window.location.href = '/login.html';
+      return;
+    }
 
-      try {
-        const response = await fetch('https://afterthoughts.onrender.com/api/users/save-article', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ articleId: this.dataset.articleId })
-        });
-
-        const data = await response.json();
-        if (response.ok) {
-          this.classList.toggle('fa-regular');
-          this.classList.toggle('fa-solid');
-          this.style.color = data.isSaved ? '#FF5A5F' : 'inherit';
-        } else {
-          alert(data.message || 'Error saving article');
-        }
-      } catch (error) {
-        console.error('Save error:', error);
-        alert('Failed to save article');
-      }
+    const response = await fetch('https://afterthoughts.onrender.com/api/users/save-article', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ 
+        articleId: this.dataset.articleId 
+      })
     });
+
+    // Handle non-JSON responses
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      throw new Error(`Server responded with ${response.status}: ${text}`);
+    }
+
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to save article');
+    }
+
+    // Update UI
+    this.classList.toggle('fa-regular');
+    this.classList.toggle('fa-solid');
+    this.style.color = data.isSaved ? '#FF5A5F' : 'inherit';
+    
+  } catch (error) {
+    console.error('Save error:', error);
+    alert(`Save failed: ${error.message}`);
+  }
+});
     // save icon added! 
 
 

@@ -591,3 +591,16 @@ footer {
   }
 
 }
+.save-icon {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: auto; /* Pushes icon to the right */
+}
+
+.save-icon:hover {
+  transform: scale(1.1);
+}
+
+.fa-solid.fa-bookmark {
+  color: #FF5A5F; /* Your brand color */
+}
