@@ -1,10 +1,8 @@
-
 console.log("🔥 Articles.js is running!");
 
 // ==============================
 // RENDER ARTICLE
 // ==============================
-
 function renderFullArticle({ title, author, text, image }) {
   const section = document.getElementById('article-section');
   if (!section) return;
@@ -38,11 +36,9 @@ function renderFullArticle({ title, author, text, image }) {
 // ==============================
 // RENDER COMMENT PROFILES
 // ==============================
-
 function makeProfile(profiles) {
   const allProfiles = document.getElementById("profile-contain");
   if (!allProfiles) return;
-
   allProfiles.innerHTML = '';
 
   profiles.forEach(profile => {
@@ -81,7 +77,6 @@ function makeProfile(profiles) {
 // ==============================
 // LOAD ARTICLE FROM BACKEND
 // ==============================
-
 const params = new URLSearchParams(window.location.search);
 const articleId = params.get('id');
 console.log("🔑 Article ID from URL:", articleId);
@@ -102,7 +97,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
     if (Array.isArray(article.comments)) {
       const formattedComments = article.comments.map(comment => ({
         name: comment.postedBy.firstName + " " + comment.postedBy.lastName,
-        image: comment.postedBy.profilePicture,  // Using the profile picture from the User model
+        image: comment.postedBy.profilePicture,
         comment: comment.text
       }));
 
@@ -110,6 +105,9 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
       makeProfile(formattedComments);
     }
 
+    // ------------------------------
+    // Kudos Functionality
+    // ------------------------------
     const kudosBtn = document.getElementById("kudos-btn");
     if (kudosBtn) {
       kudosBtn.addEventListener("click", async () => {
@@ -119,7 +117,6 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
           window.location.href = "loginPage.html";
           return;
         }
-
         try {
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/give-kudos", {
             method: "POST",
@@ -129,9 +126,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
             },
             body: JSON.stringify({ articleId })
           });
-
           const data = await response.json();
-          
           if (response.ok) {
             alert("✅ Kudos added!");
             kudosBtn.disabled = true;
@@ -144,34 +139,30 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
       });
     }
 
+    // ------------------------------
+    // Comment Submission
+    // ------------------------------
     const commentBtn = document.getElementById("comment-btn");
     const commentInput = document.getElementById("comment");
 
-    
     if (commentBtn && commentInput) {
       commentBtn.addEventListener("click", async () => {
         console.log("Comment button clicked");
-    
+
         const token = localStorage.getItem("authToken");
         const text = commentInput.value.trim();
-        const userData = JSON.parse(localStorage.getItem("userData"));
 
-        
         if (!token) {
           alert("🚩 You need to be logged in to comment.");
           window.location.href = "loginPage.html";
           return;
         }
-
-        
         if (!text) {
           alert("✍️ Please write a comment before submitting.");
           return;
         }
 
-    
         try {
-          // Send the comment to the backend
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
             method: "POST",
             headers: {
@@ -181,47 +172,40 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
             body: JSON.stringify({ articleId, text })
           });
 
-    
           const data = await response.json();
-    
           if (response.ok) {
-
             console.log("✅ Comment posted successfully:", data);
-    
+
             // Retrieve the user data
             const userData = JSON.parse(localStorage.getItem("userData")) || {};
-            
-            // Create the new comment object using the user’s info
             const newComment = {
               name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
-              image: userData.profileImage || "default.png",  // Fallback image
+              image: userData.profileImage || "default.png",
               comment: text
             };
-    
-            // Get the existing comments and add the new one at the top
+
             const existing = document._existingComments || [];
             const updated = [newComment, ...existing];
-    
-            // Update global variable
+
             document._existingComments = updated;
-    
-            // Update UI immediately
             makeProfile(updated);
-    
+
             // Clear the input field
             commentInput.value = "";
           } else {
-            alert(`⚠️ ${data.message}`);
+            // If unauthorized, inform the user
+            if (response.status === 401) {
+              alert("🚩 Unauthorized. Please log in again.");
+              window.location.href = "loginPage.html";
+            } else {
+              alert(`⚠️ ${data.message}`);
+            }
           }
         } catch (err) {
           console.error("❌ Error posting comment:", err);
         }
       });
     }
-    
-
-
-   
   })
   .catch(err => {
     console.error("❌ Error loading article:", err);
