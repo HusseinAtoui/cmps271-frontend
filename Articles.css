@@ -282,3 +282,8 @@ textarea {
   margin-top: 4px;
 }
 
+#kudos-btn.liked {
+  background-color: #aaa; /* Adjust to your desired darkened color */
+  color: #fff;
+  /* Add any additional styles for the active state */
+}
