@@ -112,6 +112,9 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
     if (kudosBtn) {
       kudosBtn.addEventListener("click", async () => {
         const token = localStorage.getItem("authToken");
+
+        console.log("🛠️ Sending Kudos request for Article ID:", articleId);
+
         if (!token) {
           alert("🚩 Please log in to give kudos.");
           window.location.href = "loginPage.html";
