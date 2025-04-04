@@ -142,42 +142,100 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
         }
       });
     }
-// ... [previous code remains identical] ...
 
-    // ==============================
-    // SENTIMENT ANALYSIS
-    // ==============================
-    async function getSentiment(text) {
-      try {
-          const response = await fetch('https://afterthoughts.onrender.com/api/sentimentComments/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ text })
-          });
+// ==============================
+// SENTIMENT ANALYSIS & CONFIRMATION
+// ==============================
+async function analyzeSentimentAndConfirm() {
+  const inputText = document.getElementById('inputText').value.trim();
+  const resultDiv = document.getElementById('result');
+  const errorDiv = document.getElementById('error');
 
-          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-          
-          const data = await response.json();
-          const sentimentMap = {
-              'anger': 'negative',
-              'disgust': 'negative',
-              'fear': 'negative',
-              'joy': 'positive',
-              'neutral': 'neutral',
-              'sadness': 'negative',
-              'surprise': 'neutral'
-          };
-          
-          return {
-              sentiment: sentimentMap[data.sentiment.toLowerCase()] || 'neutral',
-              original: data.sentiment,
-              confidence: data.confidence
-          };
-      } catch (error) {
-          console.error('Error analyzing sentiment:', error);
-          return { sentiment: 'neutral', original: 'error', confidence: 0 };
-      }
+  // Clear previous results
+  resultDiv.innerHTML = '';
+  errorDiv.innerHTML = '';
+
+  if (!inputText) {
+    showError('Please enter some text to analyze');
+    return;
   }
+
+  try {
+    const response = await fetch('http://localhost:3000/api/sentimentComments/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ text: inputText })
+    });
+
+    // Sentiment mapping
+    const sentimentMap = {
+      'anger': 'negative',
+      'disgust': 'negative',
+      'fear': 'negative',
+      'joy': 'positive',
+      'neutral': 'neutral',
+      'sadness': 'negative',
+      'surprise': 'neutral'
+    };
+
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
+    const data = await response.json();
+    const generalSentiment = sentimentMap[data.sentiment.toLowerCase()] || 'neutral';
+
+    // If negative, show confirmation div; otherwise, proceed immediately.
+    if (generalSentiment === 'negative') {
+      resultDiv.className = `result ${generalSentiment}`;
+      resultDiv.innerHTML = `
+          <strong>⚠️ Warning: Negative Comment Detected</strong><br>
+          Sentiment: ${generalSentiment}<br>
+          <strong>Original Emotion:</strong> ${data.sentiment}<br>
+          <strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%<br>
+          <div class="details">
+              Analyzed text: "${data.analyzedText}"<br>
+              Original length: ${data.originalLength} characters
+          </div>
+      `;
+
+      // Show confirmation div
+      document.getElementById('confirm-comment').style.display = 'block';
+
+      // Set up event listeners for the confirmation buttons:
+      document.getElementById('edit-comment').onclick = () => {
+        // Hide the confirmation div and let the user edit the comment
+        document.getElementById('confirm-comment').style.display = 'none';
+      };
+
+      document.getElementById('proceed-comment').onclick = () => {
+        // Hide the confirmation div and proceed with posting the comment
+        document.getElementById('confirm-comment').style.display = 'none';
+        proceedWithComment(inputText);
+      };
+
+    } else {
+      // For positive or neutral sentiment, post the comment directly.
+      proceedWithComment(inputText);
+    }
+  } catch (error) {
+    showError(`Analysis failed: ${error.message}`);
+    console.error('Error:', error);
+  }
+}
+
+// ==============================
+// BIND THE COMMENT BUTTON TO SENTIMENT ANALYSIS
+// ==============================
+// Assuming you have a comment button with id 'comment-btn'
+const commentBtn = document.getElementById("comment-btn");
+if (commentBtn) {
+  commentBtn.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevent default form submission if applicable
+    analyzeSentimentAndConfirm();
+  });
+}
+
 
   async function proceedWithComment(text) {
       try {
