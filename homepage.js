@@ -240,7 +240,21 @@ async function loadArticles() {
       }
     ];
   }
-
+  let savedArticleIds = [];
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    try {
+      const response = await fetch('https://afterthoughts.onrender.com/api/users/saved-articles', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        savedArticleIds = data.savedArticles.map(a => a._id);
+      }
+    } catch (error) {
+      console.error("Error fetching saved articles:", error);
+    }
+  }
   articlesData.forEach(article => {
     // Create card container
     const card = document.createElement('div');
@@ -312,10 +326,45 @@ async function loadArticles() {
         alert("Web Share API is not supported in this browser.");
       }
     });
-
-    // save icon added! 
     const saveIcon = document.createElement('i');
-    saveIcon.classList.add('fa-regular', 'fa-bookmark', 'save-icon');
+    saveIcon.classList.add('save-icon', 'fa-bookmark');
+    saveIcon.classList.add(savedArticleIds.includes(article._id) ? 'fa-solid' : 'fa-regular');
+    saveIcon.dataset.articleId = article._id;
+
+    // Save Icon Click Handler
+    saveIcon.addEventListener('click', async function() {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        alert('Please login to save articles');
+        window.location.href = '/login.html'; // Update with your login path
+        return;
+      }
+
+      try {
+        const response = await fetch('https://afterthoughts.onrender.com/api/users/save-article', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ articleId: this.dataset.articleId })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          this.classList.toggle('fa-regular');
+          this.classList.toggle('fa-solid');
+          this.style.color = data.isSaved ? '#FF5A5F' : 'inherit';
+        } else {
+          alert(data.message || 'Error saving article');
+        }
+      } catch (error) {
+        console.error('Save error:', error);
+        alert('Failed to save article');
+      }
+    });
+    // save icon added! 
+
 
     const authorName = document.createElement('p');
     authorName.classList.add('authorname');
