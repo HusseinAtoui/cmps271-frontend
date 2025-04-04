@@ -1,233 +1,257 @@
 console.log("🔥 Articles.js is running!");
 
-// Global variable to store whether the comment passes sentiment guidelines.
-// null means analysis not yet run, true means acceptable, false means negative.
-let sentimentAllowed = null;
+    // ==============================
+    // RENDER ARTICLE
+    // ==============================
+    function renderFullArticle({ title, author, text, image }) {
+      const section = document.getElementById('article-section');
+      if (!section) return;
 
-// ==============================
-// RENDER ARTICLE
-// ==============================
-function renderFullArticle({ title, author, text, image }) {
-  const section = document.getElementById('article-section');
-  if (!section) return;
+      section.innerHTML = "";
 
-  section.innerHTML = "";
+      const h1 = document.createElement('h1');
+      h1.className = 'title';
+      h1.textContent = title;
 
-  const h1 = document.createElement('h1');
-  h1.className = 'title';
-  h1.textContent = title;
+      const h2 = document.createElement('h2');
+      h2.textContent = `by ${author}`;
 
-  const h2 = document.createElement('h2');
-  h2.textContent = `by ${author}`;
+      const pre = document.createElement('p');
+      pre.className = 'text';
+      pre.textContent = text;
 
-  const pre = document.createElement('p');
-  pre.className = 'text';
-  pre.textContent = text;
+      section.classList.add('article');
+      section.append(h1, h2, pre);
 
-  section.classList.add('article');
-  section.append(h1, h2, pre);
-
-  const imageSection = document.querySelector('.image');
-  if (imageSection && image) {
-    imageSection.style.backgroundImage = `url("${image}")`;
-    imageSection.style.backgroundSize = '100%';
-    imageSection.style.backgroundPosition = 'center';
-    imageSection.style.backgroundRepeat = 'no-repeat';
-    imageSection.style.height = '400px';
-  }
-}
-
-// ==============================
-// RENDER COMMENT PROFILES
-// ==============================
-function makeProfile(profiles) {
-  const allProfiles = document.getElementById("profile-contain");
-  if (!allProfiles) return;
-
-  allProfiles.innerHTML = '';
-
-  profiles.forEach(profile => {
-    const profileElement = document.createElement('div');
-    profileElement.classList.add('profile-other-feedback');
-
-    const profilePicDiv = document.createElement('div');
-    profilePicDiv.classList.add('profile-pic');
-
-    const profileImg = document.createElement('img');
-    profileImg.src = profile.image;
-    profileImg.alt = profile.name;
-    profilePicDiv.appendChild(profileImg);
-
-    const nameElement = document.createElement('h2');
-    nameElement.textContent = profile.name;
-    profilePicDiv.appendChild(nameElement);
-
-    const profileCommentDiv = document.createElement('div');
-    profileCommentDiv.classList.add('profile-comment');
-
-    const textDiv = document.createElement('div');
-    textDiv.classList.add('text');
-
-    const paragraph = document.createElement('p');
-    paragraph.textContent = profile.comment;
-    textDiv.appendChild(paragraph);
-
-    profileCommentDiv.appendChild(textDiv);
-    profileElement.append(profilePicDiv, profileCommentDiv);
-
-    allProfiles.appendChild(profileElement);
-  });
-}
-
-// ==============================
-// LOAD ARTICLE FROM BACKEND
-// ==============================
-const params = new URLSearchParams(window.location.search);
-const articleId = params.get('id');
-console.log("🔑 Article ID from URL:", articleId);
-
-fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
-  .then(response => {
-    if (!response.ok) throw new Error("Article not found");
-    return response.json();
-  })
-  .then(article => {
-    renderFullArticle({
-      title: article.title,
-      author: article.userID,
-      text: article.text,
-      image: article.image
-    });
-
-    if (Array.isArray(article.comments)) {
-      const formattedComments = article.comments.map(comment => ({
-        name: comment.postedBy.firstName + " " + comment.postedBy.lastName,
-        image: comment.postedBy.profilePicture,
-        comment: comment.text
-      }));
-
-      document._existingComments = formattedComments;
-      makeProfile(formattedComments);
+      const imageSection = document.querySelector('.image');
+      if (imageSection && image) {
+        imageSection.style.backgroundImage = `url("${image}")`;
+        imageSection.style.backgroundSize = '100%';
+        imageSection.style.backgroundPosition = 'center';
+        imageSection.style.backgroundRepeat = 'no-repeat';
+        imageSection.style.height = '400px';
+      }
     }
 
     // ==============================
-    // KUDOS FUNCTIONALITY
+    // RENDER COMMENT PROFILES
     // ==============================
-    const kudosBtn = document.getElementById("kudos-btn");
-    if (kudosBtn) {
-      kudosBtn.addEventListener("click", async () => {
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-          alert("🚩 Please log in to give kudos.");
-          window.location.href = "loginPage.html";
-          return;
-        }
+    function makeProfile(profiles) {
+      const allProfiles = document.getElementById("profile-contain");
+      if (!allProfiles) return;
 
-        try {
-          const response = await fetch("https://afterthoughts.onrender.com/api/articles/give-kudos", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify({ articleId })
-          });
+      allProfiles.innerHTML = '';
 
-          const data = await response.json();
-          
-          if (response.ok) {
-            alert("✅ Kudos added!");
-            kudosBtn.disabled = true;
-          } else {
-            alert(`⚠️ ${data.message}`);
-          }
-        } catch (err) {
-          console.error("❌ Error sending kudos:", err);
-        }
+      profiles.forEach(profile => {
+        const profileElement = document.createElement('div');
+        profileElement.classList.add('profile-other-feedback');
+
+        const profilePicDiv = document.createElement('div');
+        profilePicDiv.classList.add('profile-pic');
+
+        const profileImg = document.createElement('img');
+        profileImg.src = profile.image;
+        profileImg.alt = profile.name;
+        profilePicDiv.appendChild(profileImg);
+
+        const nameElement = document.createElement('h2');
+        nameElement.textContent = profile.name;
+        profilePicDiv.appendChild(nameElement);
+
+        const profileCommentDiv = document.createElement('div');
+        profileCommentDiv.classList.add('profile-comment');
+
+        const textDiv = document.createElement('div');
+        textDiv.classList.add('text');
+
+        const paragraph = document.createElement('p');
+        paragraph.textContent = profile.comment;
+        textDiv.appendChild(paragraph);
+
+        profileCommentDiv.appendChild(textDiv);
+        profileElement.append(profilePicDiv, profileCommentDiv);
+
+        allProfiles.appendChild(profileElement);
       });
     }
 
     // ==============================
-    // COMMENT POSTING WITH SENTIMENT CHECK
+    // LOAD ARTICLE FROM BACKEND
     // ==============================
-    // The sentiment analysis MUST be run before posting. The "Analyze Sentiment" button should be clicked
-    // which sets the global variable "sentimentAllowed" accordingly.
-    const commentBtn = document.getElementById("comment-btn");
-    const commentInput = document.getElementById("comment");
+    const params = new URLSearchParams(window.location.search);
+    const articleId = params.get('id');
+    console.log("🔑 Article ID from URL:", articleId);
 
-    if (commentBtn && commentInput) {
-      commentBtn.addEventListener("click", async () => {
-        console.log("Comment button clicked");
+    fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
+      .then(response => {
+        if (!response.ok) throw new Error("Article not found");
+        return response.json();
+      })
+      .then(article => {
+        renderFullArticle({
+          title: article.title,
+          author: article.userID,
+          text: article.text,
+          image: article.image
+        });
 
-        const token = localStorage.getItem("authToken");
-        const text = commentInput.value.trim();
+        if (Array.isArray(article.comments)) {
+          const formattedComments = article.comments.map(comment => ({
+            name: comment.postedBy.firstName + " " + comment.postedBy.lastName,
+            image: comment.postedBy.profilePicture,
+            comment: comment.text
+          }));
 
-        if (!token) {
-          alert("🚩 You need to be logged in to comment.");
-          window.location.href = "loginPage.html";
-          return;
+          document._existingComments = formattedComments;
+          makeProfile(formattedComments);
         }
 
-        if (!text) {
-          alert("✍️ Please write a comment before submitting.");
-          return;
-        }
+        // ==============================
+        // KUDOS FUNCTIONALITY
+        // ==============================
+        const kudosBtn = document.getElementById("kudos-btn");
+        if (kudosBtn) {
+          kudosBtn.addEventListener("click", async () => {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+              alert("🚩 Please log in to give kudos.");
+              window.location.href = "loginPage.html";
+              return;
+            }
 
-        // Ensure sentiment analysis has been performed.
-        if (sentimentAllowed === null) {
-          alert("Please analyze the sentiment of your comment before posting.");
-          return;
-        }
+            try {
+              const response = await fetch("https://afterthoughts.onrender.com/api/articles/give-kudos", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ articleId })
+              });
 
-        if (sentimentAllowed === false) {
-          alert("Your comment does not abide by our guidelines. Please revise it.");
-          return;
-        }
-
-        // If sentimentAllowed is true, proceed to post the comment
-        try {
-          const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify({ articleId, text })
+              const data = await response.json();
+              
+              if (response.ok) {
+                alert("✅ Kudos added!");
+                kudosBtn.disabled = true;
+              } else {
+                alert(`⚠️ ${data.message}`);
+              }
+            } catch (err) {
+              console.error("❌ Error sending kudos:", err);
+            }
           });
+        }
 
-          const data = await response.json();
 
-          if (response.ok) {
-            console.log("✅ Comment posted successfully:", data);
+        // ==============================
+        // COMMENT POSTING
+        // ==============================
+        const commentBtn = document.getElementById("comment-btn");
+        const commentInput = document.getElementById("comment");
 
-            // Retrieve user data from localStorage
-            const userData = JSON.parse(localStorage.getItem("userData")) || {};
-            const newComment = {
-              name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
-              image: userData.profileImage || "default.png",
-              comment: text
-            };
+        if (commentBtn && commentInput) {
+          commentBtn.addEventListener("click", async () => {
+            console.log("Comment button clicked");
 
-            // Update global comments array and UI immediately
-            const existing = document._existingComments || [];
-            const updated = [newComment, ...existing];
-            document._existingComments = updated;
-            makeProfile(updated);
+            const token = localStorage.getItem("authToken");
+            const text = commentInput.value.trim();
 
-            // Clear the input field
-            commentInput.value = "";
-            // Reset sentimentAllowed for the next comment
-            sentimentAllowed = null;
-          } else {
-            alert(`⚠️ ${data.message}`);
-          }
-        } catch (err) {
-          console.error("❌ Error posting comment:", err);
+            if (!token) {
+              alert("🚩 You need to be logged in to comment.");
+              window.location.href = "loginPage.html";
+              return;
+            }
+
+            if (!text) {
+              alert("✍️ Please write a comment before submitting.");
+              return;
+            }
+
+            // Directly post the comment without sentiment analysis.
+            try {
+              const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ articleId, text })
+              });
+
+              const data = await response.json();
+
+              if (response.ok) {
+                console.log("✅ Comment posted successfully:", data);
+
+                // Retrieve user data from localStorage
+                const userData = JSON.parse(localStorage.getItem("userData")) || {};
+                const newComment = {
+                  name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
+                  image: userData.profileImage || "default.png",
+                  comment: text
+                };
+
+                // Update global comments array and UI immediately
+                const existing = document._existingComments || [];
+                const updated = [newComment, ...existing];
+                document._existingComments = updated;
+                makeProfile(updated);
+
+                // Clear the input field
+                commentInput.value = "";
+              } else {
+                alert(`⚠️ ${data.message}`);
+              }
+            } catch (err) {
+              console.error("❌ Error posting comment:", err);
+            }
+
+            // ==============================
+        // KUDOS FUNCTIONALITY
+        // ==============================
+        const kudosBtn = document.getElementById("kudos-btn");
+        if (kudosBtn) {
+          kudosBtn.addEventListener("click", async () => {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+              alert("🚩 Please log in to give kudos.");
+              window.location.href = "loginPage.html";
+              return;
+            }
+
+            try {
+              const response = await fetch("https://afterthoughts.onrender.com/api/articles/give-kudos", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ articleId })
+              });
+
+              const data = await response.json();
+              
+              if (response.ok) {
+                alert("✅ Kudos added!");
+                kudosBtn.disabled = true;
+              } else {
+                alert(`⚠️ ${data.message}`);
+              }
+            } catch (err) {
+              console.error("❌ Error sending kudos:", err);
+            }
+          });
+        }
+          });
+        }
+      })
+
+      
+      .catch(err => {
+        console.error("❌ Error loading article:", err);
+        const articleSection = document.getElementById('article-section');
+        if (articleSection) {
+          articleSection.innerHTML = "<p>Could not load article.</p>";
         }
       });
-    }
-  })
-  .catch(err => {
-    console.error("❌ Error loading article:", err);
-    document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
-  });
