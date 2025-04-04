@@ -181,8 +181,13 @@ async function loadEvents() {
   // Once slides are created, add slideshow controls (prev/next buttons and dots)
   createSlideshowControls();
 }
+
+/* =============================
+   Load Articles (Cards)
+   ============================= */
 async function loadArticles() {
   const gridContainer = document.querySelector('.grid-container');
+  // Clear existing cards
   gridContainer.innerHTML = "";
 
   let articlesData;
@@ -196,6 +201,7 @@ async function loadArticles() {
     }
   } catch (error) {
     console.error("Error loading articles from backend, using dummy data:", error);
+    // Fallback dummy articles
     articlesData = [
       {
         id: 1,
@@ -236,9 +242,11 @@ async function loadArticles() {
   }
 
   articlesData.forEach(article => {
+    // Create card container
     const card = document.createElement('div');
     card.classList.add('card');
 
+    // Create image container (if an image is provided)
     const imageContainer = document.createElement('div');
     imageContainer.classList.add('imagecontainer');
     if (article.image) {
@@ -248,6 +256,7 @@ async function loadArticles() {
       imageContainer.appendChild(img);
     }
 
+    // Create text section
     const textSection = document.createElement('div');
     textSection.classList.add('text-section');
 
@@ -263,19 +272,22 @@ async function loadArticles() {
     descriptionP.classList.add('description');
     descriptionP.textContent = article.description;
 
+    // Create "continue reading" button with event listener
     const continueBtn = document.createElement('button');
     continueBtn.classList.add('continue-reading');
     continueBtn.textContent = "continue reading";
     continueBtn.addEventListener('click', () => {
       window.location.href = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${article._id}`;
-    });
+  });
 
+    // Create author info section
     const buttonsDiv = document.createElement('div');
     buttonsDiv.classList.add('buttons');
 
-    // Share icon
+    // share ion added :)
     const shareIcon = document.createElement('i');
     shareIcon.classList.add('fa-solid', 'fa-share', 'share-icon');
+
     shareIcon.addEventListener('click', () => {
       if (!article._id) {
         alert("Error: Article ID is missing.");
@@ -283,6 +295,7 @@ async function loadArticles() {
       }
 
       const shareUrl = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${article._id}`;
+
       const shareText = `${article.title}\n\n${article.description}`;
 
       if (navigator.share) {
@@ -300,50 +313,25 @@ async function loadArticles() {
       }
     });
 
-    // Save icon (Bookmark)
+    // save icon added! 
     const saveIcon = document.createElement('i');
     saveIcon.classList.add('fa-regular', 'fa-bookmark', 'save-icon');
-    saveIcon.addEventListener('click', async () => {
-      const authToken = localStorage.getItem('authToken');
-      if (!authToken) {
-        alert("You need to be logged in to save articles.");
-        return;
-      }
-
-      try {
-        const response = await fetch('https://afterthoughts.onrender.com/api/users/save-article', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authToken}`
-          },
-          body: JSON.stringify({ articleId: article._id })
-        });
-
-        if (response.ok) {
-          // Switch icon to solid
-          saveIcon.classList.remove('fa-regular');
-          saveIcon.classList.add('fa-solid');
-        } else {
-          console.error('Failed to save article.');
-        }
-      } catch (error) {
-        console.error('Error saving article:', error);
-      }
-    });
 
     const authorName = document.createElement('p');
     authorName.classList.add('authorname');
     authorName.textContent = article.author;
 
     buttonsDiv.append(continueBtn, authorName, shareIcon, saveIcon);
+
+    // Assemble the text section
     textSection.append(detailsP, titleP, descriptionP, buttonsDiv);
+
+    // Assemble the card
     card.append(imageContainer, textSection);
     gridContainer.appendChild(card);
+
   });
 }
-
-  
 
 /* =============================
    Slideshow Functionality
