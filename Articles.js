@@ -1,3 +1,4 @@
+
 console.log("🔥 Articles.js is running!");
 
 // ==============================
@@ -103,7 +104,9 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
 
       document._existingComments = formattedComments;
       makeProfile(formattedComments);
-    }  // ------------------------------
+    }
+
+    // ------------------------------
     // Kudos Functionality
     // ------------------------------
     const kudosBtn = document.getElementById("kudos-btn");
@@ -117,7 +120,8 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
           alert("🚩 Please log in to give kudos.");
           window.location.href = "loginPage.html";
           return;
-        }  try {
+        }
+        try {
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/give-kudos", {
             method: "POST",
             headers: {
@@ -138,6 +142,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
         }
       });
     }
+
     // ------------------------------
     // Comment Submission
     // ------------------------------
@@ -160,7 +165,6 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
           alert("✍️ Please write a comment before submitting.");
           return;
         }
-
 
         try {
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
