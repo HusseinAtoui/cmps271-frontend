@@ -142,76 +142,91 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
         }
       });
     }
+// ... [previous code remains identical] ...
 
-    // ------------------------------
-    // Comment Submission
-    // ------------------------------
-    const commentBtn = document.getElementById("comment-btn");
-    const commentInput = document.getElementById("comment");
+    // ==============================
+    // SENTIMENT ANALYSIS
+    // ==============================
+    async function getSentiment(text) {
+      try {
+          const response = await fetch('https://afterthoughts.onrender.com/api/sentimentComments/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ text })
+          });
 
-    if (commentBtn && commentInput) {
-      commentBtn.addEventListener("click", async () => {
-        console.log("Comment button clicked");
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          
+          const data = await response.json();
+          const sentimentMap = {
+              'anger': 'negative',
+              'disgust': 'negative',
+              'fear': 'negative',
+              'joy': 'positive',
+              'neutral': 'neutral',
+              'sadness': 'negative',
+              'surprise': 'neutral'
+          };
+          
+          return {
+              sentiment: sentimentMap[data.sentiment.toLowerCase()] || 'neutral',
+              original: data.sentiment,
+              confidence: data.confidence
+          };
+      } catch (error) {
+          console.error('Error analyzing sentiment:', error);
+          return { sentiment: 'neutral', original: 'error', confidence: 0 };
+      }
+  }
 
-        const token = localStorage.getItem("authToken");
-        const text = commentInput.value.trim();
-
-        if (!token) {
-          alert("🚩 You need to be logged in to comment.");
-          window.location.href = "loginPage.html";
-          return;
-        }
-        if (!text) {
-          alert("✍️ Please write a comment before submitting.");
-          return;
-        }
-
-        try {
+  async function proceedWithComment(text) {
+      try {
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify({ articleId, text })
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem("authToken")}`
+              },
+              body: JSON.stringify({ articleId, text })
           });
 
           const data = await response.json();
           if (response.ok) {
-            console.log("✅ Comment posted successfully:", data);
+              console.log("✅ Comment posted successfully:", data);
 
-            // Retrieve the user data
-            const userData = JSON.parse(localStorage.getItem("userData")) || {};
-            const newComment = {
-              name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
-              image: userData.profileImage || "default.png",
-              comment: text
-            };
+              // Retrieve the user data
+              const userData = JSON.parse(localStorage.getItem("userData")) || {};
+              const newComment = {
+                  name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
+                  image: userData.profileImage || "default.png",
+                  comment: text
+              };
 
-            const existing = document._existingComments || [];
-            const updated = [newComment, ...existing];
+              const existing = document._existingComments || [];
+              const updated = [newComment, ...existing];
 
-            document._existingComments = updated;
-            makeProfile(updated);
+              document._existingComments = updated;
+              makeProfile(updated);
 
-            // Clear the input field
-            commentInput.value = "";
+              // Clear the input field
+              commentInput.value = "";
           } else {
-            // If unauthorized, inform the user
-            if (response.status === 401) {
-              alert("🚩 Unauthorized. Please log in again.");
-              window.location.href = "loginPage.html";
-            } else {
-              alert(`⚠️ ${data.message}`);
-            }
+              // If unauthorized, inform the user
+              if (response.status === 401) {
+                  alert("🚩 Unauthorized. Please log in again.");
+                  window.location.href = "loginPage.html";
+              } else {
+                  alert(`⚠️ ${data.message}`);
+              }
           }
-        } catch (err) {
-          console.error("❌ Error posting comment:", err);
-        }
-      });
-    }
-  })
-  .catch(err => {
-    console.error("❌ Error loading article:", err);
-    document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
-  });
+      } catch (err) {
+          console.error("❌ Error in proceedWithComment:", err);
+      }
+  }  
+
+})
+
+.catch(err => {
+  console.error("❌ Error loading article:", err);
+  document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
+});

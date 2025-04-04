@@ -65,6 +65,21 @@
                       </div>
                   
                       <script src="Articles.js"></script>
-                      
+                      <!-- Add this to your HTML (before closing </body>) -->
+<div id="sentiment-warning" class="sentiment-modal">
+    <div class="modal-content">
+        <h3>⚠️ Warning: Negative Comment Detected</h3>
+        <p>Your comment appears to be negative. Please consider:</p>
+        <ul>
+            <li>Reviewing your wording</li>
+            <li>Using constructive criticism</li>
+            <li>Avoiding personal attacks</li>
+        </ul>
+        <div class="modal-buttons">
+            <button id="confirm-comment">Post Anyway</button>
+            <button id="cancel-comment">Edit Comment</button>
+        </div>
+    </div>
+</div>
                   </body>
                   </html>
