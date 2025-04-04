@@ -1,9 +1,12 @@
 console.log("🔥 Articles.js is running!");
 
+// Global variable to store whether the comment passes sentiment guidelines.
+// null means analysis not yet run, true means acceptable, false means negative.
+let sentimentAllowed = null;
+
 // ==============================
 // RENDER ARTICLE
 // ==============================
-
 function renderFullArticle({ title, author, text, image }) {
   const section = document.getElementById('article-section');
   if (!section) return;
@@ -37,7 +40,6 @@ function renderFullArticle({ title, author, text, image }) {
 // ==============================
 // RENDER COMMENT PROFILES
 // ==============================
-
 function makeProfile(profiles) {
   const allProfiles = document.getElementById("profile-contain");
   if (!allProfiles) return;
@@ -78,9 +80,92 @@ function makeProfile(profiles) {
 }
 
 // ==============================
+// SENTIMENT ANALYSIS FUNCTION
+// ==============================
+async function runSentimentAnalysis(text) {
+  try {
+    const response = await fetch('http://localhost:3000/api/sentimentComments/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text })
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error("Error analyzing sentiment:", error);
+    throw error;
+  }
+}
+
+// ==============================
+// ANALYZE SENTIMENT (Triggered by button)
+// ==============================
+async function analyzeSentiment() {
+  // We use the textarea with id "comment" as our input.
+  const inputText = document.getElementById('comment').value.trim();
+  const resultDiv = document.getElementById('result');
+  const errorDiv = document.getElementById('error');
+
+  // Clear previous results
+  resultDiv.innerHTML = '';
+  errorDiv.innerHTML = '';
+  resultDiv.className = 'result';
+
+  if (!inputText) {
+    showError('Please enter some text to analyze');
+    sentimentAllowed = false;
+    return;
+  }
+
+  try {
+    const data = await runSentimentAnalysis(inputText);
+
+    // Map raw emotion to a general sentiment category.
+    const sentimentMap = {
+      'anger': 'negative',
+      'disgust': 'negative',
+      'fear': 'negative',
+      'joy': 'positive',
+      'neutral': 'neutral',
+      'sadness': 'negative',
+      'surprise': 'neutral'
+    };
+
+    const generalSentiment = sentimentMap[data.sentiment.toLowerCase()] || 'neutral';
+
+    resultDiv.className = `result ${generalSentiment}`;
+    resultDiv.innerHTML = `
+      <strong>Sentiment:</strong> ${generalSentiment}<br>
+      <strong>Original Emotion:</strong> ${data.sentiment}<br>
+      <strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%<br>
+      <div class="details">
+        Analyzed text: "${data.analyzedText}"<br>
+        Original length: ${data.originalLength} characters
+      </div>
+    `;
+
+    if (generalSentiment === 'negative') {
+      alert(`Your comment appears negative (${data.sentiment} with ${(data.confidence * 100).toFixed(1)}% confidence). Please revise it to abide by our guidelines.`);
+      sentimentAllowed = false;
+    } else {
+      sentimentAllowed = true;
+    }
+  } catch (error) {
+    showError(`Analysis failed: ${error.message}`);
+    console.error('Error:', error);
+    sentimentAllowed = false;
+  }
+}
+
+function showError(message) {
+  const errorDiv = document.getElementById('error');
+  errorDiv.innerHTML = message;
+}
+
+// ==============================
 // LOAD ARTICLE FROM BACKEND
 // ==============================
-
 const params = new URLSearchParams(window.location.search);
 const articleId = params.get('id');
 console.log("🔑 Article ID from URL:", articleId);
@@ -101,7 +186,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
     if (Array.isArray(article.comments)) {
       const formattedComments = article.comments.map(comment => ({
         name: comment.postedBy.firstName + " " + comment.postedBy.lastName,
-        image: comment.postedBy.profilePicture,  // Using the profile picture from the User model
+        image: comment.postedBy.profilePicture,
         comment: comment.text
       }));
 
@@ -109,6 +194,9 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
       makeProfile(formattedComments);
     }
 
+    // ==============================
+    // KUDOS FUNCTIONALITY
+    // ==============================
     const kudosBtn = document.getElementById("kudos-btn");
     if (kudosBtn) {
       kudosBtn.addEventListener("click", async () => {
@@ -143,72 +231,77 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
       });
     }
 
+    // ==============================
+    // COMMENT POSTING WITH SENTIMENT CHECK
+    // ==============================
+    // The sentiment analysis MUST be run before posting. The "Analyze Sentiment" button should be clicked
+    // which sets the global variable "sentimentAllowed" accordingly.
     const commentBtn = document.getElementById("comment-btn");
     const commentInput = document.getElementById("comment");
 
-    
     if (commentBtn && commentInput) {
       commentBtn.addEventListener("click", async () => {
         console.log("Comment button clicked");
-    
+
         const token = localStorage.getItem("authToken");
         const text = commentInput.value.trim();
-        const userData = JSON.parse(localStorage.getItem("userData"));
 
-        
         if (!token) {
           alert("🚩 You need to be logged in to comment.");
           window.location.href = "loginPage.html";
           return;
         }
 
-        
         if (!text) {
           alert("✍️ Please write a comment before submitting.");
           return;
         }
 
-    
+        // Ensure sentiment analysis has been performed.
+        if (sentimentAllowed === null) {
+          alert("Please analyze the sentiment of your comment before posting.");
+          return;
+        }
+
+        if (sentimentAllowed === false) {
+          alert("Your comment does not abide by our guidelines. Please revise it.");
+          return;
+        }
+
+        // If sentimentAllowed is true, proceed to post the comment
         try {
-          // Send the comment to the backend
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
             method: "POST",
             headers: {
- "Content-Type": "application/json",
+              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({ articleId, text })
           });
 
-    
           const data = await response.json();
-    
-          if (response.ok) {
 
+          if (response.ok) {
             console.log("✅ Comment posted successfully:", data);
-    
-            // Retrieve the user data
+
+            // Retrieve user data from localStorage
             const userData = JSON.parse(localStorage.getItem("userData")) || {};
-            
-            // Create the new comment object using the user’s info
             const newComment = {
               name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
-              image: userData.profileImage || "default.png",  // Fallback image
+              image: userData.profileImage || "default.png",
               comment: text
             };
-    
-            // Get the existing comments and add the new one at the top
+
+            // Update global comments array and UI immediately
             const existing = document._existingComments || [];
             const updated = [newComment, ...existing];
-    
-            // Update global variable
             document._existingComments = updated;
-    
-            // Update UI immediately
             makeProfile(updated);
-    
+
             // Clear the input field
             commentInput.value = "";
+            // Reset sentimentAllowed for the next comment
+            sentimentAllowed = null;
           } else {
             alert(`⚠️ ${data.message}`);
           }
@@ -217,10 +310,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
         }
       });
     }
-    
-
-
-   })
+  })
   .catch(err => {
     console.error("❌ Error loading article:", err);
     document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
