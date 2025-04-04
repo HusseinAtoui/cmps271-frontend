@@ -104,43 +104,6 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
       document._existingComments = formattedComments;
       makeProfile(formattedComments);
     }
-<<<<<<< HEAD
- // ------------------------------
-// Toggle Kudos Functionality (Frontend)
-// ------------------------------
-const kudosBtn = document.getElementById("kudos-btn");
-if (kudosBtn) {
-  kudosBtn.addEventListener("click", async () => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      alert("🚩 Please log in to give kudos.");
-      window.location.href = "loginPage.html";
-      return;
-    }
-    if (!articleId) {
-      alert("Article ID missing");
-      return;
-    }
-    try {
-      console.log("🛠️ Toggling Kudos for Article ID:", articleId);
-      const response = await fetch("https://afterthoughts.onrender.com/api/articles/toggle-kudos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ articleId })
-      });
-      const data = await response.json();
-      console.log("🛠️ Toggle Kudos Response:", data);
-      if (response.ok) {
-        if (data.message.includes("added")) {
-          kudosBtn.classList.add("liked"); // CSS will style it as darker
-          alert("✅ Kudos added!");
-        } else if (data.message.includes("removed")) {
-          kudosBtn.classList.remove("liked");
-          alert("✅ Kudos removed!");
-=======
 
     // ------------------------------
     // Kudos Functionality
@@ -156,7 +119,6 @@ if (kudosBtn) {
           alert("🚩 Please log in to give kudos.");
           window.location.href = "loginPage.html";
           return;
->>>>>>> parent of ad1c317 (Update Articles.js)
         }
         try {
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/give-kudos", {
