@@ -1,3 +1,4 @@
+
 console.log("🔥 Articles.js is running!");
 
 // ==============================
@@ -104,51 +105,43 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
       document._existingComments = formattedComments;
       makeProfile(formattedComments);
     }
-// ------------------------------
-// Toggle Kudos Functionality
-// ------------------------------
-const kudosBtn = document.getElementById("kudos-btn");
-if (kudosBtn) {
-  kudosBtn.addEventListener("click", async () => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      alert("🚩 Please log in to give kudos.");
-      window.location.href = "loginPage.html";
-      return;
-    }
-    if (!articleId) {
-      alert("Article ID missing");
-      return;
-    }
-    try {
-      console.log("🛠️ Toggling Kudos for Article ID:", articleId);
-      const response = await fetch("https://afterthoughts.onrender.com/api/articles/toggle-kudos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ articleId })
-      });
-      const data = await response.json();
-      console.log("🛠️ Toggle Kudos Response:", data);
-      if (response.ok) {
-        // Toggle button appearance based on the action performed
-        if (data.message.includes("added")) {
-          kudosBtn.classList.add("liked");
-          alert("✅ Kudos added!");
-        } else if (data.message.includes("removed")) {
-          kudosBtn.classList.remove("liked");
-          alert("✅ Kudos removed!");
+
+    // ------------------------------
+    // Kudos Functionality
+    // ------------------------------
+    const kudosBtn = document.getElementById("kudos-btn");
+    if (kudosBtn) {
+      kudosBtn.addEventListener("click", async () => {
+        const token = localStorage.getItem("authToken");
+
+        console.log("🛠️ Sending Kudos request for Article ID:", articleId);
+
+        if (!token) {
+          alert("🚩 Please log in to give kudos.");
+          window.location.href = "loginPage.html";
+          return;
         }
-      } else {
-        alert(`⚠️ ${data.message}`);
-      }
-    } catch (err) {
-      console.error("❌ Error toggling kudos:", err);
+        try {
+          const response = await fetch("https://afterthoughts.onrender.com/api/articles/give-kudos", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ articleId })
+          });
+          const data = await response.json();
+          if (response.ok) {
+            alert("✅ Kudos added!");
+            kudosBtn.disabled = true;
+          } else {
+            alert(`⚠️ ${data.message}`);
+          }
+        } catch (err) {
+          console.error("❌ Error sending kudos:", err);
+        }
+      });
     }
-  });
-}
 
     // ------------------------------
     // Comment Submission
