@@ -281,29 +281,28 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
         }
       });
     }
+
     const commentBtn = document.getElementById("comment-btn");
     const commentInput = document.getElementById("comment");
-    
+
     if (commentBtn && commentInput) {
       commentBtn.addEventListener("click", async () => {
-        console.log("Comment button clicked");
-    
         const token = localStorage.getItem("authToken");
         const text = commentInput.value.trim();
-        
+        const userData = JSON.parse(localStorage.getItem("userData"));
+
         if (!token) {
           alert("🚩 You need to be logged in to comment.");
           window.location.href = "loginPage.html";
           return;
         }
-        
+
         if (!text) {
           alert("✍️ Please write a comment before submitting.");
           return;
         }
-    
+
         try {
-          // Send the comment to the backend
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
             method: "POST",
             headers: {
@@ -312,34 +311,14 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
             },
             body: JSON.stringify({ articleId, text })
           });
-    
+
           const data = await response.json();
-    
           if (response.ok) {
-            console.log("✅ Comment posted successfully:", data);
-    
-            // Retrieve the user data
-            const userData = JSON.parse(localStorage.getItem("userData")) || {};
-            
-            // Create the new comment object using the user’s info
-            const newComment = {
-              name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
-              image: userData.profileImage || "default.png",  // Fallback image
-              comment: text
-            };
-    
-            // Get the existing comments and add the new one at the top
+
             const existing = document._existingComments || [];
             const updated = [newComment, ...existing];
-    
-            // Update global variable
             document._existingComments = updated;
-    
-            // Update UI immediately
             makeProfile(updated);
-    
-            // Clear the input field
-            commentInput.value = "";
           } else {
             alert(`⚠️ ${data.message}`);
           }
@@ -348,10 +327,6 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
         }
       });
     }
-    
-
-
-   
   })
   .catch(err => {
     console.error("❌ Error loading article:", err);
