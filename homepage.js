@@ -330,49 +330,54 @@ async function loadArticles() {
     saveIcon.classList.add('save-icon', 'fa-bookmark');
     saveIcon.classList.add(savedArticleIds.includes(article._id) ? 'fa-solid' : 'fa-regular');
     saveIcon.dataset.articleId = article._id;
-
-    // Save Icon Click Handler
-    // Update the save button event handler
-saveIcon.addEventListener('click', async function() {
-  try {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      alert('Please login to save articles');
-      window.location.href = '/login.html';
-      return;
-    }
-
-   
-    const response = await fetch('https://afterthoughts.onrender.com/api/users/save-article', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ 
-        articleId: this.dataset.articleId 
-      })
-    });
-
-    // First check if response is HTML
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Server error (${response.status}): ${errorText}`);
-    }
-
-    const data = await response.json();
-
-    // Update UI
-    this.classList.toggle('fa-regular');
-    this.classList.toggle('fa-solid');
-    this.style.color = data.isSaved ? '#FF5A5F' : 'inherit';
+    saveIcon.addEventListener('click', async function() {
+      try {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+          alert('Please login to save articles');
+          window.location.href = '/login.html';
+          return;
+        }
     
-  } catch (error) {
-    console.error('Save error:', error);
-    alert(`Operation failed: ${error.message}`);
-  }
-});
-
+        const response = await fetch('https://afterthoughts.onrender.com/api/users/save-article', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ 
+            articleId: this.dataset.articleId 
+          })
+        });
+    
+        // Handle non-JSON responses
+        const contentType = response.headers.get('content-type');
+        if (!contentType?.includes('application/json')) {
+          const text = await response.text();
+          throw new Error(`Server error ${response.status}: ${text.substring(0, 100)}`);
+        }
+    
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.error || 'Operation failed');
+        }
+    
+        // Update UI
+        this.classList.toggle('fa-regular');
+        this.classList.toggle('fa-solid');
+        this.style.color = data.isSaved ? '#FF5A5F' : 'inherit';
+        
+      } catch (error) {
+        console.error('Save error:', {
+          error: error.message,
+          articleId: this.dataset.articleId,
+          timestamp: new Date().toISOString()
+        });
+        
+        alert(`Operation failed: ${error.message.replace('Error: ', '')}`);
+      }
+    });
 
     // save icon added! 
 
