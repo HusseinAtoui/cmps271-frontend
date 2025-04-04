@@ -104,51 +104,84 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
       document._existingComments = formattedComments;
       makeProfile(formattedComments);
     }
-// ------------------------------
-// Toggle Kudos Functionality
-// ------------------------------
-const kudosBtn = document.getElementById("kudos-btn");
-if (kudosBtn) {
-  kudosBtn.addEventListener("click", async () => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      alert("🚩 Please log in to give kudos.");
-      window.location.href = "loginPage.html";
-      return;
-    }
-    if (!articleId) {
-      alert("Article ID missing");
-      return;
-    }
-    try {
-      console.log("🛠️ Toggling Kudos for Article ID:", articleId);
-      const response = await fetch("https://afterthoughts.onrender.com/api/articles/toggle-kudos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ articleId })
-      });
-      const data = await response.json();
-      console.log("🛠️ Toggle Kudos Response:", data);
-      if (response.ok) {
-        // Toggle button appearance based on the action performed
-        if (data.message.includes("added")) {
-          kudosBtn.classList.add("liked");
-          alert("✅ Kudos added!");
-        } else if (data.message.includes("removed")) {
-          kudosBtn.classList.remove("liked");
-          alert("✅ Kudos removed!");
-        }
-      } else {
-        alert(`⚠️ ${data.message}`);
+ 
+    router.post('/give-kudos', verifyToken, async (req, res) => {
+      const { articleId } = req.body;
+    
+      if (!articleId) {
+        return res.status(400).json({ message: "Article ID is required" });
       }
-    } catch (err) {
-      console.error("❌ Error toggling kudos:", err);
-    }
-  });
-}
+    
+      try {
+        const article = await Article.findById(articleId);
+        if (!article) {
+          return res.status(404).json({ message: "Article not found" });
+        }
+    
+        // Use req.user.id consistently
+        if (!article.kudos.includes(req.user.id)) {
+          article.kudos.push(req.user.id);
+        } else {
+          return res.status(400).json({ message: "You have already given kudos to this article" });
+        }
+    
+        await article.save();
+    
+        // Optionally update user activity
+        await User.findByIdAndUpdate(req.user.id, { $inc: { activity: 1 } });
+    
+        res.status(200).json({
+          message: "Kudos given successfully",
+          kudosCount: article.kudos.length
+        });
+      } catch (err) {
+        res.status(500).json({ message: "Error giving kudos", error: err.message });
+      }
+    });
+    
+    // ✅ Toggle Kudos Functionality (Add/Remove Kudos)
+    router.post('/toggle-kudos', verifyToken, async (req, res) => {
+      const { articleId } = req.body;
+    
+      if (!articleId) {
+        return res.status(400).json({ message: "Article ID is required" });
+      }
+    
+      try {
+        const article = await Article.findById(articleId);
+        if (!article) {
+          return res.status(404).json({ message: "Article not found" });
+        }
+    
+        let action = "";
+        // Use req.user.id instead of req.user.userId for consistency
+        if (article.kudos.includes(req.user.id)) {
+          // Remove kudos
+          article.kudos = article.kudos.filter(
+            id => id.toString() !== req.user.id
+          );
+          action = "removed";
+        } else {
+          // Add kudos
+          article.kudos.push(req.user.id);
+          action = "added";
+        }
+    
+        await article.save();
+    
+        // Optionally update user activity
+        await User.findByIdAndUpdate(req.user.id, { 
+          $inc: { activity: (action === "added" ? 1 : -1) } 
+        });
+    
+        res.status(200).json({
+          message: `Kudos ${action} successfully`,
+          kudosCount: article.kudos.length
+        });
+      } catch (err) {
+        res.status(500).json({ message: "Error toggling kudos", error: err.message });
+      }
+    });
 
     // ------------------------------
     // Comment Submission
