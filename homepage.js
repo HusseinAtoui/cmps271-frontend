@@ -342,6 +342,7 @@ saveIcon.addEventListener('click', async function() {
       return;
     }
 
+   
     const response = await fetch('https://afterthoughts.onrender.com/api/users/save-article', {
       method: 'POST',
       headers: {
@@ -353,18 +354,13 @@ saveIcon.addEventListener('click', async function() {
       })
     });
 
-    // Handle non-JSON responses
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/json')) {
-      const text = await response.text();
-      throw new Error(`Server responded with ${response.status}: ${text}`);
+    // First check if response is HTML
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Server error (${response.status}): ${errorText}`);
     }
 
     const data = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(data.message || 'Failed to save article');
-    }
 
     // Update UI
     this.classList.toggle('fa-regular');
@@ -373,9 +369,11 @@ saveIcon.addEventListener('click', async function() {
     
   } catch (error) {
     console.error('Save error:', error);
-    alert(`Save failed: ${error.message}`);
+    alert(`Operation failed: ${error.message}`);
   }
 });
+
+
     // save icon added! 
 
 
