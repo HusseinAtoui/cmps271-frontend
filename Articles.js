@@ -90,7 +90,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
   .then(article => {
     renderFullArticle({
       title: article.title,
-      author: `${article.userID?.firstName || "Unknown"} ${article.userID?.lastName || ""}`,
+      author: `${article.userID.firstName || "Unknown"} ${article.userID.lastName || ""}`,
       text: article.text,
       image: article.image
     });
