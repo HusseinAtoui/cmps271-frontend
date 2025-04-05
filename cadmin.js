@@ -52,11 +52,12 @@ document.addEventListener("DOMContentLoaded", async () => {
               button.addEventListener("click", async () => {
                   const id = button.getAttribute("data-id");
                   console.log("Approve button clicked:", id);
-                  const token = localStorage.getItem("token");
-                  if (!token) {
-                      alert("You are not authenticated. Please log in.");
-                      return;
-                  }
+                  const token = localStorage.getItem("authToken");
+                    if (!token) {
+                        alert("You are not authenticated. Please log in.");
+                        return;
+                    }
+
                   const response = await fetch(`https://afterthoughts.onrender.com/api/articles/approve/${id}`, {
                       method: "PUT",
                       headers: { Authorization: `Bearer ${token}` },
