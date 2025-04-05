@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Afterthoughts Philosophy Journal</title>
   <link rel="stylesheet" href="Articles.css">
 </head>
+
 <body>
+
   <!-- Navigation Bar -->
   <button id="open-sidebar-btn" onclick="openSideBar()">
     <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9">
-      <path d="M165.13-254.62q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.86q7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.87q-7.22 7.12-17.9 7.12H165.13Zm0-200.25q-10.68 0-17.9-7.27-7.23-7.26-7.23-17.99 0-10.74 7.23-17.87 7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.27 7.23 7.26 7.23 17.99 0 10.74-7.23 17.87-7.22 7.13-17.9 7.13H165.13Zm0-200.26q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.87q7.22-7.12 17.9-7.12h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.86q-7.22 7.13-17.9 7.13H165.13Z" />
+      <path
+        d="M165.13-254.62q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.86q7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.87q-7.22 7.12-17.9 7.12H165.13Zm0-200.25q-10.68 0-17.9-7.27-7.23-7.26-7.23-17.99 0-10.74 7.23-17.87 7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.27 7.23 7.26 7.23 17.99 0 10.74-7.23 17.87-7.22 7.13-17.9 7.13H165.13Zm0-200.26q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.87q7.22-7.12 17.9-7.12h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.86q-7.22 7.13-17.9 7.13H165.13Z" />
     </svg>
   </button>
-  
+
   <nav class="navbar" id="navbar">
     <div class="logo">
       <img src="logo.png" alt="Afterthoughts Logo">
@@ -22,12 +26,13 @@
       <li>
         <button id="close-sidebar-btn" onclick="closeSideBar()">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#7D0C0E">
-            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+            <path
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
           </svg>
         </button>
       </li>
       <li><a href="index.html">Home</a></li>
-      <li><a href="subpage.html" class="active">Submissions</a></li>
+      <li><a href="subpage.html">Submissions</a></li>
       <li><a href="profilepage.html">Profile</a></li>
       <li><a href="EventPage.html">Events</a></li>
       <li><a href="teamPage.html">Team</a></li>
@@ -36,15 +41,20 @@
       <li class="loginLink"><a href="loginPage.html">Login</a></li>
     </ul>
   </nav>
-  
+
   <div id="overlay" onclick="closeSideBar()"></div>
-  
+
+  <!--article img-->
   <section class="image"></section>
+
+  <!-- article title and text -->
   <section id="article-section">
     <!-- Article content will load here -->
   </section>
 
+  <!--feedback section-->
   <div class="feedback">
+
     <div class="context">
       <h3>Thots Kweschens Queeries</h3>
       <div class="writing">
@@ -54,15 +64,18 @@
       </div>
       <div class="like">
         <button id="comment-btn" type="button">Comment</button>
-        <button id="kudos-btn" type="button">Kudos <3</button>
+        <button id="kudos-btn" type="button">Kudos</button>
       </div>
     </div>
+
     <div class="other">
       <div id="profile-contain"></div>
       <!-- Profiles will be loaded here -->
     </div>
+
   </div>
-                      <script src="Articles.js"></script>
-                      
-                  </body>
-                  </html>
+
+  <script src="Articles.js"></script>
+</body>
+
+</html>

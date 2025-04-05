@@ -215,3 +215,17 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
     console.error("❌ Error loading article:", err);
     document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
   });
+
+/* =============================
+ nav bar
+ ============================= */
+
+const navbar = document.getElementById('navbar');
+
+function openSideBar() {
+  navbar.classList.add('show');
+}
+
+function closeSideBar() {
+  navbar.classList.remove('show');
+}
