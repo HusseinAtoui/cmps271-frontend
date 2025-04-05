@@ -298,29 +298,7 @@ textarea {
 /*       Responsive Styles       */
 /* ============================= */
 
-@media (max-width: 480px) {
-
-  /* comments section */
-
-  .feedback {
-    background-color: #7D0C0E;
-    flex-direction: column;
-  }
-
-  .comments {
-    width: 92%;
-  }
-
-  .feedback button {
-    width: 225px;
-  }
-
-  .other {
-    width: 100%;
-    height: 400px;
-    margin-left: 0px;
-  }
-}
+@media (max-width: 480px) {}
 
 /* ✅ 481px - 768px (Larger Phones & Tablets)  */
 @media (max-width: 768px) {
@@ -369,6 +347,37 @@ textarea {
   #open-sidebar-btn,
   #close-sidebar-btn {
     display: block;
+  }
+
+  /* comments section */
+
+  .feedback {
+    background-color: #7D0C0E;
+    flex-direction: column;
+  }
+
+  .comments {
+    width: 100%;
+  }
+
+  .feedback button {
+    width: 225px;
+  }
+
+  .other {
+    width: 100%;
+    height: 400px;
+    margin-left: 0px;
+  }
+
+  .text {
+    text-align: left;
+    font-size: 120%;
+    margin: 1%;
+  }
+
+  .context {
+    width: 100%;
   }
 
 }
