@@ -135,17 +135,16 @@ function displayArticles(articles) {
         const buttonsDiv = document.createElement('div');
         buttonsDiv.classList.add('buttons');
 
-        // Creates a "share" button :)
-        const shareBtn = document.createElement('button');
-        shareBtn.classList.add('share-button');
-        shareBtn.textContent = "Share";
-        shareBtn.addEventListener('click', () => {
+        // Create share icon
+        const shareIcon = document.createElement('i');
+        shareIcon.classList.add('fa-solid', 'fa-share', 'share-icon');
+        shareIcon.addEventListener('click', () => {
             if (!article._id) {
                 alert("Error: Article ID is missing.");
                 return;
             }
 
-            const shareUrl = `${window.location.origin}/articles/${article._id}`;
+            const shareUrl = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${article._id}`;
             const shareText = `${article.title}\n${shareUrl}\n${article.description}`;
 
             if (navigator.share) {
@@ -163,13 +162,17 @@ function displayArticles(articles) {
             }
         });
 
+        // Create save icon
+        const saveIcon = document.createElement('i');
+        saveIcon.classList.add('fa-regular', 'fa-bookmark', 'save-icon');
+
         const authorName = document.createElement('p');
         authorName.classList.add('authorname');
         authorName.textContent = article.author;
 
-        // Append the title first, then the details below
+        // Append elements
+        buttonsDiv.append(continueBtn, shareIcon, saveIcon, authorName);
         textSection.append(titleP, detailsP, descriptionP, buttonsDiv);
-        buttonsDiv.append(continueBtn, shareBtn, authorName);
         card.append(imageContainer, textSection);
         gridContainer.appendChild(card);
     });

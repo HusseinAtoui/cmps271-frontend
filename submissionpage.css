@@ -114,7 +114,6 @@ body {
     display: none;
 }
 
-
 /* ========================================= */
 /*                 Footer                    */
 /* ========================================= */
@@ -352,7 +351,7 @@ span {
     display: block;
     width: 100%;
     padding: 12px;
-    font-size: 18px;
+    font-size: 14px;
     background-color: #a52a2a;
     color: white;
     border: none;
@@ -369,6 +368,10 @@ span {
 /* ============================= */
 /*       Responsive Styles       */
 /* ============================= */
+
+@media (max-width: 366px) {
+
+}
 
 /* ====== 320px - 480px (Small Phones) ====== */
 @media (max-width: 480px) {}

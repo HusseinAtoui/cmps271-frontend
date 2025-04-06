@@ -85,6 +85,7 @@ function makeEvent(events) {
         allEvents.appendChild(eventElement);
     });
 }
+
 // Function to initialize FullCalendar with events from the backend
 function initializeCalendar(events) {
     var calendarEl = document.getElementById('tempcal');

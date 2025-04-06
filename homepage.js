@@ -169,7 +169,7 @@ async function loadEvents() {
     });
 
     // Append all text elements to the text section
-    textSection.append(detailsP, titleP, descriptionP, continueBtn);
+    textSection.append(detailsP, titleP, continueBtn);
 
     // Append image and text to the slide container
     slide.append(imageContainer, textSection);
@@ -240,7 +240,21 @@ async function loadArticles() {
       }
     ];
   }
-
+  let savedArticleIds = [];
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    try {
+      const response = await fetch('https://afterthoughts.onrender.com/api/users/saved-articles', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        savedArticleIds = data.savedArticles.map(a => a._id);
+      }
+    } catch (error) {
+      console.error("Error fetching saved articles:", error);
+    }
+  }
   articlesData.forEach(article => {
     // Create card container
     const card = document.createElement('div');
@@ -277,23 +291,27 @@ async function loadArticles() {
     continueBtn.classList.add('continue-reading');
     continueBtn.textContent = "continue reading";
     continueBtn.addEventListener('click', () => {
-      console.log(`Continue reading article ${article.id}`);
-      // TODO: Redirect to article details page, e.g., window.location.href = `/articles/${article.id}`;
-    });
+      window.location.href = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${article._id}`;
+  });
 
-    // Creates a "share" button :)
-    const shareBtn = document.createElement('button');
-    shareBtn.classList.add('share-button');
-    shareBtn.textContent = "Share";
-    shareBtn.addEventListener('click', () => {
+    // Create author info section
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.classList.add('buttons');
+
+    // share ion added :)
+    const shareIcon = document.createElement('i');
+    shareIcon.classList.add('fa-solid', 'fa-share', 'share-icon');
+
+    shareIcon.addEventListener('click', () => {
       if (!article._id) {
         alert("Error: Article ID is missing.");
         return;
       }
-    
-      const shareUrl = `${window.location.origin}/articles/${article._id}`;
-      const shareText = `${article.title}\n${shareUrl}\n${article.description}`;
-    
+
+      const shareUrl = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${article._id}`;
+
+      const shareText = `${article.title}\n\n${article.description}`;
+
       if (navigator.share) {
         navigator.share({
           title: article.title,
@@ -307,25 +325,68 @@ async function loadArticles() {
       } else {
         alert("Web Share API is not supported in this browser.");
       }
-    });    
+    });
+    const saveIcon = document.createElement('i');
+    saveIcon.classList.add('save-icon', 'fa-bookmark');
+    saveIcon.classList.add(savedArticleIds.includes(article._id) ? 'fa-solid' : 'fa-regular');
+    saveIcon.dataset.articleId = article._id;
+    saveIcon.addEventListener('click', async function() {
+      try {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+          alert('Please login to save articles');
+          window.location.href = '/login.html';
+          return;
+        }
+    
+        const response = await fetch('https://afterthoughts.onrender.com/api/users/save-article', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ 
+            articleId: this.dataset.articleId 
+          })
+        });
+    
+        // Handle non-JSON responses
+        const contentType = response.headers.get('content-type');
+        if (!contentType?.includes('application/json')) {
+          const text = await response.text();
+          throw new Error(`Server error ${response.status}: ${text.substring(0, 100)}`);
+        }
+    
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.error || 'Operation failed');
+        }
+    
+        // Update UI
+        this.classList.toggle('fa-regular');
+        this.classList.toggle('fa-solid');
+        this.style.color = data.isSaved ? '#FF5A5F' : 'inherit';
+        
+      } catch (error) {
+        console.error('Save error:', {
+          error: error.message,
+          articleId: this.dataset.articleId,
+          timestamp: new Date().toISOString()
+        });
+        
+        alert(`Operation failed: ${error.message.replace('Error: ', '')}`);
+      }
+    });
 
+    // save icon added! 
 
-    // Create author info section
-    const buttonsDiv = document.createElement('div');
-    buttonsDiv.classList.add('buttons');
-
-    const authorImg = document.createElement('img');
-    authorImg.classList.add('profile');
-    if (article.authorProfile) {
-      authorImg.src = article.authorProfile;
-      authorImg.alt = article.author;
-    }
 
     const authorName = document.createElement('p');
     authorName.classList.add('authorname');
     authorName.textContent = article.author;
 
-    buttonsDiv.append(continueBtn, shareBtn, authorImg, authorName);
+    buttonsDiv.append(continueBtn, authorName, shareIcon, saveIcon);
 
     // Assemble the text section
     textSection.append(detailsP, titleP, descriptionP, buttonsDiv);
@@ -333,6 +394,7 @@ async function loadArticles() {
     // Assemble the card
     card.append(imageContainer, textSection);
     gridContainer.appendChild(card);
+
   });
 }
 

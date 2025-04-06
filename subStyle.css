@@ -452,6 +452,35 @@ footer {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+
+.share-icon,
+.save-icon {
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+  margin: 0 8px;
+  display: inline-block;
+}
+
+.share-icon {
+  padding-left: 140px;
+}
+
+.save-icon {
+  padding-left: 10px;
+}
+
+.share-icon:hover {
+  color: #68aaf1;
+}
+
+.save-icon:hover {
+  color: #f39c12;
+}
+
+
+
 /* ============================= */
 /*       Responsive Styles       */
 /* ============================= */
