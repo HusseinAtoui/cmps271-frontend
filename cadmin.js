@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                   });
 
                   console.log("Response status:", response.status);
+                  const result = await response.json(); 
                   if (response.ok) {
                       alert("Article approved successfully!");
                       fetchArticles();
