@@ -3,10 +3,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("eventForm").addEventListener("submit", uploadEvent);
 });
 
-// ✅ Fetch and display all events
+// Use a base URL that switches based on the environment.
+
+
+// Helper function to get the JWT token from localStorage.
+function getToken() {
+    return localStorage.getItem("authToken"); // Ensure token is set upon login.
+}
+
+// ✅ Fetch and display all events (no authentication required)
 async function fetchEvents() {
     try {
-        const response = await fetch('https://afterthoughts.onrender.com/api/events/');
+        const response = await fetch(`http://localhost:3000/api/events/add`);
         const events = await response.json();
         const eventList = document.getElementById("eventList");
 
@@ -21,8 +29,6 @@ async function fetchEvents() {
                 <p>${event.description}</p>
                 <p><strong>Date:</strong> ${new Date(event.date).toLocaleDateString()}</p>
                 <p>${event.details}</p>
-                
-
                 <button onclick="fetchEventById('${event._id}')">View Details</button>
                 <button class="delete-btn" onclick="deleteEvent('${event._id}')">Delete</button>
             `;
@@ -37,7 +43,7 @@ async function fetchEvents() {
 // ✅ Fetch and display a single event by ID
 async function fetchEventById(eventId) {
     try {
-        const response = await fetch(`https://afterthoughts.onrender.com/api/events/${eventId}`);
+        const response = await fetch(`http://localhost:3000/api/events/${eventId}`);
         const event = await response.json();
 
         if (!response.ok) {
@@ -51,9 +57,16 @@ async function fetchEventById(eventId) {
     }
 }
 
-// ✅ Upload a new event
-async function uploadEvent(event) {
-    event.preventDefault();
+// ✅ Upload a new event (admin only)
+async function uploadEvent(e) {
+    e.preventDefault();
+
+    // Retrieve the auth token
+    const token = getToken();
+    if (!token) {
+        alert("You must be logged in as an admin to upload events.");
+        return;
+    }
 
     const formData = new FormData();
     formData.append("title", document.getElementById("title").value);
@@ -65,13 +78,16 @@ async function uploadEvent(event) {
     console.log("📩 Sending Form Data:", [...formData.entries()]);
 
     try {
-        const response = await fetch("http://localhost:3000/api/events", {
+        const response = await fetch(`http://localhost:3000/api/events`, {
             method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
             body: formData
         });
 
         const responseData = await response.json();
-        
+
         if (!response.ok) {
             console.error("❌ Server Response:", responseData);
             throw new Error(responseData.error || "Unknown error occurred");
@@ -86,15 +102,25 @@ async function uploadEvent(event) {
     }
 }
 
-// ✅ Delete an event (No authentication required)
+// ✅ Delete an event (admin only)
 async function deleteEvent(eventId) {
     if (!confirm("⚠️ Are you sure you want to delete this event?")) return;
+
+    // Retrieve the auth token
+    const token = getToken();
+    if (!token) {
+        alert("You must be logged in as an admin to delete events.");
+        return;
+    }
 
     console.log("🗑️ Deleting Event ID:", eventId);
 
     try {
-        const response = await fetch(`https://afterthoughts.onrender.com/api/events/${eventId}`, {
-            method: "DELETE"
+        const response = await fetch(`http://localhost:3000/api/events/${eventId}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         });
 
         const responseData = await response.json();
