@@ -242,8 +242,19 @@ async function analyzeSentiment(commentInput) {
           alert("✍️ Please write a comment before submitting.");
           return;
         }
-        const analysisSuccess = await analyzeSentiment(text);
-        if (!analysisSuccess) return;
+        const sentiment = await analyzeSentiment(text);
+    
+        // Block negative comments
+        if (sentiment === 'negative') {
+          alert("❌ Comments with negative sentiment cannot be posted");
+          return;
+        }
+    
+        // If analysis failed, ask for confirmation
+        if (sentiment === 'error') {
+          const confirmPost = confirm("⚠️ Sentiment analysis failed. Post comment anyway?");
+          if (!confirmPost) return;
+        }
         try {
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
             method: "POST",
