@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
   saveBioBtn.addEventListener("click", async function () {
     const bio = bioInput.value;
     try {
-      const response = await fetch("http://localhost:3000/api/auth/change-bio", {
+      const response = await fetch("https://afterthoughts.onrender.com/api/auth/change-bio", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -239,7 +239,7 @@ savePicBtn.addEventListener("click", async function () {
 
   try {
     // Send the request to update profile picture
-    const response = await fetch("http://localhost:3000/api/auth/change-pfp", {
+    const response = await fetch("https://afterthoughts.onrender.com/api/auth/change-pfp", {
       method: "PUT",
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("authToken")}`
@@ -274,7 +274,7 @@ savePicBtn.addEventListener("click", async function () {
 // Confirm account deletion
 yesDeleteBtn.addEventListener("click", async function () {
   try {
-    const response = await fetch("http://localhost:3000/api/auth/delete-account", {
+    const response = await fetch("https://afterthoughts.onrender.com/api/auth/delete-account", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -306,7 +306,7 @@ noDeleteBtn.addEventListener("click", function () {
 
 logoutBtn.addEventListener("click", async function () {
   try {
-    const response = await fetch("http://localhost:3000/api/auth/logout", {
+    const response = await fetch("https://afterthoughts.onrender.com/api/auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -468,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Send POST request to the backend endpoint
-      const response = await fetch('http://localhost:3000/api/schedule', {
+      const response = await fetch('https://afterthoughts.onrender.com/api/schedule', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
