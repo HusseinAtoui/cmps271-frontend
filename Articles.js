@@ -253,7 +253,7 @@ async function analyzeSentiment(commentInput) {
           return;
         }
         await analyzeSentiment(text); // 👈 THIS TRIGGERS THE ANALYSIS
-        const proceed = confirm("Show sentiment analysis results before posting?"); // 👈 OPTIONAL CONFIRMATION
+       
         try {
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
             method: "POST",
