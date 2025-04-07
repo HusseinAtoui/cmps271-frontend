@@ -41,6 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 try {
                     const textFromPdf = await convertPdfToText(docFile);
                     formData.append("text", textFromPdf);
+                    if(textFromPdf){
+                        formData.append("minToRead",Math.floor(textFromPdf.length/15));
+                    }
+                    
                 } catch (error) {
                     console.error("❌ Error converting PDF to text:", error);
                     statusMessage.innerHTML = `<p style="color: red;">Error converting PDF to text.</p>`;
