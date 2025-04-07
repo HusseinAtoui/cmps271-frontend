@@ -171,13 +171,6 @@ const commentBtn = document.getElementById("comment-btn");
 const commentInput = document.getElementById("comment");
 
 async function analyzeSentiment(commentInput) {
-  const resultDiv = document.getElementById('result');
-  const errorDiv = document.getElementById('error');
-  
-  // Clear previous results
-  resultDiv.innerHTML = '';
-  errorDiv.innerHTML = '';
-  resultDiv.className = 'result';
 
   // Trim and validate input
   const trimmedText = commentInput.trim();
@@ -213,22 +206,19 @@ async function analyzeSentiment(commentInput) {
       const data = await response.json();
       const generalSentiment = sentimentMap[data.sentiment.toLowerCase()] || 'neutral';
 
-      resultDiv.className = `result ${generalSentiment}`;
-      resultDiv.innerHTML = `
-          <strong>Sentiment:</strong> ${generalSentiment}<br>
-          <strong>Original Emotion:</strong> ${data.sentiment}<br>
-          <strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%<br>
-          <div class="details">
-              Analyzed text: "${data.analyzedText}"<br>
-              Original length: ${data.originalLength} characters
-          </div>
-      `;
-
-  } catch (error) {
-      showError(`Analysis failed: ${error.message}`);
-      console.error('Error:', error);
+      alert(`Sentiment Analysis Result:\n
+        Overall: ${generalSentiment.toUpperCase()}
+        Emotion: ${data.sentiment}
+        Confidence: ${(data.confidence * 100).toFixed(1)}%
+        Processed Text: "${data.analyzedText}"`);
+      
+      return true;
+  
+    } catch (error) {
+      alert(`❌ Analysis Error: ${error.message}`);
+      return false;
+    }
   }
-}
 
 
 // ----------------------------
