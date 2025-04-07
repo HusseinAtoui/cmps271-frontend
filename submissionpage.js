@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         appendIfMissing(formData, "title", "Untitled Article");
         appendIfMissing(formData, "description", "Read more about this");
         appendIfMissing(formData, "date", new Date().toISOString());
-        appendIfMissing(formData, "minToRead", "1");
+      
         appendIfMissing(formData, "tag", "general");
 
         // Handle image upload
@@ -41,6 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 try {
                     const textFromPdf = await convertPdfToText(docFile);
                     formData.append("text", textFromPdf);
+                    if(textFromPdf){
+                        formData.set("minToRead",Math.floor((textFromPdf.length/15)/60)+1);
+                    }
+                    
                 } catch (error) {
                     console.error("❌ Error converting PDF to text:", error);
                     statusMessage.innerHTML = `<p style="color: red;">Error converting PDF to text.</p>`;
