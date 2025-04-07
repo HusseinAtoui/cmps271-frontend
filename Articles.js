@@ -109,43 +109,50 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
 // ------------------------------
 // Heart Button Functionality (Private Like Tracking)
 // ------------------------------
-const heartBtn = document.getElementById("kudos-btn");
-console.log("Heart button:", heartBtn);
-if (heartBtn) {
-  heartBtn.classList.add("heart-btn");
+document.addEventListener('DOMContentLoaded', () => {
+  const heartBtn = document.getElementById('kudos-btn');
+  const articleId = new URLSearchParams(window.location.search).get('id');
+  const token = localStorage.getItem("authToken");
 
+  if (!heartBtn || !articleId) return;
+
+  let isLiked = false;
+
+  // Optionally preload like state
   (async () => {
-    const token = localStorage.getItem("authToken");
     if (token) {
       try {
-        const response = await fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}/like-status`, {
+        const res = await fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}/like-status`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        
-        if (response.ok) {
-          const { hasLiked } = await response.json();
-          if (hasLiked) heartBtn.classList.add("liked");
+        const data = await res.json();
+        if (data.hasLiked) {
+          isLiked = true;
+          heartBtn.classList.add("liked");
         }
       } catch (err) {
-        console.error("Error checking like status:", err);
+        console.error("❌ Error fetching like status:", err);
       }
     }
   })();
 
+  // Handle like toggle
   heartBtn.addEventListener("click", async () => {
     if (!token) {
-      alert("Please log in to like articles.");
+      alert("🚩 Please log in to like this article.");
       window.location.href = "loginPage.html";
       return;
     }
 
-    try {
-      const isLiked = heartBtn.classList.contains("liked");
-      const endpoint = isLiked 
-        ? "https://afterthoughts.onrender.com/api/articles/remove-like"
-        : "https://afterthoughts.onrender.com/api/articles/add-like";
+    isLiked = !isLiked;
+    heartBtn.classList.toggle("liked");
 
-      const response = await fetch(endpoint, {
+    const endpoint = isLiked
+      ? "https://afterthoughts.onrender.com/api/articles/add-like"
+      : "https://afterthoughts.onrender.com/api/articles/remove-like";
+
+    try {
+      await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -153,18 +160,11 @@ if (heartBtn) {
         },
         body: JSON.stringify({ articleId })
       });
-
-      if (response.ok) {
-        heartBtn.classList.toggle("liked");
-        // Add animation
-        heartBtn.classList.add("animate");
-        setTimeout(() => heartBtn.classList.remove("animate"), 700);
-      }
     } catch (err) {
-      console.error("Error toggling like:", err);
+      console.error("❌ Failed to sync like:", err);
     }
   });
-}
+});
 
 
 const commentBtn = document.getElementById("comment-btn");
