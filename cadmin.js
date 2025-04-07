@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const articleText = button.getAttribute("data-text");
             
                     try {
-                        const aiResponse = await fetch("http://localhost:3000/api/aiplagarism/detect", {
+                        const aiResponse = await fetch("https://afterthoughts.onrender.com/api/aiplagarism/detect", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
