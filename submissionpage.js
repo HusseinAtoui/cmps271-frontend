@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const textFromPdf = await convertPdfToText(docFile);
                     formData.append("text", textFromPdf);
                     if(textFromPdf){
-                        formData.append("minToRead",Math.floor((textFromPdf.length/15)/60)+1);
+                        formData.set("minToRead",Math.floor((textFromPdf.length/15)/60)+1);
                     }
                     
                 } catch (error) {
