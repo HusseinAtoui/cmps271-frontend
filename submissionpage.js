@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         appendIfMissing(formData, "title", "Untitled Article");
         appendIfMissing(formData, "description", "Read more about this");
         appendIfMissing(formData, "date", new Date().toISOString());
-        appendIfMissing(formData, "minToRead", "1");
+      
         appendIfMissing(formData, "tag", "general");
 
         // Handle image upload
