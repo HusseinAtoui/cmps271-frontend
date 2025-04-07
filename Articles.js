@@ -106,43 +106,65 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
       makeProfile(formattedComments);
     }
 
-    // ------------------------------
-    // Kudos Functionality
-    // ------------------------------
-    const kudosBtn = document.getElementById("kudos-btn");
-    if (kudosBtn) {
-      kudosBtn.addEventListener("click", async () => {
-        const token = localStorage.getItem("authToken");
+// ------------------------------
+// Heart Button Functionality (Private Like Tracking)
+// ------------------------------
+const heartBtn = document.getElementById("kudos-btn");
+console.log("Heart button:", heartBtn);
+if (heartBtn) {
+  heartBtn.classList.add("heart-btn");
 
-        console.log("🛠️ Sending Kudos request for Article ID:", articleId);
+  (async () => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      try {
+        const response = await fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}/like-status`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        if (response.ok) {
+          const { hasLiked } = await response.json();
+          if (hasLiked) heartBtn.classList.add("liked");
+        }
+      } catch (err) {
+        console.error("Error checking like status:", err);
+      }
+    }
+  })();
 
-        if (!token) {
-          alert("🚩 Please log in to give kudos.");
-          window.location.href = "loginPage.html";
-          return;
-        }
-        try {
-          const response = await fetch("https://afterthoughts.onrender.com/api/articles/give-kudos", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify({ articleId })
-          });
-          const data = await response.json();
-          if (response.ok) {
-            alert("✅ Kudos added!");
-            kudosBtn.disabled = true;
-          } else {
-            alert(`⚠️ ${data.message}`);
-          }
-        } catch (err) {
-          console.error("❌ Error sending kudos:", err);
-        }
-      });
+  heartBtn.addEventListener("click", async () => {
+    if (!token) {
+      alert("Please log in to like articles.");
+      window.location.href = "loginPage.html";
+      return;
     }
 
+    try {
+      const isLiked = heartBtn.classList.contains("liked");
+      const endpoint = isLiked 
+        ? "https://afterthoughts.onrender.com/api/articles/remove-like"
+        : "https://afterthoughts.onrender.com/api/articles/add-like";
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ articleId })
+      });
+
+      if (response.ok) {
+        heartBtn.classList.toggle("liked");
+        // Add animation
+        heartBtn.classList.add("animate");
+        setTimeout(() => heartBtn.classList.remove("animate"), 700);
+      }
+    } catch (err) {
+      console.error("Error toggling like:", err);
+    }
+  });
+}
     // ------------------------------
     // Comment Submission
     // ------------------------------
