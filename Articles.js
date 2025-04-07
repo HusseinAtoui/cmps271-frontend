@@ -165,11 +165,76 @@ if (heartBtn) {
     }
   });
 }
+
+
+const commentBtn = document.getElementById("comment-btn");
+const commentInput = document.getElementById("comment");
+
+async function analyzeSentiment(commentInput) {
+  const resultDiv = document.getElementById('result');
+  const errorDiv = document.getElementById('error');
+  
+  // Clear previous results
+  resultDiv.innerHTML = '';
+  errorDiv.innerHTML = '';
+  resultDiv.className = 'result';
+
+  // Trim and validate input
+  const trimmedText = commentInput.trim();
+  if (!trimmedText) {
+      showError('Please enter some text to analyze');
+      return;
+  }
+
+  try {
+      const response = await fetch('https://afterthoughts.onrender.com/api/sentimentComments/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ text: trimmedText })
+      });
+
+      const sentimentMap = {
+          'anger': 'negative',
+          'disgust': 'negative',
+          'fear': 'negative',
+          'joy': 'positive',
+          'neutral': 'neutral',
+          'sadness': 'negative',
+          'surprise': 'neutral'
+      };
+
+      if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const generalSentiment = sentimentMap[data.sentiment.toLowerCase()] || 'neutral';
+
+      resultDiv.className = `result ${generalSentiment}`;
+      resultDiv.innerHTML = `
+          <strong>Sentiment:</strong> ${generalSentiment}<br>
+          <strong>Original Emotion:</strong> ${data.sentiment}<br>
+          <strong>Confidence:</strong> ${(data.confidence * 100).toFixed(1)}%<br>
+          <div class="details">
+              Analyzed text: "${data.analyzedText}"<br>
+              Original length: ${data.originalLength} characters
+          </div>
+      `;
+
+  } catch (error) {
+      showError(`Analysis failed: ${error.message}`);
+      console.error('Error:', error);
+  }
+}
+
+
+// ----------------------------
     // ------------------------------
     // Comment Submission
     // ------------------------------
-    const commentBtn = document.getElementById("comment-btn");
-    const commentInput = document.getElementById("comment");
 
     if (commentBtn && commentInput) {
       commentBtn.addEventListener("click", async () => {
@@ -187,7 +252,8 @@ if (heartBtn) {
           alert("✍️ Please write a comment before submitting.");
           return;
         }
-
+        await analyzeSentiment(text); // 👈 THIS TRIGGERS THE ANALYSIS
+        const proceed = confirm("Show sentiment analysis results before posting?"); // 👈 OPTIONAL CONFIRMATION
         try {
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
             method: "POST",
