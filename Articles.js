@@ -242,8 +242,8 @@ async function analyzeSentiment(commentInput) {
           alert("✍️ Please write a comment before submitting.");
           return;
         }
-        await analyzeSentiment(text); // 👈 THIS TRIGGERS THE ANALYSIS
-       
+        const analysisSuccess = await analyzeSentiment(text);
+        if (!analysisSuccess) return;
         try {
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
             method: "POST",
