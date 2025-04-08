@@ -234,12 +234,13 @@ async function analyzeSentiment(commentInput) {
         Confidence: ${(data.confidence * 100).toFixed(1)}%
         Processed Text: "${data.analyzedText}"`);
       
-      return true;
-  
-    } catch (error) {
-      alert(`❌ Analysis Error: ${error.message}`);
-      return false;
-    }
+
+        return generalSentiment;
+    
+      } catch (error) {
+        console.error("❌ Analysis Error:", error);
+        return 'error';
+      }
   }
 
 
@@ -264,16 +265,16 @@ async function analyzeSentiment(commentInput) {
           alert("✍️ Please write a comment before submitting.");
           return;
         }
-        const sentiment = await analyzeSentiment(text);
-    
-        // Block negative comments
-        if (sentiment === 'negative') {
-          alert("❌ Comments with negative sentiment cannot be posted");
+        const generalSentiment = await analyzeSentiment(text);
+  
+        // Block negative comments with modal
+        if (generalSentiment === 'negative') {
+          showNegativeCommentModal();
           return;
         }
-    
-        // If analysis failed, ask for confirmation
-        if (sentiment === 'error') {
+      
+        // Handle analysis errors
+        if (generalSentiment === 'error') {
           const confirmPost = confirm("⚠️ Sentiment analysis failed. Post comment anyway?");
           if (!confirmPost) return;
         }
@@ -339,4 +340,22 @@ function openSideBar() {
 
 function closeSideBar() {
   navbar.classList.remove('show');
+}// Add these helper functions
+function showNegativeCommentModal() {
+  const modal = document.getElementById('negative-comment-modal');
+  modal.style.display = 'flex';
+}
+
+function hideNegativeCommentModal() {
+  const modal = document.getElementById('negative-comment-modal');
+  modal.style.display = 'none';
+}
+
+// Add event listener for modal close
+document.getElementById('modal-close-btn').addEventListener('click', hideNegativeCommentModal);
+
+// Modified sentiment check in your comment submission code
+if (generalSentiment === 'negative') {
+  showNegativeCommentModal();
+  return;
 }
