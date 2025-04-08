@@ -6,6 +6,13 @@
     font-family: "Times New Roman";
 }
 
+.quote-text {
+    font-style: italic;
+    font-size: 1rem;
+    color: #7D0C0E;
+    margin-top: 0.5rem;
+}
+
 body {
     margin: 0;
     background-color: #7D0C0E;
@@ -732,3 +739,4 @@ input[type="file"] {
         display: none;
     }
 }
+
