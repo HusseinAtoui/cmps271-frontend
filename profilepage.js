@@ -335,7 +335,7 @@ logoutBtn.addEventListener("click", async function () {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async  () => {
   // --- User Data & Authentication ---
   const userDataString = localStorage.getItem("userData");
   const token = localStorage.getItem("authToken");
@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       const articlesData = await response.json();
-      console.log('Author Stats:', data);
+      console.log('Author Stats:', articlesData);
       return articlesData;
   
     } catch (error) {
@@ -385,7 +385,9 @@ document.addEventListener("DOMContentLoaded", () => {
       throw error; // Re-throw for handling in components
     }
   }
-  const articlesData=fetchAuthorStats();
+  try{ const articlesData= await fetchAuthorStats();
+
+
   // Calculate overall totals
   const totalArticles = articlesData.stats.totalArticles;
   const totalUniqueViews = 300;
@@ -458,7 +460,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+  } 
+  }catch (error) {
+    console.error("Error loading stats:", error);
   }
+ 
 });
 // Other functions (fetchArticles, displayArticles, toggleSettings, etc.)
 // are defined below as needed...
