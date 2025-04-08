@@ -213,7 +213,7 @@ h3 {
 .heart-btn:active {
   transform: scale(0.95);
 }
-.heart-btn.liked .heart-icon {
+#kudos-btn.liked .heart-icon {
   fill: #ea0408;
   transform: scale(1.1);
 }
