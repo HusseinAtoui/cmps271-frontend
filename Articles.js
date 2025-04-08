@@ -267,16 +267,10 @@ async function analyzeSentiment(commentInput) {
         }
         const generalSentiment = await analyzeSentiment(text);
   
-        // Block negative comments with modal
+        // Block negative comments
         if (generalSentiment === 'negative') {
-          showNegativeCommentModal();
+          showError();
           return;
-        }
-      
-        // Handle analysis errors
-        if (generalSentiment === 'error') {
-          const confirmPost = confirm("⚠️ Sentiment analysis failed. Post comment anyway?");
-          if (!confirmPost) return;
         }
         try {
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
@@ -341,21 +335,12 @@ function openSideBar() {
 function closeSideBar() {
   navbar.classList.remove('show');
 }// Add these helper functions
-function showNegativeCommentModal() {
-  const modal = document.getElementById('negative-comment-modal');
-  modal.style.display = 'flex';
+function showError() {
+  const errorDiv = document.getElementById('negative-comment-warning');
+  errorDiv.style.display = 'block';
 }
 
-function hideNegativeCommentModal() {
-  const modal = document.getElementById('negative-comment-modal');
-  modal.style.display = 'none';
-}
-
-// Add event listener for modal close
-document.getElementById('modal-close-btn').addEventListener('click', hideNegativeCommentModal);
-
-// Modified sentiment check in your comment submission code
-if (generalSentiment === 'negative') {
-  showNegativeCommentModal();
-  return;
+function closeError() {
+  const errorDiv = document.getElementById('negative-comment-warning');
+  errorDiv.style.display = 'none';
 }
