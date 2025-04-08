@@ -385,6 +385,7 @@ document.addEventListener("DOMContentLoaded", () => {
       throw error; // Re-throw for handling in components
     }
   }
+  const articlesData=fetchAuthorStats();
   // Calculate overall totals
   const totalArticles = articlesData.stats.totalArticles;
   const totalUniqueViews = 300;
