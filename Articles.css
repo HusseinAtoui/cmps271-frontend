@@ -403,55 +403,43 @@ textarea {
     display: none;
   }
 
-}
-
-/* Sentiment Modal Styles */
-.modal {
+}/* Error Message Styles */
+.comment-error {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 10px;
-  width: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffe6e6;
+  border: 2px solid #7D0C0E;
+  border-radius: 8px;
+  padding: 20px;
   max-width: 400px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.error-content {
+  position: relative;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.modal-content h2 {
+.error-content p {
   color: #7D0C0E;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
+  margin: 0;
+  font-size: 1.1rem;
 }
 
-.modal-content p {
-  color: #555;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-}
-
-#modal-close-btn {
-  background-color: #7D0C0E;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 5px;
-  font-size: 1rem;
+.close-error {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  color: #7D0C0E;
+  font-size: 24px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-#modal-close-btn:hover {
-  background-color: #5a090b;
+.close-error:hover {
+  color: #5a090b;
 }

@@ -7,11 +7,20 @@
 }
 
 .quote-text {
-    font-style: italic;
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #7D0C0E;
+    margin: 1rem 0;
+    font-style: italic;
+    max-width: 600px;
+    line-height: 1.4;
+  }
+  
+  .quote-text em {
+    display: block;
     margin-top: 0.5rem;
-}
+    font-size: 1rem;
+    color: #555;
+  }
 
 body {
     margin: 0;
