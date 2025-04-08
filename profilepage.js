@@ -472,7 +472,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const toggleButton = document.getElementById('toggleScheduler');
   const schedulerDiv = document.getElementById('scheduler');
 
-  toggleButton.addEventListener('click', function () {
+  toggleButton.addEventListener('click',function () {
     // Toggle the scheduler's visibility
     if (schedulerDiv.style.display === "none" || schedulerDiv.style.display === "") {
       schedulerDiv.style.display = "block";
