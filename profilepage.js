@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Fetch and display articles from the backend
   fetchArticles();
+
+  // Fetch and display motivational quote
+  fetchMotivationalQuote();
 });
 
 async function fetchArticles() {
@@ -335,7 +338,7 @@ logoutBtn.addEventListener("click", async function () {
   }
 });
 
-document.addEventListener("DOMContentLoaded", async  () => {
+document.addEventListener("DOMContentLoaded", async () => {
   // --- User Data & Authentication ---
   const userDataString = localStorage.getItem("userData");
   const token = localStorage.getItem("authToken");
@@ -359,10 +362,10 @@ document.addEventListener("DOMContentLoaded", async  () => {
 
   // --- Stats & Chart Code ---
   // Sample articles data for chart demo; replace with your actual articles if needed
-  
+
   async function fetchAuthorStats() {
     const token = localStorage.getItem('authToken'); // Or your auth token storage
-  
+
     try {
       const response = await fetch('http://localhost:3000/api/articles/author-stats', {
         method: 'GET',
@@ -371,100 +374,101 @@ document.addEventListener("DOMContentLoaded", async  () => {
           'Content-Type': 'application/json'
         }
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const articlesData = await response.json();
       console.log('Author Stats:', articlesData);
       return articlesData;
-  
+
     } catch (error) {
       console.error('Failed to fetch author stats:', error);
       throw error; // Re-throw for handling in components
     }
   }
-  try{ const articlesData= await fetchAuthorStats();
+  try {
+    const articlesData = await fetchAuthorStats();
 
 
-  // Calculate overall totals
-  const totalArticles = articlesData.stats.totalArticles;
-  const totalUniqueViews = 300;
-  const totalLikes = articlesData.stats.totalLikes;
-  const totalComments = articlesData.stats.totalComments;
+    // Calculate overall totals
+    const totalArticles = articlesData.stats.totalArticles;
+    const totalUniqueViews = 300;
+    const totalLikes = articlesData.stats.totalLikes;
+    const totalComments = articlesData.stats.totalComments;
 
-  // Insert stat boxes into the dashboard-stats section
-  const statsContainer = document.querySelector(".dashboard-stats");
-  statsContainer.innerHTML = `
+    // Insert stat boxes into the dashboard-stats section
+    const statsContainer = document.querySelector(".dashboard-stats");
+    statsContainer.innerHTML = `
         <div class="stat-box" data-type="articles">Total Articles: ${totalArticles}</div>
         <div class="stat-box" data-type="uniqueViews">Total Unique Views: ${totalUniqueViews}</div>
         <div class="stat-box" data-type="popular">Total Likes: ${totalLikes}</div>
         <div class="stat-box" data-type="engagement">Total Comments: ${totalComments}</div>
     `;
 
-  // Add click event listeners to stat boxes
-  document.querySelectorAll(".stat-box").forEach(box => {
-    box.addEventListener("click", function () {
-      const statType = this.getAttribute("data-type");
-      displayGraph(statType);
-      this.classList.toggle("hidden");
+    // Add click event listeners to stat boxes
+    document.querySelectorAll(".stat-box").forEach(box => {
+      box.addEventListener("click", function () {
+        const statType = this.getAttribute("data-type");
+        displayGraph(statType);
+        this.classList.toggle("hidden");
+      });
+
     });
 
-  });
 
-
-  function displayGraph(type) {
-    // Dummy x-axis values (for example, days or months)
-    const xValues = Array.from({ length: totalArticles }, (_, i) => i + 1);
-    let dataSet;
-    // Set dummy datasets based on the type clicked
-    if (type === "articles") {
-      dataSet = xValues;
-    } else if (type === "uniqueViews") {
-      dataSet = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-    } else if (type === "popular") {
-      dataSet = articlesData.stats.likesPerArticle;
-    } else if (type === "engagement") {
-      dataSet = articlesData.stats.commentsPerArticle;
-    }
-
-
-    // Ensure the chart container is visible
-    const container = document.getElementById("chartContainer");
-    container.style.display = "block";
-    // Clear any existing content in the container
-    container.innerHTML = "";
-    // Create a new canvas element for the chart
-    const canvas = document.createElement("canvas");
-    canvas.id = "chartCanvas";
-    container.appendChild(canvas);
-    const ctx = canvas.getContext("2d");
-    // Create the chart using Chart.js (line chart example)
-    new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: xValues,
-        datasets: [{
-          label: `${type} Chart`,
-          data: dataSet,
-          borderColor: "#7D0C0E",
-          fill: false
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: { beginAtZero: true }
-        }
+    function displayGraph(type) {
+      // Dummy x-axis values (for example, days or months)
+      const xValues = Array.from({ length: totalArticles }, (_, i) => i + 1);
+      let dataSet;
+      // Set dummy datasets based on the type clicked
+      if (type === "articles") {
+        dataSet = xValues;
+      } else if (type === "uniqueViews") {
+        dataSet = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+      } else if (type === "popular") {
+        dataSet = articlesData.stats.likesPerArticle;
+      } else if (type === "engagement") {
+        dataSet = articlesData.stats.commentsPerArticle;
       }
-    });
-  } 
-  }catch (error) {
+
+
+      // Ensure the chart container is visible
+      const container = document.getElementById("chartContainer");
+      container.style.display = "block";
+      // Clear any existing content in the container
+      container.innerHTML = "";
+      // Create a new canvas element for the chart
+      const canvas = document.createElement("canvas");
+      canvas.id = "chartCanvas";
+      container.appendChild(canvas);
+      const ctx = canvas.getContext("2d");
+      // Create the chart using Chart.js (line chart example)
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: xValues,
+          datasets: [{
+            label: `${type} Chart`,
+            data: dataSet,
+            borderColor: "#7D0C0E",
+            fill: false
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    }
+  } catch (error) {
     console.error("Error loading stats:", error);
   }
- 
+
 });
 // Other functions (fetchArticles, displayArticles, toggleSettings, etc.)
 // are defined below as needed...
@@ -472,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const toggleButton = document.getElementById('toggleScheduler');
   const schedulerDiv = document.getElementById('scheduler');
 
-  toggleButton.addEventListener('click',function () {
+  toggleButton.addEventListener('click', function () {
     // Toggle the scheduler's visibility
     if (schedulerDiv.style.display === "none" || schedulerDiv.style.display === "") {
       schedulerDiv.style.display = "block";
@@ -562,19 +566,22 @@ window.onload = function () {
   fetchMotivationalQuote();
 };
 
-function fetchMotivationalQuote() {
-  fetch('https://afterthoughts.onrender.com/api/quotes/')  // Call your backend to get the motivational quote
-    .then(response => response.json())
-    .then(data => {
-      const quote = data.quote;    // Quote text
-      const author = data.author;  // Author name
-
-      // Display the quote in the profile page
-      document.getElementById("motivational-quote").innerHTML = `"${quote}" - ${author}`;
-    })
-    .catch(error => {
-      console.error('Error fetching quote:', error);
-      document.getElementById("motivational-quote").innerHTML = `"Your quote will load here..."`;
-    });
+async function fetchMotivationalQuote() {
+  try {
+    const response = await fetch('https://afterthoughts.onrender.com/api/quotes');
+    if (!response.ok) throw new Error('Failed to fetch quote');
+    
+    const data = await response.json();
+    const quoteElement = document.getElementById('motivational-quote');
+    
+    if (data.quote && data.author) {
+      quoteElement.innerHTML = `"${data.quote}"<br><em>- ${data.author}</em>`;
+    } else {
+      quoteElement.textContent = '"The only way to do great work is to love what you do." - Steve Jobs';
+    }
+  } catch (error) {
+    console.error('Quote fetch error:', error);
+    document.getElementById('motivational-quote').textContent = 
+      '"Success is not final, failure is not fatal: It is the courage to continue that counts." - Churchill';
+  }
 }
-
