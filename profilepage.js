@@ -596,7 +596,7 @@ window.onload = function () {
 
 async function fetchMotivationalQuote() {
   try {
-    const response = await fetch('https://afterthoughts.onrender.com/api/quotes');
+    const response = await fetch('https://afterthoughts.onrender.com/api/quotes/');
     if (!response.ok) throw new Error('Failed to fetch quote');
     
     const data = await response.json();
