@@ -40,7 +40,13 @@ async function fetchArticles() {
 
   let articlesData;
   try {
-    const response = await fetch('http://localhost:3000/api/articles/author');
+    const response = await fetch('http://localhost:3000/api/articles/author', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem("authToken")}`, // Include the token in the header
+        'Content-Type': 'application/json',
+      },
+    });
     console.log("hello");
     if (response.ok) {
       articlesData = await response.json();
