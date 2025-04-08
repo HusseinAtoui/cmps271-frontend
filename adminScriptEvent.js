@@ -64,6 +64,7 @@ async function uploadEvent(e) {
 
     // Retrieve the auth token
     const token = getToken();
+    console.log(token);
     if (!token) {
         alert("You must be logged in as an admin to upload events.");
         return;
