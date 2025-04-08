@@ -40,7 +40,7 @@ async function fetchArticles() {
 
   let articlesData;
   try {
-    const response = await fetch('http://localhost:3000/api/articles/authorapproved');
+    const response = await fetch('http://localhost:3000/api/articles/author');
     console.log("hello");
     if (response.ok) {
       articlesData = await response.json();
