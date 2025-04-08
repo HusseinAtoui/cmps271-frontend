@@ -171,71 +171,54 @@ const commentBtn = document.getElementById("comment-btn");
 const commentInput = document.getElementById("comment");
 
 async function analyzeSentiment(commentInput) {
-  const modal = document.getElementById('sentimentModal');
-  const message = document.getElementById('sentimentMessage');
-  const emotion = document.getElementById('detectedEmotion');
-  const confidence = document.getElementById('confidenceScore');
-  const processedText = document.getElementById('processedText');
-  
-  try {
-    const response = await fetch('https://afterthoughts.onrender.com/api/sentimentComments/', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ text: commentInput.trim() })
-    });
 
-    if (!response.ok) throw new Error('Analysis failed');
-    
-    const data = await response.json();
-    const sentimentMap = {
-      'anger': 'negative',
-      'disgust': 'negative',
-      'fear': 'negative',
-      'joy': 'positive',
-      'neutral': 'neutral',
-      'sadness': 'negative',
-      'surprise': 'neutral'
-    };
-
-    const generalSentiment = sentimentMap[data.sentiment.toLowerCase()] || 'neutral';
-
-    // Update modal content
-    modal.className = `modal ${generalSentiment}`;
-    message.innerHTML = generalSentiment === 'negative' 
-      ? '🚫 Negative comments cannot be posted' 
-      : `This comment appears ${generalSentiment}`;
-      
-    emotion.textContent = data.sentiment;
-    confidence.textContent = `${(data.confidence * 100).toFixed(1)}%`;
-    processedText.textContent = data.analyzedText;
-
-    // Show modal
-    modal.style.display = 'block';
-
-    return new Promise((resolve) => {
-      document.getElementById('confirmButton').onclick = () => {
-        modal.style.display = 'none';
-        resolve(generalSentiment !== 'negative');
-      };
-      
-      document.querySelector('.close').onclick = () => {
-        modal.style.display = 'none';
-        resolve(false);
-      };
-      
-      window.onclick = (event) => {
-        if (event.target === modal) {
-          modal.style.display = 'none';
-          resolve(false);
-        }
-      };
-    });
-
-  } catch (error) {
-    alert(`❌ Analysis Error: ${error.message}`);
-    return false;
+  // Trim and validate input
+  const trimmedText = commentInput.trim();
+  if (!trimmedText) {
+      showError('Please enter some text to analyze');
+      return;
   }
-}
+
+  try {
+      const response = await fetch('https://afterthoughts.onrender.com/api/sentimentComments/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ text: trimmedText })
+      });
+
+      const sentimentMap = {
+          'anger': 'negative',
+          'disgust': 'negative',
+          'fear': 'negative',
+          'joy': 'positive',
+          'neutral': 'neutral',
+          'sadness': 'negative',
+          'surprise': 'neutral'
+      };
+
+      if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const generalSentiment = sentimentMap[data.sentiment.toLowerCase()] || 'neutral';
+
+      alert(`Sentiment Analysis Result:\n
+        Overall: ${generalSentiment.toUpperCase()}
+        Emotion: ${data.sentiment}
+        Confidence: ${(data.confidence * 100).toFixed(1)}%
+        Processed Text: "${data.analyzedText}"`);
+      
+      return true;
+  
+    } catch (error) {
+      alert(`❌ Analysis Error: ${error.message}`);
+      return false;
+    }
+  }
 
 
 // ----------------------------
@@ -259,8 +242,19 @@ async function analyzeSentiment(commentInput) {
           alert("✍️ Please write a comment before submitting.");
           return;
         }
-        const allowed = await analyzeSentiment(text);
-        if (!allowed) return;
+        const sentiment = await analyzeSentiment(text);
+    
+        // Block negative comments
+        if (sentiment === 'negative') {
+          alert("❌ Comments with negative sentiment cannot be posted");
+          return;
+        }
+    
+        // If analysis failed, ask for confirmation
+        if (sentiment === 'error') {
+          const confirmPost = confirm("⚠️ Sentiment analysis failed. Post comment anyway?");
+          if (!confirmPost) return;
+        }
         try {
           const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
             method: "POST",
