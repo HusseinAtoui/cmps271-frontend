@@ -14,7 +14,7 @@ function getToken() {
 // ✅ Fetch and display all events (no authentication required)
 async function fetchEvents() {
     try {
-        const response = await fetch(`https://afterthoughts.onrender.com/api/events/add`);
+        const response = await fetch(`https://afterthoughts.onrender.com/api/events/`);
         const events = await response.json();
         const eventList = document.getElementById("eventList");
 
@@ -78,7 +78,7 @@ async function uploadEvent(e) {
     console.log("📩 Sending Form Data:", [...formData.entries()]);
 
     try {
-        const response = await fetch(`https://afterthoughts.onrender.com/api/events`, {
+        const response = await fetch(`https://afterthoughts.onrender.com/api/events/add`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`
