@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchArticles() {
       try {
-          const response = await fetch("https://afterthoughts.onrender.com/api/articles/");
+          const response = await fetch("https://afterthoughts.onrender.com/api/articles/pending");
           if (!response.ok) throw new Error("Failed to fetch articles");
           const articles = await response.json();
           const articlesList = document.getElementById("articles-list");
