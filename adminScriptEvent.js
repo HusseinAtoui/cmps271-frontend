@@ -11,6 +11,7 @@ function getToken() {
     return localStorage.getItem("authToken"); // Ensure token is set upon login.
 }
 
+
 // ✅ Fetch and display all events (no authentication required)
 async function fetchEvents() {
     try {
