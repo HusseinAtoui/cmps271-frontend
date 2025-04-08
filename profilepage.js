@@ -1,36 +1,64 @@
 document.addEventListener('DOMContentLoaded', function () {
   const urlParams = new URLSearchParams(window.location.search);
   const tokenParam = urlParams.get('token');
-  if (tokenParam) {
-    localStorage.setItem('authToken', tokenParam);
-    // Optionally, remove the token from the URL for cleanliness
-    window.history.replaceState({}, document.title, window.location.pathname);
+  const userParam = urlParams.get('user');
+
+  // Handle URL parameters if they exist
+  if (tokenParam && userParam) {
+    try {
+      // Decode and store both token and user data
+      const userData = JSON.parse(decodeURIComponent(userParam));
+      localStorage.setItem('authToken', tokenParam);
+      localStorage.setItem('userData', JSON.stringify(userData));
+      
+      // Clean the URL after storing
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } catch (error) {
+      console.error('Error parsing user data:', error);
+      localStorage.clear();
+      window.location.href = 'loginPage.html';
+      return;
+    }
   }
 
-  // Check if userData and authToken are present in localStorage
-  const userDataString = localStorage.getItem("userData");
-  const token = localStorage.getItem("authToken");
+  // Check stored credentials
+  const token = localStorage.getItem('authToken');
+  const userDataString = localStorage.getItem('userData');
 
-  if (!userDataString || !token) {
-    console.warn("User not logged in. Redirecting...");
-    window.location.href = "loginPage.html";
+  if (!token || !userDataString) {
+    console.warn('Missing credentials. Redirecting...');
+    localStorage.clear();
+    window.location.href = 'loginPage.html';
     return;
   }
-  const userData = JSON.parse(userDataString);
 
-  // Update the greeting
-  const userGreeting = document.getElementById("user-greeting");
-  if (userGreeting) {
-    userGreeting.textContent = `Hi, ${userData.firstName} ${userData.lastName}`;
+  // Parse user data with error handling
+  let userData;
+  try {
+    userData = JSON.parse(userDataString);
+  } catch (error) {
+    console.error('Invalid user data:', error);
+    localStorage.clear();
+    window.location.href = 'loginPage.html';
+    return;
   }
 
-  // Update the profile image
-  const profileImage = document.getElementById("user-profile-image");
-  if (profileImage) {
-    profileImage.src = userData.profilePicture || "default-profile.jpeg";
-  }
+  // Update UI elements
+  const updateProfileUI = () => {
+    const userGreeting = document.getElementById('user-greeting');
+    const profileImage = document.getElementById('user-profile-image');
 
-  // Fetch and display articles from the backend
+    if (userGreeting) {
+      userGreeting.textContent = `Hi, ${userData.firstName} ${userData.lastName}`;
+    }
+
+    if (profileImage) {
+      profileImage.src = userData.profilePicture || 'default-profile.jpeg';
+      profileImage.alt = `${userData.firstName}'s profile picture`;
+    }
+  };
+
+  updateProfileUI();
   fetchArticles();
 
   // Fetch and display motivational quote
