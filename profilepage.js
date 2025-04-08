@@ -40,7 +40,14 @@ async function fetchArticles() {
 
   let articlesData;
   try {
-    const response = await fetch('https://afterthoughts.onrender.com/api/articles/');
+    const response = await fetch('http://localhost:3000/api/articles/author', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem("authToken")}`, // Include the token in the header
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log("hello");
     if (response.ok) {
       articlesData = await response.json();
     } else {
@@ -328,7 +335,7 @@ logoutBtn.addEventListener("click", async function () {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async  () => {
   // --- User Data & Authentication ---
   const userDataString = localStorage.getItem("userData");
   const token = localStorage.getItem("authToken");
@@ -352,20 +359,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Stats & Chart Code ---
   // Sample articles data for chart demo; replace with your actual articles if needed
-  const articlesData = [
-    { title: "Article 1", month: "January", uniqueViews: 50, likes: 20, comments: 5 },
-    { title: "Article 2", month: "January", uniqueViews: 40, likes: 15, comments: 8 },
-    { title: "Article 3", month: "February", uniqueViews: 60, likes: 25, comments: 10 },
-    { title: "Article 4", month: "March", uniqueViews: 70, likes: 30, comments: 12 },
-    { title: "Article 5", month: "March", uniqueViews: 55, likes: 22, comments: 7 },
-    { title: "Article 6", month: "April", uniqueViews: 80, likes: 35, comments: 15 }
-  ];
+  
+  async function fetchAuthorStats() {
+    const token = localStorage.getItem('authToken'); // Or your auth token storage
+  
+    try {
+      const response = await fetch('http://localhost:3000/api/articles/author-stats', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const articlesData = await response.json();
+      console.log('Author Stats:', articlesData);
+      return articlesData;
+  
+    } catch (error) {
+      console.error('Failed to fetch author stats:', error);
+      throw error; // Re-throw for handling in components
+    }
+  }
+  try{ const articlesData= await fetchAuthorStats();
+
 
   // Calculate overall totals
-  const totalArticles = articlesData.length;
-  const totalUniqueViews = articlesData.reduce((sum, art) => sum + art.uniqueViews, 0);
-  const totalLikes = articlesData.reduce((sum, art) => sum + art.likes, 0);
-  const totalComments = articlesData.reduce((sum, art) => sum + art.comments, 0);
+  const totalArticles = articlesData.stats.totalArticles;
+  const totalUniqueViews = 300;
+  const totalLikes = articlesData.stats.totalLikes;
+  const totalComments = articlesData.stats.totalComments;
 
   // Insert stat boxes into the dashboard-stats section
   const statsContainer = document.querySelector(".dashboard-stats");
@@ -389,17 +416,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function displayGraph(type) {
     // Dummy x-axis values (for example, days or months)
-    const xValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const xValues = Array.from({ length: totalArticles }, (_, i) => i + 1);
     let dataSet;
     // Set dummy datasets based on the type clicked
     if (type === "articles") {
-      dataSet = [1, 2, 1, 3, 2, 4, 3, 5, 4, 6];
+      dataSet = xValues;
     } else if (type === "uniqueViews") {
       dataSet = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
     } else if (type === "popular") {
-      dataSet = [5, 5, 6, 7, 8, 8, 9, 10, 10, 11];
+      dataSet = articlesData.stats.likesPerArticle;
     } else if (type === "engagement") {
-      dataSet = [2, 3, 2, 4, 3, 5, 3, 6, 4, 7];
+      dataSet = articlesData.stats.commentsPerArticle;
     }
 
 
@@ -433,7 +460,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+  } 
+  }catch (error) {
+    console.error("Error loading stats:", error);
   }
+ 
 });
 // Other functions (fetchArticles, displayArticles, toggleSettings, etc.)
 // are defined below as needed...
