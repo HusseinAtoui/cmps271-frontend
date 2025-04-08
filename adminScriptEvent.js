@@ -14,7 +14,7 @@ function getToken() {
 // ✅ Fetch and display all events (no authentication required)
 async function fetchEvents() {
     try {
-        const response = await fetch(`http://localhost:3000/api/events/add`);
+        const response = await fetch(`https://afterthoughts.onrender.com/api/events/add`);
         const events = await response.json();
         const eventList = document.getElementById("eventList");
 
@@ -43,7 +43,7 @@ async function fetchEvents() {
 // ✅ Fetch and display a single event by ID
 async function fetchEventById(eventId) {
     try {
-        const response = await fetch(`http://localhost:3000/api/events/${eventId}`);
+        const response = await fetch(`https://afterthoughts.onrender.com/api/events/${eventId}`);
         const event = await response.json();
 
         if (!response.ok) {
@@ -78,7 +78,7 @@ async function uploadEvent(e) {
     console.log("📩 Sending Form Data:", [...formData.entries()]);
 
     try {
-        const response = await fetch(`http://localhost:3000/api/events`, {
+        const response = await fetch(`https://afterthoughts.onrender.com/api/events`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -116,7 +116,7 @@ async function deleteEvent(eventId) {
     console.log("🗑️ Deleting Event ID:", eventId);
 
     try {
-        const response = await fetch(`http://localhost:3000/api/events/${eventId}`, {
+        const response = await fetch(`https://afterthoughts.onrender.com/api/events/${eventId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`
