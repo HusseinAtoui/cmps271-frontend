@@ -108,8 +108,8 @@ function displayArticles(articles) {
     continueBtn.textContent = "Continue reading";
     continueBtn.addEventListener('click', () => {
       window.location.href = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${article._id}`;
-  });
-  
+    });
+
     const buttonsDiv = document.createElement('div');
     buttonsDiv.classList.add('buttons');
 
@@ -506,3 +506,44 @@ function openSideBar() {
 function closeSideBar() {
   navbar.classList.remove('show');
 }
+
+/*
+const quotes = [
+  "Believe you can and you're halfway there.",
+  "Your limitation—it’s only your imagination.",
+  "Push yourself, because no one else is going to do it for you.",
+  "Great things never come from comfort zones.",
+  "Dream it. Wish it. Do it.",
+  "Don’t watch the clock; do what it does. Keep going."
+];
+
+window.addEventListener('DOMContentLoaded', () => {
+  const quoteElement = document.getElementById('motivational-quote');
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  quoteElement.textContent = `"${randomQuote}"`;
+});
+
+*/
+
+// profilepage.js
+// Call the function when the page loads to fetch the quote
+window.onload = function () {
+  fetchMotivationalQuote();
+};
+
+function fetchMotivationalQuote() {
+  fetch('https://afterthoughts.onrender.com/api/quotes/')  // Call your backend to get the motivational quote
+    .then(response => response.json())
+    .then(data => {
+      const quote = data.quote;    // Quote text
+      const author = data.author;  // Author name
+
+      // Display the quote in the profile page
+      document.getElementById("motivational-quote").innerHTML = `"${quote}" - ${author}`;
+    })
+    .catch(error => {
+      console.error('Error fetching quote:', error);
+      document.getElementById("motivational-quote").innerHTML = `"Your quote will load here..."`;
+    });
+}
+
