@@ -75,24 +75,25 @@ document.addEventListener("DOMContentLoaded", async () => {
               });
           });
 
-          document.querySelectorAll(".disapprove").forEach((button) => {
-              button.addEventListener("click", async () => {
-                  const id = button.getAttribute("data-id");
-                  console.log("Disapprove button clicked:", id);
-                  await fetch(`https://afterthoughts.onrender.com/api/articles/disapprove/${id}`, { method: "PUT" });
-
-                  alert("Article disapproved successfully!");
-                  fetchArticles();
-              });
-          });
+ 
+  
 
           document.querySelectorAll(".delete").forEach((button) => {
               button.addEventListener("click", async () => {
                   const id = button.getAttribute("data-id");
-                  console.log("Delete button clicked:", id);
+                  console.log("Delete button clicked:", id);   
+                  console.log("Approve button clicked:", id);
+                  const token = localStorage.getItem("authToken");
+                  console.log(token);
+                    if (!token) {
+                        alert("You are not authenticated. Please log in.");
+                        return;
+                    }
+
 
                   const response = await fetch(`https://afterthoughts.onrender.com/api/articles/delete/${id}`, {
                       method: "DELETE",
+                      headers: { Authorization: `Bearer ${token}` },
                   });
 
                   if (response.ok) {
@@ -101,7 +102,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                   } else {
                       alert("Failed to delete the article.");
                   }
-              }); });  document.querySelectorAll(".check-ai").forEach((button) => {
+              }); }); 
+              
+              
+              
+              document.querySelectorAll(".check-ai").forEach((button) => {
                 button.addEventListener("click", async () => {
                     if (!aiToggleDiv.classList.contains("hidden")) {
                         toggleAIToggleDiv();
