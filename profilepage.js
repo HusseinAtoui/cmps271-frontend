@@ -1,64 +1,36 @@
 document.addEventListener('DOMContentLoaded', function () {
   const urlParams = new URLSearchParams(window.location.search);
   const tokenParam = urlParams.get('token');
-  const userParam = urlParams.get('user');
-
-  // Handle URL parameters if they exist
-  if (tokenParam && userParam) {
-    try {
-      // Decode and store both token and user data
-      const userData = JSON.parse(decodeURIComponent(userParam));
-      localStorage.setItem('authToken', tokenParam);
-      localStorage.setItem('userData', JSON.stringify(userData));
-      
-      // Clean the URL after storing
-      window.history.replaceState({}, document.title, window.location.pathname);
-    } catch (error) {
-      console.error('Error parsing user data:', error);
-      localStorage.clear();
-      window.location.href = 'loginPage.html';
-      return;
-    }
+  if (tokenParam) {
+    localStorage.setItem('authToken', tokenParam);
+    // Optionally, remove the token from the URL for cleanliness
+    window.history.replaceState({}, document.title, window.location.pathname);
   }
 
-  // Check stored credentials
-  const token = localStorage.getItem('authToken');
-  const userDataString = localStorage.getItem('userData');
+  // Check if userData and authToken are present in localStorage
+  const userDataString = localStorage.getItem("userData");
+  const token = localStorage.getItem("authToken");
 
-  if (!token || !userDataString) {
-    console.warn('Missing credentials. Redirecting...');
-    localStorage.clear();
-    window.location.href = 'loginPage.html';
+  if (!userDataString || !token) {
+    console.warn("User not logged in. Redirecting...");
+    window.location.href = "loginPage.html";
     return;
   }
+  const userData = JSON.parse(userDataString);
 
-  // Parse user data with error handling
-  let userData;
-  try {
-    userData = JSON.parse(userDataString);
-  } catch (error) {
-    console.error('Invalid user data:', error);
-    localStorage.clear();
-    window.location.href = 'loginPage.html';
-    return;
+  // Update the greeting
+  const userGreeting = document.getElementById("user-greeting");
+  if (userGreeting) {
+    userGreeting.textContent = `Hi, ${userData.firstName} ${userData.lastName}`;
   }
 
-  // Update UI elements
-  const updateProfileUI = () => {
-    const userGreeting = document.getElementById('user-greeting');
-    const profileImage = document.getElementById('user-profile-image');
+  // Update the profile image
+  const profileImage = document.getElementById("user-profile-image");
+  if (profileImage) {
+    profileImage.src = userData.profilePicture || "default-profile.jpeg";
+  }
 
-    if (userGreeting) {
-      userGreeting.textContent = `Hi, ${userData.firstName} ${userData.lastName}`;
-    }
-
-    if (profileImage) {
-      profileImage.src = userData.profilePicture || 'default-profile.jpeg';
-      profileImage.alt = `${userData.firstName}'s profile picture`;
-    }
-  };
-
-  updateProfileUI();
+  // Fetch and display articles from the backend
   fetchArticles();
 
   // Fetch and display motivational quote
