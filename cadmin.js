@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const token = localStorage.getItem("authToken");
           const response = await fetch("http://localhost:3000/api/articles/pending",
             {
-                method: "PUT",
+                method: "GET",
                 headers: { Authorization: `Bearer ${token}` },
             }
           );
