@@ -24,7 +24,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchArticles() {
       try {
-          const response = await fetch("https://afterthoughts.onrender.com/api/articles/pending");
+        const token = localStorage.getItem("authToken");
+          const response = await fetch("https://afterthoughts.onrender.com/api/articles/pending",
+            {
+                method: "PUT",
+                headers: { Authorization: `Bearer ${token}` },
+            }
+          );
           if (!response.ok) throw new Error("Failed to fetch articles");
           const articles = await response.json();
           const articlesList = document.getElementById("articles-list");
