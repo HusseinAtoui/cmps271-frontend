@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                       <p><strong>Date:</strong> ${new Date(article.date).toLocaleDateString()}</p>
                       <p><strong>Full Text:</strong> ${article.text}</p>
                       <button class="approve" data-id="${article._id}">Approve</button>
-                      <button class="disapprove" data-id="${article._id}">Disapprove</button>
                       <button class="delete" data-id="${article._id}">Delete</button>
                       <button class="check-ai" data-text="${article.text}">Check for AI Plagiarism</button>
                   </div>
