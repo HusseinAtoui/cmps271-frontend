@@ -1,0 +1,22 @@
+{
+    "name": "Afterthoughts",
+    "short_name": "PBJ",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#222222",
+    "description": "Read and write articles.",
+    "icons": [
+      {
+        "src": "/pwa/web-app-manifest-192x192.png",
+        "sizes": "192x192",
+        "type": "png"
+      },
+      {
+        "src": "/pwa/web-app-manifest-512x512.png",
+        "sizes": "512x512",
+        "type": "png"
+      }
+    ]
+  }
+  
