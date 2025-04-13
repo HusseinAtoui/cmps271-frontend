@@ -1,4 +1,4 @@
-import { Autosave, clearAutosave } from './Cookies.js';
+import { enableAutoSave, clearAutoSave } from './Cookies.js';
 // Ensure correct PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
 
@@ -8,10 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const loadingIndicator = document.getElementById("loading");
     const token = localStorage.getItem("authToken");
 
-    Autosave('#title', 'draft-title');
-    Autosave('#description', 'draft-description');
-    Autosave('#text', 'draft-text');
-
+    const formSaver = enableAutoSave('#submissionForm', 'article_draft');
+    
     if (!form) {
         console.error("❌ Error: Submission form not found.");
         return;
@@ -119,10 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const result = await response.json();
             if (response.ok) {
-                clearAutosave('draft-title');
-                clearAutosave('draft-description');
-                clearAutosave('draft-text');
-
+                clearAutoSave('article_draft');
+                
                 statusMessage.innerHTML = `<p style="color: green;">Submission successful!</p>`;
                 form.reset();
             } else {
