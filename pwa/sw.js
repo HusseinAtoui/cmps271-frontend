@@ -1,30 +1,55 @@
-const CACHE_NAME = 'journal-cache-v1';
+const CACHE_NAME = 'journal-cache-v2';
 
-const urlsToCache = [
-  '/',             // homepage
+const STATIC_ASSETS = [
+  '/',
   '/index.html',
-  '/homepage.css',  
-  '/homepage.js',       
+  '/homepage.css',
+  '/homepage.js',
   '/pwa/web-app-manifest-192x192.png',
   '/pwa/web-app-manifest-512x512.png'
 ];
 
-// Install event — cache everything listed
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
-        return cache.addAll(urlsToCache);
-      })
+      .then((cache) => cache.addAll(STATIC_ASSETS))
   );
 });
 
-// Fetch event — serve from cache if available
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        return response || fetch(event.request);
-      })
+// Clean old caches
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.filter(key => key !== CACHE_NAME)
+            .map(key => caches.delete(key))
+      )
+    )
   );
+});
+
+// Dynamic caching for API responses
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+
+  if (request.url.includes('/api/')) {
+    // Cache API responses
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(request, clone);
+          });
+          return response;
+        })
+        .catch(() => caches.match(request)) // Offline fallback
+    );
+  } else {
+    // Serve static assets from cache first
+    event.respondWith(
+      caches.match(request)
+        .then(cached => cached || fetch(request))
+    );
+  }
 });
