@@ -9,14 +9,14 @@
     "description": "Read and write articles.",
     "icons": [
       {
-        "src": "/pwa/web-app-manifest-192x192.png",
+        "src": "/cmps271-frontend/pwa/web-app-manifest-192x192.png",
         "sizes": "192x192",
-        "type": "png"
+        "type": "image/png"
       },
       {
-        "src": "/pwa/web-app-manifest-512x512.png",
+        "src": "/cmps271-frontend/pwa/web-app-manifest-512x512.png",
         "sizes": "512x512",
-        "type": "png"
+        "type": "image/png"
       }
     ]
   }

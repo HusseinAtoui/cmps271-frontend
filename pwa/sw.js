@@ -1,14 +1,13 @@
-const CACHE_NAME = 'journal-cache-v2';
+const CACHE_NAME = 'journal-cache-v4';
 
 const STATIC_ASSETS = [
-    '/cmps271-frontend/',
-    '/cmps271-frontend/index.html',
-    '/cmps271-frontend/homepage.css',
-    '/cmps271-frontend/homepage.js',
-    '/cmps271-frontend/pwa/web-app-manifest-192x192.png',
-    '/cmps271-frontend/pwa/web-app-manifest-512x512.png'
-  ];
-  
+  '/cmps271-frontend/',
+  '/cmps271-frontend/index.html',
+  '/cmps271-frontend/homepage.css',
+  '/cmps271-frontend/homepage.js',
+  '/cmps271-frontend/pwa/web-app-manifest-192x192.png',
+  '/cmps271-frontend/pwa/web-app-manifest-512x512.png'
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -17,7 +16,6 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Clean old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -29,28 +27,9 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Dynamic caching for API responses
 self.addEventListener('fetch', (event) => {
-  const { request } = event;
-
-  if (request.url.includes('/api/')) {
-    // Cache API responses
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(request, clone);
-          });
-          return response;
-        })
-        .catch(() => caches.match(request)) // Offline fallback
-    );
-  } else {
-    // Serve static assets from cache first
-    event.respondWith(
-      caches.match(request)
-        .then(cached => cached || fetch(request))
-    );
-  }
+  event.respondWith(
+    caches.match(event.request)
+      .then(cachedResponse => cachedResponse || fetch(event.request))
+  );
 });
