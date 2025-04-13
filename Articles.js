@@ -1,5 +1,6 @@
 
 console.log("🔥 Articles.js is running!");
+import { Autosave, clearAutosave } from './Cookies.js';
 
 // ==============================
 // RENDER ARTICLE
@@ -182,6 +183,8 @@ function setupHeartButton(articleId) {
 const commentBtn = document.getElementById("comment-btn");
 const commentInput = document.getElementById("comment");
 
+Autosave('#comment', 'draft-comment');
+
 async function analyzeSentiment(commentInput) {
 
   // Trim and validate input
@@ -275,6 +278,8 @@ async function analyzeSentiment(commentInput) {
           const data = await response.json();
           if (response.ok) {
             console.log("✅ Comment posted successfully:", data);
+
+            clearAutosave('draft-comment');
 
             // Retrieve the user data
             const userData = JSON.parse(localStorage.getItem("userData")) || {};
