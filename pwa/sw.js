@@ -1,13 +1,14 @@
 const CACHE_NAME = 'journal-cache-v2';
 
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/homepage.css',
-  '/homepage.js',
-  '/pwa/web-app-manifest-192x192.png',
-  '/pwa/web-app-manifest-512x512.png'
-];
+    '/cmps271-frontend/',
+    '/cmps271-frontend/index.html',
+    '/cmps271-frontend/homepage.css',
+    '/cmps271-frontend/homepage.js',
+    '/cmps271-frontend/pwa/web-app-manifest-192x192.png',
+    '/cmps271-frontend/pwa/web-app-manifest-512x512.png'
+  ];
+  
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
