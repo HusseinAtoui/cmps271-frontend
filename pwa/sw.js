@@ -1,4 +1,4 @@
-const CACHE_NAME = 'journal-cache-v4';
+const CACHE_NAME = 'journal-cache-v5';
 
 const STATIC_ASSETS = [
   '/cmps271-frontend/',
@@ -28,8 +28,26 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(cachedResponse => cachedResponse || fetch(event.request))
-  );
+  const { request } = event;
+
+  // Handle API requests for events/articles
+  if (request.url.includes('/api/events') || request.url.includes('/api/articles')) {
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(request, responseClone);
+          });
+          return response;
+        })
+        .catch(() => caches.match(request)) // Serve cached API response if offline
+    );
+  } else {
+    // Handle static assets
+    event.respondWith(
+      caches.match(request)
+        .then(cachedResponse => cachedResponse || fetch(request))
+    );
+  }
 });
