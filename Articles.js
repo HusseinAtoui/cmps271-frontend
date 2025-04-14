@@ -21,6 +21,37 @@ function renderFullArticle({ title, author, text, image }) {
   pre.className = 'text';
   pre.textContent = text;
 
+const articleLink = `https://afterthoughts.onrender.com/article?id=${articleId}`;
+// MLA 
+const mlaCitation = `${author}. "${title}." Afterthoughts Philosophy Journal, ${articleLink}.`;
+// APA 
+const apaCitation = `${author} (${new Date().getFullYear()}). ${title}. Afterthoughts Philosophy Journal. Retrieved from ${articleLink}`;
+const citationContainer = document.createElement('div');
+citationContainer.className = 'citation-container';
+
+// MLA 
+const mlaBtn = document.createElement('button');
+mlaBtn.textContent = 'Copy MLA Citation';
+mlaBtn.className = 'cite-btn';
+mlaBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(mlaCitation);
+  alert('MLA Citation copied!');
+});
+
+// APA button 
+const apaBtn = document.createElement('button');
+apaBtn.textContent = 'Copy APA Citation';
+apaBtn.className = 'cite-btn';
+apaBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(apaCitation);
+  alert('APA Citation copied!');
+});
+
+citationContainer.append(mlaBtn, apaBtn);
+
+section.append(h1, h2, pre, citationContainer);
+
+
   section.classList.add('article');
   section.append(h1, h2, pre);
 
