@@ -21,52 +21,39 @@ function renderFullArticle({ title, author, text, image }) {
   pre.className = 'text';
   pre.textContent = text;
 
-  const articleLink = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${articleId}`;
+const articleLink = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${articleId}`;
+;
+// MLA 
+const mlaCitation = `${author}. "${title}." Afterthoughts Philosophy Journal, ${articleLink}.`;
+// APA 
+const apaCitation = `${author} (${new Date().getFullYear()}). ${title}. Afterthoughts Philosophy Journal. Retrieved from ${articleLink}`;
+const citationContainer = document.createElement('div');
+citationContainer.className = 'citation-container';
 
-  // MLA Citation
-  const mlaCitation = `${author}. "${title}." Afterthoughts Philosophy Journal, ${articleLink}.`;
-  
-  // APA Citation
-  const apaCitation = `${author} (${new Date().getFullYear()}). ${title}. Afterthoughts Philosophy Journal. Retrieved from ${articleLink}`;
-  
-  const citationContainer = document.createElement('div');
-  citationContainer.className = 'citation-container';
-  
-  // Generate Citation Button
-  const generateBtn = document.createElement('button');
-  generateBtn.textContent = 'Generate Citation';
-  generateBtn.className = 'cite-btn';
-  
-  const dropdown = document.createElement('div');
-  dropdown.className = 'citation-dropdown';
-  dropdown.style.display = 'none';
-  
-  const mlaOption = document.createElement('div');
-  mlaOption.textContent = 'Copy MLA Citation';
-  mlaOption.addEventListener('click', () => {
-    navigator.clipboard.writeText(mlaCitation);
-    alert('MLA Citation copied!');
-    dropdown.style.display = 'none';
-  });
-  
-  const apaOption = document.createElement('div');
-  apaOption.textContent = 'Copy APA Citation';
-  apaOption.addEventListener('click', () => {
-    navigator.clipboard.writeText(apaCitation);
-    alert('APA Citation copied!');
-    dropdown.style.display = 'none';
-  });
-  
-  dropdown.append(mlaOption, apaOption);
-  
-  // Toggle Dropdown Visibility
-  generateBtn.addEventListener('click', () => {
-    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-  });
-  
-  citationContainer.append(generateBtn, dropdown);
-  section.append(h1, h2, pre, citationContainer);
-  
+// MLA 
+const mlaBtn = document.createElement('button');
+mlaBtn.textContent = 'Copy MLA Citation';
+mlaBtn.className = 'cite-btn';
+mlaBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(mlaCitation);
+  alert('MLA Citation copied!');
+});
+
+// APA button 
+const apaBtn = document.createElement('button');
+apaBtn.textContent = 'Copy APA Citation';
+apaBtn.className = 'cite-btn';
+apaBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(apaCitation);
+  alert('APA Citation copied!');
+});
+console.log("Appending citation buttons now..."); // for testing 
+
+citationContainer.append(mlaBtn, apaBtn);
+
+section.append(h1, h2, pre, citationContainer);
+section.classList.add('article');
+
   const imageSection = document.querySelector('.image');
   if (imageSection && image) {
     imageSection.style.backgroundImage = `url("${image}")`;
