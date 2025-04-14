@@ -15,6 +15,7 @@ function renderFullArticle({ title, author, text, image }) {
   h1.textContent = title;
 
   const h2 = document.createElement('h2');
+  h2.className = 'author-title';
   h2.textContent = `by ${author}`;
 
   const pre = document.createElement('p');
