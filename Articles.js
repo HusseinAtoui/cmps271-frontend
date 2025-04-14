@@ -21,7 +21,8 @@ function renderFullArticle({ title, author, text, image }) {
   pre.className = 'text';
   pre.textContent = text;
 
-const articleLink = `https://afterthoughts.onrender.com/article?id=${articleId}`;
+const articleLink = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${articleId}`;
+;
 // MLA 
 const mlaCitation = `${author}. "${title}." Afterthoughts Philosophy Journal, ${articleLink}.`;
 // APA 

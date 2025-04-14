@@ -460,13 +460,11 @@ textarea {
 }
 
 .cite-btn:hover {
-  background-color: #ffe6e6;
+  background-color: #b45454;
 }
 
 .citation-container {
-  background-color: #FFE2D5;
   padding: 20px;
   display: flex;
   gap: 10px;
 }
-
