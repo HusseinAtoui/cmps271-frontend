@@ -16,10 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Load saved form data from localStorage
     function loadFormData() {
-        const inputs = form.querySelectorAll('input, textarea, select');
+        const inputs = form.querySelectorAll('input:not([type="file"]), textarea, select');
         inputs.forEach(input => {
-            if (input.type === 'file') return; // Skip file inputs
-            
             const savedValue = localStorage.getItem(`form_${form.id}_${input.name}`);
             if (savedValue !== null) {
                 if (input.type === 'checkbox' || input.type === 'radio') {
@@ -33,23 +31,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Save form data to localStorage with debouncing
     function setupFormAutoSave() {
-        const inputs = form.querySelectorAll('input, textarea, select');
+        const inputs = form.querySelectorAll('input:not([type="file"]), textarea, select');
         let saveTimeout;
-
-        function saveInputValue(input) {
-            if (input.type === 'file') return;
-            
-            if (input.type === 'checkbox' || input.type === 'radio') {
-                localStorage.setItem(`form_${form.id}_${input.name}`, input.checked);
-            } else {
-                localStorage.setItem(`form_${form.id}_${input.name}`, input.value);
-            }
-        }
 
         inputs.forEach(input => {
             input.addEventListener('input', function() {
                 clearTimeout(saveTimeout);
-                saveTimeout = setTimeout(() => saveInputValue(input), 500);
+                saveTimeout = setTimeout(() => {
+                    if (this.type === 'checkbox' || this.type === 'radio') {
+                        localStorage.setItem(`form_${form.id}_${this.name}`, this.checked);
+                    } else {
+                        localStorage.setItem(`form_${form.id}_${this.name}`, this.value);
+                    }
+                }, 500);
             });
         });
     }
@@ -170,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const result = await response.json();
             if (response.ok) {
-                
+
                 statusMessage.innerHTML = `<p style="color: green;">Submission successful!</p>`;
                 form.reset();
             } else {
