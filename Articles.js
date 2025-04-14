@@ -11,7 +11,7 @@ function renderFullArticle({ title, author, text, image }) {
   section.innerHTML = "";
 
   const h1 = document.createElement('h1');
-  h1.className = 'title';
+  h1.className = 'article-title';
   h1.textContent = title;
 
   const h2 = document.createElement('h2');
