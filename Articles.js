@@ -120,9 +120,39 @@ function makeProfile(profiles) {
 }
 
 // ==============================
+// LOAD ARTICLE FROM BACKEND
+// ==============================
+const params = new URLSearchParams(window.location.search);
+const articleId = params.get('id');
+console.log("🔑 Article ID from URL:", articleId);
+
+fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
+  .then(response => {
+    if (!response.ok) throw new Error("Article not found");
+    return response.json();
+  })
+  .then(article => {
+    renderFullArticle({
+      title: article.title,
+      author: `${article.userID.firstName || "Unknown"} ${article.userID.lastName || ""}`,
+      text: article.text,
+      image: article.image
+    });
+
+    if (Array.isArray(article.comments)) {
+      const formattedComments = article.comments.map(comment => ({
+        name: comment.postedBy.firstName + " " + comment.postedBy.lastName,
+        image: comment.postedBy.profilePicture,
+        comment: comment.text
+      }));
+
+      document._existingComments = formattedComments;
+      makeProfile(formattedComments);
+    }
+    setupHeartButton(articleId);
+// ==============================
 // HEART BUTTON FUNCTIONALITY
 // ==============================
-
 function setupHeartButton(articleId) {
   const heartBtn = document.getElementById('kudos-btn');
   const token = localStorage.getItem("authToken");
@@ -136,7 +166,7 @@ function setupHeartButton(articleId) {
 
     try {
       const response = await fetch(
-        `https://afterthoughts.onrender.com/api/articles/${articleId}/like-status`,
+        `https://afterthoughts.onrender.com/api/articles/${articleId}/like-status`, 
         {
           headers: { Authorization: `Bearer ${token}` }
         }
@@ -191,38 +221,6 @@ function setupHeartButton(articleId) {
 
   checkLikeStatus();
 }
-
-// ==============================
-// LOAD ARTICLE FROM BACKEND
-// ==============================
-const params = new URLSearchParams(window.location.search);
-const articleId = params.get('id');
-console.log("🔑 Article ID from URL:", articleId);
-
-fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
-  .then(response => {
-    if (!response.ok) throw new Error("Article not found");
-    return response.json();
-  })
-  .then(article => {
-    renderFullArticle({
-      title: article.title,
-      author: `${article.userID.firstName || "Unknown"} ${article.userID.lastName || ""}`,
-      text: article.text,
-      image: article.image
-    });
-
-    if (Array.isArray(article.comments)) {
-      const formattedComments = article.comments.map(comment => ({
-        name: comment.postedBy.firstName + " " + comment.postedBy.lastName,
-        image: comment.postedBy.profilePicture,
-        comment: comment.text
-      }));
-
-      document._existingComments = formattedComments;
-      makeProfile(formattedComments);
-    }
-    setupHeartButton(articleId);
 
 
 const commentBtn = document.getElementById("comment-btn");
