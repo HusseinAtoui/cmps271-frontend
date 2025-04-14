@@ -50,10 +50,7 @@ apaBtn.addEventListener('click', () => {
 citationContainer.append(mlaBtn, apaBtn);
 
 section.append(h1, h2, pre, citationContainer);
-
-
-  section.classList.add('article');
-  section.append(h1, h2, pre);
+section.classList.add('article');
 
   const imageSection = document.querySelector('.image');
   if (imageSection && image) {
