@@ -492,3 +492,11 @@ textarea {
 .citation-dropdown div:hover {
   background-color: #ddd;
 }
+.article-title {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 40px;
+  font-weight: bold;
+  text-transform: none;  
+  color: #7D0C0E;
+  margin-bottom: 10px;
+}
