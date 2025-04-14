@@ -457,6 +457,7 @@ textarea {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 18px;
 }
 
 .cite-btn:hover {
@@ -475,7 +476,7 @@ textarea {
 
 .citation-dropdown {
   margin-top: 10px;
-  background-color: #f9f9f9;
+  background-color: #faefe1;
   border: 1px solid #ccc;
   border-radius: 4px;
   position: absolute;
@@ -490,7 +491,7 @@ textarea {
 }
 
 .citation-dropdown div:hover {
-  background-color: #ddd;
+  background-color: #e7b7dd;
 }
 .article-title {
   font-family: 'Times New Roman', Times, serif;
