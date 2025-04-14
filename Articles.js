@@ -46,6 +46,7 @@ apaBtn.addEventListener('click', () => {
   navigator.clipboard.writeText(apaCitation);
   alert('APA Citation copied!');
 });
+console.log("Appending citation buttons now..."); // for testing 
 
 citationContainer.append(mlaBtn, apaBtn);
 
