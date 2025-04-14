@@ -18,7 +18,7 @@ function renderFullArticle({ title, author, text, image }) {
   h2.className = 'author-title';
   h2.textContent = `by ${author}`;
 
-  const pre = document.createElement('pre');
+  const pre = document.createElement('p');
   pre.className = 'text';
   pre.textContent = text;
 
@@ -108,7 +108,7 @@ function makeProfile(profiles) {
     const textDiv = document.createElement('div');
     textDiv.classList.add('text');
 
-    const paragraph = document.createElement('pre');
+    const paragraph = document.createElement('p');
     paragraph.textContent = profile.comment;
     textDiv.appendChild(paragraph);
 
