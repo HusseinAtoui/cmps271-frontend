@@ -450,8 +450,7 @@ textarea {
 }
 
 .cite-btn {
-  /*background-color: #7D0C0E; */
-  background-color: black;
+  background-color: #7D0C0E;
   color: white;
   padding: 8px 16px;
   border: none;
@@ -461,11 +460,11 @@ textarea {
 }
 
 .cite-btn:hover {
-  background-color: #5c090b;
+  background-color: #ffe6e6;
 }
 
 .citation-container {
-  background-color: yellow;
+  background-color: #FFE2D5;
   padding: 20px;
   display: flex;
   gap: 10px;
