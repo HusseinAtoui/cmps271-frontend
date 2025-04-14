@@ -468,3 +468,27 @@ textarea {
   display: flex;
   gap: 10px;
 }
+.citation-container {
+  margin-top: 20px;
+  position: relative;
+}
+
+.citation-dropdown {
+  margin-top: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 1;
+  width: max-content;
+  padding: 5px;
+}
+
+.citation-dropdown div {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.citation-dropdown div:hover {
+  background-color: #ddd;
+}
