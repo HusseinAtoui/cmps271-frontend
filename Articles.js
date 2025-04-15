@@ -126,7 +126,8 @@ function setupCommentPersistence(articleId) {
   const commentBtn = document.getElementById("comment-btn");
   
   if (!commentInput || !commentBtn) return;
-
+  
+  // Load saved comment from localStorage
   function loadComment() {
     const savedComment = localStorage.getItem(`article_${articleId}_comment`);
     if (savedComment !== null) {
@@ -134,7 +135,7 @@ function setupCommentPersistence(articleId) {
     }
   }
   
-  // Save comment to localStorage 
+  // Save comment to localStorage with debouncing
   function setupCommentAutoSave() {
     let saveTimeout;
     
@@ -151,6 +152,7 @@ function setupCommentPersistence(articleId) {
     localStorage.removeItem(`article_${articleId}_comment`);
   }
   
+  // Initialize comment persistence
   loadComment();
   setupCommentAutoSave();
    
@@ -163,7 +165,7 @@ function setupCommentPersistence(articleId) {
   
   // Add clear draft button
   const clearBtn = document.createElement('button');
-  clearBtn.textContent = 'Clear';
+  clearBtn.textContent = 'Clear Draft';
   clearBtn.className = 'clear-comment-btn';
   clearBtn.addEventListener('click', () => {
     commentInput.value = '';
