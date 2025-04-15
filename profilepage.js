@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const token = localStorage.getItem('authToken'); // Or your auth token storage
 
     try {
-      const response = await fetch('http://localhost:3000/api/articles/author-stats', {
+      const response = await fetch("https://afterthoughts.onrender.com/api/articles/author-stats", {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
