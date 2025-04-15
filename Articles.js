@@ -118,13 +118,69 @@ function makeProfile(profiles) {
     allProfiles.appendChild(profileElement);
   });
 }
-
+// ==============================
+// COMMENT PERSISTENCE FUNCTIONALITY
+// ==============================
+function setupCommentPersistence(articleId) {
+  const commentInput = document.getElementById("comment");
+  const commentBtn = document.getElementById("comment-btn");
+  
+  if (!commentInput || !commentBtn) return;
+  
+  // Load saved comment from localStorage
+  function loadComment() {
+    const savedComment = localStorage.getItem(`article_${articleId}_comment`);
+    if (savedComment !== null) {
+      commentInput.value = savedComment;
+    }
+  }
+  
+  // Save comment to localStorage with debouncing
+  function setupCommentAutoSave() {
+    let saveTimeout;
+    
+    commentInput.addEventListener('input', function() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        localStorage.setItem(`article_${articleId}_comment`, commentInput.value);
+      }, 500);
+    });
+  }
+  
+  // Clear saved comment
+  function clearComment() {
+    localStorage.removeItem(`article_${articleId}_comment`);
+  }
+  
+  // Initialize comment persistence
+  loadComment();
+  setupCommentAutoSave();
+   
+  //removes local storage with commented
+  commentBtn.addEventListener("click", () => {
+    if (commentInput.value === "") {
+      localStorage.removeItem(`article_${articleId}_comment`);
+    }
+  });
+  
+  // Add clear draft button
+  const clearBtn = document.createElement('button');
+  clearBtn.textContent = 'Clear Draft';
+  clearBtn.className = 'clear-comment-btn';
+  clearBtn.addEventListener('click', () => {
+    commentInput.value = '';
+    clearComment();
+  });
+  
+  commentBtn.insertAdjacentElement('afterend', clearBtn);
+}
 // ==============================
 // LOAD ARTICLE FROM BACKEND
 // ==============================
 const params = new URLSearchParams(window.location.search);
 const articleId = params.get('id');
 console.log("🔑 Article ID from URL:", articleId);
+setupCommentPersistence(articleId); 
 
 fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
   .then(response => {
