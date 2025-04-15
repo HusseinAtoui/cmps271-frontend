@@ -14,6 +14,58 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    // Load saved form data from localStorage
+    function loadFormData() {
+        const inputs = form.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            if (input.type === 'file') return; // Skip file inputs
+            
+            const savedValue = localStorage.getItem(`form_${form.id}_${input.name}`);
+            if (savedValue !== null) {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    input.checked = savedValue === 'true';
+                } else {
+                    input.value = savedValue;
+                }
+            }
+        });
+    }
+
+    // Save form data to localStorage with debouncing
+    function setupFormAutoSave() {
+        const inputs = form.querySelectorAll('input, textarea, select');
+        let saveTimeout;
+
+        function saveInputValue(input) {
+            if (input.type === 'file') return;
+            
+            if (input.type === 'checkbox' || input.type === 'radio') {
+                localStorage.setItem(`form_${form.id}_${input.name}`, input.checked);
+            } else {
+                localStorage.setItem(`form_${form.id}_${input.name}`, input.value);
+            }
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(() => saveInputValue(input), 500);
+            });
+        });
+    }
+
+    // Clear saved form data
+    function clearFormData() {
+        const inputs = form.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            localStorage.removeItem(`form_${form.id}_${input.name}`);
+        });
+    }
+
+    // Initialize form persistence
+    loadFormData();
+    setupFormAutoSave();
+
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
         loadingIndicator.style.display = "block";
@@ -25,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
         appendIfMissing(formData, "title", "Untitled Article");
         appendIfMissing(formData, "description", "Read more about this");
         appendIfMissing(formData, "date", new Date().toISOString());
-      
         appendIfMissing(formData, "tag", "general");
 
         // Handle image upload
@@ -65,6 +116,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Submit the article
         await submitArticle(formData);
+        
+        // Clear saved data after successful submission
+        clearFormData();
     });
 
     // Function to ensure a field exists in FormData
@@ -116,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const result = await response.json();
             if (response.ok) {
-
+                
                 statusMessage.innerHTML = `<p style="color: green;">Submission successful!</p>`;
                 form.reset();
             } else {
@@ -145,7 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
-
 
 /* =============================
    nav bar
