@@ -43,7 +43,7 @@ async function fetchArticles() {
 
   let articlesData;
   try {
-    const response = await fetch('http://localhost:3000/api/articles/author', {
+    const response = await fetch("https://afterthoughts.onrender.com/api/articles/author", {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem("authToken")}`, // Include the token in the header
@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const token = localStorage.getItem('authToken'); // Or your auth token storage
 
     try {
-      const response = await fetch('http://localhost:3000/api/articles/author-stats', {
+      const response = await fetch("https://afterthoughts.onrender.com/api/articles/author-stats", {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -503,7 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Send POST request to the backend endpoint
-      const response = await fetch('https://afterthoughts.onrender.com/api/schedule', {
+      const response = await fetch("https://afterthoughts.onrender.com/api/schedule", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -568,7 +568,7 @@ window.onload = function () {
 
 async function fetchMotivationalQuote() {
   try {
-    const response = await fetch('https://afterthoughts.onrender.com/api/quotes/');
+    const response = await fetch("https://afterthoughts.onrender.com/api/quotes/");
     if (!response.ok) throw new Error('Failed to fetch quote');
     
     const data = await response.json();

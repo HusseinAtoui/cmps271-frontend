@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function fetchArticles() {
       try {
         const token = localStorage.getItem("authToken");
-          const response = await fetch("http://localhost:3000/api/articles/pending",
+          const response = await fetch("https://afterthoughts.onrender.com/api/articles/pending",
             {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` },
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         return;
                     }
 
-                  const response = await fetch(`http://localhost:3000/api/articles/approve/${id}`, {
+                  const response = await fetch(`https://afterthoughts.onrender.com/api/articles/approve/${id}`, {
                       method: "PUT",
                       headers: { Authorization: `Bearer ${token}` },
                   });
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const articleText = button.getAttribute("data-text");
             
                     try {
-                        const aiResponse = await fetch("http://localhost:3000/api/aiplagarism/detect", {
+                        const aiResponse = await fetch("https://afterthoughts.onrender.com/api/aiplagarism/detect", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",

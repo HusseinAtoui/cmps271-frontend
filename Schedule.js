@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Send POST request to the backend endpoint
-      const response = await fetch('http://localhost:3000/api/schedule', {
+      const response = await fetch("https://afterthoughts.onrender.com/api/schedule", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Function to fetch meetings from the backend
   async function fetchMeetings() {
     try {
-      const response = await fetch('http://localhost:3000/api/schedule'); // Adjust endpoint as needed
+      const response = await fetch("https://afterthoughts.onrender.com/api/schedule"); // Adjust endpoint as needed
       if (!response.ok) {
         throw new Error('Failed to fetch meetings');
       }

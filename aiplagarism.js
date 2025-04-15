@@ -7,7 +7,7 @@ async function detectAI() {
     }
     document.getElementById("result").innerText = "Analyzing...";
     try {
-      const response = await fetch("http://localhost:3000/aiplagarism/detect", {
+      const response = await fetch("https://afterthoughts.onrender.com/aiplagarism/detect", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text })
