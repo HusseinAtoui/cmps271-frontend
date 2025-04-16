@@ -191,8 +191,18 @@ body {
     object-fit: cover;
 }
 
+/* Cpatcha */
+
+.g-recaptcha {
+    width: 100%;
+    margin-left:72%;
+
+}
+
 /* Responsive Design */
-@media screen and (max-width: 900px) {
+
+
+@media (max-width: 900px) {
     .login-box {
         flex-direction: column;
         width: 90%;
@@ -205,6 +215,12 @@ body {
 
     .login-image {
         display: none;
+    }
+
+    .g-recaptcha {
+        width: 100%;
+        margin-left: 80px;
+
     }
 }
 
