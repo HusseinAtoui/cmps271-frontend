@@ -542,25 +542,6 @@ function closeSideBar() {
   navbar.classList.remove('show');
 }
 
-/*
-const quotes = [
-  "Believe you can and you're halfway there.",
-  "Your limitation—it’s only your imagination.",
-  "Push yourself, because no one else is going to do it for you.",
-  "Great things never come from comfort zones.",
-  "Dream it. Wish it. Do it.",
-  "Don’t watch the clock; do what it does. Keep going."
-];
-
-window.addEventListener('DOMContentLoaded', () => {
-  const quoteElement = document.getElementById('motivational-quote');
-  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-  quoteElement.textContent = `"${randomQuote}"`;
-});
-
-*/
-
-// profilepage.js
 // Call the function when the page loads to fetch the quote
 window.onload = function () {
   fetchMotivationalQuote();
