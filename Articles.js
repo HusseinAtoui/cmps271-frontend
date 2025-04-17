@@ -224,7 +224,7 @@ function setupHeartButton(articleId) {
 
     try {
       const response = await fetch(
-        `https://afterthoughts.onrender.com/api/articles/1/2/3/4/${articleId}/like-status`,
+        `https://afterthoughts.onrender.com/api/articles/${articleId}/like-status`,
         {
           headers: { Authorization: `Bearer ${token}` }
         }
