@@ -209,18 +209,22 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
 // ==============================
 function setupHeartButton(articleId) {
   const heartBtn = document.getElementById('kudos-btn');
-  const token = localStorage.getItem("authToken");
-
   if (!heartBtn || !articleId) return;
 
-  let isLiked = false;
+  const heartIcon = heartBtn.querySelector('.heart-icon');
+  if (!heartIcon) return;
 
-  const checkLikeStatus = async () => {
-    if (!token) return;
+  const token = localStorage.getItem("authToken");
+
+  async function checkLikeStatus() {
+    if (!token) {
+      heartBtn.classList.remove("liked");
+      return;
+    }
 
     try {
       const response = await fetch(
-        `https://afterthoughts.onrender.com/api/articles/1/2/3/4/${articleId}/like-status`, 
+        `https://afterthoughts.onrender.com/api/articles/${articleId}/like-status`,
         {
           headers: { Authorization: `Bearer ${token}` }
         }
@@ -230,29 +234,29 @@ function setupHeartButton(articleId) {
 
       const data = await response.json();
       if (data.hasLiked) {
-        isLiked = true;
         heartBtn.classList.add("liked");
+      } else {
+        heartBtn.classList.remove("liked");
       }
     } catch (err) {
       console.error("Error checking like status:", err);
     }
-  };
+  }
 
-  heartBtn.addEventListener("click", async () => {
+  async function handleHeartClick() {
     if (!token) {
       alert("Please log in to like this article.");
       window.location.href = "loginPage.html";
       return;
     }
 
-    isLiked = !isLiked;
-    heartBtn.classList.toggle("liked");
+    const isLiked = heartBtn.classList.contains("liked");
     heartBtn.disabled = true;
 
     try {
       const endpoint = isLiked
-        ? 'https://afterthoughts.onrender.com/api/articles/add-like'
-        : 'https://afterthoughts.onrender.com/api/articles/remove-like';
+        ? "https://afterthoughts.onrender.com/api/articles/remove-like"
+        : "https://afterthoughts.onrender.com/api/articles/add-like";
 
       const response = await fetch(endpoint, {
         method: "POST",
@@ -263,16 +267,22 @@ function setupHeartButton(articleId) {
         body: JSON.stringify({ articleId })
       });
 
-      if (!response.ok) throw new Error("Failed to update like status");
+      if (!response.ok) throw new Error("Failed to update like");
+
+      heartBtn.classList.toggle("liked");
+
+      heartIcon.style.transform = "scale(1.3)";
+      setTimeout(() => {
+        heartIcon.style.transform = "";
+      }, 300);
+
     } catch (err) {
       console.error("Error updating like:", err);
-      isLiked = !isLiked;
-      heartBtn.classList.toggle("liked");
     } finally {
       heartBtn.disabled = false;
     }
-  });
-
+  }
+  heartBtn.addEventListener("click", handleHeartClick);
   checkLikeStatus();
 }
 
