@@ -251,8 +251,8 @@ function setupHeartButton(articleId) {
 
     try {
       const endpoint = isLiked
-        ? "https://afterthoughts.onrender.com/api/articles/add-like"
-        : "https://afterthoughts.onrender.com/api/articles/remove-like";
+        ? 'https://afterthoughts.onrender.com/api/articles/add-like'
+        : 'https://afterthoughts.onrender.com/api/articles/remove-like';
 
       const response = await fetch(endpoint, {
         method: "POST",
