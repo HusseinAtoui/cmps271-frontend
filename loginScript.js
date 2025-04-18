@@ -79,13 +79,20 @@ document.getElementById("signupFormElement").addEventListener("submit", async fu
         }
     } catch (error) {
         console.error("Signup error:", error);
-        alert("An error occurred. Please try again.",error);
+        alert("An error occurred. Please try again.", error);
     }
 });
 
 // Login form submission event listener
 document.getElementById("loginFormElement").addEventListener("submit", async function (e) {
     e.preventDefault();
+
+    // Get CAPTCHA response
+    const captchaResponse = grecaptcha.getResponse();
+    if (!captchaResponse) {
+        alert('Please complete the CAPTCHA!');
+        return;
+    }
 
     // Gather login form field values
     const email = document.getElementById("email").value.trim();
@@ -103,6 +110,15 @@ document.getElementById("loginFormElement").addEventListener("submit", async fun
             body: JSON.stringify({ email, password })
         });
         const result = await response.json();
+
+        if (!response.ok) {
+            // Handle CAPTCHA errors
+            if (data.error) {
+              alert(data.error);
+              grecaptcha.reset();
+            }
+            return;
+          }
 
         if (result.status === "SUCCESS") {
             alert("Login successful!");
