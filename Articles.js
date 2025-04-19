@@ -204,6 +204,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
       makeProfile(formattedComments);
     }
     setupHeartButton(articleId);
+
 // ==============================
 // HEART BUTTON FUNCTIONALITY
 // ==============================
@@ -220,7 +221,7 @@ function setupHeartButton(articleId) {
 
     try {
       const response = await fetch(
-        `https://afterthoughts.onrender.com/api/articles/1/2/3/4/${articleId}/like-status`, 
+        `https://afterthoughts.onrender.com/api/articles/${articleId}/like-status`, 
         {
           headers: { Authorization: `Bearer ${token}` }
         }
@@ -251,8 +252,8 @@ function setupHeartButton(articleId) {
 
     try {
       const endpoint = isLiked
-        ? "https://afterthoughts.onrender.com/api/articles/add-like"
-        : "https://afterthoughts.onrender.com/api/articles/remove-like";
+        ? 'https://afterthoughts.onrender.com/api/articles/add-like'
+        : 'https://afterthoughts.onrender.com/api/articles/remove-like';
 
       const response = await fetch(endpoint, {
         method: "POST",

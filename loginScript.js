@@ -79,7 +79,7 @@ document.getElementById("signupFormElement").addEventListener("submit", async fu
         }
     } catch (error) {
         console.error("Signup error:", error);
-        alert("An error occurred. Please try again.",error);
+        alert("An error occurred. Please try again.", error);
     }
 });
 

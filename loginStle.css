@@ -191,38 +191,6 @@ body {
     object-fit: cover;
 }
 
-/* Cpatcha */
-
-.g-recaptcha {
-    width: 100%;
-    margin-left:72%;
-
-}
-
-/* Responsive Design */
-
-
-@media (max-width: 900px) {
-    .login-box {
-        flex-direction: column;
-        width: 90%;
-        max-width: 500px;
-    }
-
-    .login-form {
-        padding: 40px;
-    }
-
-    .login-image {
-        display: none;
-    }
-
-    .g-recaptcha {
-        width: 100%;
-        margin-left: 80px;
-
-    }
-}
 
 /* Footer Section */
 
@@ -301,4 +269,36 @@ footer {
 
 .mailing-list button:hover {
     background-color: #F0C5A4;
+}
+
+/* Cpatcha */
+
+.g-recaptcha {
+    width: 100%;
+    margin-left: 72%;
+
+}
+
+/* Responsive Design */
+
+@media (max-width: 900px) {
+    .login-box {
+        flex-direction: column;
+        width: 90%;
+        max-width: 500px;
+    }
+
+    .login-form {
+        padding: 40px;
+    }
+
+    .login-image {
+        display: none;
+    }
+
+    .g-recaptcha {
+        width: 100%;
+        margin-left: 80px;
+
+    }
 }
