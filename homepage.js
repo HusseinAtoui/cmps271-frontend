@@ -531,4 +531,4 @@ window.onload = function() {
       document.getElementById('cookie-popup').classList.add('show');
     }, 5000); // Show after 5 seconds
   }
-};s
+};

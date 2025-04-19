@@ -612,6 +612,7 @@ footer {
   height: auto;
   position: fixed;
   bottom: 20px;
+  left: -100%;
   background-color: #faefe1;
   color: black;
   border: 2px solid #faefe1;
