@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Recommendation Test</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 1.8em;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 5px 0;
+      font-size: 1em;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px 0;
+      background: #f9f9f9;
+    }
+
+    .slug {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .title {
+      font-style: italic;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Article Recommendation Test</h1>
+
+  <label for="slug">Enter Article Slug:</label><br>
+  <input type="text" id="slug" placeholder="example-article-slug" /><br>
+  <button onclick="getRecommendations()">Fetch Recommendations</button>
+
+  <div id="results"></div>
+
+  <script>
+    async function getRecommendations() {
+      const slug = document.getElementById('slug').value.trim();
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = 'Loading...';
+
+      if (!slug) {
+        resultsDiv.innerHTML = '<div class="error">Please enter a valid slug.</div>';
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:3000/api/articles/recommend/${slug}`);
+        const data = await res.json();
+
+        if (!data.recommendations) {
+          throw new Error("No recommendations returned.");
+        }
+
+        if (data.recommendations.length === 0) {
+          resultsDiv.innerHTML = "<p>No similar articles found.</p>";
+          return;
+        }
+
+        resultsDiv.innerHTML = data.recommendations.map(rec => `
+          <div class="card">
+            <div class="slug">${rec.slug}</div>
+            <div class="title">"${rec.title}"</div>
+          </div>
+        `).join("");
+      } catch (err) {
+        console.error(err);
+        resultsDiv.innerHTML = `<div class="error">❌ Failed to load recommendations: ${err.message}</div>`;
+      }
+    }
+  </script>
+</body>
+</html>
