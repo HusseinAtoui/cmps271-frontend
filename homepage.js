@@ -506,3 +506,29 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+/* =============================
+      cookies banner
+============================= */
+
+function setCookie(name, value, days) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+}
+
+function getCookie(name) {
+  return document.cookie.split('; ').find(row => row.startsWith(name + '='))?.split('=')[1];
+}
+
+function handleCookies(accepted) {
+  setCookie('cookiesAccepted', accepted ? 'true' : 'false', 1);
+  document.getElementById('cookie-popup').classList.remove('show');
+}
+
+window.onload = function() {
+  const cookieDecision = getCookie('cookiesAccepted');
+  if (cookieDecision !== 'true' && cookieDecision !== 'false') {
+    setTimeout(function() {
+      document.getElementById('cookie-popup').classList.add('show');
+    }, 5000); // Show after 5 seconds
+  }
+};s

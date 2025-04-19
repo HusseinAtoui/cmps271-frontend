@@ -604,3 +604,43 @@ footer {
 .fa-solid.fa-bookmark {
   color: #FF5A5F; /* Your brand color */
 }
+/* ============================= */
+/*        cookies pop-up         */
+/* ============================= */
+#cookie-popup {
+  width: 40%;
+  height: auto;
+  position: fixed;
+  bottom: 20px;
+  background-color: #faefe1;
+  color: black;
+  border: 2px solid #faefe1;
+  padding: 20px;
+  border-radius: 8px;
+  transition: left 0.5s ease-in-out;
+}
+
+#cookie-popup.show {
+  left: 20px;
+}
+
+#cookie-popup button {
+  background-color: #7D0C0E;
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+#cookie-popup a {
+  color: black;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+#cookie-popup a:hover {
+  color: #7D0C0E; 
+}
