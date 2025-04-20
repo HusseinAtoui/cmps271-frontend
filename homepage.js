@@ -524,11 +524,11 @@ function handleCookies(accepted) {
   document.getElementById('cookie-popup').classList.remove('show');
 }
 
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", () => {
   const cookieDecision = getCookie('cookiesAccepted');
   if (cookieDecision !== 'true' && cookieDecision !== 'false') {
-    setTimeout(function() {
+    setTimeout(() => {
       document.getElementById('cookie-popup').classList.add('show');
-    }, 5000); // Show after 5 seconds
+    }, 5000);
   }
-};
+});
