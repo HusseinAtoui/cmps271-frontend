@@ -525,13 +525,10 @@ function handleCookies(accepted) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const popup = document.getElementById('cookie-popup');
-  if (!popup) return; // Exit early if popup not found
-
   const cookieDecision = getCookie('cookiesAccepted');
   if (cookieDecision !== 'true' && cookieDecision !== 'false') {
     setTimeout(() => {
-      popup.classList.add('show');
+      document.getElementById('cookie-popup').classList.add('show');
     }, 5000);
   }
 });
