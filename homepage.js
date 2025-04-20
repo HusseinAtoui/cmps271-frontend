@@ -6,10 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
   loadDynamicContent();
 
   const popup = document.getElementById('cookie-popup');
+  const cookieDecision = getCookie('cookiesAccepted');
   if (popup && cookieDecision !== 'true' && cookieDecision !== 'false') {
     setTimeout(() => {
-      popup.classList.add('show');
-    }, 5000);
+        popup.classList.add('show');
+        console.log("Cookie banner shown");
+      }, 5000);
+    } else {
+    console.log("Cookie decision already made:", cookieDecision);
   }
 });
 
