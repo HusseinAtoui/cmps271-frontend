@@ -619,6 +619,7 @@ footer {
   padding: 20px;
   border-radius: 8px;
   transition: left 0.5s ease-in-out;
+  z-index: 9999;
 }
 
 #cookie-popup.show {
