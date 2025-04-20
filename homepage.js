@@ -1,3 +1,7 @@
+function getCookie(name) {
+  return document.cookie.split('; ').find(row => row.startsWith(name + '='))?.split('=')[1];
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // Set up event listeners for static navigation buttons
   setupStaticEventListeners();
@@ -7,13 +11,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const popup = document.getElementById('cookie-popup');
   const cookieDecision = getCookie('cookiesAccepted');
+  console.log("🍪 Cookie decision:", cookieDecision);
   if (popup && cookieDecision !== 'true' && cookieDecision !== 'false') {
+    console.log("✅ Showing cookie popup in 5s...");
     setTimeout(() => {
-        popup.classList.add('show');
-        console.log("Cookie banner shown");
-      }, 5000);
-    } else {
-    console.log("Cookie decision already made:", cookieDecision);
+      popup.classList.add('show');
+      console.log("✅ Cookie popup should now be visible.");
+    }, 5000);
+  } else {
+    console.log("👍 Cookie preference already set.");
   }
 });
 
@@ -525,11 +531,6 @@ function setCookie(name, value, days) {
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
   document.cookie = `${name}=${value}; expires=${expires}; path=/`;
 }
-
-function getCookie(name) {
-  return document.cookie.split('; ').find(row => row.startsWith(name + '='))?.split('=')[1];
-}
-
 function handleCookies(accepted) {
   setCookie('cookiesAccepted', accepted ? 'true' : 'false', 1);
   document.getElementById('cookie-popup').classList.remove('show');
