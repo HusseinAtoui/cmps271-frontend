@@ -4,6 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Load dynamic content for events (slideshow) and articles (cards)
   loadDynamicContent();
+
+  const popup = document.getElementById('cookie-popup');
+  if (popup && cookieDecision !== 'true' && cookieDecision !== 'false') {
+    setTimeout(() => {
+      popup.classList.add('show');
+    }, 5000);
+  }
 });
 
 /* =============================
@@ -523,12 +530,3 @@ function handleCookies(accepted) {
   setCookie('cookiesAccepted', accepted ? 'true' : 'false', 1);
   document.getElementById('cookie-popup').classList.remove('show');
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  const cookieDecision = getCookie('cookiesAccepted');
-  if (cookieDecision !== 'true' && cookieDecision !== 'false') {
-    setTimeout(() => {
-      document.getElementById('cookie-popup').classList.add('show');
-    }, 5000);
-  }
-});
