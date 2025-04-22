@@ -6,12 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     
       // 3) Now safely parse
-      let userData;
-      try {
-        userData = JSON.parse(userDataString);
-      } catch (e) {
-        console.error("Failed to parse userData:", e);
-        return;
+      let userData = {
+        firstName: "After",
+        lastName: "Thinker",
+        profilePicture: "default-profile.jpeg"
+      };
+      if (userDataString && token) {
+        try {
+          userData = JSON.parse(userDataString);
+        } catch (e) {
+          console.error("Failed to parse userData from storage. Using fallback:", e);
+        }
+      } else {
+        console.warn("⚠️ No user token or data found. Using dummy user.");
       }
     
       // 4) Update the greeting
