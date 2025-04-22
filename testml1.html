@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Recommended Articles</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f5f5f5;
+    }
+
+    input, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .card a {
+      color: #7D0C0E;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Article Recommendation Tester</h1>
+  <label for="articleId">Enter an Article ID:</label><br>
+  <input type="text" id="articleId" placeholder="e.g. 662e912dbcd524ee3f07e236" size="50">
+  <button onclick="fetchRecommendations()">Fetch Recommendations</button>
+
+  <h2>Results:</h2>
+  <div id="results"></div>
+
+  <script>
+    async function fetchRecommendations() {
+      const articleId = document.getElementById('articleId').value.trim();
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '';
+
+      if (!articleId) {
+        alert('Please enter a valid article ID');
+        return;
+      }
+
+      try {
+        const res = await fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}/recommendations`);
+        const data = await res.json();
+
+        if (!Array.isArray(data.recommendations)) {
+          resultsDiv.innerHTML = `<p>❌ Error: ${data.error || 'No recommendations found.'}</p>`;
+          return;
+        }
+
+        if (data.recommendations.length === 0) {
+          resultsDiv.innerHTML = `<p>⚠️ No similar articles found.</p>`;
+          return;
+        }
+
+        data.recommendations.forEach(article => {
+          const card = document.createElement('div');
+          card.className = 'card';
+
+          const title = document.createElement('h3');
+          title.textContent = article.title;
+
+          const desc = document.createElement('p');
+          desc.textContent = article.description || 'No description provided.';
+
+          const link = document.createElement('a');
+          link.href = `Articles.html?id=${article._id}`;
+          link.textContent = 'Read more →';
+
+          card.appendChild(title);
+          card.appendChild(desc);
+          card.appendChild(link);
+          resultsDiv.appendChild(card);
+        });
+
+      } catch (err) {
+        console.error('❌ Fetch error:', err);
+        resultsDiv.innerHTML = '<p>❌ Failed to fetch recommendations.</p>';
+      }
+    }
+  </script>
+
+</body>
+</html>
