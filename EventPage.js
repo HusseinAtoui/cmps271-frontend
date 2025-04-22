@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const userDataString = localStorage.getItem("userData");
+    const token = localStorage.getItem("authToken");
     if (!userDataString || !token) {
         alert("Not logged in");
         // e.g. window.location.href = "/login.html";
