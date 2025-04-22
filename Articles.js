@@ -341,11 +341,9 @@ async function analyzeSentiment(commentInput) {
     console.error("❌ Error loading article:", err);
     document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
   });// Set up the heart button functionality
-
-
   function setupHeartButton(articleId) {
     const heartBtn = document.getElementById('kudos-btn');
-    const likeCountElement = document.getElementById('like-count');  // Element to display the like count
+    const likeCountElement = document.getElementById('like-count');  // Assuming you have an element to display the like count
     const token = localStorage.getItem("authToken");
   
     if (!heartBtn || !articleId || !likeCountElement) return;
@@ -361,6 +359,29 @@ async function analyzeSentiment(commentInput) {
       heartBtn.classList.add("liked");
     }
   
+    const checkLikeStatus = async () => {
+      if (!token) return;
+  
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/articles/${articleId}/like-status`, // Update to localhost
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+  
+        if (!response.ok) throw new Error("Failed to fetch like status");
+  
+        const data = await response.json();
+        if (data.hasLiked) {
+          isLiked = true;
+          heartBtn.classList.add("liked");
+        }
+      } catch (err) {
+        console.error("Error checking like status:", err);
+      }
+    };
+  
     heartBtn.addEventListener("click", async () => {
       if (!token) {
         alert("Please log in to like this article.");
@@ -368,24 +389,21 @@ async function analyzeSentiment(commentInput) {
         return;
       }
   
-      // Toggle like status
-      isLiked = !isLiked;
+      isLiked = !isLiked; // Toggle like status
       heartBtn.classList.toggle("liked"); // Toggle the heart button visual state
       heartBtn.disabled = true;
   
       try {
-        // Use the appropriate endpoint based on like status
         const endpoint = isLiked
-          ? `http://localhost:3000/api/articles/${articleId}/add-like`
-          : `http://localhost:3000/api/articles/${articleId}/remove-like`;
+          ? `http://localhost:3000/api/articles/${articleId}/like`  // Update to localhost
+          : `http://localhost:3000/api/articles/${articleId}/unlike`; // Update to localhost
   
         const response = await fetch(endpoint, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ articleId })
+            Authorization: `Bearer ${token}`
+          }
         });
   
         if (!response.ok) throw new Error("Failed to update like status");
@@ -406,8 +424,13 @@ async function analyzeSentiment(commentInput) {
       } finally {
         heartBtn.disabled = false;
       }
-    });    checkLikeStatus(); 
+    });
+  
+    checkLikeStatus(); // Check the like status on page load
   }
+  
+  
+  
 /* =============================
  nav bar
  ============================= */
