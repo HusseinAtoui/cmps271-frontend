@@ -2,27 +2,37 @@
 console.log("🔥 Articles.js is running!");
 // ==============================
 // HEART BUTTON FUNCTIONALITY
-// ============================
-// ==============================
-// RENDER ARTICLE
 // ==============================
 function setupHeartButton(articleId) {
   const heartBtn = document.getElementById('kudos-btn');
-  const likeCountElement = document.getElementById('like-count'); // Ensure this exists in your HTML
   const token = localStorage.getItem("authToken");
 
-  if (!heartBtn || !articleId || !likeCountElement) return;
+  if (!heartBtn || !articleId) return;
 
-  let isLiked = localStorage.getItem(`liked_${articleId}`) === 'true';  // Retrieve the like status from localStorage
-  let likesCount = parseInt(localStorage.getItem(`likeCount_${articleId}`), 10) || 0;  // Retrieve the like count from localStorage
+  let isLiked = false;
 
-  // Set the initial like count from localStorage
-  likeCountElement.textContent = likesCount;
+  const checkLikeStatus = async () => {
+    if (!token) return;
 
-  // If the article is liked (based on localStorage), set the button state accordingly
-  if (isLiked) {
-    heartBtn.classList.add("liked");
-  }
+    try {
+      const response = await fetch(
+        `https://afterthoughts.onrender.com/api/articles/${articleId}/like-status`, 
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to fetch like status");
+
+      const data = await response.json();
+      if (data.hasLiked) {
+        isLiked = true;
+        heartBtn.classList.add("liked");
+      }
+    } catch (err) {
+      console.error("Error checking like status:", err);
+    }
+  };
 
   heartBtn.addEventListener("click", async () => {
     if (!token) {
@@ -31,34 +41,25 @@ function setupHeartButton(articleId) {
       return;
     }
 
-    isLiked = !isLiked; // Toggle like status
-    heartBtn.classList.toggle("liked"); // Toggle the heart button visual state
+    isLiked = !isLiked;
+    heartBtn.classList.toggle("liked");
     heartBtn.disabled = true;
 
     try {
       const endpoint = isLiked
-        ? `http://localhost:3000/api/articles/${articleId}/like`
-        : `http://localhost:3000/api/articles/${articleId}/unlike`;
+        ? 'https://afterthoughts.onrender.com/api/articles/add-like'
+        : 'https://afterthoughts.onrender.com/api/articles/remove-like';
 
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`
-        }
+        },
+        body: JSON.stringify({ articleId })
       });
 
       if (!response.ok) throw new Error("Failed to update like status");
-
-      // Update the like count in localStorage
-      likesCount = isLiked ? likesCount + 1 : likesCount - 1;
-      localStorage.setItem(`likeCount_${articleId}`, likesCount); // Store like count in localStorage
-
-      // Update the UI with the new like count
-      likeCountElement.textContent = likesCount;
-
-      // Persist the like status in localStorage
-      localStorage.setItem(`liked_${articleId}`, isLiked.toString());
     } catch (err) {
       console.error("Error updating like:", err);
       isLiked = !isLiked;
@@ -68,10 +69,11 @@ function setupHeartButton(articleId) {
     }
   });
 
-
-    checkLikeStatus(); // Check the like status on page load
-  }
-  
+  checkLikeStatus();
+}
+// ==============================
+// RENDER ARTICLE
+// ==============================
 function renderFullArticle({ title, author, text, image }) {
   const section = document.getElementById('article-section');
   if (!section) return;
@@ -406,8 +408,7 @@ async function analyzeSentiment(commentInput) {
   .catch(err => {
     console.error("❌ Error loading article:", err);
     document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
-  });// Set up the heart button functionality
- // Setup like button for heart functionality
+  });
 
   function renderRecommendations(recommendations) {
     const recommendationsSection = document.getElementById('recommendations-section');
@@ -450,7 +451,6 @@ async function analyzeSentiment(commentInput) {
       recommendationsSection.appendChild(articleDiv);
     });
   }
-  
   
 /* =============================
  nav bar
