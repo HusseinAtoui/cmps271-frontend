@@ -1,31 +1,35 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Check for user data and display greeting if logged in
-    const userDataString = localStorage.getItem("userData");
-    const token = localStorage.getItem("authToken");
-
     if (!userDataString || !token) {
-        console.warn("User not logged in. Redirecting...");
-        window.location.href = "login.html";
+        alert("Not logged in");
+        // e.g. window.location.href = "/login.html";
         return;
-    }
-
-    const userData = JSON.parse(userDataString);
-
-    // Update the greeting
-    const userGreeting = document.getElementById("user-greeting");
-    if (userGreeting) {
-        userGreeting.textContent = ` ${userData.firstName} ${userData.lastName}`;
-    }
-
-    // Update the profile image (if needed)
-    const profileImage = document.getElementById("user-profile-image");
-    if (profileImage) {
+      }
+    
+      // 3) Now safely parse
+      let userData;
+      try {
+        userData = JSON.parse(userDataString);
+      } catch (e) {
+        console.error("Failed to parse userData:", e);
+        return;
+      }
+    
+      // 4) Update the greeting
+      const userGreeting = document.getElementById("user-greeting");
+      if (userGreeting) {
+        userGreeting.textContent = `${userData.firstName} ${userData.lastName}`;
+      }
+    
+      // 5) Update the profile image
+      const profileImage = document.getElementById("user-profile-image");
+      if (profileImage) {
         profileImage.src = userData.profilePicture || "default-profile.jpeg";
-    }
+      }
+    
+      // 6) Fetch your events, calendar, etc.
+      fetchEvents();
+    });
 
-    // Fetch and display events
-    fetchEvents(); // Call function to fetch events from backend
-});
 
 
 // Function to fetch and display events from the backend
