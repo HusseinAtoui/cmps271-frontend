@@ -341,94 +341,114 @@ async function analyzeSentiment(commentInput) {
     console.error("❌ Error loading article:", err);
     document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
   });// Set up the heart button functionality
-  function setupHeartButton(articleId) {
-    const heartBtn = document.getElementById('kudos-btn');
-    const likeCountElement = document.getElementById('like-count');  // Assuming you have an element to display the like count
-    const token = localStorage.getItem("authToken");
-  
-    if (!heartBtn || !articleId || !likeCountElement) return;
-  
-    let isLiked = localStorage.getItem(`liked_${articleId}`) === 'true';  // Retrieve the like status from localStorage
-    let likesCount = parseInt(localStorage.getItem(`likeCount_${articleId}`), 10) || 0;  // Retrieve the like count from localStorage
-  
-    // Set the initial like count from localStorage
-    likeCountElement.textContent = likesCount;
-  
-    // If the article is liked (based on localStorage), set the button state accordingly
-    if (isLiked) {
-      heartBtn.classList.add("liked");
+ // Setup like button for heart functionality
+function setupHeartButton(articleId) {
+  const heartBtn = document.getElementById('kudos-btn');
+  const likeCountElement = document.getElementById('like-count'); // Ensure this exists in your HTML
+  const token = localStorage.getItem("authToken");
+
+  if (!heartBtn || !articleId || !likeCountElement) return;
+
+  let isLiked = localStorage.getItem(`liked_${articleId}`) === 'true';  // Retrieve the like status from localStorage
+  let likesCount = parseInt(localStorage.getItem(`likeCount_${articleId}`), 10) || 0;  // Retrieve the like count from localStorage
+
+  // Set the initial like count from localStorage
+  likeCountElement.textContent = likesCount;
+
+  // If the article is liked (based on localStorage), set the button state accordingly
+  if (isLiked) {
+    heartBtn.classList.add("liked");
+  }
+
+  heartBtn.addEventListener("click", async () => {
+    if (!token) {
+      alert("Please log in to like this article.");
+      window.location.href = "loginPage.html";
+      return;
     }
-  
-    const checkLikeStatus = async () => {
-      if (!token) return;
-  
-      try {
-        const response = await fetch(
-          `http://localhost:3000/api/articles/${articleId}/like-status`, // Update to localhost
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
-        );
-  
-        if (!response.ok) throw new Error("Failed to fetch like status");
-  
-        const data = await response.json();
-        if (data.hasLiked) {
-          isLiked = true;
-          heartBtn.classList.add("liked");
+
+    isLiked = !isLiked; // Toggle like status
+    heartBtn.classList.toggle("liked"); // Toggle the heart button visual state
+    heartBtn.disabled = true;
+
+    try {
+      const endpoint = isLiked
+        ? `http://localhost:3000/api/articles/${articleId}/like`
+        : `http://localhost:3000/api/articles/${articleId}/unlike`;
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
         }
-      } catch (err) {
-        console.error("Error checking like status:", err);
-      }
-    };
-  
-    heartBtn.addEventListener("click", async () => {
-      if (!token) {
-        alert("Please log in to like this article.");
-        window.location.href = "loginPage.html";
-        return;
-      }
-  
-      isLiked = !isLiked; // Toggle like status
-      heartBtn.classList.toggle("liked"); // Toggle the heart button visual state
-      heartBtn.disabled = true;
-  
-      try {
-        const endpoint = isLiked
-          ? `http://localhost:3000/api/articles/${articleId}/like`  // Update to localhost
-          : `http://localhost:3000/api/articles/${articleId}/unlike`; // Update to localhost
-  
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          }
-        });
-  
-        if (!response.ok) throw new Error("Failed to update like status");
-  
-        // Update the like count in localStorage
-        likesCount = isLiked ? likesCount + 1 : likesCount - 1;
-        localStorage.setItem(`likeCount_${articleId}`, likesCount);  // Store like count in localStorage
-  
-        // Update the UI with the new like count
-        likeCountElement.textContent = likesCount;
-  
-        // Persist the like status in localStorage
-        localStorage.setItem(`liked_${articleId}`, isLiked.toString());
-      } catch (err) {
-        console.error("Error updating like:", err);
-        isLiked = !isLiked;
-        heartBtn.classList.toggle("liked");
-      } finally {
-        heartBtn.disabled = false;
-      }
-    });
-  
+      });
+
+      if (!response.ok) throw new Error("Failed to update like status");
+
+      // Update the like count in localStorage
+      likesCount = isLiked ? likesCount + 1 : likesCount - 1;
+      localStorage.setItem(`likeCount_${articleId}`, likesCount); // Store like count in localStorage
+
+      // Update the UI with the new like count
+      likeCountElement.textContent = likesCount;
+
+      // Persist the like status in localStorage
+      localStorage.setItem(`liked_${articleId}`, isLiked.toString());
+    } catch (err) {
+      console.error("Error updating like:", err);
+      isLiked = !isLiked;
+      heartBtn.classList.toggle("liked");
+    } finally {
+      heartBtn.disabled = false;
+    }
+  });
+
+
     checkLikeStatus(); // Check the like status on page load
   }
   
+  function renderRecommendations(recommendations) {
+    const recommendationsSection = document.getElementById('recommendations-section');
+    recommendationsSection.innerHTML = ''; // Clear previous recommendations
+  
+    // Loop through the recommendations and display them as small cards
+    recommendations.forEach((recommendation) => {
+      const articleDiv = document.createElement('div');
+      articleDiv.classList.add('recommended-article-card');
+  
+      // Thumbnail image or placeholder if no image is available
+      const image = document.createElement('img');
+      image.src = recommendation.image || 'default-thumbnail.jpg';  // Placeholder for missing image
+      image.alt = recommendation.title;
+      image.classList.add('recommended-article-image');
+  
+      // Title of the recommended article
+      const title = document.createElement('h3');
+      title.classList.add('recommended-article-title');
+      title.textContent = recommendation.title;
+  
+      // Short description (trimmed for preview)
+      const description = document.createElement('p');
+      description.classList.add('recommended-article-description');
+      description.textContent = recommendation.description || 'No description available';
+  
+      // Link to the full article
+      const link = document.createElement('a');
+      link.href = `/articles.html?id=${recommendation._id}`; // Link to the recommended article
+      link.classList.add('recommended-article-link');
+      link.textContent = 'Read More';
+  
+      // Append image, title, description, and link to the card
+      articleDiv.appendChild(image);
+      articleDiv.appendChild(title);
+      articleDiv.appendChild(description);
+      articleDiv.appendChild(link);
+  
+      // Append the card to the recommendations section
+      recommendationsSection.appendChild(articleDiv);
+    });
+  }
   
   
 /* =============================
