@@ -372,7 +372,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
   if (!userDataString || !token) {
     console.warn("User not logged in. Redirecting...");
-    window.location.href = "login.html";
+    window.location.href = "loginPage.html";
     return;
   }
   const userData = JSON.parse(userDataString);
