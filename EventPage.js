@@ -1,42 +1,43 @@
-document.addEventListener('DOMContentLoaded', function () {
-    if (!userDataString || !token) {
-        alert("Not logged in");
-        // e.g. window.location.href = "/login.html";
-        return;
+document.addEventListener('DOMContentLoaded', () => {
+    const userDataString = localStorage.getItem("userData");
+    const token          = localStorage.getItem("authToken");
+  
+    // Start with a dummy user
+    let userData = {
+      firstName: "After",
+      lastName:  "Thinker",
+      profilePicture: "default-profile.jpeg"
+    };
+  
+    // If we actually have a stored user and token, parse it
+    if (userDataString && token) {
+      try {
+        userData = JSON.parse(userDataString);
+      } catch (e) {
+        console.error("Failed to parse userData from storage, using dummy:", e);
       }
-    
-      // 3) Now safely parse
-      let userData = {
-        firstName: "After",
-        lastName: "Thinker",
-        profilePicture: "default-profile.jpeg"
-      };
-      if (userDataString && token) {
-        try {
-          userData = JSON.parse(userDataString);
-        } catch (e) {
-          console.error("Failed to parse userData from storage. Using fallback:", e);
-        }
-      } else {
-        console.warn("⚠️ No user token or data found. Using dummy user.");
-      }
-    
-      // 4) Update the greeting
-      const userGreeting = document.getElementById("user-greeting");
-      if (userGreeting) {
-        userGreeting.textContent = `${userData.firstName} ${userData.lastName}`;
-      }
-    
-      // 5) Update the profile image
-      const profileImage = document.getElementById("user-profile-image");
-      if (profileImage) {
-        profileImage.src = userData.profilePicture || "default-profile.jpeg";
-      }
-    
-      // 6) Fetch your events, calendar, etc.
-      fetchEvents();
-    });
-
+    } else {
+      console.warn("⚠️ No user data or token found. Using dummy user.");
+      // (Optional) redirect to login instead of dummy:
+      // window.location.href = "/login.html";
+    }
+  
+    // Update the greeting
+    const userGreeting = document.getElementById("user-greeting");
+    if (userGreeting) {
+      userGreeting.textContent = `${userData.firstName} ${userData.lastName}`;
+    }
+  
+    // Update the profile image
+    const profileImage = document.getElementById("user-profile-image");
+    if (profileImage) {
+      profileImage.src = userData.profilePicture;
+    }
+  
+    // Now fetch events & calendar
+    fetchEvents();
+  });
+  
 
 
 // Function to fetch and display events from the backend
