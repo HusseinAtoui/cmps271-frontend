@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             console.log("Submitting article...");
 
-            const response = await fetch("https://afterthoughts.onrender.com/api/articles/add", {
+            const response = await fetch("http://localhost:3000/api/articles/add", {
                 method: "POST",
                 headers: { "Authorization": `Bearer ${token}` },
                 body: formData
