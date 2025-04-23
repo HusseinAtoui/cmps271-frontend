@@ -1,9 +1,8 @@
-console.log("🔥 Articles.js is running!");
 
+console.log("🔥 Articles.js is running!");
 // ==============================
 // HEART BUTTON FUNCTIONALITY
 // ==============================
-
 function setupHeartButton(articleId) {
   const heartBtn = document.getElementById('kudos-btn');
   const token = localStorage.getItem("authToken");
@@ -75,7 +74,7 @@ function setupHeartButton(articleId) {
 // ==============================
 // RENDER ARTICLE
 // ==============================
-function renderFullArticle({ title, author, text, image, articleId }) {
+function renderFullArticle({ title, author, text, image }) {
   const section = document.getElementById('article-section');
   if (!section) return;
 
@@ -150,60 +149,108 @@ function renderFullArticle({ title, author, text, image, articleId }) {
 }
 
 // ==============================
-// RENDER RECOMMENDATIONS
+// RENDER COMMENT PROFILES
 // ==============================
+function makeProfile(profiles) {
+  const allProfiles = document.getElementById("profile-contain");
+  if (!allProfiles) return;
+  allProfiles.innerHTML = '';
 
-function renderRecommendations(recommendations) {
-  const recommendationsSection = document.getElementById('recommendations');
-  recommendationsSection.innerHTML = ''; // Clear previous recommendations
+  profiles.forEach(profile => {
+    const profileElement = document.createElement('div');
+    profileElement.classList.add('profile-other-feedback');
 
-  recommendations.forEach((recommendation) => {
-    const articleDiv = document.createElement('div');
-    articleDiv.classList.add('recommended-article-card');
+    const profilePicDiv = document.createElement('div');
+    profilePicDiv.classList.add('profile-pic');
 
-    // Thumbnail image or placeholder if no image is available
-    const image = document.createElement('img');
-    image.src = recommendation.image || 'default-thumbnail.jpg';  // Placeholder for missing image
-    image.alt = recommendation.title;
-    image.classList.add('recommended-article-image');
+    const profileImg = document.createElement('img');
+    profileImg.src = profile.image;
+    profileImg.alt = profile.name;
+    profilePicDiv.appendChild(profileImg);
 
-    // Title of the recommended article
-    const title = document.createElement('h3');
-    title.classList.add('recommended-article-title');
-    title.textContent = recommendation.title;
+    const nameElement = document.createElement('h2');
+    nameElement.textContent = profile.name;
+    profilePicDiv.appendChild(nameElement);
 
-    // Short description (trimmed for preview)
-    const description = document.createElement('p');
-    description.classList.add('recommended-article-description');
-    description.textContent = recommendation.description || 'No description available';
+    const profileCommentDiv = document.createElement('div');
+    profileCommentDiv.classList.add('profile-comment');
 
-    // Link to the full article
-    const link = document.createElement('a');
-    link.href = `/articles.html?id=${recommendation._id}`; // Link to the recommended article
-    link.classList.add('recommended-article-link');
-    link.textContent = 'Read More';
+    const textDiv = document.createElement('div');
+    textDiv.classList.add('text');
 
-    // Append image, title, description, and link to the card
-    articleDiv.appendChild(image);
-    articleDiv.appendChild(title);
-    articleDiv.appendChild(description);
-    articleDiv.appendChild(link);
+    const paragraph = document.createElement('p');
+    paragraph.textContent = profile.comment;
+    textDiv.appendChild(paragraph);
 
-    // Append the card to the recommendations section
-    recommendationsSection.appendChild(articleDiv);
+    profileCommentDiv.appendChild(textDiv);
+    profileElement.append(profilePicDiv, profileCommentDiv);
+
+    allProfiles.appendChild(profileElement);
   });
 }
-
 // ==============================
-// FETCH ARTICLE AND RECOMMENDATIONS
+// COMMENT PERSISTENCE FUNCTIONALITY
 // ==============================
+function setupCommentPersistence(articleId) {
+  const commentInput = document.getElementById("comment");
+  const commentBtn = document.getElementById("comment-btn");
+  
+  if (!commentInput || !commentBtn) return;
 
+  function loadComment() {
+    const savedComment = localStorage.getItem(`article_${articleId}_comment`);
+    if (savedComment !== null) {
+      commentInput.value = savedComment;
+    }
+  }
+  
+  // Save comment to localStorage 
+  function setupCommentAutoSave() {
+    let saveTimeout;
+    
+    commentInput.addEventListener('input', function() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        localStorage.setItem(`article_${articleId}_comment`, commentInput.value);
+      }, 500);
+    });
+  }
+  
+  // Clear saved comment
+  function clearComment() {
+    localStorage.removeItem(`article_${articleId}_comment`);
+  }
+  
+  loadComment();
+  setupCommentAutoSave();
+   
+  //removes local storage with commented
+  commentBtn.addEventListener("click", () => {
+    if (commentInput.value === "") {
+      localStorage.removeItem(`article_${articleId}_comment`);
+    }
+  });
+  
+  // Add clear draft button
+  const clearBtn = document.createElement('button');
+  clearBtn.textContent = 'Clear';
+  clearBtn.className = 'clear-comment-btn';
+  clearBtn.addEventListener('click', () => {
+    commentInput.value = '';
+    clearComment();
+  });
+  
+  commentBtn.insertAdjacentElement('afterend', clearBtn);
+}
+// ==============================
+// LOAD ARTICLE FROM BACKEND
+// ==============================
 const params = new URLSearchParams(window.location.search);
 const articleId = params.get('id');
 console.log("🔑 Article ID from URL:", articleId);
+setupCommentPersistence(articleId); 
 
-// Fetch the article
-fetch(`http://localhost:3000/api/articles/${articleId}`)
+fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
   .then(response => {
     if (!response.ok) throw new Error("Article not found");
     return response.json();
@@ -213,27 +260,197 @@ fetch(`http://localhost:3000/api/articles/${articleId}`)
       title: article.title,
       author: `${article.userID.firstName || "Unknown"} ${article.userID.lastName || ""}`,
       text: article.text,
-      image: article.image,
-      articleId: article._id
+      image: article.image
     });
 
-    // Fetch the recommendations for the article
-    fetch(`http://localhost:3000/api/articles/${articleId}/recommendations`)
-      .then(response => response.json())
-      .then(data => {
-        renderRecommendations(data.recommendations);
-      })
-      .catch(error => {
-        console.error('Error fetching recommendations:', error);
+    if (Array.isArray(article.comments)) {
+      const formattedComments = article.comments.map(comment => ({
+        name: comment.postedBy.firstName + " " + comment.postedBy.lastName,
+        image: comment.postedBy.profilePicture,
+        comment: comment.text
+      }));
+
+      document._existingComments = formattedComments;
+      makeProfile(formattedComments);
+    }
+    setupHeartButton(articleId);
+
+
+const commentBtn = document.getElementById("comment-btn");
+const commentInput = document.getElementById("comment");
+
+async function analyzeSentiment(commentInput) {
+
+  // Trim and validate input
+  const trimmedText = commentInput.trim();
+  if (!trimmedText) {
+      showError('Please enter some text to analyze');
+      return;
+  }
+
+  try {
+      const response = await fetch('https://afterthoughts.onrender.com/api/sentimentComments/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ text: trimmedText })
       });
 
-    setupHeartButton(articleId);
+      const sentimentMap = {
+          'anger': 'negative',
+          'disgust': 'negative',
+          'fear': 'negative',
+          'joy': 'positive',
+          'neutral': 'neutral',
+          'sadness': 'negative',
+          'surprise': 'neutral'
+      };
+
+      if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const generalSentiment = sentimentMap[data.sentiment.toLowerCase()] || 'neutral';
+
+      alert(`Sentiment Analysis Result:\n
+        Overall: ${generalSentiment.toUpperCase()}
+        Emotion: ${data.sentiment}
+        Confidence: ${(data.confidence * 100).toFixed(1)}%
+        Processed Text: "${data.analyzedText}"`);
+      
+
+        return generalSentiment;
+    
+      } catch (error) {
+        console.error("❌ Analysis Error:", error);
+        return 'error';
+      }
+  }
+
+
+// ----------------------------
+    // ------------------------------
+    // Comment Submission
+    // ------------------------------
+
+    if (commentBtn && commentInput) {
+      commentBtn.addEventListener("click", async () => {
+        console.log("Comment button clicked");
+
+        const token = localStorage.getItem("authToken");
+        const text = commentInput.value.trim();
+
+        if (!token) {
+          alert("🚩 You need to be logged in to comment.");
+          window.location.href = "loginPage.html";
+          return;
+        }
+        if (!text) {
+          alert("✍️ Please write a comment before submitting.");
+          return;
+        }
+        const generalSentiment = await analyzeSentiment(text);
+  
+        // Block negative comments
+        if (generalSentiment === 'negative') {
+          showError();
+          return;
+        }
+        try {
+          const response = await fetch("https://afterthoughts.onrender.com/api/articles/comment-article", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ articleId, text })
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+            console.log("✅ Comment posted successfully:", data);
+
+
+            // Retrieve the user data
+            const userData = JSON.parse(localStorage.getItem("userData")) || {};
+            const newComment = {
+              name: `${userData.firstName || "Anonymous"} ${userData.lastName || ""}`,
+              image: userData.profileImage || "default.png",
+              comment: text
+            };
+
+            const existing = document._existingComments || [];
+            const updated = [newComment, ...existing];
+
+            document._existingComments = updated;
+            makeProfile(updated);
+
+            // Clear the input field
+            commentInput.value = "";
+          } else {
+            // If unauthorized, inform the user
+            if (response.status === 401) {
+              alert("🚩 Unauthorized. Please log in again.");
+              window.location.href = "loginPage.html";
+            } else {
+              alert(`⚠️ ${data.message}`);
+            }
+          }
+        } catch (err) {
+          console.error("❌ Error posting comment:", err);
+        }
+      });
+    }
   })
   .catch(err => {
     console.error("❌ Error loading article:", err);
     document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
   });
 
+  function renderRecommendations(recommendations) {
+    const recommendationsSection = document.getElementById('recommendations-section');
+    recommendationsSection.innerHTML = ''; // Clear previous recommendations
+  
+    // Loop through the recommendations and display them as small cards
+    recommendations.forEach((recommendation) => {
+      const articleDiv = document.createElement('div');
+      articleDiv.classList.add('recommended-article-card');
+  
+      // Thumbnail image or placeholder if no image is available
+      const image = document.createElement('img');
+      image.src = recommendation.image || 'default-thumbnail.jpg';  // Placeholder for missing image
+      image.alt = recommendation.title;
+      image.classList.add('recommended-article-image');
+  
+      // Title of the recommended article
+      const title = document.createElement('h3');
+      title.classList.add('recommended-article-title');
+      title.textContent = recommendation.title;
+  
+      // Short description (trimmed for preview)
+      const description = document.createElement('p');
+      description.classList.add('recommended-article-description');
+      description.textContent = recommendation.description || 'No description available';
+  
+      // Link to the full article
+      const link = document.createElement('a');
+      link.href = `/articles.html?id=${recommendation._id}`; // Link to the recommended article
+      link.classList.add('recommended-article-link');
+      link.textContent = 'Read More';
+  
+      // Append image, title, description, and link to the card
+      articleDiv.appendChild(image);
+      articleDiv.appendChild(title);
+      articleDiv.appendChild(description);
+      articleDiv.appendChild(link);
+  
+      // Append the card to the recommendations section
+      recommendationsSection.appendChild(articleDiv);
+    });
+  }
   
 /* =============================
  nav bar
