@@ -413,6 +413,58 @@ async function analyzeSentiment(commentInput) {
       }
     });    checkLikeStatus(); 
   }
+
+
+  
+function loadRecommendations(articleId) {
+  fetch(`http://localhost:3000/api/articles/${articleId}/cached-recommendations`)
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("recommendations");
+
+      if (!container) return;
+
+      const recommendations = data.recommendations;
+
+      if (!Array.isArray(recommendations) || recommendations.length === 0) {
+        container.innerHTML += "<p>No recommended articles available at this time.</p>";
+        return;
+      }
+
+      recommendations.forEach(rec => {
+        const recDiv = document.createElement("div");
+        recDiv.className = "recommendation";
+
+        const title = document.createElement("h3");
+        title.textContent = rec.title;
+
+        const link = document.createElement("a");
+        link.href = `Articles.html?id=${rec._id}`;
+        link.appendChild(title);
+
+        const image = document.createElement("img");
+        image.src = rec.image || "https://via.placeholder.com/200x120?text=No+Image";
+        image.alt = rec.title;
+        image.className = "recommendation-img";
+
+        const description = document.createElement("p");
+        description.textContent = rec.description || "";
+
+        recDiv.append(link, image, description);
+        container.appendChild(recDiv);
+      });
+    })
+    .catch(err => {
+      console.error("❌ Error loading recommendations:", err);
+      const container = document.getElementById("recommendations");
+      if (container) {
+        container.innerHTML += "<p>Failed to load recommendations.</p>";
+      }
+    });
+}
+
+// 🔁 Call the function after article loads
+loadRecommendations(articleId);
 /* =============================
  nav bar
  ============================= */
