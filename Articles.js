@@ -1,76 +1,12 @@
 
+
 console.log("🔥 Articles.js is running!");
 // ==============================
 // HEART BUTTON FUNCTIONALITY
-// ==============================
-function setupHeartButton(articleId) {
-  const heartBtn = document.getElementById('kudos-btn');
-  const token = localStorage.getItem("authToken");
+// =============================
 
-  if (!heartBtn || !articleId) return;
 
-  let isLiked = false;
-
-  const checkLikeStatus = async () => {
-    if (!token) return;
-
-    try {
-      const response = await fetch(
-        `https://afterthoughts.onrender.com/api/articles/${articleId}/like-status`, 
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      );
-
-      if (!response.ok) throw new Error("Failed to fetch like status");
-
-      const data = await response.json();
-      if (data.hasLiked) {
-        isLiked = true;
-        heartBtn.classList.add("liked");
-      }
-    } catch (err) {
-      console.error("Error checking like status:", err);
-    }
-  };
-
-  heartBtn.addEventListener("click", async () => {
-    if (!token) {
-      alert("Please log in to like this article.");
-      window.location.href = "loginPage.html";
-      return;
-    }
-
-    isLiked = !isLiked;
-    heartBtn.classList.toggle("liked");
-    heartBtn.disabled = true;
-
-    try {
-      const endpoint = isLiked
-        ? 'https://afterthoughts.onrender.com/api/articles/add-like'
-        : 'https://afterthoughts.onrender.com/api/articles/remove-like';
-
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ articleId })
-      });
-
-      if (!response.ok) throw new Error("Failed to update like status");
-    } catch (err) {
-      console.error("Error updating like:", err);
-      isLiked = !isLiked;
-      heartBtn.classList.toggle("liked");
-    } finally {
-      heartBtn.disabled = false;
-    }
-  });
-
-  checkLikeStatus();
-}
+// ============================
 // ==============================
 // RENDER ARTICLE
 // ==============================
@@ -408,50 +344,75 @@ async function analyzeSentiment(commentInput) {
   .catch(err => {
     console.error("❌ Error loading article:", err);
     document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
-  });
 
-  function renderRecommendations(recommendations) {
-    const recommendationsSection = document.getElementById('recommendations-section');
-    recommendationsSection.innerHTML = ''; // Clear previous recommendations
+  });// Set up the heart button functionality
+
+
+  function setupHeartButton(articleId) {
+    const heartBtn = document.getElementById('kudos-btn');
+    const likeCountElement = document.getElementById('like-count');  // Element to display the like count
+    const token = localStorage.getItem("authToken");
   
-    // Loop through the recommendations and display them as small cards
-    recommendations.forEach((recommendation) => {
-      const articleDiv = document.createElement('div');
-      articleDiv.classList.add('recommended-article-card');
+    if (!heartBtn || !articleId || !likeCountElement) return;
   
-      // Thumbnail image or placeholder if no image is available
-      const image = document.createElement('img');
-      image.src = recommendation.image || 'default-thumbnail.jpg';  // Placeholder for missing image
-      image.alt = recommendation.title;
-      image.classList.add('recommended-article-image');
+    let isLiked = localStorage.getItem(`liked_${articleId}`) === 'true';  // Retrieve the like status from localStorage
+    let likesCount = parseInt(localStorage.getItem(`likeCount_${articleId}`), 10) || 0;  // Retrieve the like count from localStorage
   
-      // Title of the recommended article
-      const title = document.createElement('h3');
-      title.classList.add('recommended-article-title');
-      title.textContent = recommendation.title;
+    // Set the initial like count from localStorage
+    likeCountElement.textContent = likesCount;
   
-      // Short description (trimmed for preview)
-      const description = document.createElement('p');
-      description.classList.add('recommended-article-description');
-      description.textContent = recommendation.description || 'No description available';
+    // If the article is liked (based on localStorage), set the button state accordingly
+    if (isLiked) {
+      heartBtn.classList.add("liked");
+    }
   
-      // Link to the full article
-      const link = document.createElement('a');
-      link.href = `/articles.html?id=${recommendation._id}`; // Link to the recommended article
-      link.classList.add('recommended-article-link');
-      link.textContent = 'Read More';
+    heartBtn.addEventListener("click", async () => {
+      if (!token) {
+        alert("Please log in to like this article.");
+        window.location.href = "loginPage.html";
+        return;
+      }
   
-      // Append image, title, description, and link to the card
-      articleDiv.appendChild(image);
-      articleDiv.appendChild(title);
-      articleDiv.appendChild(description);
-      articleDiv.appendChild(link);
+      // Toggle like status
+      isLiked = !isLiked;
+      heartBtn.classList.toggle("liked"); // Toggle the heart button visual state
+      heartBtn.disabled = true;
   
-      // Append the card to the recommendations section
-      recommendationsSection.appendChild(articleDiv);
-    });
+      try {
+        // Use the appropriate endpoint based on like status
+        const endpoint = isLiked
+          ? `http://localhost:3000/api/articles/${articleId}/add-like`
+          : `http://localhost:3000/api/articles/${articleId}/remove-like`;
+  
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ articleId })
+        });
+  
+        if (!response.ok) throw new Error("Failed to update like status");
+  
+        // Update the like count in localStorage
+        likesCount = isLiked ? likesCount + 1 : likesCount - 1;
+        localStorage.setItem(`likeCount_${articleId}`, likesCount);  // Store like count in localStorage
+  
+        // Update the UI with the new like count
+        likeCountElement.textContent = likesCount;
+  
+        // Persist the like status in localStorage
+        localStorage.setItem(`liked_${articleId}`, isLiked.toString());
+      } catch (err) {
+        console.error("Error updating like:", err);
+        isLiked = !isLiked;
+        heartBtn.classList.toggle("liked");
+      } finally {
+        heartBtn.disabled = false;
+      }
+    });    checkLikeStatus(); 
   }
-  
 /* =============================
  nav bar
  ============================= */
