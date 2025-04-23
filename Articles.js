@@ -1,11 +1,50 @@
-
-
 console.log("🔥 Articles.js is running!");
-// ==============================
 
 // ==============================
-// RECOMMENDATIONS SYSTEM
+// LOAD ARTICLE FROM BACKEND
 // ==============================
+
+const params = new URLSearchParams(window.location.search);
+const articleId = params.get('id');
+console.log("🔑 Article ID from URL:", articleId);
+setupCommentPersistence(articleId);
+loadRecommendations(articleId); // ✅ Make sure this runs after setup
+
+fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
+  .then(response => {
+    if (!response.ok) throw new Error("Article not found");
+    return response.json();
+  })
+  .then(article => {
+    renderFullArticle({
+      title: article.title,
+      author: `${article.userID.firstName || "Unknown"} ${article.userID.lastName || ""}`,
+      text: article.text,
+      image: article.image
+    });
+
+    if (Array.isArray(article.comments)) {
+      const formattedComments = article.comments.map(comment => ({
+        name: comment.postedBy.firstName + " " + comment.postedBy.lastName,
+        image: comment.postedBy.profilePicture,
+        comment: comment.text
+      }));
+
+      document._existingComments = formattedComments;
+      makeProfile(formattedComments);
+    }
+
+    setupHeartButton(articleId);
+  })
+  .catch(err => {
+    console.error("❌ Error loading article:", err);
+    document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
+  });
+
+// ==============================
+// LOAD RECOMMENDATIONS
+// ==============================
+
 function loadRecommendations(articleId) {
   const container = document.getElementById("recommendations");
   if (!container) return;
@@ -16,9 +55,9 @@ function loadRecommendations(articleId) {
       return res.json();
     })
     .then(data => {
+      console.log("🎯 Recommendations received:", data.recommendations);
       container.innerHTML = '<h2 class="recommendations-title">Recommended Reads</h2>';
-      
-      if (data.recommendations?.length > 0) {
+      if (Array.isArray(data.recommendations) && data.recommendations.length > 0) {
         renderRecommendations(data.recommendations);
       } else {
         showAlternativeSuggestions();
@@ -36,17 +75,24 @@ function renderRecommendations(recommendations) {
   grid.className = 'recommendation-grid';
 
   recommendations.forEach(rec => {
+    const imageSrc = rec.image || "https://via.placeholder.com/300x180?text=No+Image";
+    const title = rec.title || "Untitled";
+    const description = rec.description || "No description available.";
+    const shortDescription = description.slice(0, 100) + (description.length > 100 ? '...' : '');
+    const minToRead = rec.minToRead || 1;
+    const kudosCount = rec.kudos?.length || 0;
+
     const card = document.createElement('div');
     card.className = 'rec-card';
     card.innerHTML = `
-      <a href="Articles.html?id=${rec._id}" aria-label="${rec.title}">
-        <img src="${rec.image}" alt="${rec.title}" loading="lazy">
+      <a href="Articles.html?id=${rec._id}" aria-label="${title}">
+        <img src="${imageSrc}" alt="${title}" loading="lazy">
         <div class="rec-content">
-          <h3>${rec.title}</h3>
-          <p>${rec.description?.slice(0, 100)}${rec.description?.length > 100 ? '...' : ''}</p>
+          <h3>${title}</h3>
+          <p>${shortDescription}</p>
           <div class="rec-meta">
-            <span>${rec.minToRead} min read</span>
-            <span>${rec.kudos?.length || 0} ❤️</span>
+            <span>${minToRead} min read</span>
+            <span>${kudosCount} ❤️</span>
           </div>
         </div>
       </a>
@@ -81,86 +127,9 @@ function showAlternativeSuggestions(isError = false) {
 }
 
 // ==============================
-// ADDITIONAL STYLES
-// ==============================
-const recommendationStyles = `
-/* Recommendation grid styling */
-.recommendation-grid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  margin-top: 1rem;
-}
-
-.rec-card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-}
-
-.rec-card:hover {
-  transform: translateY(-3px);
-}
-
-.rec-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 10px 10px 0 0;
-}
-
-/* Alternative recommendations */
-.alt-recommendations {
-  padding: 2rem;
-  background: #f8f9fa;
-  border-radius: 10px;
-  margin-top: 1rem;
-}
-
-.alt-recommendations.error {
-  background: #ffe3e3;
-  border: 1px solid #ffc9c9;
-}
-
-.alt-grid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-}
-
-.alt-card {
-  padding: 1.5rem;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
-}
-
-.alt-card:hover {
-  transform: translateY(-3px);
-  text-decoration: none;
-}
-
-.no-recs {
-  text-align: center;
-  padding: 2rem;
-}
-`;
-
-// Inject styles
-const styleTag = document.createElement('style');
-styleTag.textContent = recommendationStyles;
-document.head.appendChild(styleTag);
-
-// ==============================
-// INITIALIZATION
-// ==============================
-
-// ============================
-// ==============================
 // RENDER ARTICLE
 // ==============================
+
 function renderFullArticle({ title, author, text, image }) {
   const section = document.getElementById('article-section');
   if (!section) return;
@@ -180,25 +149,20 @@ function renderFullArticle({ title, author, text, image }) {
   pre.textContent = text;
 
   const articleLink = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${articleId}`;
-
-  // MLA Citation
   const mlaCitation = `${author}. "${title}." Afterthoughts Philosophy Journal, ${articleLink}.`;
-  
-  // APA Citation
   const apaCitation = `${author} (${new Date().getFullYear()}). ${title}. Afterthoughts Philosophy Journal. Retrieved from ${articleLink}`;
-  
+
   const citationContainer = document.createElement('div');
   citationContainer.className = 'citation-container';
-  
-  // Generate Citation Button
+
   const generateBtn = document.createElement('button');
   generateBtn.textContent = 'Generate Citation';
   generateBtn.className = 'cite-btn';
-  
+
   const dropdown = document.createElement('div');
   dropdown.className = 'citation-dropdown';
   dropdown.style.display = 'none';
-  
+
   const mlaOption = document.createElement('div');
   mlaOption.textContent = 'Copy MLA Citation';
   mlaOption.addEventListener('click', () => {
@@ -206,7 +170,7 @@ function renderFullArticle({ title, author, text, image }) {
     alert('MLA Citation copied!');
     dropdown.style.display = 'none';
   });
-  
+
   const apaOption = document.createElement('div');
   apaOption.textContent = 'Copy APA Citation';
   apaOption.addEventListener('click', () => {
@@ -214,21 +178,19 @@ function renderFullArticle({ title, author, text, image }) {
     alert('APA Citation copied!');
     dropdown.style.display = 'none';
   });
-  
+
   dropdown.append(mlaOption, apaOption);
-  
-  // Toggle Dropdown Visibility
   generateBtn.addEventListener('click', () => {
     dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
   });
-  
+
   citationContainer.append(generateBtn, dropdown);
   section.append(h1, h2, pre, citationContainer);
-  
+
   const imageSection = document.querySelector('.image');
   if (imageSection && image) {
     imageSection.style.backgroundImage = `url("${image}")`;
-    imageSection.style.backgroundSize = '100%';
+    imageSection.style.backgroundSize = 'cover';
     imageSection.style.backgroundPosition = 'center';
     imageSection.style.backgroundRepeat = 'no-repeat';
     imageSection.style.height = '400px';
@@ -329,13 +291,7 @@ function setupCommentPersistence(articleId) {
   
   commentBtn.insertAdjacentElement('afterend', clearBtn);
 }
-// ==============================
-// LOAD ARTICLE FROM BACKEND
-// ==============================
-const params = new URLSearchParams(window.location.search);
-const articleId = params.get('id');
-console.log("🔑 Article ID from URL:", articleId);
-setupCommentPersistence(articleId); 
+
 
 fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
   .then(response => {
@@ -584,75 +540,3 @@ function closeError() {
   const errorDiv = document.getElementById('negative-comment-warning');
   errorDiv.style.display = 'none';
 }
-
-
-
-// ==============================
-// STYLES
-// ==============================
-const styles = `
-  /* Recommendation styles */
-  .recommendations-title {
-    margin-bottom: 2rem;
-    font-size: 1.8rem;
-  }
-
-  .recommendation-grid {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
-
-  .rec-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    overflow: hidden;
-    transition: transform 0.2s ease;
-  }
-
-  .rec-card:hover {
-    transform: translateY(-5px);
-  }
-
-  .rec-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-
-  .rec-content {
-    padding: 1.5rem;
-  }
-
-  /* Alternative recommendations */
-  .alt-recommendations {
-    padding: 2rem;
-    background: #f8f9fa;
-    border-radius: 12px;
-    margin: 2rem 0;
-  }
-
-  .alt-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-
-  .alt-card {
-    padding: 1.5rem;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease;
-  }
-
-  .alt-card:hover {
-    transform: translateY(-3px);
-  }
-`;
-
-// Inject styles
-const styleTag = document.createElement('style');
-styleTag.textContent = styles;
-document.head.appendChild(styleTag);
