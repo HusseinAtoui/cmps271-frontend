@@ -309,8 +309,7 @@ async function analyzeSentiment(commentInput) {
           if (response.ok) {
             console.log("✅ Comment posted successfully:", data);
 
-            localStorage.removeItem(`article_${articleId}_comment`);
-            
+
             // Retrieve the user data
             const userData = JSON.parse(localStorage.getItem("userData")) || {};
             const newComment = {
@@ -415,55 +414,55 @@ async function analyzeSentiment(commentInput) {
     });    checkLikeStatus(); 
   }
 
-
+  function loadRecommendations(articleId) {
+    fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}/cached-recommendations`)
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("recommendations");
+        container.innerHTML = '<h2>Recommended Reads</h2>';
   
-function loadRecommendations(articleId) {
-  fetch(`http://localhost:3000/api/articles/${articleId}/cached-recommendations`)
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById("recommendations");
-
-      if (!container) return;
-
-      const recommendations = data.recommendations;
-
-      if (!Array.isArray(recommendations) || recommendations.length === 0) {
-        container.innerHTML += "<p>No recommended articles available at this time.</p>";
-        return;
-      }
-
-      recommendations.forEach(rec => {
-        const recDiv = document.createElement("div");
-        recDiv.className = "recommendation";
-
-        const title = document.createElement("h3");
-        title.textContent = rec.title;
-
-        const link = document.createElement("a");
-        link.href = `Articles.html?id=${rec._id}`;
-        link.appendChild(title);
-
-        const image = document.createElement("img");
-        image.src = rec.image || "https://via.placeholder.com/200x120?text=No+Image";
-        image.alt = rec.title;
-        image.className = "recommendation-img";
-
-        const description = document.createElement("p");
-        description.textContent = rec.description || "";
-
-        recDiv.append(link, image, description);
-        container.appendChild(recDiv);
+        if (!data.recommendations?.length) {
+          container.innerHTML += `<div class="no-recs">
+            <p>No recommendations yet. Check back later!</p>
+          </div>`;
+          return;
+        }
+  
+        const recGrid = document.createElement('div');
+        recGrid.className = 'recommendation-grid';
+  
+        data.recommendations.forEach(rec => {
+          const card = document.createElement('div');
+          card.className = 'rec-card';
+  
+          card.innerHTML = `
+            <a href="Articles.html?id=${rec._id}">
+              <img src="${rec.image}" alt="${rec.title}">
+              <div class="rec-content">
+                <h3>${rec.title}</h3>
+                <p>${rec.description?.slice(0, 100)}...</p>
+                <div class="rec-meta">
+                  <span>${rec.minToRead} min read</span>
+                  <span>${rec.kudos?.length || 0} ❤️</span>
+                </div>
+              </div>
+            </a>
+          `;
+  
+          recGrid.appendChild(card);
+        });
+  
+        container.appendChild(recGrid);
+      })
+      .catch(err => {
+        console.error("❌ Recommendation error:", err);
+        document.getElementById("recommendations").innerHTML = `
+          <div class="rec-error">
+            <p>Recommendations currently unavailable</p>
+          </div>
+        `;
       });
-    })
-    .catch(err => {
-      console.error("❌ Error loading recommendations:", err);
-      const container = document.getElementById("recommendations");
-      if (container) {
-        container.innerHTML += "<p>Failed to load recommendations.</p>";
-      }
-    });
-}
-
+  }
 // 🔁 Call the function after article loads
 loadRecommendations(articleId);
 /* =============================
