@@ -147,94 +147,42 @@ function renderFullArticle({ title, author, text, image, articleId }) {
     imageSection.style.backgroundRepeat = 'no-repeat';
     imageSection.style.height = '400px';
   }
+  fetchAndRenderRecommendations(articleId);
+
 }
+async function fetchAndRenderRecommendations(articleId) {
+  try {
+    const res = await fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}/recommendations`);
+    const data = await res.json();
 
-// ==============================
-// RENDER RECOMMENDATIONS
-// ==============================
+    const container = document.getElementById('recommendations');
+    container.innerHTML = "<h2>Recommended Articles</h2>";
 
-function renderRecommendations(recommendations) {
-  const recommendationsSection = document.getElementById('recommendations');
-  recommendationsSection.innerHTML = ''; // Clear previous recommendations
+    const grid = document.createElement('div');
+    grid.className = 'recommendation-grid';
 
-  recommendations.forEach((recommendation) => {
-    const articleDiv = document.createElement('div');
-    articleDiv.classList.add('recommended-article-card');
+    data.recommendations.slice(0, 4).forEach(article => {
+      const card = document.createElement('div');
+      card.className = 'recommendation-card';
 
-    // Thumbnail image or placeholder if no image is available
-    const image = document.createElement('img');
-    image.src = recommendation.image || 'default-thumbnail.jpg';  // Placeholder for missing image
-    image.alt = recommendation.title;
-    image.classList.add('recommended-article-image');
+      card.innerHTML = `
+        <div class="card-img" style="background-image: url('${article.image}')"></div>
+        <div class="card-content">
+          <h3>${article.title}</h3>
+          <p>${article.description?.substring(0, 200)}...</p>
+          <a href="Articles.html?id=${article._id}" class="read-btn">continue reading</a>
+        </div>
+      `;
 
-    // Title of the recommended article
-    const title = document.createElement('h3');
-    title.classList.add('recommended-article-title');
-    title.textContent = recommendation.title;
-
-    // Short description (trimmed for preview)
-    const description = document.createElement('p');
-    description.classList.add('recommended-article-description');
-    description.textContent = recommendation.description || 'No description available';
-
-    // Link to the full article
-    const link = document.createElement('a');
-    link.href = `/articles.html?id=${recommendation._id}`; // Link to the recommended article
-    link.classList.add('recommended-article-link');
-    link.textContent = 'Read More';
-
-    // Append image, title, description, and link to the card
-    articleDiv.appendChild(image);
-    articleDiv.appendChild(title);
-    articleDiv.appendChild(description);
-    articleDiv.appendChild(link);
-
-    // Append the card to the recommendations section
-    recommendationsSection.appendChild(articleDiv);
-  });
-}
-
-// ==============================
-// FETCH ARTICLE AND RECOMMENDATIONS
-// ==============================
-
-const params = new URLSearchParams(window.location.search);
-const articleId = params.get('id');
-console.log("🔑 Article ID from URL:", articleId);
-
-// Fetch the article
-fetch(`http://localhost:3000/api/articles/${articleId}`)
-  .then(response => {
-    if (!response.ok) throw new Error("Article not found");
-    return response.json();
-  })
-  .then(article => {
-    renderFullArticle({
-      title: article.title,
-      author: `${article.userID.firstName || "Unknown"} ${article.userID.lastName || ""}`,
-      text: article.text,
-      image: article.image,
-      articleId: article._id
+      grid.appendChild(card);
     });
 
-    // Fetch the recommendations for the article
-    fetch(`http://localhost:3000/api/articles/${articleId}/recommendations`)
-      .then(response => response.json())
-      .then(data => {
-        renderRecommendations(data.recommendations);
-      })
-      .catch(error => {
-        console.error('Error fetching recommendations:', error);
-      });
+    container.appendChild(grid);
+  } catch (err) {
+    console.error("Failed to load recommendations:", err);
+  }
+}
 
-    setupHeartButton(articleId);
-  })
-  .catch(err => {
-    console.error("❌ Error loading article:", err);
-    document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
-  });
-
-  
 /* =============================
  nav bar
  ============================= */
