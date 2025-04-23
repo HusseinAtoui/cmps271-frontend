@@ -2,9 +2,160 @@
 
 console.log("🔥 Articles.js is running!");
 // ==============================
-// HEART BUTTON FUNCTIONALITY
-// =============================
 
+// ==============================
+// RECOMMENDATIONS SYSTEM
+// ==============================
+function loadRecommendations(articleId) {
+  const container = document.getElementById("recommendations");
+  if (!container) return;
+
+  fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}/cached-recommendations`)
+    .then(res => {
+      if (!res.ok) throw new Error(res.statusText);
+      return res.json();
+    })
+    .then(data => {
+      container.innerHTML = '<h2 class="recommendations-title">Recommended Reads</h2>';
+      
+      if (data.recommendations?.length > 0) {
+        renderRecommendations(data.recommendations);
+      } else {
+        showAlternativeSuggestions();
+      }
+    })
+    .catch(err => {
+      console.error("❌ Recommendation error:", err);
+      showAlternativeSuggestions(true);
+    });
+}
+
+function renderRecommendations(recommendations) {
+  const container = document.getElementById("recommendations");
+  const grid = document.createElement('div');
+  grid.className = 'recommendation-grid';
+
+  recommendations.forEach(rec => {
+    const card = document.createElement('div');
+    card.className = 'rec-card';
+    card.innerHTML = `
+      <a href="Articles.html?id=${rec._id}" aria-label="${rec.title}">
+        <img src="${rec.image}" alt="${rec.title}" loading="lazy">
+        <div class="rec-content">
+          <h3>${rec.title}</h3>
+          <p>${rec.description?.slice(0, 100)}${rec.description?.length > 100 ? '...' : ''}</p>
+          <div class="rec-meta">
+            <span>${rec.minToRead} min read</span>
+            <span>${rec.kudos?.length || 0} ❤️</span>
+          </div>
+        </div>
+      </a>
+    `;
+    grid.appendChild(card);
+  });
+
+  container.appendChild(grid);
+}
+
+function showAlternativeSuggestions(isError = false) {
+  const container = document.getElementById("recommendations");
+  container.innerHTML = `
+    <div class="alt-recommendations ${isError ? 'error' : ''}">
+      <h3>${isError ? 'Recommendations Currently Unavailable' : 'More Philosophical Explorations'}</h3>
+      <div class="alt-grid">
+        <a href="/tag/music" class="alt-card" aria-label="Browse music articles">
+          <h4>All Music Articles</h4>
+          <p>Explore philosophical analyses of musical forms</p>
+        </a>
+        <a href="/tag/art" class="alt-card" aria-label="Browse art articles">
+          <h4>Art & Philosophy</h4>
+          <p>Discover art's existential engagements</p>
+        </a>
+        <a href="/tags" class="alt-card" aria-label="Browse all topics">
+          <h4>Browse All Topics</h4>
+          <p>Explore diverse philosophical perspectives</p>
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+// ==============================
+// ADDITIONAL STYLES
+// ==============================
+const recommendationStyles = `
+/* Recommendation grid styling */
+.recommendation-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  margin-top: 1rem;
+}
+
+.rec-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.rec-card:hover {
+  transform: translateY(-3px);
+}
+
+.rec-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Alternative recommendations */
+.alt-recommendations {
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin-top: 1rem;
+}
+
+.alt-recommendations.error {
+  background: #ffe3e3;
+  border: 1px solid #ffc9c9;
+}
+
+.alt-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.alt-card {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.alt-card:hover {
+  transform: translateY(-3px);
+  text-decoration: none;
+}
+
+.no-recs {
+  text-align: center;
+  padding: 2rem;
+}
+`;
+
+// Inject styles
+const styleTag = document.createElement('style');
+styleTag.textContent = recommendationStyles;
+document.head.appendChild(styleTag);
+
+// ==============================
+// INITIALIZATION
+// ==============================
 
 // ============================
 // ==============================
@@ -414,60 +565,6 @@ async function analyzeSentiment(commentInput) {
     });    checkLikeStatus(); 
   }
 
-  function loadRecommendations(articleId) {
-    fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}/cached-recommendations`)
-      .then(res => res.json())
-      .then(data => {
-        const container = document.getElementById("recommendations");
-        container.innerHTML = '<h2>Recommended Reads</h2>';
-  
-        if (!data.recommendations?.length) {
-          container.innerHTML += `<div class="no-recs">
-            <p>No recommendations yet. Check back later!</p>
-          </div>`;
-          return;
-        }
-  
-        const recGrid = document.createElement('div');
-        recGrid.className = 'recommendation-grid';
-  
-        data.recommendations.forEach(rec => {
-          const card = document.createElement('div');
-          card.className = 'rec-card';
-  
-          card.innerHTML = `
-            <a href="Articles.html?id=${rec._id}">
-              <img src="${rec.image}" alt="${rec.title}">
-              <div class="rec-content">
-                <h3>${rec.title}</h3>
-                <p>${rec.description?.slice(0, 100)}...</p>
-                <div class="rec-meta">
-                  <span>${rec.minToRead} min read</span>
-                  <span>${rec.kudos?.length || 0} ❤️</span>
-                </div>
-              </div>
-            </a>
-          `;
-  
-          recGrid.appendChild(card);
-        });
-  
-        container.appendChild(recGrid);
-      })
-      .catch(err => {
-        console.error("❌ Recommendation error:", err);
-        document.getElementById("recommendations").innerHTML = `
-          <div class="rec-error">
-            <p>Recommendations currently unavailable</p>
-          </div>
-        `;
-      });
-  }
-// 🔁 Call the function after article loads
-loadRecommendations(articleId);
-/* =============================
- nav bar
- ============================= */
 
 const navbar = document.getElementById('navbar');
 
@@ -487,3 +584,75 @@ function closeError() {
   const errorDiv = document.getElementById('negative-comment-warning');
   errorDiv.style.display = 'none';
 }
+
+
+
+// ==============================
+// STYLES
+// ==============================
+const styles = `
+  /* Recommendation styles */
+  .recommendations-title {
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+  }
+
+  .recommendation-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .rec-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+
+  .rec-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .rec-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .rec-content {
+    padding: 1.5rem;
+  }
+
+  /* Alternative recommendations */
+  .alt-recommendations {
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin: 2rem 0;
+  }
+
+  .alt-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .alt-card {
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+  }
+
+  .alt-card:hover {
+    transform: translateY(-3px);
+  }
+`;
+
+// Inject styles
+const styleTag = document.createElement('style');
+styleTag.textContent = styles;
+document.head.appendChild(styleTag);
