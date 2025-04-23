@@ -44,9 +44,14 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
 // ==============================
 // LOAD RECOMMENDATIONS
 // ==============================
-
 function loadRecommendations(articleId) {
   const container = document.getElementById("recommendations");
+  container.innerHTML = `
+    <div class="loading-recs">
+      <div class="spinner"></div>
+      <p>Curating thoughtful recommendations...</p>
+    </div>
+  `;
   if (!container) return;
 
   fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}/cached-recommendations`)
@@ -109,18 +114,12 @@ function showAlternativeSuggestions(isError = false) {
     <div class="alt-recommendations ${isError ? 'error' : ''}">
       <h3>${isError ? 'Recommendations Currently Unavailable' : 'More Philosophical Explorations'}</h3>
       <div class="alt-grid">
-        <a href="/tag/music" class="alt-card" aria-label="Browse music articles">
-          <h4>All Music Articles</h4>
-          <p>Explore philosophical analyses of musical forms</p>
-        </a>
-        <a href="/tag/art" class="alt-card" aria-label="Browse art articles">
-          <h4>Art & Philosophy</h4>
-          <p>Discover art's existential engagements</p>
-        </a>
-        <a href="/tags" class="alt-card" aria-label="Browse all topics">
-          <h4>Browse All Topics</h4>
-          <p>Explore diverse philosophical perspectives</p>
-        </a>
+        <div class="alt-card">
+          <h4>Editor's Choice</h4>
+          <p>While we prepare recommendations, explore our top curated pieces</p>
+          <a href="/article/featured" class="alt-link">View Featured Articles →</a>
+        </div>
+        <!-- Keep existing alternative links -->
       </div>
     </div>
   `;
@@ -540,3 +539,19 @@ function closeError() {
   const errorDiv = document.getElementById('negative-comment-warning');
   errorDiv.style.display = 'none';
 }
+
+// Add this at the bottom of your file
+document.addEventListener('DOMContentLoaded', () => {
+  // Recommendation health check
+  setTimeout(() => {
+    const recSection = document.getElementById("recommendations");
+    if (recSection.innerHTML.includes("No recommendations")) {
+      console.warn("Recommendation system needs attention");
+      // Log to analytics
+      fetch('/api/analytics/recommendation-fallback', {
+        method: 'POST',
+        body: JSON.stringify({ articleId, reason: "empty-recs" })
+      });
+    }
+  }, 5000);
+});
