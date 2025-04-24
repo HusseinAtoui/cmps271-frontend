@@ -503,7 +503,9 @@ textarea {
 
 /* Responsive Grid */
 @media (max-width: 1024px) {
-  
+  #recommended-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 @media (max-width: 600px) {
@@ -605,8 +607,6 @@ textarea {
     display: none;
   }
 
-  #recommended-container {
-    grid-template-columns: repeat(1, 1fr);
-  }
+ 
 
 }
