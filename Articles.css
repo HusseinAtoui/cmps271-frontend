@@ -218,8 +218,9 @@ h3 {
 }
 
 #kudos-btn.liked .heart-icon {
-  fill: #ea0408;
   transform: scale(1.1);
+  fill: #ea0408;
+ 
 }
 
 .writing {
