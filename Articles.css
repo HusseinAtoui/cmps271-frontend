@@ -1,3 +1,4 @@
+
 /* ============================= */
 /*          Global Styles        */
 /* ============================= */
@@ -219,7 +220,7 @@ h3 {
 #kudos-btn.liked .heart-icon {
   transform: scale(1.1);
   fill: #ea0408;
-
+ 
 }
 
 .writing {
@@ -439,8 +440,6 @@ textarea {
   background-color: #7D0C0E;
   padding: 50px 30px;
   border-top: 6px solid #7D0C0E;
-  display: flex;
-  flex-direction: column;
 }
 
 .recommended-articles h3 {
@@ -503,11 +502,15 @@ textarea {
 }
 
 /* Responsive Grid */
-@media (max-width: 1024px) {}
+@media (max-width: 1024px) {
+  
+}
 
 @media (max-width: 600px) {
 
-  
+  #recommended-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================= */
@@ -602,6 +605,8 @@ textarea {
     display: none;
   }
 
-  
+  #recommended-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
 
 }
