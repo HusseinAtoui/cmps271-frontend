@@ -410,6 +410,48 @@ async function analyzeSentiment(commentInput) {
     document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
   });
 
+  function renderRecommendedArticles(currentId) {
+    fetch('https://afterthoughts.onrender.com/api/articles')
+      .then(res => res.json())
+      .then(allArticles => {
+        // Filter out the current article
+        const filtered = allArticles.filter(article => article._id !== currentId);
+  
+        // Shuffle and pick 4 random articles
+        const shuffled = filtered.sort(() => 0.5 - Math.random());
+        const recommended = shuffled.slice(0, 4);
+  
+        // Create and insert recommendation section
+        const section = document.createElement('section');
+        section.className = 'recommended-articles';
+        section.innerHTML = `<h3>You Might Also Like</h3>`;
+  
+        recommended.forEach(article => {
+          const card = document.createElement('div');
+          card.className = 'recommended-card';
+          card.innerHTML = `
+            <a href="Articles.html?id=${article._id}">
+              <div class="card-image" style="background-image: url('${article.image}');"></div>
+              <div class="card-text">
+                <h4>${article.title}</h4>
+                <p>${article.description || article.text.slice(0, 100)}...</p>
+              </div>
+            </a>
+          `;
+          section.appendChild(card);
+        });
+  
+        document.body.appendChild(section);
+      })
+      .catch(err => {
+        console.error("❌ Error loading recommended articles:", err);
+      });
+  }
+  
+  // Call it after article is loaded
+  renderRecommendedArticles(articleId);
+  
+
 /* =============================
  nav bar
  ============================= */
