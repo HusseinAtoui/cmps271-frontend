@@ -373,7 +373,7 @@ async function analyzeSentiment(commentInput) {
           if (response.ok) {
             console.log("✅ Comment posted successfully:", data);
 
-            localStorage.removeItem(`article_${articleId}_comment`);
+
             // Retrieve the user data
             const userData = JSON.parse(localStorage.getItem("userData")) || {};
             const newComment = {
