@@ -413,14 +413,17 @@ async function analyzeSentiment(commentInput) {
     fetch('https://afterthoughts.onrender.com/api/articles')
       .then(res => res.json())
       .then(allArticles => {
+        // Filter out the current article
         const filtered = allArticles.filter(article => article._id !== currentId);
+  
+        // Shuffle and pick 4 random articles
         const shuffled = filtered.sort(() => 0.5 - Math.random());
         const recommended = shuffled.slice(0, 4);
   
-        const container = document.getElementById('recommended-container');
-        if (!container) return;
-  
-        container.innerHTML = ''; // Clear existing if any
+        // Create and insert recommendation section
+        const section = document.createElement('section');
+        section.className = 'recommended-articles';
+        section.innerHTML = `<h3>You Might Also Like</h3>`;
   
         recommended.forEach(article => {
           const card = document.createElement('div');
@@ -434,8 +437,10 @@ async function analyzeSentiment(commentInput) {
               </div>
             </a>
           `;
-          container.appendChild(card);
+          section.appendChild(card);
         });
+  
+        document.body.appendChild(section);
       })
       .catch(err => {
         console.error("❌ Error loading recommended articles:", err);
@@ -445,6 +450,7 @@ async function analyzeSentiment(commentInput) {
   // Call it after article is loaded
   renderRecommendedArticles(articleId);
   
+
 
 /* =============================
  nav bar
