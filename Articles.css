@@ -522,14 +522,12 @@ textarea {
     display: none;
   }
 
-}/* ============================= */
-/*  Recommended Articles Styles  */
-/* Recommended Articles Section */
+}/*  Recommended Articles Styles  */
 /* ============================= */
 .recommended-articles {
   background-color: #faefe1;
+  padding: 40px 50px;
   padding: 50px;
-  padding: 50px 30px;
   border-top: 6px solid #7D0C0E;
   text-align: center;
 }
@@ -538,17 +536,17 @@ textarea {
   font-family: "Times New Roman", serif;
   font-size: 32px;
   color: #7D0C0E;
-  margin-bottom: 40px;
-  text-align: center;
   margin-bottom: 30px;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 #recommended-container {
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .recommended-card {
@@ -557,27 +555,27 @@ textarea {
   border-radius: 10px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
   font-family: "Times New Roman", serif;
   text-align: left;
-  transition: all 0.3s ease;
 }
 
 .recommended-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .recommended-card a {
   text-decoration: none;
   color: inherit;
-  text-decoration: none;
   display: block;
   height: 100%;
 }
 
 .card-image {
   width: 100%;
+  height: 160px;
   height: 180px;
   background-size: cover;
   background-position: center;
@@ -585,8 +583,9 @@ textarea {
 }
 
 .card-text {
-  padding: 16px;
   padding: 15px;
+  font-family: "Times New Roman", serif;
+  padding: 16px;
 }
 
 .card-text h4 {
@@ -598,12 +597,11 @@ textarea {
 .card-text p {
   font-size: 16px;
   color: #444;
-  color: #333;
+
   line-height: 1.5;
 }
 
 /* Responsive Behavior */
-/* Responsive Grid */
 @media (max-width: 1024px) {
   #recommended-container {
     grid-template-columns: repeat(2, 1fr);
