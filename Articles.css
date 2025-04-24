@@ -567,3 +567,72 @@ textarea {
   border-radius: 10px;
   margin-top: 1rem;
 }
+/* ============================= */
+/*  Recommended Articles Styles  */
+/* ============================= */
+.recommended-articles {
+  background-color: #faefe1;
+  padding: 40px 50px;
+  border-top: 6px solid #7D0C0E;
+}
+
+.recommended-articles h3 {
+  font-family: "Times New Roman", serif;
+  font-size: 32px;
+  color: #7D0C0E;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+#recommended-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.recommended-card {
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.recommended-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.recommended-card a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.card-image {
+  width: 100%;
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.card-text {
+  padding: 15px;
+  font-family: "Times New Roman", serif;
+}
+
+.card-text h4 {
+  font-size: 20px;
+  color: #7D0C0E;
+  margin-bottom: 10px;
+}
+
+.card-text p {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.4;
+}
