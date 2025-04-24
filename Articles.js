@@ -1,17 +1,6 @@
+
+
 console.log("🔥 Articles.js is running!");
-
-// ==============================
-// LOAD ARTICLE FROM BACKEND
-// ==============================
-
-const params = new URLSearchParams(window.location.search);
-const articleId = params.get('id');
-console.log("🔑 Article ID from URL:", articleId);
-setupCommentPersistence(articleId);
-loadRecommendations(articleId); // ✅ Make sure this runs after setup
-
-
-
 // ==============================
 // HEART BUTTON FUNCTIONALITY
 // ==============================
@@ -83,126 +72,9 @@ function setupHeartButton(articleId) {
 
   checkLikeStatus();
 }
-
-fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
-  .then(response => {
-    if (!response.ok) throw new Error("Article not found");
-    return response.json();
-  })
-  .then(article => {
-    renderFullArticle({
-      title: article.title,
-      author: `${article.userID.firstName || "Unknown"} ${article.userID.lastName || ""}`,
-      text: article.text,
-      image: article.image
-    });
-
-    if (Array.isArray(article.comments)) {
-      const formattedComments = article.comments.map(comment => ({
-        name: comment.postedBy.firstName + " " + comment.postedBy.lastName,
-        image: comment.postedBy.profilePicture,
-        comment: comment.text
-      }));
-
-      document._existingComments = formattedComments;
-      makeProfile(formattedComments);
-    }
-
-    setupHeartButton(articleId);
-  })
-  .catch(err => {
-    console.error("❌ Error loading article:", err);
-    document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
-  });
-
-// ==============================
-// LOAD RECOMMENDATIONS
-// ==============================
-function loadRecommendations(articleId) {
-  const container = document.getElementById("recommendations");
-  container.innerHTML = `
-    <div class="loading-recs">
-      <div class="spinner"></div>
-      <p>Curating thoughtful recommendations...</p>
-    </div>
-  `;
-  if (!container) return;
-
-  fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}/cached-recommendations`)
-    .then(res => {
-      if (!res.ok) throw new Error(res.statusText);
-      return res.json();
-    })
-    .then(data => {
-      console.log("🎯 Recommendations received:", data.recommendations);
-      container.innerHTML = '<h2 class="recommendations-title">Recommended Reads</h2>';
-      if (Array.isArray(data.recommendations) && data.recommendations.length > 0) {
-        renderRecommendations(data.recommendations);
-      } else {
-        showAlternativeSuggestions();
-      }
-    })
-    .catch(err => {
-      console.error("❌ Recommendation error:", err);
-      showAlternativeSuggestions(true);
-    });
-}
-
-function renderRecommendations(recommendations) {
-  const container = document.getElementById("recommendations");
-  const grid = document.createElement('div');
-  grid.className = 'recommendation-grid';
-
-  recommendations.forEach(rec => {
-    const imageSrc = rec.image || "https://via.placeholder.com/300x180?text=No+Image";
-    const title = rec.title || "Untitled";
-    const description = rec.description || "No description available.";
-    const shortDescription = description.slice(0, 100) + (description.length > 100 ? '...' : '');
-    const minToRead = rec.minToRead || 1;
-    const kudosCount = rec.kudos?.length || 0;
-
-    const card = document.createElement('div');
-    card.className = 'rec-card';
-    card.innerHTML = `
-      <a href="Articles.html?id=${rec._id}" aria-label="${title}">
-        <img src="${imageSrc}" alt="${title}" loading="lazy">
-        <div class="rec-content">
-          <h3>${title}</h3>
-          <p>${shortDescription}</p>
-          <div class="rec-meta">
-            <span>${minToRead} min read</span>
-            <span>${kudosCount} ❤️</span>
-          </div>
-        </div>
-      </a>
-    `;
-    grid.appendChild(card);
-  });
-
-  container.appendChild(grid);
-}
-
-function showAlternativeSuggestions(isError = false) {
-  const container = document.getElementById("recommendations");
-  container.innerHTML = `
-    <div class="alt-recommendations ${isError ? 'error' : ''}">
-      <h3>${isError ? 'Recommendations Currently Unavailable' : 'More Philosophical Explorations'}</h3>
-      <div class="alt-grid">
-        <div class="alt-card">
-          <h4>Editor's Choice</h4>
-          <p>While we prepare recommendations, explore our top curated pieces</p>
-          <a href="/article/featured" class="alt-link">View Featured Articles →</a>
-        </div>
-        <!-- Keep existing alternative links -->
-      </div>
-    </div>
-  `;
-}
-
 // ==============================
 // RENDER ARTICLE
 // ==============================
-
 function renderFullArticle({ title, author, text, image }) {
   const section = document.getElementById('article-section');
   if (!section) return;
@@ -222,20 +94,25 @@ function renderFullArticle({ title, author, text, image }) {
   pre.textContent = text;
 
   const articleLink = `https://husseinatoui.github.io/cmps271-frontend/Articles.html?id=${articleId}`;
-  const mlaCitation = `${author}. "${title}." Afterthoughts Philosophy Journal, ${articleLink}.`;
-  const apaCitation = `${author} (${new Date().getFullYear()}). ${title}. Afterthoughts Philosophy Journal. Retrieved from ${articleLink}`;
 
+  // MLA Citation
+  const mlaCitation = `${author}. "${title}." Afterthoughts Philosophy Journal, ${articleLink}.`;
+  
+  // APA Citation
+  const apaCitation = `${author} (${new Date().getFullYear()}). ${title}. Afterthoughts Philosophy Journal. Retrieved from ${articleLink}`;
+  
   const citationContainer = document.createElement('div');
   citationContainer.className = 'citation-container';
-
+  
+  // Generate Citation Button
   const generateBtn = document.createElement('button');
   generateBtn.textContent = 'Generate Citation';
   generateBtn.className = 'cite-btn';
-
+  
   const dropdown = document.createElement('div');
   dropdown.className = 'citation-dropdown';
   dropdown.style.display = 'none';
-
+  
   const mlaOption = document.createElement('div');
   mlaOption.textContent = 'Copy MLA Citation';
   mlaOption.addEventListener('click', () => {
@@ -243,7 +120,7 @@ function renderFullArticle({ title, author, text, image }) {
     alert('MLA Citation copied!');
     dropdown.style.display = 'none';
   });
-
+  
   const apaOption = document.createElement('div');
   apaOption.textContent = 'Copy APA Citation';
   apaOption.addEventListener('click', () => {
@@ -251,19 +128,21 @@ function renderFullArticle({ title, author, text, image }) {
     alert('APA Citation copied!');
     dropdown.style.display = 'none';
   });
-
+  
   dropdown.append(mlaOption, apaOption);
+  
+  // Toggle Dropdown Visibility
   generateBtn.addEventListener('click', () => {
     dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
   });
-
+  
   citationContainer.append(generateBtn, dropdown);
   section.append(h1, h2, pre, citationContainer);
-
+  
   const imageSection = document.querySelector('.image');
   if (imageSection && image) {
     imageSection.style.backgroundImage = `url("${image}")`;
-    imageSection.style.backgroundSize = 'cover';
+    imageSection.style.backgroundSize = '100%';
     imageSection.style.backgroundPosition = 'center';
     imageSection.style.backgroundRepeat = 'no-repeat';
     imageSection.style.height = '400px';
@@ -364,7 +243,13 @@ function setupCommentPersistence(articleId) {
   
   commentBtn.insertAdjacentElement('afterend', clearBtn);
 }
-
+// ==============================
+// LOAD ARTICLE FROM BACKEND
+// ==============================
+const params = new URLSearchParams(window.location.search);
+const articleId = params.get('id');
+console.log("🔑 Article ID from URL:", articleId);
+setupCommentPersistence(articleId); 
 
 fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
   .then(response => {
@@ -390,6 +275,7 @@ fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
       makeProfile(formattedComments);
     }
     setupHeartButton(articleId);
+
 
 
 const commentBtn = document.getElementById("comment-btn");
@@ -524,10 +410,11 @@ async function analyzeSentiment(commentInput) {
   .catch(err => {
     console.error("❌ Error loading article:", err);
     document.getElementById('article-section').innerHTML = "<p>Could not load article.</p>";
+  });
 
-  });// Set up the heart button functionality
-
-
+/* =============================
+ nav bar
+ ============================= */
 
 const navbar = document.getElementById('navbar');
 
@@ -547,19 +434,3 @@ function closeError() {
   const errorDiv = document.getElementById('negative-comment-warning');
   errorDiv.style.display = 'none';
 }
-
-// Add this at the bottom of your file
-document.addEventListener('DOMContentLoaded', () => {
-  // Recommendation health check
-  setTimeout(() => {
-    const recSection = document.getElementById("recommendations");
-    if (recSection.innerHTML.includes("No recommendations")) {
-      console.warn("Recommendation system needs attention");
-      // Log to analytics
-      fetch('/api/analytics/recommendation-fallback', {
-        method: 'POST',
-        body: JSON.stringify({ articleId, reason: "empty-recs" })
-      });
-    }
-  }, 5000);
-});
