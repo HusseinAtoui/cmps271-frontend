@@ -2,9 +2,13 @@ console.log("🔥 Articles.js is running!");
 // ==============================
 // HEART BUTTON FUNCTIONALITY
 // ==============================
-function setupHeartButton(articleId) {
+function setupHeartButton() {
   const heartBtn = document.getElementById('kudos-btn');
   const token = localStorage.getItem("authToken");
+
+  // ✅ Extract article ID from the URL path
+  const articleId = window.location.pathname.split("/").pop();
+  console.log("🔑 Article ID from URL:", articleId);
 
   if (!heartBtn || !articleId) return;
 
@@ -15,9 +19,11 @@ function setupHeartButton(articleId) {
 
     try {
       const response = await fetch(
-        `https://afterthoughts.onrender.com/api/articles/1/2/3/4/${articleId}/like-status`, 
+        `https://afterthoughts.onrender.com/api/articles/${articleId}/like-status`,
         {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
       );
 
@@ -40,36 +46,36 @@ function setupHeartButton(articleId) {
       return;
     }
 
-    isLiked = !isLiked;
-    heartBtn.classList.toggle("liked");
     heartBtn.disabled = true;
 
     try {
       const endpoint = isLiked
-        ? 'https://afterthoughts.onrender.com/api/articles/add-like'
-        : 'https://afterthoughts.onrender.com/api/articles/remove-like';
+        ? `https://afterthoughts.onrender.com/api/articles/${articleId}/unlike`
+        : `https://afterthoughts.onrender.com/api/articles/${articleId}/like`;
 
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ articleId })
+        }
       });
 
       if (!response.ok) throw new Error("Failed to update like status");
-    } catch (err) {
-      console.error("Error updating like:", err);
+
       isLiked = !isLiked;
       heartBtn.classList.toggle("liked");
+    } catch (err) {
+      console.error("Error updating like:", err);
     } finally {
       heartBtn.disabled = false;
     }
   });
 
-  checkLikeStatus();
+  checkLikeStatus(); // initial call
 }
+
+
 // ==============================
 // RENDER ARTICLE
 // ==============================
