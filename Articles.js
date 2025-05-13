@@ -1,4 +1,14 @@
 console.log("🔥 Articles.js is running!");
+
+const params = new URLSearchParams(window.location.search);
+const articleId = params.get('id');
+
+if (!articleId || articleId.length !== 24) {
+  console.error("❌ Invalid or missing article ID in URL:", articleId);
+  document.getElementById('article-section').innerHTML = "<p>Invalid article link.</p>";
+  throw new Error("Stopping script due to invalid article ID.");
+}
+
 // ==============================
 // HEART BUTTON FUNCTIONALITY
 // ==============================
@@ -250,8 +260,7 @@ function setupCommentPersistence(articleId) {
 // ==============================
 // LOAD ARTICLE FROM BACKEND
 // ==============================
-const params = new URLSearchParams(window.location.search);
-const articleId = params.get('id');
+
 console.log("🔑 Article ID from URL:", articleId);
 setupCommentPersistence(articleId); 
 
