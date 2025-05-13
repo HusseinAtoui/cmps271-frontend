@@ -261,7 +261,6 @@ function setupCommentPersistence(articleId) {
 // LOAD ARTICLE FROM BACKEND
 // ==============================
 
-console.log("🔑 Article ID from URL:", articleId);
 setupCommentPersistence(articleId); 
 
 fetch(`https://afterthoughts.onrender.com/api/articles/${articleId}`)
