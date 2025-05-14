@@ -451,9 +451,9 @@ textarea {
 
 #recommended-container {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
-  max-width: 85%;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -602,7 +602,7 @@ textarea {
   }
 
   #recommended-container {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
 }
