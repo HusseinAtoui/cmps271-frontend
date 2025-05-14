@@ -545,8 +545,12 @@ footer {
   .card .text-section {
     width: 85%;
     margin-left: 40px;
-
   }
+
+  #cookie-popup {
+    width: 60%;
+  }
+
 }
 
 /* ✅ 481px - 768px (Larger Phones & Tablets)  */
