@@ -462,6 +462,67 @@ footer {
   background-color: #F0C5A4;
 }
 
+
+/* save icon */
+
+.save-icon {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: auto;
+}
+
+.save-icon:hover {
+  transform: scale(1.1);
+}
+
+.fa-solid.fa-bookmark {
+  color: #FF5A5F;
+}
+
+/* ============================= */
+/*        cookies pop-up         */
+/* ============================= */
+
+#cookie-popup {
+  width: 40%;
+  height: auto;
+  position: fixed;
+  bottom: 20px;
+  left: -100%;
+  background-color: #faefe1;
+  color: black;
+  border: 2px solid #faefe1;
+  padding: 20px;
+  border-radius: 8px;
+  transition: left 0.5s ease-in-out;
+  z-index: 9999;
+}
+
+#cookie-popup.show {
+  left: 20px;
+}
+
+#cookie-popup button {
+  background-color: #7D0C0E;
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+#cookie-popup a {
+  color: black;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+#cookie-popup a:hover {
+  color: #7D0C0E;
+}
+
 /* ============================= */
 /*       Responsive Styles       */
 /* ============================= */
@@ -590,59 +651,4 @@ footer {
     font-size: 1.2rem;
   }
 
-}
-.save-icon {
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-left: auto; /* Pushes icon to the right */
-}
-
-.save-icon:hover {
-  transform: scale(1.1);
-}
-
-.fa-solid.fa-bookmark {
-  color: #FF5A5F; /* Your brand color */
-}
-/* ============================= */
-/*        cookies pop-up         */
-/* ============================= */
-#cookie-popup {
-  width: 40%;
-  height: auto;
-  position: fixed;
-  bottom: 20px;
-  left: -100%;
-  background-color: #faefe1;
-  color: black;
-  border: 2px solid #faefe1;
-  padding: 20px;
-  border-radius: 8px;
-  transition: left 0.5s ease-in-out;
-  z-index: 9999;
-}
-
-#cookie-popup.show {
-  left: 20px;
-}
-
-#cookie-popup button {
-  background-color: #7D0C0E;
-  color: white;
-  border: none;
-  padding: 15px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-#cookie-popup a {
-  color: black;
-  text-decoration: underline;
-  transition: color 0.3s ease;
-}
-
-#cookie-popup a:hover {
-  color: #7D0C0E; 
 }
