@@ -500,11 +500,16 @@ textarea {
   line-height: 1.5;
 }
 
-/* Responsive Grid */
+
+
+/* ============================= */
+/*       Responsive Styles       */
+/* ============================= */
+
 @media (max-width: 1024px) {
 
   #recommended-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 
 }
@@ -516,10 +521,6 @@ textarea {
   }
   
 }
-
-/* ============================= */
-/*       Responsive Styles       */
-/* ============================= */
 
 @media (max-width: 480px) {
 
