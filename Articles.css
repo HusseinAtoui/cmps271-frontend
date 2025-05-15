@@ -500,9 +500,6 @@ textarea {
   line-height: 1.5;
 }
 
-<<<<<<< HEAD
-
-=======
 /* Responsive Grid */
 @media (max-width: 1024px) {
 
@@ -519,7 +516,7 @@ textarea {
   }
   
 }
->>>>>>> parent of e5f3d6b (ml resp)
+
 
 /* ============================= */
 /*       Responsive Styles       */
@@ -550,14 +547,6 @@ textarea {
 
   .context {
     width: 100%;
-  }
-
-}
-
-@media (max-width: 600px) {
-
-  #recommended-container {
-    grid-template-columns: 1fr;
   }
 
 }
@@ -618,10 +607,6 @@ textarea {
 
   .logo {
     display: none;
-  }
-
-  #recommended-container {
-    grid-template-columns: repeat(2, 1fr);
   }
 
 }
