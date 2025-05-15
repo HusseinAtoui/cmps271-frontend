@@ -500,7 +500,26 @@ textarea {
   line-height: 1.5;
 }
 
+<<<<<<< HEAD
 
+=======
+/* Responsive Grid */
+@media (max-width: 1024px) {
+
+  #recommended-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  #recommended-container {
+    grid-template-columns: 1fr;
+  }
+  
+}
+>>>>>>> parent of e5f3d6b (ml resp)
 
 /* ============================= */
 /*       Responsive Styles       */
