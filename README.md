@@ -1,2 +1,2 @@
 # cmps271
-CMPS271 Project
+CMPS271 Project - Afterthoughts
